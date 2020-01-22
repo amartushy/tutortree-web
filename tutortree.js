@@ -110,6 +110,7 @@ firebase.auth().onAuthStateChanged(function(user) {
           upcomingDate.innerHTML = startTime + endTime
           upcomingBlock.appendChild(upcomingStudent)
           upcomingBlock.appendChild(upcomingCourse)
+          upcomingBlock.appendChild(upcomingDate)
           upcomingSection.appendChild(upcomingBlock)
          
         }
