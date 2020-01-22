@@ -1,4 +1,3 @@
-var test="test test test"
 tutorsNameField = document.getElementById("tutors-name")
 tutorsEmailField = document.getElementById("tutors-email")
 tutorsPhotoField = document.getElementById("tutors-photo")
@@ -21,6 +20,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                    // this value to authenticate with your backend server, if
                    // you have one. Use User.getToken() instead.
     var ref = dataRef.child(userId)
+
     //LOAD UNIVERSITIES AVAILABLE COURSES
     courseLayoutArea = document.getElementById("course-layout-area")
     schoolref.once("value", function(snapshot) {
@@ -89,6 +89,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     	var currentTime = Math.round((new Date()).getTime() / 1000);
       var hasUpcoming = false
       var upcomingSection = document.getElementById('upcoming-section')
+
       for (sessionId in snapshot.child(userId+"/sessions").val()) {
 				if(snapshot.child(userId+"/sessions/"+sessionId+"/start").val() > currentTime){
         	hasUpcoming = true
@@ -97,6 +98,8 @@ firebase.auth().onAuthStateChanged(function(user) {
           var upcomingCourse = document.createElement("button")
           var upcomingDate = document.createElement("h3")
           var studentId = snapshot.child(userId+"/sessions/"+sessionId+'/other').val()
+          var startTime = snapshot.child(userId+'/sessions/'+sessionId+'/course/start').val()
+          var endTime = snapshot.child(userId+'/sessions/'+sessionId+'/course/end').val()
           upcomingCourse.setAttribute('class', 'course-button w-button')
           upcomingBlock.setAttribute('class', 'upcoming-block')
           upcomingStudent.setAttribute('class', 'upcoming-header')
@@ -104,6 +107,7 @@ firebase.auth().onAuthStateChanged(function(user) {
           
           upcomingStudent.innerHTML = snapshot.child(studentId+'/name/').val()
           upcomingCourse.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/course').val()
+          upcomingDate.innerHTML = startTime + endTime
           upcomingBlock.appendChild(upcomingStudent)
           upcomingBlock.appendChild(upcomingCourse)
           upcomingSection.appendChild(upcomingBlock)
