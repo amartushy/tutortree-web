@@ -131,7 +131,3 @@ function loadTutorProfile(userId) {
     updateProfile.setAttribute('onClick', 'userDidUpdateProfile("'+userId+'")')
 
 }
-
-
-
-
