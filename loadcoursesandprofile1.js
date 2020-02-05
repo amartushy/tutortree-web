@@ -1,7 +1,6 @@
 tutorsNameField = document.getElementById("tutors-name")
 tutorsEmailField = document.getElementById("tutors-email")
 tutorsPhotoField = document.getElementById("tutors-photo")
-tutorsPhotoUrlField = document.getElementById("tutors-photo-url")
 emailCheckBox = document.getElementById("email-checkbox")
 smsCheckBox = document.getElementById("sms-checkbox")
 tutorsBioField = document.getElementById("tutors-bio")
@@ -75,6 +74,54 @@ function loadAvailableCourses(userId) {
     })
 
 }
+// LOAD UPCOMING SESSIONS
+function loadUpcomingSessions(userID) {
+	dataRef.once("value", function(snapshot) {
+  	var currentTime = Math.round((new Date()).getTime() / 1000);
+    var hasUpcoming = false
+    var upcomingSection = document.getElementById('upcoming-section')
+    
+    for (sessionId in snapshot.child(userId+"/sessions").val()) {
+    	if(snapshot.child(userId+"/sessions/"+sessionId+"/start").val() > currentTime){
+      	hasUpcoming = true
+        var upcomingBlock = document.createElement("div");
+        var upcomingStudent = document.createElement("h3")
+        var upcomingCourse = document.createElement("button")
+        var upcomingDate = document.createElement("h4")
+        var studentId = snapshot.child(userId+"/sessions/"+sessionId+'/other').val()
+        
+        //TIME FORMATTING
+        var startTimeEpoch = snapshot.child(userId+'/sessions/'+sessionId+'/start').val()
+        var endTimeEpoch = snapshot.child(userId+'/sessions/'+sessionId+'/end').val()
+        var startTime = new Date(startTimeEpoch*1000)
+        var endTime = new Date(endTimeEpoch*1000)
+        var startDayandHour = startTime.toLocaleDateString("en-US", {weekday:'long',
+        		hour: 'numeric', minute:'numeric'})
+        var endMinutes = (endTime.getMinutes = '0') ? "00":endTime.getMinutes
+        var endHour = ((endTime.getHours() + 24) % 12 || 12) +":"+ endMinutes
+        
+        
+        upcomingCourse.setAttribute('class', 'upcoming-course confirmed-session w-button')
+        upcomingBlock.setAttribute('class', 'upcoming-block')
+        upcomingStudent.setAttribute('class', 'upcoming-header')
+        upcomingDate.setAttribute('class', 'date-and-time')
+          
+        upcomingStudent.innerHTML = snapshot.child(studentId+'/name/').val()
+        upcomingCourse.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/course').val()
+        upcomingDate.innerHTML = startDayandHour+ " until "+ endHour
+        upcomingBlock.appendChild(upcomingStudent)
+        upcomingBlock.appendChild(upcomingCourse)
+        upcomingBlock.appendChild(upcomingDate)
+        upcomingSection.appendChild(upcomingBlock)
+        }
+      }
+      if (hasUpcoming == false) {
+            upcomingSection.innerHTML = "No upcoming sessions"
+        }
+    })
+
+}
+
 
 //LOAD TUTORS PROFILE
 function loadTutorProfile(userId) {
@@ -85,11 +132,10 @@ function loadTutorProfile(userId) {
         console.log(snapshot.val())
         tutorsEmailField.value = snapshot.child("email").val()
         tutorsNameField.value = snapshot.child("name").val()
-        tutorsPhotoUrlField.value = snapshot.child("profileURL").val()
         tutorsBioField.value = snapshot.child("bio").val()
         tutorsRateField.value = snapshot.child("PPH").val()
         tutorsMaxHoursField.value = snapshot.child("MAX").val()
-          
+        
         //CALCULATE CURRENT BALANCE
         var totalIncome = 0
         var totalSpending = 0
