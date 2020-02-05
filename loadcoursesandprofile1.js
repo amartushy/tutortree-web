@@ -124,6 +124,7 @@ function loadUpcomingSessions(userID) {
 
 
 //LOAD TUTORS PROFILE
+var tutorsBalanceButton = document.getElementById("tutors-balance-button")
 function loadTutorProfile(userId) {
     var tutorRef = dataRef.child(userId)
 
@@ -152,7 +153,7 @@ function loadTutorProfile(userId) {
             }
         }
         currentBalance = totalIncome - totalSpending
-        tutorsBalanceField.value = currentBalance.toFixed(2)
+        tutorsBalanceButton.innerHTML = "$" + currentBalance.toFixed(2) + " Withdraw Balance"
           
           
         //UPDATE NOTIFICATIONS
