@@ -162,10 +162,7 @@ function loadTutorProfile(userId) {
         var emailNotifications = snapshot.child("emailNotifications").val()
         if (emailNotifications){
             emailCheckBox.checked = true
-		document.querySelector('.toggle').click();
-		document.querySelector('.toggle-active').click();
-		document.querySelector('.top-line').click();
-		document.querySelector('.bottom-line').click();
+		document.querySelector('.toggle-ticker').click();
         } else {
             emailCheckBox.checked = false
         }
