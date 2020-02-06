@@ -55,29 +55,47 @@ function userDidUpdateProfile(userId) {
         'bio':newBio,
         })
 }
-
-//Update Email and SMS notifications
-$(document).ready(function()
-{
-  $('#email-checkbox').change(function() 
-  {
-    if(this.checked == true)
-    {
-    	console.log("email notifications are on")
+//WITHDRAW PARTIAL BALANCE FUNCTION
+function venmoWithdrawal(userId, balance) {
+		var amountToWithdraw = document.getElementById('amount-to-withdraw')
+  	var venmoUsername = document.getElementById('venmo-username')
+    var spendingId = create8CharID()
+    var currentTime = Date.now()/1000
+    var pending = 0
+    var withdrawDict = {
+    		'amount' : amountToWithdraw.value,
+        'numberDate' : currentTime,
+        'status' : pending,
+        'type' : 'Withdrawal',
+        'uid' : userId,
+        'venmo' : venmoUsername.value
+    		}
+    var spendingDict = { }
+    spendingDict[spendingId] = withdrawDict
+    var spendingRef = dataRef.child('/'+userId+'/spending/')
+  	var withdrawRef = database.ref('updateDatabase/withdrawals/')
+    
+    if((parseFloat(withdrawDict['amount']) > 0) && (parseFloat(withdrawDict['amount']) < balance) ) {
+    		amountToWithdraw.value = ''
+    		venmoUsername.value = ''
+        console.log(spendingId)
+        spendingRef.update(spendingDict)
+        withdrawRef.update(spendingDict)
+        alert("Thank you for your withdrawal! Please allow 24 hours for processing.")
     } else {
-    	console.log("email notifications off")
+    		alert("Sorry, there was an error. There are either insufficent funds or the amount type is invalid.")
     }
-  })
-})
-$(document).ready(function()
-{
-  $('#sms-checkbox').change(function() 
-  {
-    if(this.checked == true)
-    {
-    	console.log("sms notifications are on")
-    } else {
-    	console.log("sms notifications off")
+    
+    console.log(withdrawDict)
+}
+//HELPER FUNCITON TO CREATE SPENDING ID
+function create8CharID() {
+		var result =''
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    var charactersLength = characters.length
+    
+    for (i = 0; i < 8; i++) {
+    		result += characters.charAt(Math.floor(Math.random() * charactersLength))
     }
-	})
-})
+    return result
+}
