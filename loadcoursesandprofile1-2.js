@@ -154,7 +154,9 @@ function loadTutorProfile(userId) {
         }
         currentBalance = totalIncome - totalSpending
         tutorsBalanceButton.innerHTML = "$" + currentBalance.toFixed(2) + " Withdraw Balance"
-          
+        //WITHDRAW BALANCE BUTTON
+    	var withdrawButton = document.getElementById('withdraw-balance')
+    	withdrawButton.setAttribute('onClick', 'venmoWithdrawal("'+userId+'","'+currentBalance+'")')
           
         //UPDATE NOTIFICATIONS
         var emailNotifications = snapshot.child("emailNotifications").val()
@@ -177,9 +179,5 @@ function loadTutorProfile(userId) {
     //UPDATE PROFILE BUTTON
     var updateProfile = document.getElementById('update-profile')
     updateProfile.setAttribute('onClick', 'userDidUpdateProfile("'+userId+'")')
-	
-    //WITHDRAW BALANCE BUTTON
-    var withdrawButton = document.getElementById('withdraw-balance')
-    withdrawButton.setAttribute('onClick', 'venmoWithdrawal("'+userId+'","'+currentBalance+'")')
 
 }
