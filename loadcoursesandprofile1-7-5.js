@@ -126,8 +126,11 @@ dataRef.once("value", function(snapshot) {
         upcomingStudent.innerHTML = snapshot.child(studentId+'/name/').val()
         upcomingCourse.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/course').val()
         upcomingDate.innerHTML = startDayandHour+ " until "+ endHour
-	studentImage.src =  snapshot.child(studentId+'/profileURL/').val()	
-	
+	try {
+		studentImage.src =  snapshot.child(studentId+'/profileURL/').val()	
+	} catch {
+		studentImage.src = snapshot.child('XwbsnUHFYOZabc8IwGybfELFqKC2/profileURL/'val()
+	}
 	//Build the Block
 	headerAndDate.appendChild(upcomingStudent)
 	headerAndDate.appendChild(upcomingDate)
