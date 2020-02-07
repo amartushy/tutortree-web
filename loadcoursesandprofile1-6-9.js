@@ -138,7 +138,7 @@ dataRef.once("value", function(snapshot) {
 	upcomingBlock.appendChild(studentContainer)
         pendingContainer.appendChild(upcomingCourse)
 	upcomingBlock.appendChild(pendingContainer)
-        upcomingBlock.appendChild(upcomingDate)
+ 
 	if (isPending == 1) {
 		upcomingSection.appendChild(upcomingBlock)
 	} else {
