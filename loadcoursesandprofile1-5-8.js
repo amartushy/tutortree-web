@@ -162,8 +162,8 @@ function loadTutorProfile(userId) {
         var emailNotifications = snapshot.child("emailNotifications").val()
         if ((emailNotifications == true) && (emailCheckBox.checked == false)){
 		document.querySelector('.toggle-ticker').click();
-        } else if ((emailNotifications == false) && (emailCheckBox.checked ==true)) {
-		document.querySelector(.toggle-ticker).click();
+        } else if ((emailNotifications == false) && (emailCheckBox.checked == true)) {
+		document.querySelector('.toggle-ticker').click();
 	}
         var smsNotifications = snapshot.child("smsNotifications").val()
         if (smsNotifications) {
