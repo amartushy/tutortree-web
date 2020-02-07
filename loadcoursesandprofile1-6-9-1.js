@@ -92,7 +92,6 @@ dataRef.once("value", function(snapshot) {
         var upcomingBlock = document.createElement("div")
 	var studentContainer = document.createElement("div")
 	var studentImage = document.createElement("div")
-	var imagesrc = document.createElement("img")
 	var headerAndDate = document.createElement("div")
 	var pendingContainer = document.createElement("div")
         var upcomingStudent = document.createElement("h3")
@@ -127,12 +126,12 @@ dataRef.once("value", function(snapshot) {
         upcomingStudent.innerHTML = snapshot.child(studentId+'/name/').val()
         upcomingCourse.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/course').val()
         upcomingDate.innerHTML = startDayandHour+ " until "+ endHour
-	imagesrc.src = snapshot.child(studentId+'/profileURL/').val()	
+	var imageURL =  snapshot.child(studentId+'/profileURL/').val()	
 	
 	//Build the Block
 	headerAndDate.appendChild(upcomingStudent)
 	headerAndDate.appendChild(upcomingDate)
-	studentImage.appendChild(imagesrc)
+	studentImage.style.backgroundImage = 'url(' + imageUrl + ')'
 	studentContainer.appendChild(studentImage)
 	studentContainer.appendChild(headerAndDate)
 	upcomingBlock.appendChild(studentContainer)
