@@ -160,7 +160,7 @@ function loadTutorProfile(userId) {
           
         //UPDATE NOTIFICATIONS
         var emailNotifications = snapshot.child("emailNotifications").val()
-        if (emailNotifications && (emailCheckbox.checked == false)){
+        if (emailNotifications && (emailCheckBox.checked == false)){
 		document.querySelector('.toggle-ticker').click();
 		emailCheckBox.checked = true
         } else if (emailNotifications) {
