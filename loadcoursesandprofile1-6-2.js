@@ -91,8 +91,8 @@ function loadUpcomingSessions(userID) {
         var upcomingCourse = document.createElement("button")
 	var pendingButton = document.createElement("button")
         var upcomingDate = document.createElement("h4")
-        var studentId = snapshot.child(sessionId+'/other').val()
-        var isPending = snapshot.child(sessionId+'/status').val()
+        var studentId = snapshot.child(userId+"/sessions/"+sessionId+'/other').val()
+        var isPending = snapshot.child(userId+"/sessions/"+sessionId+'/status').val()
 	
         //TIME FORMATTING
         var startTimeEpoch = snapshot.child(userId+'/sessions/'+sessionId+'/start').val()
