@@ -79,6 +79,7 @@ function loadUpcomingSessions(userID) {
 	dataRef.once("value", function(snapshot) {
   	var currentTime = Math.round((new Date()).getTime() / 1000);
     var hasUpcoming = false
+    var hasPending = false
     var upcomingSection = document.getElementById('upcoming-section')
     var pendingSection = document.getElementById('pending-section')
     
@@ -122,6 +123,7 @@ function loadUpcomingSessions(userID) {
 	if (isPending == 1) {
 		upcomingSection.appendChild(upcomingBlock)
 	} else {
+		hasPending = true
 		pendingButton.innerHTML = "PENDING"
 		pendingButton.setAttribute("onClick", "userConfirmedSession('"+userId+"','"+sessionId+"')")
 		pendingContainer.appendChild(pendingButton)
@@ -131,6 +133,9 @@ function loadUpcomingSessions(userID) {
       }
       if (hasUpcoming == false) {
             upcomingSection.innerHTML = "No upcoming sessions"
+        }
+      if (hasPending == false) {
+            pendingSection.innerHTML = "No pending sessions"
         }
     })
 
