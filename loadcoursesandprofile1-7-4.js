@@ -196,11 +196,7 @@ function loadTutorProfile(userId) {
           
         //UPDATE NOTIFICATIONS
         var emailNotifications = snapshot.child("emailNotifications").val()
-        if ((emailNotifications == true) && (emailCheckBox.checked == false)){
-		document.querySelector('.toggle-ticker').click();
-        } else if ((emailNotifications == false) && (emailCheckBox.checked == true)) {
-		document.querySelector('.toggle-ticker').click();
-	}
+        
         
           
     }, function (error) {
