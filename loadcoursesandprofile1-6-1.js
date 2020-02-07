@@ -165,12 +165,7 @@ function loadTutorProfile(userId) {
         } else if ((emailNotifications == false) && (emailCheckBox.checked == true)) {
 		document.querySelector('.toggle-ticker').click();
 	}
-        var smsNotifications = snapshot.child("smsNotifications").val()
-        if ((smsNotifications == true) && (smsCheckBox.checked == false)){
-		document.querySelector('.toggle-ticker-sms').click();
-        } else if ((smsNotifications == false) && (smsCheckBox.checked == true)) {
-		document.querySelector('.toggle-ticker-sms').click();
-	}
+        
           
     }, function (error) {
         console.log("Error: " + error.code);
