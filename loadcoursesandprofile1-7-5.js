@@ -198,8 +198,10 @@ function loadTutorProfile(userId) {
         var emailNotifications = snapshot.child("emailNotifications").val()
         if (emailNotifications) {
 		emailButton.innerHTML = "Email Notifications: On"
+		emailButton.style.backgroundColor = "#EC7764"
 	} else {
 		emailButton.innerHTML = "Email Notifications: Off"
+		emailButton.style.backgroundColor = "#ADDCCB"
 	}
         
           
