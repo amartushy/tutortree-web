@@ -91,7 +91,7 @@ dataRef.once("value", function(snapshot) {
 	//Create elements
         var upcomingBlock = document.createElement("div")
 	var studentContainer = document.createElement("div")
-	var studentImage = document.createElement("div")
+	var studentImage = document.createElement("img")
 	var headerAndDate = document.createElement("div")
 	var pendingContainer = document.createElement("div")
         var upcomingStudent = document.createElement("h3")
@@ -114,7 +114,7 @@ dataRef.once("value", function(snapshot) {
 	//Set Webflow classes
         upcomingCourse.setAttribute('class', 'upcoming-course confirmed-session w-button')
 	studentContainer.setAttribute('class', 'student-container')
-	studentImage.setAttribute('class', 'student-image')
+	studentImage.setAttribute('class', 'students-image')
 	headerAndDate.setAttribute('class', 'header-and-date')
 	pendingContainer.setAttribute('class', 'pending-and-course')
         upcomingBlock.setAttribute('class', 'upcoming-block')
@@ -126,12 +126,11 @@ dataRef.once("value", function(snapshot) {
         upcomingStudent.innerHTML = snapshot.child(studentId+'/name/').val()
         upcomingCourse.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/course').val()
         upcomingDate.innerHTML = startDayandHour+ " until "+ endHour
-	var imageURL =  snapshot.child(studentId+'/profileURL/').val()	
+	studentImage.src =  snapshot.child(studentId+'/profileURL/').val()	
 	
 	//Build the Block
 	headerAndDate.appendChild(upcomingStudent)
 	headerAndDate.appendChild(upcomingDate)
-	studentImage.style.backgroundImage = 'url(' + imageURL + ')'
 	studentContainer.appendChild(studentImage)
 	studentContainer.appendChild(headerAndDate)
 	upcomingBlock.appendChild(studentContainer)
