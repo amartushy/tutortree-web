@@ -123,7 +123,7 @@ function loadUpcomingSessions(userID) {
 		upcomingSection.appendChild(upcomingBlock)
 	} else {
 		pendingButton.innerHTML = "PENDING"
-		pendingButton.setAttribute("onClick", "userConfirmedSession('"+userId+"','"+sessionId+"')"
+		pendingButton.setAttribute("onClick", "userConfirmedSession('"+userId+"','"+sessionId+"')")
 		pendingContainer.appendChild(pendingButton)
         	pendingSection.appendChild(upcomingBlock)	
 	}
