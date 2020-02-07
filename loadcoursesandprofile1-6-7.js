@@ -76,8 +76,8 @@ function loadAvailableCourses(userId) {
 }
 // LOAD UPCOMING SESSIONS
 function loadUpcomingSessions(userID) {
-	dataRef.once("value", function(snapshot) {
-  	var currentTime = Math.round((new Date()).getTime() / 1000);
+dataRef.once("value", function(snapshot) {
+    var currentTime = Math.round((new Date()).getTime() / 1000);
     var hasUpcoming = false
     var hasPending = false
     var upcomingSection = document.getElementById('upcoming-section')
@@ -87,7 +87,13 @@ function loadUpcomingSessions(userID) {
     	if(snapshot.child(userId+"/sessions/"+sessionId+"/start").val() > currentTime){
 	console.log(sessionId)
       	hasUpcoming = true
-        var upcomingBlock = document.createElement("div");
+		
+	//Create elements
+        var upcomingBlock = document.createElement("div")
+	var studentContainer = document.createElement("div")
+	var studentImage = document.createElement("div")
+	var imagesrc = document.createElement("img")
+	var headerAndDate = document.createElement("div")
 	var pendingContainer = document.createElement("div")
         var upcomingStudent = document.createElement("h3")
         var upcomingCourse = document.createElement("button")
@@ -106,17 +112,30 @@ function loadUpcomingSessions(userID) {
         var endMinutes = (endTime.getMinutes = '0') ? "00":endTime.getMinutes
         var endHour = ((endTime.getHours() + 24) % 12 || 12) +":"+ endMinutes
         
+	//Set Webflow classes
         upcomingCourse.setAttribute('class', 'upcoming-course confirmed-session w-button')
+	studentContainer.setAttribute('class', 'student-container')
+	studentImage.setAttribute('class', 'student-image')
+	headerAndDate.setAttribute('class', 'header-and-date')
 	pendingContainer.setAttribute('class', 'pending-and-course')
         upcomingBlock.setAttribute('class', 'upcoming-block')
         upcomingStudent.setAttribute('class', 'upcoming-header')
 	pendingButton.setAttribute('class', 'pending-course pending-session w-button')
         upcomingDate.setAttribute('class', 'date-and-time')
-          
+        
+	//Data assignment
         upcomingStudent.innerHTML = snapshot.child(studentId+'/name/').val()
         upcomingCourse.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/course').val()
         upcomingDate.innerHTML = startDayandHour+ " until "+ endHour
-        upcomingBlock.appendChild(upcomingStudent)
+	imagesrc.src = snapshot.child(studentId+'/profileURL/).val()	
+	
+	//Build the Block
+	headerAndDate.appendChild(upcomingStudent)
+	headerAndDate.appendChild(upcomingDate)
+	studentImage.appendChild(imagesrc)
+	studentContainer.appendChild(studentImage)
+	studentContainer.appendChild(headerAndDate)
+	upcomingBlock.appendChild(studentContainer)
         pendingContainer.appendChild(upcomingCourse)
 	upcomingBlock.appendChild(pendingContainer)
         upcomingBlock.appendChild(upcomingDate)
