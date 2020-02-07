@@ -131,11 +131,11 @@ dataRef.once("value", function(snapshot) {
 	//Build the Block
 	headerAndDate.appendChild(upcomingStudent)
 	headerAndDate.appendChild(upcomingDate)
+	pendingContainer.appendChild(upcomingCourse)
+	headerAndDate.appendChild(pendingContainer)
 	studentContainer.appendChild(studentImage)
 	studentContainer.appendChild(headerAndDate)
 	upcomingBlock.appendChild(studentContainer)
-        pendingContainer.appendChild(upcomingCourse)
-	upcomingBlock.appendChild(pendingContainer)
  
 	if (isPending == 1) {
 		upcomingSection.appendChild(upcomingBlock)
