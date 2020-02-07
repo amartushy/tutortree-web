@@ -168,7 +168,7 @@ function loadTutorProfile(userId) {
         var smsNotifications = snapshot.child("smsNotifications").val()
         if ((smsNotifications == true) && (smsCheckBox.checked == false)){
 		document.querySelector('.toggle-ticker-sms').click();
-        } else if ((emailNotifications == false) && (smsCheckBox.checked == true)) {
+        } else if ((smsNotifications == false) && (smsCheckBox.checked == true)) {
 		document.querySelector('.toggle-ticker-sms').click();
 	}
           
