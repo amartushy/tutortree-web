@@ -99,3 +99,36 @@ function create8CharID() {
     }
     return result
 }
+//TODO: Mobile seems to be running infinite loop
+//UPDATE EMAIL NOTIFICATIONS
+var emailToggle = document.querySelector('.toggle-ticker')
+emailToggle.setAttribute("onClick", 'userDidUpdateEmail()')
+
+function userDidUpdateEmail() {
+	var emailRef = dataRef.child(userId)
+ 
+    emailRef.once("value", function(snapshot) {
+    		console.log(snapshot.child('emailNotifications/').val())
+    		if (snapshot.child('emailNotifications/').val() == true) {
+        		emailRef.update( {emailNotifications:false} )
+        } else {
+        		emailRef.update( {emailNotifications:true} )
+        }
+    })
+}
+//UPDATE SMS NOTIFICATIONS
+var SMSToggle = document.querySelector('.toggle-ticker-sms')
+SMSToggle.setAttribute("onClick", 'userDidUpdateSMS()')
+
+function userDidUpdateSMS() {
+	var smsRef = dataRef.child(userId)
+ 
+    smsRef.once("value", function(snapshot) {
+    		console.log(snapshot.child('smsNotifications/').val())
+    		if (snapshot.child('smsNotifications/').val() == true) {
+        		smsRef.update( {smsNotifications:false} )
+        } else {
+        		smsRef.update( {smsNotifications:true} )
+        }
+    })
+}
