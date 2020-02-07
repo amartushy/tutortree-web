@@ -84,6 +84,7 @@ function loadUpcomingSessions(userID) {
     
     for (sessionId in snapshot.child(userId+"/sessions").val()) {
     	if(snapshot.child(userId+"/sessions/"+sessionId+"/start").val() > currentTime){
+	console.log(sessionId)
       	hasUpcoming = true
         var upcomingBlock = document.createElement("div");
 	var pendingContainer = document.createElement("div")
@@ -122,6 +123,7 @@ function loadUpcomingSessions(userID) {
 		upcomingSection.appendChild(upcomingBlock)
 	} else {
 		pendingButton.innerHTML = "PENDING"
+		pendingButton.setAttribute("onClick", "userConfirmedSession('"+userId+"','"+sessionId+"')"
 		pendingContainer.appendChild(pendingButton)
         	pendingSection.appendChild(upcomingBlock)	
 	}
