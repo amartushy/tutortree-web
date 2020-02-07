@@ -166,11 +166,11 @@ function loadTutorProfile(userId) {
 		document.querySelector('.toggle-ticker').click();
 	}
         var smsNotifications = snapshot.child("smsNotifications").val()
-        if (smsNotifications) {
-            smsCheckBox.checked = true
-        } else {
-            smsCheckBox.checked = false
-        }
+        if ((smsNotifications == true) && (smsCheckBox.checked == false)){
+		document.querySelector('.toggle-ticker-sms').click();
+        } else if ((emailNotifications == false) && (smsCheckBox.checked == true)) {
+		document.querySelector('.toggle-ticker-sms').click();
+	}
           
     }, function (error) {
         console.log("Error: " + error.code);
