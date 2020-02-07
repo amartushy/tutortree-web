@@ -80,16 +80,20 @@ function loadUpcomingSessions(userID) {
   	var currentTime = Math.round((new Date()).getTime() / 1000);
     var hasUpcoming = false
     var upcomingSection = document.getElementById('upcoming-section')
+    var pendingSection = document.getElementById('pending-section')
     
     for (sessionId in snapshot.child(userId+"/sessions").val()) {
     	if(snapshot.child(userId+"/sessions/"+sessionId+"/start").val() > currentTime){
       	hasUpcoming = true
         var upcomingBlock = document.createElement("div");
+	var pendingContainer = document.createElement("div")
         var upcomingStudent = document.createElement("h3")
         var upcomingCourse = document.createElement("button")
+	var pendingButton = document.createElement("button")
         var upcomingDate = document.createElement("h4")
-        var studentId = snapshot.child(userId+"/sessions/"+sessionId+'/other').val()
-        
+        var studentId = snapshot.child(sessionId+'/other').val()
+        var isPending = snapshot.child(sessionId+'/status').val()
+	
         //TIME FORMATTING
         var startTimeEpoch = snapshot.child(userId+'/sessions/'+sessionId+'/start').val()
         var endTimeEpoch = snapshot.child(userId+'/sessions/'+sessionId+'/end').val()
@@ -100,19 +104,27 @@ function loadUpcomingSessions(userID) {
         var endMinutes = (endTime.getMinutes = '0') ? "00":endTime.getMinutes
         var endHour = ((endTime.getHours() + 24) % 12 || 12) +":"+ endMinutes
         
-        
         upcomingCourse.setAttribute('class', 'upcoming-course confirmed-session w-button')
+	pendingContainer.setAttribute('class', 'pending-and-course')
         upcomingBlock.setAttribute('class', 'upcoming-block')
         upcomingStudent.setAttribute('class', 'upcoming-header')
+	pendingButton.setAttribute('class', 'pending-course pending-session w-button')
         upcomingDate.setAttribute('class', 'date-and-time')
           
         upcomingStudent.innerHTML = snapshot.child(studentId+'/name/').val()
         upcomingCourse.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/course').val()
         upcomingDate.innerHTML = startDayandHour+ " until "+ endHour
         upcomingBlock.appendChild(upcomingStudent)
-        upcomingBlock.appendChild(upcomingCourse)
+        pendingContainer.appendChild(upcomingCourse)
+	upcomingBlock.appendChild(pendingContainer)
         upcomingBlock.appendChild(upcomingDate)
-        upcomingSection.appendChild(upcomingBlock)
+	if (isPending == 1) {
+		upcomingSection.appendChild(upcomingBlock)
+	} else {
+		pendingButton.innerHTML = "PENDING"
+		pendingContainer.appendChild(pendingButton)
+        	pendingSection.appendChild(upcomingBlock)	
+	}
         }
       }
       if (hasUpcoming == false) {
