@@ -131,7 +131,7 @@ dataRef.once("value", function(snapshot) {
 	//Build the Block
 	headerAndDate.appendChild(upcomingStudent)
 	headerAndDate.appendChild(upcomingDate)
-	studentImage.style.backgroundImage = 'url(' + imageUrl + ')'
+	studentImage.style.backgroundImage = 'url(' + imageURL + ')'
 	studentContainer.appendChild(studentImage)
 	studentContainer.appendChild(headerAndDate)
 	upcomingBlock.appendChild(studentContainer)
