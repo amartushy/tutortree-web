@@ -129,7 +129,7 @@ dataRef.once("value", function(snapshot) {
 	try {
 		studentImage.src =  snapshot.child(studentId+'/profileURL/').val()	
 	} catch {
-		studentImage.src = snapshot.child('XwbsnUHFYOZabc8IwGybfELFqKC2/profileURL/'val()
+		studentImage.src = snapshot.child('XwbsnUHFYOZabc8IwGybfELFqKC2/profileURL/'val())
 	}
 	//Build the Block
 	headerAndDate.appendChild(upcomingStudent)
