@@ -1,7 +1,7 @@
 tutorsNameField = document.getElementById("tutors-name")
 tutorsEmailField = document.getElementById("tutors-email")
 tutorsPhotoField = document.getElementById("tutors-photo")
-emailCheckBox = document.getElementById("email-checkbox")
+emailButton = document.getElementById("email-notifications")
 smsCheckBox = document.getElementById("sms-checkbox")
 tutorsBioField = document.getElementById("tutors-bio")
 tutorsRateField = document.getElementById("tutors-rate")
@@ -196,7 +196,11 @@ function loadTutorProfile(userId) {
           
         //UPDATE NOTIFICATIONS
         var emailNotifications = snapshot.child("emailNotifications").val()
-        
+        if (emailNotifications) {
+		emailButton.innerHTML = "Email Notifications: On"
+	} else {
+		emailButton.innerHTML = "Email Notifications: Off"
+	}
         
           
     }, function (error) {
