@@ -65,6 +65,11 @@ function loadAvailableCourses(userId) {
                     }
               		tutorCount++
                 }
+		if (isTutorRegistered){
+		     yourCoursesArea.appendChild(subjectBlock)
+	     	} else {
+		    courseLayoutArea.appendChild(subjectBlock)  
+	     	}
 		
                 var tutorLabel = document.createElement('p')
                 tutorLabel.innerText =tutorCount + " tutors"
@@ -72,11 +77,7 @@ function loadAvailableCourses(userId) {
                 courseButton.appendChild(tutorLabel)
                 subjectBlock.appendChild(courseButton)
                 tutorCount = 0
-	     if (isTutorRegistered){
-		     yourCoursesArea.appendChild(subjectBlock)
-	     } else {
-		    courseLayoutArea.appendChild(subjectBlock)  
-	     }
+	    
           }
    
       }
