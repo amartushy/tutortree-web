@@ -125,7 +125,7 @@ dataRef.once("value", function(snapshot) {
 	}
         var endHour = ((endTime.getHours() + 24) % 12 || 12) +":"+ endMinutes
         
-	//Set Webflow classes
+	//Set Webflow classes and Id's
         upcomingCourse.setAttribute('class', 'upcoming-course confirmed-session w-button')
 	studentContainer.setAttribute('class', 'student-container')
 	studentImage.setAttribute('class', 'students-image')
@@ -133,6 +133,7 @@ dataRef.once("value", function(snapshot) {
 	pendingContainer.setAttribute('class', 'pending-and-course')
         upcomingBlock.setAttribute('class', 'upcoming-block')
 	upcomingBlock.setAttribute('id', sessionId)
+	upcomingBlock.setAttribute('id', startTimeEpoch)
         upcomingStudent.setAttribute('class', 'upcoming-header')
 	pendingButton.setAttribute('class', 'pending-course pending-session w-button')
         upcomingDate.setAttribute('class', 'date-and-time')
@@ -155,9 +156,10 @@ dataRef.once("value", function(snapshot) {
 	studentContainer.appendChild(studentImage)
 	studentContainer.appendChild(headerAndDate)
 	upcomingBlock.appendChild(studentContainer)
- 
+ 	
 	if (isPending == 1) {
 		upcomingSection.appendChild(upcomingBlock)
+		updateUpcomingArray(startTimeEpoch)
 	} else {
 		hasPending = true
 		pendingButton.innerHTML = "PENDING"
