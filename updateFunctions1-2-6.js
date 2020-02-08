@@ -129,9 +129,11 @@ function userConfirmedSession(userId, sessionID) {
         sendPushTo(studentsToken,pushMessage)
     }
     })
-	setTimeout(function(){
-	//location.reload()
-	}, 500);
+    var pendingSection = document.getElementById('pending-section')
+    var upcomingSection = document.getElementById('upcoming-section')
+    var updatedBlock = document.getElementById('"'+sessionId'"')
+    upcomingSection.appendChild(updatedBlock)
+    pendingSection.removeChild(updatedBlock)
     
 }
 
