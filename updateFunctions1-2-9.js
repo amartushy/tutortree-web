@@ -131,7 +131,7 @@ function userConfirmedSession(userId, sessionID) {
     })
     var pendingSection = document.getElementById('pending-section')
     var upcomingSection = document.getElementById('upcoming-section')
-    var updatedBlock = document.getElementById('"'+sessionID+'"')
+    var updatedBlock = document.getElementById(sessionID)
     upcomingSection.appendChild(updatedBlock)
     pendingSection.removeChild(updatedBlock)
     
