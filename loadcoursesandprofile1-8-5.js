@@ -178,9 +178,10 @@ function loadTutorProfile(userId) {
         tutorsRateField.value = snapshot.child("PPH").val()
         tutorsMaxHoursField.value = snapshot.child("MAX").val()
 	
-	var createPhoto = document.createElement("img")
-	createPhoto.src = snapshot.child("profileURL").val()
-        tutorsPhotoField.appendChild(createPhoto)
+	//var createPhoto = document.createElement("img")
+	//createPhoto.src = snapshot.child("profileURL").val()
+        //tutorsPhotoField.appendChild(createPhoto)
+	tutorsPhotoField.src = snapshot.child("profileURL").val()
 		
         //CALCULATE CURRENT BALANCE
         var totalIncome = 0
