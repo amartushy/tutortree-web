@@ -179,6 +179,7 @@ function loadTutorProfile(userId) {
         tutorsMaxHoursField.value = snapshot.child("MAX").val()
 	
 	var createPhoto = document.createElement("img")
+	createPhoto.setAttribute('class', 'profile-image')
 	createPhoto.src = snapshot.child("/profileURL/").val()
         tutorsPhotoField.appendChild(createPhoto)
 	
