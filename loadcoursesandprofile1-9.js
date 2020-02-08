@@ -168,7 +168,13 @@ dataRef.once("value", function(snapshot) {
 var tutorsBalanceButton = document.getElementById("tutors-balance-button")
 function loadTutorProfile(userId) {
     var tutorRef = dataRef.child(userId)
-
+	
+    	tutorRef.once("value", function(snapshot) {
+	var createPhoto = document.createElement("img")
+	createPhoto.setAttribute('class', 'profile-image')
+	createPhoto.src = snapshot.child("/profileURL/").val()
+        tutorsPhotoField.appendChild(createPhoto)
+	}
 	tutorRef.on("value", function(snapshot) {
         //SET FIELDS
         console.log(snapshot.val())
@@ -178,10 +184,6 @@ function loadTutorProfile(userId) {
         tutorsRateField.value = snapshot.child("PPH").val()
         tutorsMaxHoursField.value = snapshot.child("MAX").val()
 	
-	var createPhoto = document.createElement("img")
-	createPhoto.setAttribute('class', 'profile-image')
-	createPhoto.src = snapshot.child("/profileURL/").val()
-        tutorsPhotoField.appendChild(createPhoto)
 	
 		
         //CALCULATE CURRENT BALANCE
