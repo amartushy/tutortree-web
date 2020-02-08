@@ -48,7 +48,7 @@ function loadAvailableCourses(userId) {
             subjectBlock.appendChild(subjectHeader)
           
             for(course in snapshot.child(tutorsUniversity+"/"+subject).val()) {
-          		var subjectBlock = document.getElementById(subject)
+          	//var subjectBlock = document.getElementById(subject)
                 var courseButton = document.createElement('button')
                 courseButton.setAttribute('id', subject+'-'+course)
                 courseButton.setAttribute('onClick', 'userDidRegisterForCourse("'+tutorsUniversity+'","'+subject+'","'+course+'","'+userId+'")')
@@ -65,11 +65,6 @@ function loadAvailableCourses(userId) {
                     }
               		tutorCount++
                 }
-		if (isTutorRegistered){
-		     yourCoursesArea.appendChild(subjectBlock)
-	     	} else {
-		    courseLayoutArea.appendChild(subjectBlock)  
-	     	}
 		
                 var tutorLabel = document.createElement('p')
                 tutorLabel.innerText =tutorCount + " tutors"
@@ -78,7 +73,12 @@ function loadAvailableCourses(userId) {
                 subjectBlock.appendChild(courseButton)
                 tutorCount = 0
 	    
-          }
+        }
+	if (isTutorRegistered){
+		yourCoursesArea.appendChild(subjectBlock)
+	} else {
+		courseLayoutArea.appendChild(subjectBlock)  
+	}
    
       }
     })
