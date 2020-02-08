@@ -16,6 +16,8 @@ var schoolRef = dataRef.parent
 //LOAD UNIVERSITIES AVAILABLE COURSES
 function loadAvailableCourses(userId) {
     courseLayoutArea = document.getElementById("course-layout-area")
+    yourCoursesArea = document.getElementById("your-courses")
+	
     schoolRef.once("value", function(snapshot) {
     console.log(snapshot.val())
     	//set which university
@@ -36,13 +38,13 @@ function loadAvailableCourses(userId) {
       
         //create new blocks for each course
         for(subject in snapshot.child(tutorsUniversity).val()) {
-      		var subjectBlock = document.createElement('div')
+	    var isTutorRegistered = false
+      	    var subjectBlock = document.createElement('div')
             var subjectHeader = document.createElement("h2")
             subjectBlock.setAttribute('class', 'course-container')
             subjectBlock.setAttribute('id', subject)
             subjectHeader.setAttribute('class', 'subject-heading')
             subjectHeader.innerText = subject
-            courseLayoutArea.appendChild(subjectBlock)
             subjectBlock.appendChild(subjectHeader)
           
             for(course in snapshot.child(tutorsUniversity+"/"+subject).val()) {
@@ -57,18 +59,24 @@ function loadAvailableCourses(userId) {
                 courseButton.setAttribute('registered',false)
                 for(tutor in snapshot.child(tutorsUniversity+"/"+subject+"/"+course+"/tutors").val()) {
               		if(userId == tutor){
-                  		courseButton.setAttribute('registered', true)
+			isTutorRegistered = true
+                  	courseButton.setAttribute('registered', true)
                     	courseButton.style.backgroundColor = "#295A53"
                     }
               		tutorCount++
                 }
-
+		
                 var tutorLabel = document.createElement('p')
                 tutorLabel.innerText =tutorCount + " tutors"
                 tutorLabel.setAttribute('class', 'tutor-label')
                 courseButton.appendChild(tutorLabel)
                 subjectBlock.appendChild(courseButton)
                 tutorCount = 0
+	     if (isTutorRegistered){
+		     yourCoursesArea.appendChild(subjectBlock)
+	     } else {
+		    courseLayoutArea.appendChild(subjectBlock)  
+	     }
           }
    
       }
