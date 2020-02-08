@@ -132,7 +132,8 @@ function userConfirmedSession(userId, sessionID) {
     var upcomingSection = document.getElementById('upcoming-section')
     var pendingContainer = document.getElementById(sessionID+"-container")
     var pendingButton = document.getElementById(sessionID+"-button")
-    var updatedBlock = document.getElementById(sessionID)
+    
+    var updatedBlock = document.querySelector(sessionID)
     upcomingSection.appendChild(updatedBlock)
     pendingContainer.removeChild(pendingButton)
     
