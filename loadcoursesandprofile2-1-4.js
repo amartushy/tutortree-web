@@ -158,7 +158,7 @@ dataRef.once("value", function(snapshot) {
 	upcomingBlock.appendChild(studentContainer)
  	
 	if (isPending == 1) {
-		//upcomingSection.appendChild(upcomingBlock)
+		upcomingSection.appendChild(upcomingBlock)
 		updateUpcomingArray(startTimeEpoch)
 	} else {
 		hasPending = true
