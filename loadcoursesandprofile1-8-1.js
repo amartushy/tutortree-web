@@ -2,6 +2,7 @@ tutorsNameField = document.getElementById("tutors-name")
 tutorsEmailField = document.getElementById("tutors-email")
 tutorsPhotoField = document.getElementById("tutors-photo")
 emailButton = document.getElementById("email-notifications")
+smsButton = document.getElementById("sms-notifications")
 smsCheckBox = document.getElementById("sms-checkbox")
 tutorsBioField = document.getElementById("tutors-bio")
 tutorsRateField = document.getElementById("tutors-rate")
@@ -126,7 +127,7 @@ dataRef.once("value", function(snapshot) {
         upcomingStudent.innerHTML = snapshot.child(studentId+'/name/').val()
         upcomingCourse.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/course').val()
         upcomingDate.innerHTML = startDayandHour+ " until "+ endHour
-	if (snapshot.child(studentId+'/profileURL/').val().length>15) {
+	if (snapshot.child(studentId+'/profileURL/').val().length > 100) {
 		studentImage.src =  snapshot.child(studentId+'/profileURL/').val()
 	} else {	
 		studentImage.src = snapshot.child('XwbsnUHFYOZabc8IwGybfELFqKC2/profileURL/').val()
@@ -201,11 +202,19 @@ function loadTutorProfile(userId) {
         //UPDATE NOTIFICATIONS
         var emailNotifications = snapshot.child("emailNotifications").val()
         if (emailNotifications) {
-		emailButton.innerHTML = "Email Notifications: On"
+		emailButton.innerHTML = "ON"
 		emailButton.style.backgroundColor = "#EC7764"
 	} else {
-		emailButton.innerHTML = "Email Notifications: Off"
+		emailButton.innerHTML = "OFF"
 		emailButton.style.backgroundColor = "#ADDCCB"
+	}
+	var smsNotifications = snapshot.child("smsNotifications".val()
+	if (smsNotifications) {
+		smsButton.innerHTML = "ON"
+		smsButton.style.backgroundColor = "#EC7764"
+	} else {
+		smsButton.innerHTML = "OFF"
+		smsButton.style.backgroundColor = "#ADDCCB"
 	}
         
           
