@@ -128,6 +128,7 @@ dataRef.once("value", function(snapshot) {
 	headerAndDate.setAttribute('class', 'header-and-date')
 	pendingContainer.setAttribute('class', 'pending-and-course')
         upcomingBlock.setAttribute('class', 'upcoming-block')
+	upcomingBlock.setAttribute('id', "'"+sessionId+"'")
         upcomingStudent.setAttribute('class', 'upcoming-header')
 	pendingButton.setAttribute('class', 'pending-course pending-session w-button')
         upcomingDate.setAttribute('class', 'date-and-time')
