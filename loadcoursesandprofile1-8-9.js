@@ -1,6 +1,6 @@
 tutorsNameField = document.getElementById("tutors-name")
 tutorsEmailField = document.getElementById("tutors-email")
-tutorsPhotoField = document.getElementById("tutors-photo")
+tutorsPhotoField = document.getElementById("tutors-photo-container")
 emailButton = document.getElementById("email-notifications")
 smsButton = document.getElementById("sms-notifications")
 smsCheckBox = document.getElementById("sms-checkbox")
@@ -178,10 +178,10 @@ function loadTutorProfile(userId) {
         tutorsRateField.value = snapshot.child("PPH").val()
         tutorsMaxHoursField.value = snapshot.child("MAX").val()
 	
-	//var createPhoto = document.createElement("img")
-	//createPhoto.setAttribute('class', 'profile-image')
-	//createPhoto.src = snapshot.child("/profileURL/").val()
-        tutorsPhotoField.src = snapshot.child("/profileURL/").val()
+	var createPhoto = document.createElement("img")
+	createPhoto.setAttribute('class', 'profile-image')
+	createPhoto.src = snapshot.child("/profileURL/").val()
+        tutorsPhotoField.appendChild(createPhoto)
 	
 		
         //CALCULATE CURRENT BALANCE
