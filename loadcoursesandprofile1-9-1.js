@@ -174,7 +174,8 @@ function loadTutorProfile(userId) {
 	createPhoto.setAttribute('class', 'profile-image')
 	createPhoto.src = snapshot.child("/profileURL/").val()
         tutorsPhotoField.appendChild(createPhoto)
-	}
+	})
+	
 	tutorRef.on("value", function(snapshot) {
         //SET FIELDS
         console.log(snapshot.val())
