@@ -177,7 +177,8 @@ function loadTutorProfile(userId) {
         tutorsBioField.value = snapshot.child("bio").val()
         tutorsRateField.value = snapshot.child("PPH").val()
         tutorsMaxHoursField.value = snapshot.child("MAX").val()
-        
+        tutorsPhotoField.src = snapshot.child("profileURL").val()
+		
         //CALCULATE CURRENT BALANCE
         var totalIncome = 0
         var totalSpending = 0
@@ -201,6 +202,7 @@ function loadTutorProfile(userId) {
           
         //UPDATE NOTIFICATIONS
         var emailNotifications = snapshot.child("emailNotifications").val()
+	emailButton.setAttribute('onClick', 'updateUserEmail("' + userId + '")')
         if (emailNotifications) {
 		emailButton.innerHTML = "ON"
 		emailButton.style.backgroundColor = "#EC7764"
@@ -209,6 +211,7 @@ function loadTutorProfile(userId) {
 		emailButton.style.backgroundColor = "#ADDCCB"
 	}
 	var smsNotifications = snapshot.child("smsNotifications").val()
+	var smsButton.setAttribute('onClick', 'updateUserSMS("' + userId + '")')
 	if (smsNotifications) {
 		smsButton.innerHTML = "ON"
 		smsButton.style.backgroundColor = "#EC7764"
