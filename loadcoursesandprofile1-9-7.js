@@ -158,8 +158,11 @@ dataRef.once("value", function(snapshot) {
 		hasPending = true
 		pendingButton.innerHTML = "PENDING"
 		pendingButton.setAttribute("onClick", "userConfirmedSession('"+userId+"','"+sessionId+"')")
+		pendingButton.setAttribute('id', sessionId+"-button")
 		pendingContainer.appendChild(pendingButton)
-        	pendingSection.appendChild(upcomingBlock)	
+		pendingContainer.setAttribute('id', sessionId+"-container")
+        	pendingSection.appendChild(upcomingBlock)
+		
 	}
         }
       }
