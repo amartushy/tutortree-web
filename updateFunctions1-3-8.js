@@ -215,4 +215,24 @@ function updateUserSMS() {
     })
 }
 
+//ASSOCIATED SORT UPCOMING FUNCTIONS
+var upcomingArray = []
+function updateUpcomingArray(timestamp) {
+		upcomingArray.push(timestamp)
+    upcomingArray.sort(sortNumber)
+}
+function sortNumber(a,b) {
+	return(a-b)
+}
+function appendToUpcoming() {
+		var items = upcomingArray.length
+    var upcomingSection = document.getElementById('upcoming-section')
+		for( i=0 ; i < items ; i++ ) {
+    		var timestampID = upcomingArray[i]
+    		var upcomingBlock = document.getElementById(timestampID)
+        console.log(timestampID)
+        upcomingSection.appendChild(upcomingBlock)
+    }
+}
+
 
