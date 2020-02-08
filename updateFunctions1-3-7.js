@@ -135,9 +135,9 @@ function userConfirmedSession(userId, sessionID) {
     
     var updatedBlock = document.querySelector("."+sessionID)
     //upcomingSection.appendChild(updatedBlock)
-    removeAllFromUpcoming()
-	console.log(updatedBlock.id)
-    //updateUpcomingArray(updatedBlock.id)
+    
+    //removeAllFromUpcoming()
+    updateUpcomingArray(updatedBlock.id)
     appendToUpcoming()
     pendingContainer.removeChild(pendingButton)
     
