@@ -118,7 +118,8 @@ dataRef.once("value", function(snapshot) {
         var endTime = new Date(endTimeEpoch*1000)
         var startDayandHour = startTime.toLocaleDateString("en-US", {weekday:'long',
         		hour: 'numeric', minute:'numeric'})
-        var endMinutes = (endTime.getMinutes() = '0') ? "00":endTime.getMinutes()
+	var getEndMinutes = endTime.getMinutes()
+        var endMinutes = (getEndMinutes = '0') ? "00":getEndMinutes
         var endHour = ((endTime.getHours() + 24) % 12 || 12) +":"+ endMinutes
         
 	//Set Webflow classes
