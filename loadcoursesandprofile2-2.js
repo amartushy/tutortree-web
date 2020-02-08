@@ -161,6 +161,7 @@ dataRef.once("value", function(snapshot) {
  	
 	if (isPending == 1) {
 		upcomingSection.appendChild(upcomingBlock)
+		rescheduleButton.innerHTML = "RESCHEDULE"
 		pendingContainer.appendChild(rescheduleButton)
 		updateUpcomingArray(startTimeEpoch)
 	} else {
