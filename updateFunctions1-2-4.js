@@ -129,7 +129,10 @@ function userConfirmedSession(userId, sessionID) {
         sendPushTo(studentsToken,pushMessage)
     }
     })
-    location.reload()
+	setTimeout(function(){
+	location.reload()
+	}, 500);
+    
 }
 
 //HELPER FUNCTION TO CONVERT TIME
