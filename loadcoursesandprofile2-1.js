@@ -119,6 +119,7 @@ dataRef.once("value", function(snapshot) {
         var startDayandHour = startTime.toLocaleDateString("en-US", {weekday:'long',
         		hour: 'numeric', minute:'numeric'})
 	var getEndMinutes = endTime.getMinutes()
+	console.log(getEndMinutes)
         var endMinutes = (getEndMinutes = '0') ? "00":getEndMinutes
         var endHour = ((endTime.getHours() + 24) % 12 || 12) +":"+ endMinutes
         
