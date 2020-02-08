@@ -208,7 +208,7 @@ function loadTutorProfile(userId) {
 		emailButton.innerHTML = "OFF"
 		emailButton.style.backgroundColor = "#ADDCCB"
 	}
-	var smsNotifications = snapshot.child("smsNotifications".val()
+	var smsNotifications = snapshot.child("smsNotifications").val()
 	if (smsNotifications) {
 		smsButton.innerHTML = "ON"
 		smsButton.style.backgroundColor = "#EC7764"
