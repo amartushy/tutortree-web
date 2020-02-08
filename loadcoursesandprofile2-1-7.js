@@ -107,6 +107,7 @@ dataRef.once("value", function(snapshot) {
         var upcomingStudent = document.createElement("h3")
         var upcomingCourse = document.createElement("button")
 	var pendingButton = document.createElement("button")
+	var rescheduleButton = document.createElement("button")
         var upcomingDate = document.createElement("h4")
         var studentId = snapshot.child(userId+"/sessions/"+sessionId+'/other').val()
         var isPending = snapshot.child(userId+"/sessions/"+sessionId+'/status').val()
@@ -135,6 +136,8 @@ dataRef.once("value", function(snapshot) {
 	upcomingBlock.setAttribute('id', startTimeEpoch)
         upcomingStudent.setAttribute('class', 'upcoming-header')
 	pendingButton.setAttribute('class', 'pending-course pending-session w-button')
+	rescheduleButton.setAttribute('onClick', 'rescheduleSession()')
+	rescheduleButton.setAttribute('class', 'reschedule-button w-button')
         upcomingDate.setAttribute('class', 'date-and-time')
         
 	//Data assignment
@@ -157,7 +160,8 @@ dataRef.once("value", function(snapshot) {
 	upcomingBlock.appendChild(studentContainer)
  	
 	if (isPending == 1) {
-		upcomingSection.appendChild(upcomingBlock)
+		//upcomingSection.appendChild(upcomingBlock)
+		pendingContainer.appendChild(rescheduleButton)
 		updateUpcomingArray(startTimeEpoch)
 	} else {
 		hasPending = true
