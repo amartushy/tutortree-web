@@ -136,7 +136,6 @@ dataRef.once("value", function(snapshot) {
 	upcomingBlock.setAttribute('id', startTimeEpoch)
         upcomingStudent.setAttribute('class', 'upcoming-header')
 	pendingButton.setAttribute('class', 'pending-course pending-session w-button')
-	rescheduleButton.setAttribute('onClick', 'rescheduleSession()')
 	rescheduleButton.setAttribute('class', 'reschedule-button w-button')
         upcomingDate.setAttribute('class', 'date-and-time')
         
