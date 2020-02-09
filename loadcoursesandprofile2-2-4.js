@@ -137,7 +137,7 @@ dataRef.once("value", function(snapshot) {
         upcomingStudent.setAttribute('class', 'upcoming-header')
 	pendingButton.setAttribute('class', 'pending-course pending-session w-button')
 	rescheduleButton.setAttribute('class', 'reschedule-button w-button')
-	rescheduleButton.setAttribute('onClick', 'initializeReschedule("'+sessionId+'")')
+	rescheduleButton.setAttribute('onClick', 'initializeReschedule("'+userId+'","'+sessionId+'")')
         upcomingDate.setAttribute('class', 'date-and-time')
         
 	//Data assignment
