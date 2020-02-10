@@ -210,6 +210,28 @@ function loadTutorProfile(userId) {
         tutorsBioField.value = snapshot.child("bio").val()
         tutorsRateField.value = snapshot.child("PPH").val()
         tutorsMaxHoursField.value = snapshot.child("MAX").val()
+		
+	//UPDATE SESSIONS, AVERAGE, AND HOURLY LABELS
+	var sessionsLabel = document.getElementById("sessions-label")
+	var averageLabel = document.getElementById("average-label")
+	var hourlyLabel = document.getElementById("hourly-label")
+	
+	var sessionCount = 0
+	var averageScore = 0
+	var ratingCount = 0
+
+	for (sessionId in snapshot.child("/sessions").val()) {
+		sessionCount++
+	}
+	for (ratingId in snapshot.child("/ratings/").val() {
+	     if (ratingId.length == 8) {
+		averageScore += ratingId.val()
+		ratingCount++
+		}
+	}
+	sessionLabel.innerHTML = sessionCount
+	averageLabel.innerHTML = (averageScore/averageCount)
+	hourlyLabel.innerHTML = "$" + snapshot.child("/PPH/")*2
 	
 	
 		
