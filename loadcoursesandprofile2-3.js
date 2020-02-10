@@ -218,7 +218,7 @@ function loadTutorProfile(userId) {
 	
 	var sessionCount = 0
 	var averageScore = 0
-	var ratingCount = 0
+	var averageCount = 0
 
 	for (sessionId in snapshot.child("/sessions").val()) {
 		sessionCount++
