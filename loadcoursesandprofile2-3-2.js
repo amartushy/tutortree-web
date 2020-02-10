@@ -231,8 +231,8 @@ function loadTutorProfile(userId) {
 		}
 	}
 	sessionsLabel.innerHTML = sessionCount
-	averageLabel.innerHTML = (averageScore/averageCount)
-	hourlyLabel.innerHTML = "$" + snapshot.child("/PPH/")*2
+	averageLabel.innerHTML = (averageScore/averageCount).toFixed(2)
+	hourlyLabel.innerHTML = "$" + parseFloat(snapshot.child("/PPH/"))*2
 	
 	
 		
