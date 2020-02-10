@@ -225,11 +225,11 @@ function loadTutorProfile(userId) {
 	}
 	for (ratingId in snapshot.child("/ratings/").val()) {
 	     if (ratingId.length == 8) {
-		averageScore += ratingId.val()
+		averageScore += ratingId.child().val()
 		ratingCount++
 		}
 	}
-	sessionLabel.innerHTML = sessionCount
+	sessionsLabel.innerHTML = sessionCount
 	averageLabel.innerHTML = (averageScore/averageCount)
 	hourlyLabel.innerHTML = "$" + snapshot.child("/PPH/")*2
 	
