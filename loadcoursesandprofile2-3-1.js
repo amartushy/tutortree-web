@@ -227,7 +227,7 @@ function loadTutorProfile(userId) {
 	     if (ratingId.length == 8) {
 		
 		averageScore += snapshot.child("/ratings/"+ratingId).val()
-		ratingCount++
+		averageCount++
 		}
 	}
 	sessionsLabel.innerHTML = sessionCount
