@@ -225,9 +225,8 @@ function loadTutorProfile(userId) {
 	}
 	for (ratingId in snapshot.child("/ratings/").val()) {
 	     if (ratingId.length == 8) {
-		     console.log(ratingId)
-		     console.log(ratingId.val())
-		//averageScore += ratingId.child.val()
+		
+		averageScore += snapshot.child("/ratings/"+ratingId).val()
 		ratingCount++
 		}
 	}
