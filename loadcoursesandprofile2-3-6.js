@@ -232,7 +232,7 @@ function loadTutorProfile(userId) {
 	}
 	sessionsLabel.innerHTML = sessionCount
 	averageLabel.innerHTML = (averageScore/averageCount).toFixed(2)
-	hourlyLabel.innerHTML = "$" + tutorsRateField.valu
+	hourlyLabel.innerHTML = "$" + tutorsRateField.value
 	
 	
 		
