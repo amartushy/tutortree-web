@@ -223,7 +223,7 @@ function loadTutorProfile(userId) {
 	for (sessionId in snapshot.child("/sessions").val()) {
 		sessionCount++
 	}
-	for (ratingId in snapshot.child("/ratings/").val() {
+	for (ratingId in snapshot.child("/ratings/").val()) {
 	     if (ratingId.length == 8) {
 		averageScore += ratingId.val()
 		ratingCount++
