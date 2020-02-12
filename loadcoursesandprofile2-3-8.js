@@ -189,6 +189,48 @@ dataRef.once("value", function(snapshot) {
 
 }
 
+//ASSIGNMENT VARS FOR RESCHEDULING
+var daySeconds = 0
+var startSeconds = 0
+var endSeconds = 0
+
+//Get references to each day button
+var firstDay = document.getElementById("day1")
+var secondDay = document.getElementById("day2")
+var thirdDay = document.getElementById("day3")
+var fourthDay = document.getElementById("day4")
+var fifthDay = document.getElementById("day5")
+var sixthDay = document.getElementById("day6")
+var seventhDay = document.getElementById("day7")
+
+// Add attributes to day buttons
+firstDay.setAttribute("onClick", "updateFromDayButton(0)")
+secondDay.setAttribute("onClick", "updateFromDayButton(1)")
+thirdDay.setAttribute("onClick", "updateFromDayButton(2)")
+fourthDay.setAttribute("onClick", "updateFromDayButton(3)")
+fifthDay.setAttribute("onClick", "updateFromDayButton(4)")
+sixthDay.setAttribute("onClick", "updateFromDayButton(5)")
+seventhDay.setAttribute("onClick", "updateFromDayButton(6)")
+
+//Get references to time slots
+var startHour = document.getElementById("start-hour")
+var startMinute = document.getElementById("start-minute")
+var endHour = document.getElementById("end-hour")
+var endMinute = document.getElementById("end-minute")
+
+//Initialize Arrays
+var dayButtonArray = [firstDay, secondDay, thirdDay, fourthDay, fifthDay, sixthDay, seventhDay]
+var dayArray = ["day1","day2","day3","day4","day5","day6","day7"]
+var monthArray = ["month1","month2","month3","month4","month5","month6","month7"]
+var weekDays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+
+var allSessions = document.querySelectorAll(".reschedule-button")
+allSessions.forEach(element => element.setAttribute("onClick", "initializeReschedule()"))
+
+var modalWrapper = document.getElementById("reschedule-wrapper")
+var confirmRescheduleButton = document.getElementById("confirm-reschedule")
+
+
 
 //LOAD TUTORS PROFILE
 var tutorsBalanceButton = document.getElementById("tutors-balance-button")
