@@ -235,4 +235,97 @@ function appendToUpcoming() {
     }
 }
 
+//ASSOCIATED RESCHEDULEING FUNCTIONS
+function initializeReschedule(userId,sessionId) {
+		firstDay.innerHTML = "Today"
+		for ( i = 1; i < 7; i++){
+    		var dayFromSeconds = new Date(getSecondsFromEpoch(i))
+    		var getDay = dayFromSeconds.getDay()
+    		dayButtonArray[i].innerHTML = weekDays[getDay]
+    }
+    for( i = 0; i < 7; i++) {
+    		var dayAndMonth = formatMonthAndDayFromEpoch(i)
+        document.getElementById(monthArray[i]).innerHTML = dayAndMonth
+    }
+    modalWrapper.style.display = "flex"
+    confirmRescheduleButton.removeAttribute("onClick")
+		confirmRescheduleButton.setAttribute("onClick", "reschedule('"+userId+"','"+sessionId+"')")
+    
+}	
+function formatMonthAndDayFromEpoch(day) {
+		var todaysEpoch = new Date()
+    todaysEpoch.setHours(0,0,0,0)
+    var secondsToAdd = 86400*day
+    var todaysSeconds = todaysEpoch.getTime()/1000
+    var daySeconds = todaysSeconds+secondsToAdd
+    
+    var whichDay = new Date(daySeconds*1000)
+    var monthString = whichDay.getMonth()+1
+    var dayString = whichDay.getDate()
+    var formattedString =  monthString + "/" + dayString
+    return ( formattedString )
+}
+
+function getSecondsFromEpoch(day) {
+		var todaysEpoch = new Date()
+    todaysEpoch.setHours(0,0,0,0)
+    var secondsToAdd = 86400*day
+    var todaysSeconds = todaysEpoch.getTime()/1000
+    var daySeconds = todaysSeconds+secondsToAdd
+    
+    var outputSeconds = daySeconds*1000
+    return(outputSeconds)
+}
+
+
+function updateFromDayButton(day) {	
+		var clickedDay = dayButtonArray[day]
+    clickedDay.style.backgroundColor = "#EC7764"
+    for ( i = 0; i < 7; i++){
+    		if (i != day) {
+        		dayButtonArray[i].style.backgroundColor = "#7EC9E7"
+        }
+    }
+    
+    daySeconds = getSecondsFromEpoch(day)
+    console.log("Epoch Midnight: " +daySeconds)
+}
+
+function outputSecondsFromHour(value) {
+		var secondsFromMidnight = value*3600*1000
+    return(secondsFromMidnight)
+}
+
+function outputSecondsFromMinute(value) {
+		return(value*60*1000)
+}
+
+
+function reschedule(userId,sessionId) {
+		//Get start and end epoch's
+		var getStartHour = outputSecondsFromHour(startHour.value)
+    var getStartMinute = outputSecondsFromMinute(startMinute.value)
+    startSeconds = getStartHour + getStartMinute
+    var getEndHour = outputSecondsFromHour(endHour.value)
+    var getEndMinutes = outputSecondsFromMinute(endMinute.value)
+    endSeconds = getEndHour + getEndMinutes
+    
+		var startEpoch = daySeconds + startSeconds
+    var endEpoch = daySeconds + endSeconds
+    
+    var sessionRef = dataRef.child('/'+userId+'/')
+    
+    var startEpochSeconds = startEpoch/1000
+    var endEpochSeconds = endEpoch/1000
+    
+    		
+    var updateStartDict = {start:startEpochSeconds}
+    var updateEndDict = {end:endEpochSeconds}
+   	sessionRef.child('/sessions/'+sessionId).update(updateStartDict)
+    sessionRef.child('/sessions/'+sessionId).update(updateEndDict)
+   
+    location.reload()
+}
+
+
 
