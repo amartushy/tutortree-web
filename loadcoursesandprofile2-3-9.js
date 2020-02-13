@@ -329,3 +329,111 @@ function loadTutorProfile(userId) {
     updateProfile.setAttribute('onClick', 'userDidUpdateProfile("'+userId+'")')
 
 }
+
+//AVAILABILITY AND ASSOCIATED FUNCTIONS
+var availabilityArray = []
+var mondayArray = new Array(48)
+var tuesdayArray = new Array(48)
+var wednesdayArray = new Array(48)
+var thursdayArray = new Array(48)
+var fridayArray = new Array(48)
+var saturdayArray = new Array(48)
+var sundayArray = new Array(48)
+var weekdayArray = [mondayArray, tuesdayArray, wednesdayArray, thursdayArray,
+										fridayArray, saturdayArray, sundayArray]
+                    
+// Initialize all arrays from firebase 
+function availabilityInit(userId) {
+	availRef = dataRef.child(userId+'/availability/')
+  availRef.once("value", function(snapshot) {
+    for( i=0; i<7; i++) {
+        var decimalAvailability = snapshot.child(i).val()
+        var binaryAvailability = convertToHexFromBinary(decimalAvailability)
+        availabilityArray.push(decimalAvailability)
+        weekdayArray[i] = binaryAvailability.split("")
+     }
+     initializeButtons(0, userId)
+     initializeButtons(1, userId)
+     initializeButtons(2, userId)
+     initializeButtons(3, userId)
+     initializeButtons(4, userId)
+     initializeButtons(5, userId)
+     initializeButtons(6, userId)
+	})
+}
+
+//Set buttons backgrounds and define their onlick functions
+function initializeButtons(day, userId) {
+		var dayArrayBinary = weekdayArray[day]
+		for( i = 0; i < weekdayArray[day].length; i++) {
+    		var id = day+"-"+i
+        var getButton = document.getElementById(id)
+				try {
+        		getButton.setAttribute('onClick', 'updateDayArray("'+day+'","'+i+'","'+userId+'")')
+    				if(weekdayArray[day][i] == 1) {
+        				getButton.style.backgroundColor = "#2D3C61"
+        		}
+        } catch {console.log("no button exists with id: "+id)}
+    }
+}
+
+//Onlick function for each button
+function updateDayArray(dayString, timeSlotString, userId) {
+		var day = parseFloat(dayString)
+    var timeSlot = parseFloat(timeSlotString)
+    var buttonId = day + "-" + timeSlot
+    var getButtonById = document.getElementById(buttonId)
+		var dayArray = weekdayArray[day]
+		var tutorsAvailabilityRef = dataRef.child(userId+'/availability/')
+		var updateAvaDict = {}
+    
+    if (parseFloat(dayArray[timeSlot]) == 0) {
+    		dayArray[timeSlot] = "1"
+        console.log(dayArray)
+        getButtonById.style.backgroundColor = "#2D3C61"
+        
+        updateAvaDict[dayString] = getHexFromBinaryArray(dayArray)
+        tutorsAvailabilityRef.update(updateAvaDict)
+
+		} else if (parseFloat(dayArray[timeSlot]) == 1) {
+    		dayArray[timeSlot] = "0"
+        console.log(dayArray)
+        getButtonById.style.backgroundColor = "#F8F8F4"
+        
+        updateAvaDict[dayString] = getHexFromBinaryArray(dayArray)
+        tutorsAvailabilityRef.update(updateAvaDict)
+    }
+}
+
+function getHexFromBinaryArray(binaryArray) {
+			var binaryString = binaryArray.join('')
+			console.log(binaryString)
+      var decimalString = parseInt(binaryString, 2)
+      var firebaseDecimal = decimalString * 65536
+      return( firebaseDecimal ) 
+}
+
+function convertToHexFromBinary(hexVal) {
+		var binaryVal48 = twosComplement(hexVal, 64).slice(0,48)
+		return binaryVal48
+}
+//Helper functions to get twos complement of any hex value
+function twosComplement(value, bitCount) {
+  let binaryStr;
+  
+  if (value >= 0) {
+    let twosComp = value.toString(2);
+    binaryStr    = padAndChop(twosComp, '0', (bitCount || twosComp.length));
+  } else {
+    binaryStr = (Math.pow(2, bitCount) + value).toString(2);
+    
+    if (Number(binaryStr) < 0) {
+      return undefined
+    }
+  }
+  return binaryStr;
+}
+function padAndChop(str, padChar, length) {
+  return (Array(length).fill(padChar).join('') + str).slice(length*-1);
+}
+
