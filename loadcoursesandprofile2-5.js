@@ -85,6 +85,11 @@ function loadAvailableCourses(userId) {
     })
 
 }
+
+function sortNumber(a,b) {
+	return(a-b)
+}
+
 var upcomingArray = []
 function updateUpcomingArray(timestamp) {
 		upcomingArray.push(timestamp)
