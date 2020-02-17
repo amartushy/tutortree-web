@@ -13,7 +13,7 @@ upcomingSessions = document.getElementById("upcomingdiv")
 var dataRef = database.ref("updateDatabase/users/")
 var schoolRef = dataRef.parent
 
-
+var upcomingArray = []
 function updateUpcomingArray(timestamp) {
 		upcomingArray.push(timestamp)
     upcomingArray.sort(sortNumber)
