@@ -216,11 +216,7 @@ function updateUserSMS() {
 }
 
 //ASSOCIATED SORT UPCOMING FUNCTIONS
-var upcomingArray = []
-function updateUpcomingArray(timestamp) {
-		upcomingArray.push(timestamp)
-    upcomingArray.sort(sortNumber)
-}
+
 function sortNumber(a,b) {
 	return(a-b)
 }
