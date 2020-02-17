@@ -666,7 +666,7 @@ function sortNumber(a,b) {
 }
 function appendToUpcoming() {
 		var items = upcomingArray.length
-    var upcomingSection = document.getElementById('upcoming-section-1')
+    var upcomingSection = document.getElementById('upcoming-section')
 		for( i=0 ; i < items ; i++ ) {
     		var timestampID = upcomingArray[i]
     		var upcomingBlock = document.getElementById(timestampID)
