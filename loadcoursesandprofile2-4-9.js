@@ -85,6 +85,12 @@ function loadAvailableCourses(userId) {
     })
 
 }
+var upcomingArray = []
+function updateUpcomingArray(timestamp) {
+		upcomingArray.push(timestamp)
+    upcomingArray.sort(sortNumber)
+}
+
 // LOAD UPCOMING SESSIONS
 function loadUpcomingSessions(userID) {
 dataRef.once("value", function(snapshot) {
