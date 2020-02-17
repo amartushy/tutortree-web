@@ -217,9 +217,6 @@ function updateUserSMS() {
 
 //ASSOCIATED SORT UPCOMING FUNCTIONS
 
-function sortNumber(a,b) {
-	return(a-b)
-}
 function appendToUpcoming() {
 		var items = upcomingArray.length
     var upcomingSection = document.getElementById('upcoming-section')
