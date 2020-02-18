@@ -362,7 +362,7 @@ function reschedule(userId,sessionId) {
     	
     })
 	
-	location.reload()
+	//location.reload()
 }
 
 
