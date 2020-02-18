@@ -135,8 +135,10 @@ function userConfirmedSession(userId, sessionID) {
     
     //var updatedBlock = document.getElementsByClassName("upcoming-block "+sessionID)
     var updatedBlock = document.getElementById(sessionID)
-    console.log("this is the sessionId: "+sessionID)
-    console.log(updatedBlock)
+    console.log("this is the updatedBlock: ")
+	console.log(updatedBlock)
+	console.log("this is the sessionID: ")
+	console.log(sessionID)
     //upcomingSection.appendChild(updatedBlock)
     
     //removeAllFromUpcoming()
