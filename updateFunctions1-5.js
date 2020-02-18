@@ -134,10 +134,12 @@ function userConfirmedSession(userId, sessionID) {
     var pendingButton = document.getElementById(sessionID+"-button")
     
     var updatedBlock = document.getElementsByClassName("upcoming-block "+sessionID)
+    console.log(updatedBlock)
     //upcomingSection.appendChild(updatedBlock)
     
     //removeAllFromUpcoming()
     updateUpcomingArray(updatedBlock.id)
+	console.log(updatedBlock.id)
     appendToUpcoming()
     pendingContainer.removeChild(pendingButton)
     
