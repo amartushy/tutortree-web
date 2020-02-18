@@ -150,6 +150,11 @@ function userConfirmedSession(userId, sessionID) {
 	console.log(updatedBlock.id)
     appendToUpcoming()
     pendingContainer.removeChild(pendingButton)
+	    
+    var newRescheduleButton = document.createElement("button")
+    newRescheduleButton.setAttribute('class', 'reschedule-button w-button')
+    newRescheduleButton.setAttribute('onClick', 'initializeReschedule("'+userId+'","'+sessionID+'")')
+    pendingContainer.appendChild(newRescheduleButton)
     })
 }
 
