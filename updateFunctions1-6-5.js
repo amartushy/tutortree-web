@@ -343,7 +343,7 @@ function reschedule(userId,sessionId) {
     var tutorsName = snapshot.child(userId+'/name/').val()
     var startTimeEpoch = snapshot.child(userId+'/sessions/'+sessionId+'/start').val()
     var dateAndTime = convertEpochTime(startTimeEpoch)
-    
+    console.log(studentsId, tutorsName, startTimeEpoch, dateAndTime)
     if(snapshot.child(studentsId+'/smsNotifications/').val() == true) {
     		var studentsNumber = snapshot.child(studentsId+'/phone/').val()
         var sendMessage = "Session Rescheduled%0A" + tutorsName + " has rescheduled your upcoming session to " + dateAndTime
