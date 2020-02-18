@@ -105,11 +105,12 @@ function create8CharID() {
 function userConfirmedSession(userId, sessionID) {
 		var sessionRef = dataRef.child(userId+"/sessions/"+sessionID)
     console.log(sessionRef)
+	var startTimeEpoch = 0
     sessionRef.update( {status:1} )
     dataRef.once("value", function(snapshot) {
     var studentsId = snapshot.child(userId+"/sessions/"+sessionID+'/other/').val()
     var tutorsName = snapshot.child(userId+'/name/').val()
-    var startTimeEpoch = snapshot.child(userId+'/sessions/'+sessionID+'/start').val()
+    startTimeEpoch = snapshot.child(userId+'/sessions/'+sessionID+'/start').val()
     var dateAndTime = convertEpochTime(startTimeEpoch)
     
     
