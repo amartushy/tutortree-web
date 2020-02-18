@@ -134,7 +134,7 @@ function userConfirmedSession(userId, sessionID) {
     var pendingButton = document.getElementById(sessionID+"-button")
     
     //var updatedBlock = document.getElementsByClassName("upcoming-block "+sessionID)
-    var updatedBlock = documnet.getElementById(startTimeEpoch)
+    var updatedBlock = document.getElementById(startTimeEpoch)
     console.log(startTimeEpoch)
     console.log("this is the updatedBlock: ")
 	console.log(updatedBlock)
