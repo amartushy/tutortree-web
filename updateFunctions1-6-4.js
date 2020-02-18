@@ -335,7 +335,34 @@ function reschedule(userId,sessionId) {
    	sessionRef.child('/sessions/'+sessionId).update(updateStartDict)
     sessionRef.child('/sessions/'+sessionId).update(updateEndDict)
    
-    location.reload()
+    
+	
+    //Notify Student of Reschedule
+    dataRef.once("value", function(snapshot) {
+    var studentsId = snapshot.child(userId+"/sessions/"+sessionId+'/other/').val()
+    var tutorsName = snapshot.child(userId+'/name/').val()
+    var startTimeEpoch = snapshot.child(userId+'/sessions/'+sessionId+'/start').val()
+    var dateAndTime = convertEpochTime(startTimeEpoch)
+    
+    if(snapshot.child(studentsId+'/smsNotifications/').val() == true) {
+    		var studentsNumber = snapshot.child(studentsId+'/phone/').val()
+        var sendMessage = "Session Rescheduled%0A" + tutorsName + " has rescheduled your upcoming session to " + dateAndTime
+    		sendSMSTo(studentsNumber,sendMessage)
+    } 
+    if(snapshot.child(studentsId+'/emailNotifications/').val() == true) {
+    		var studentsEmail = snapshot.child(studentsId+'/email/').val()
+        var emailMessage = tutorsName+ " has rescheduled your upcoming session to "+dateAndTime
+        sendEmailTo(studentsEmail,sendMessage)
+    }
+    if(snapshot.child(studentsId+'/pushNotifications/').val() == true) {
+    		var studentsToken = snapshot.child(studentsId+'/token/').val()
+        var pushMessage = tutorsName+ " has rescheduled your upcoming session to " + dateAndTime
+        sendPushTo(studentsToken,pushMessage)
+    }
+    	
+    })
+	
+	location.reload()
 }
 
 
