@@ -351,8 +351,7 @@ var thursdayArray = new Array(48)
 var fridayArray = new Array(48)
 var saturdayArray = new Array(48)
 var sundayArray = new Array(48)
-var weekdayArray = [mondayArray, tuesdayArray, wednesdayArray, thursdayArray,
-										fridayArray, saturdayArray, sundayArray]
+var weekdayArray = [mondayArray, tuesdayArray, wednesdayArray, thursdayArray, fridayArray, saturdayArray, sundayArray]
                     
 // Initialize all arrays from firebase 
 function availabilityInit(userId) {
