@@ -140,7 +140,7 @@ function userConfirmedSession(userId, sessionID) {
 	console.log("this is the sessionID: ")
 	console.log(sessionID)
 	console.log("this is the blocks id: ")
-	console.log(updatedBlock.id
+	console.log(updatedBlock.id)
     //upcomingSection.appendChild(updatedBlock)
     
     //removeAllFromUpcoming()
