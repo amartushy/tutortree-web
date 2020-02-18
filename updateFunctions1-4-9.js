@@ -219,6 +219,8 @@ function updateUserSMS() {
 
 function appendToUpcoming() {
 		var items = upcomingArray.length
+		console.log("upcominglength: " + items)
+	console.log(upcomingArray)
     var upcomingSection = document.getElementById('upcoming-section')
 		for( i=0 ; i < items ; i++ ) {
     		var timestampID = upcomingArray[i]
