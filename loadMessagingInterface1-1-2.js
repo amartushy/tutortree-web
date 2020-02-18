@@ -52,7 +52,7 @@ function createMessagingBlock(connectionId) {
         unreadBubble.innerHTML = 0
     		messagingContainer.appendChild(headerAndBubbleContainer)
         headerAndBubbleContainer.appendChild(messagingHeader)
-        headerAndBubbleContainer.appendChile(unreadBubble)
+        headerAndBubbleContainer.appendChild(unreadBubble)
     		messagingContainer.appendChild(messagingPreview)
     		messagingBlock.appendChild(messagingImage)
     		messagingBlock.appendChild(messagingContainer)
