@@ -361,8 +361,8 @@ function reschedule(userId,sessionId) {
     }
     	
     })
-	appendToUpcoming()
-	//location.reload()
+    setTimeout(() => { location.reload(); }, 2000);
+
 }
 
 
