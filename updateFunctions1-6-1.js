@@ -153,6 +153,7 @@ function userConfirmedSession(userId, sessionID) {
 	    
     var newRescheduleButton = document.createElement("button")
     newRescheduleButton.setAttribute('class', 'reschedule-button w-button')
+    newRescheduleBuitton.innerHTML = "RESCHEDULE"
     newRescheduleButton.setAttribute('onClick', 'initializeReschedule("'+userId+'","'+sessionID+'")')
     pendingContainer.appendChild(newRescheduleButton)
     })
