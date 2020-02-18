@@ -105,12 +105,12 @@ function create8CharID() {
 function userConfirmedSession(userId, sessionID) {
 		var sessionRef = dataRef.child(userId+"/sessions/"+sessionID)
     console.log(sessionRef)
-	var startTimeEpoch = 0
     sessionRef.update( {status:1} )
+	
     dataRef.once("value", function(snapshot) {
     var studentsId = snapshot.child(userId+"/sessions/"+sessionID+'/other/').val()
     var tutorsName = snapshot.child(userId+'/name/').val()
-    startTimeEpoch = snapshot.child(userId+'/sessions/'+sessionID+'/start').val()
+    var startTimeEpoch = snapshot.child(userId+'/sessions/'+sessionID+'/start').val()
     var dateAndTime = convertEpochTime(startTimeEpoch)
     
     
@@ -129,7 +129,7 @@ function userConfirmedSession(userId, sessionID) {
         var pushMessage = tutorsName+ " has confirmed your session on "+dateAndTime
         sendPushTo(studentsToken,pushMessage)
     }
-    })
+    
     var upcomingSection = document.getElementById('upcoming-section')
     var pendingContainer = document.getElementById(sessionID+"-container")
     var pendingButton = document.getElementById(sessionID+"-button")
@@ -150,7 +150,7 @@ function userConfirmedSession(userId, sessionID) {
 	console.log(updatedBlock.id)
     appendToUpcoming()
     pendingContainer.removeChild(pendingButton)
-    
+    })
 }
 
 //HELPER FUNCTION TO CONVERT TIME
