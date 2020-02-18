@@ -361,7 +361,7 @@ function reschedule(userId,sessionId) {
     }
     	
     })
-	
+	loadUpcomingSessions(userId)
 	//location.reload()
 }
 
