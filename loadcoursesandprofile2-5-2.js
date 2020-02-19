@@ -99,7 +99,9 @@ function updateUpcomingArray(timestamp) {
 // LOAD UPCOMING SESSIONS
 function loadUpcomingSessions(userID) {
 dataRef.once("value", function(snapshot) {
-    var currentTime = Math.round((new Date()).getTime() / 1000);
+    //var currentTime = Math.round((new Date()).getTime() / 1000);
+    var todaysEpoch = new Date()
+    var currentTime = todaysEpoch.setHours(0,0,0,0)/1000
     var hasUpcoming = false
     var hasPending = false
     var upcomingSection = document.getElementById('upcoming-section')
