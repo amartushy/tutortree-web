@@ -119,3 +119,71 @@ function initializeMessagingHeader(studentId) {
         }
     })
 }
+
+
+
+
+
+
+
+
+
+
+/*
+function listenForIncomingMessages(connection, student) {
+		var currentMessagesArea = document.getElementById("messages-area")
+		var connectionListener = dataRef.child('/connections/'+connection)
+    //create array to hold subarrays
+    var connectionArrays = []
+    //create array for date identifiers
+    var dateIdentifiers = []
+    //create array message id's on DOM
+    
+    var currentMessageIDs = Object.values(currentMessagesArea)
+    console.log("current ids: " + currentMessageIDs)
+    
+    connectionListener.on("value", function(snapshot) {
+    		//check if messages exist
+        //try {
+        //check if the update trigger was a new message - use keys.length
+        		var allMessages = snapshot.child('/messages/').val()
+        
+        		console.log(allMessages)
+        		console.log(Object.keys(allMessages).length)
+        		if(Object.keys(allMessages).length > currentMessageIDs.length) {
+            		//match children id's to database
+                for(messageIdentifier in allMessages) {
+                    //if db id is not found on DOM:
+                		if(!currentMessageIDs.includes(messageIdentifier)) {
+                    		var newMessageSubArray = []
+                    		//init sub array
+                    		var newMessageArray = new Array(3)
+                        var message = snapshot.child('/messages/message/').val()
+                        var isStudent = snapshot.child('/messages/sender/').val()
+                        var dateObject = snapshot.child('/messages/date/').val()
+                        
+                        //check individual and push to subarray
+                        if( isStudent == student ) {
+                        		newMessageArray.push('student', message, messageIdentifier)
+                            newMessageSubArray.push( dateObject, newMessageSubArray )
+                        } else { 
+                        		newMessageArray.push('tutor', message, messageIdentifier)
+                            newMessageSubArray.push( dateObject, newMessageSubArray )
+                        }
+                        connectionArrays.push(newMessageSubArray)
+                        dateIdentifiers.push(dateObject)
+                   }
+            		}
+                  
+            }
+            //sort unupdated messages in ascending order
+						//formatMessage for every value in main array
+            sortAndFormatMessages(dateIdentifiers, connectionArrays)
+        
+        //} catch {
+        		console.log("Update was not for a new message")
+        //}
+      
+    })
+
+}*/
