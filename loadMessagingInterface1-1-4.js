@@ -68,3 +68,54 @@ function createMessagingBlock(connectionId) {
         loadLastMessage(connectionId)
     })
 }
+
+function loadLastMessage(connectionId) {
+		var messageRef = schoolRef.child("/connections/"+connectionId+"/messages/")
+		messageRef.once("value", function(snapshot) {
+    var messagePreview = document.getElementById(connectionId)
+    var countMessage = 0
+    var latestMessage = ""
+    
+    for (message in snapshot.val()) {
+    
+    		var dataCount = snapshot.child(message+'/metadata/date/').val()
+    		if( dataCount > countMessage) {
+        		latestMessage = snapshot.child(message+'/message/').val()
+            countMessage = dataCount
+        }
+    }
+    
+    if ( countMessage > 0 ) {
+    		messagePreview.innerHTML = latestMessage
+    } else {
+    		messagePreview.innerHTML = "No messages yet"
+    }
+ 
+  })
+}
+
+function initializeMessagingHeader(studentId) {
+
+		var studentRef = schoolRef.child('/users/'+studentId)
+		studentRef.once("value", function(snapshot) {
+    		var studentsName = snapshot.child('/name/').val()
+        var studentsEmail = snapshot.child('/email/').val()
+        var studentsPhone = snapshot.child('/phone/').val()
+        
+        document.getElementById("students-name-header").innerHTML = studentsName
+        
+        var studentsContactNumber = document.getElementById("students-number")
+        var studentsContactEmail = document.getElementById("students-email")
+        if (snapshot.child('/smsNotifications/').val() == true) {
+        		studentsContactNumber.innerHTML = studentsPhone
+        } else {
+        		studentsContactNumber.innerHTML = "This student has not agreed to sms contact"
+        }
+        
+        if (snapshot.child('/emailNotifications/').val() == true) {
+        		studentsContactEmail.innerHTML = studentsPhone
+        } else {
+        		studentsContactEmail.innerHTML = "This student has not agreed to email contact"
+        }
+    })
+}
