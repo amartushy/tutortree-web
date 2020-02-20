@@ -115,17 +115,19 @@ function userConfirmedSession(userId, sessionID) {
     
     
     if(snapshot.child(studentsId+'/smsNotifications/').val() == true) {
-    		var studentsNumber = snapshot.child(studentsId+'/phone/').val()
+    	var studentsNumber = snapshot.child(studentsId+'/phone/').val()
         var sendMessage = "Booking Confirmed%0A"+tutorsName+ " has confirmed your session on "+dateAndTime
-    		sendSMSTo(studentsNumber,sendMessage)
+    	sendSMSTo(studentsNumber,sendMessage)
     } 
     if(snapshot.child(studentsId+'/emailNotifications/').val() == true) {
-    		var studentsEmail = snapshot.child(studentsId+'/email/').val()
+    	var studentsEmail = snapshot.child(studentsId+'/email/').val()
+	var titleMessage = "Booking Confirmed"
         var emailMessage = tutorsName+ " has confirmed your session on "+dateAndTime
-        sendEmailTo(studentsEmail,sendMessage)
+        sendEmailTo(studentsEmail, titleMessage, sendMessage)
     }
     if(snapshot.child(studentsId+'/pushNotifications/').val() == true) {
-    		var studentsToken = snapshot.child(studentsId+'/token/').val()
+    	var studentsToken = snapshot.child(studentsId+'/token/').val()
+	var titleMessage = "Booking Confirmed"
         var pushMessage = tutorsName+ " has confirmed your session on "+dateAndTime
         sendPushTo(studentsToken,pushMessage)
     }
@@ -177,15 +179,15 @@ function sendSMSTo(number, message) {
 		xhttp.open("GET", herokuURL, true);
 		xhttp.send();
 }
-function sendPushTo(token, message) {
+function sendPushTo(token, title, message) {
 		var xhttp = new XMLHttpRequest();
-    var herokuURL = "https://tutortree-development.herokuapp.com/sendNotification/Booking%20Confirmed"+"/"+message+"/"+token+"/1"
+    var herokuURL = "https://tutortree-development.herokuapp.com/sendNotification/"+title+"/"+message+"/"+token+"/1"
     xhttp.open("GET", herokuURL, true);
 		xhttp.send();
 }
-function sendEmailTo(email, message) {
+function sendEmailTo(email, title, message) {
 		var xhttp = new XMLHttpRequest();
-    var herokuURL = "https://tutortree-development.herokuapp.com/sendEmailTo/"+email+"/Booking%20Confirmed/"+message
+    var herokuURL = "https://tutortree-development.herokuapp.com/sendEmailTo/"+email+"/"+title+"/"+message
     console.log(herokuURL)
 		xhttp.open("GET", herokuURL, true);
 		xhttp.send();
