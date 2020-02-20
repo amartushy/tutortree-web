@@ -195,9 +195,42 @@ dataRef.once("value", function(snapshot) {
 	
       if (hasUpcoming == false) {
             upcomingSection.innerHTML = "No upcoming sessions"
+	      	pendingSection.innerHTML = "No pending sessions"
+		var noUpcomingContainer = document.createElement("div")
+	     	var noUpcomingImage = document.createElement("img")
+	      	var noUpcomingSection = document.createElement("div")
+	      	var noUpcomingHeader = document.createElement("h3")
+		
+		noUpcomingContainer.setAttribute("class", "no-sessions-container")
+	      	noUpcomingImage.setAttribute("class", "upcoming-image")
+	      	noUpcomingSection.setAttribute("class", "no-sessions-section")
+	      	noUpcomingHeader.setAttribute("class", "no-sessions-section")
+	      
+	      	UpcomingSection.appendChild(noUpcomingContainer)
+	      	noUpcomingContainer.appendChild(noUpcomingImage)
+	      	noUpcomingContainer.appendChild(noUpcomingSection)
+	      	noUpcomingSection.appendChild(noUpcomingHeader)
+	      
+	      	noUpcoming.innerHTML = "No Upcoming Sessions"
         }
       if (hasPending == false) {
-            pendingSection.innerHTML = "No pending sessions"
+            	pendingSection.innerHTML = "No pending sessions"
+		var noPendingContainer = document.createElement("div")
+	     	var noPendingImage = document.createElement("img")
+	      	var noPendingSection = document.createElement("div")
+	      	var noPendingHeader = document.createElement("h3")
+		
+		noPendingContainer.setAttribute("class", "no-sessions-container")
+	      	noPendingImage.setAttribute("class", "upcoming-image")
+	      	noPendingSection.setAttribute("class", "no-sessions-section")
+	      	noPendingHeader.setAttribute("class", "no-sessions-section")
+	      
+	      	pendingSection.appendChild(noPendingContainer)
+	      	noPendingContainer.appendChild(noPendingImage)
+	      	noPendingContainer.appendChild(noPendingSection)
+	      	noPendingSection.appendChild(noPendingHeader)
+	      
+	      	noPending.innerHTML = "No Pending Sessions"
         }
     })
 
