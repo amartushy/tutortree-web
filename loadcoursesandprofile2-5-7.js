@@ -206,7 +206,9 @@ dataRef.once("value", function(snapshot) {
 	      	noUpcomingImage.setAttribute("class", "upcoming-image")
 	      	noUpcomingSection.setAttribute("class", "no-sessions-title")
 	      	noUpcomingHeader.setAttribute("class", "no-sessions-header")
-	      	
+	      
+	      	noUpcomingImage.src = snapshot.child('XwbsnUHFYOZabc8IwGybfELFqKC2/profileURL/').val()
+	      
 	      	noUpcomingBlock.appendChild(noUpcomingContainer)
 	      	noUpcomingContainer.appendChild(noUpcomingImage)
 	      	noUpcomingContainer.appendChild(noUpcomingSection)
@@ -230,6 +232,8 @@ dataRef.once("value", function(snapshot) {
 	      	noPendingSection.setAttribute("class", "no-sessions-title")
 	      	noPendingHeader.setAttribute("class", "no-sessions-header")
 	      	
+	      	noPendingImage.src = snapshot.child('XwbsnUHFYOZabc8IwGybfELFqKC2/profileURL/').val()
+	      
 	      	noPendingBlock.appendChild(noPendingContainer)
 	      	noPendingContainer.appendChild(noPendingImage)
 	      	noPendingContainer.appendChild(noPendingSection)
