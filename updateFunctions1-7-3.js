@@ -129,7 +129,7 @@ function userConfirmedSession(userId, sessionID) {
     	var studentsToken = snapshot.child(studentsId+'/token/').val()
 	var titleMessage = "Booking Confirmed"
         var pushMessage = tutorsName+ " has confirmed your session on "+dateAndTime
-        sendPushTo(studentsToken,pushMessage)
+        sendPushTo(studentsToken,titleMessage, pushMessage)
     }
     
     var upcomingSection = document.getElementById('upcoming-section')
