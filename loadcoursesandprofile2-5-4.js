@@ -194,43 +194,50 @@ dataRef.once("value", function(snapshot) {
       appendToUpcoming()
 	
       if (hasUpcoming == false) {
-            upcomingSection.innerHTML = "No upcoming sessions"
-	      	pendingSection.innerHTML = "No pending sessions"
+	      
+	      	var noUpcomingBlock = document.createElement("div")
 		var noUpcomingContainer = document.createElement("div")
 	     	var noUpcomingImage = document.createElement("img")
 	      	var noUpcomingSection = document.createElement("div")
 	      	var noUpcomingHeader = document.createElement("h3")
 		
-		noUpcomingContainer.setAttribute("class", "no-sessions-container")
+		noUpcomingBlock.setAttribute("class", "upcoming-block")
+		noUpcomingContainer.setAttribute("class", "no-sessions-area")
 	      	noUpcomingImage.setAttribute("class", "upcoming-image")
-	      	noUpcomingSection.setAttribute("class", "no-sessions-section")
-	      	noUpcomingHeader.setAttribute("class", "no-sessions-section")
-	      
-	      	UpcomingSection.appendChild(noUpcomingContainer)
+	      	noUpcomingSection.setAttribute("class", "no-sessions-title")
+	      	noUpcomingHeader.setAttribute("class", "no-sessions-header")
+	      	
+	      	noUpcomingBlock.appendChild(noUpcomingContainer)
 	      	noUpcomingContainer.appendChild(noUpcomingImage)
 	      	noUpcomingContainer.appendChild(noUpcomingSection)
 	      	noUpcomingSection.appendChild(noUpcomingHeader)
+	      	
+	      	noUpcomingHeader.innerHTML = "No Upcoming Sessions"
 	      
-	      	noUpcoming.innerHTML = "No Upcoming Sessions"
+	      	upcomingSection.appendChild(noUpcomingBlock)
         }
       if (hasPending == false) {
-            	pendingSection.innerHTML = "No pending sessions"
+
+		var noPendingBlock = document.createElement("div")
 		var noPendingContainer = document.createElement("div")
 	     	var noPendingImage = document.createElement("img")
 	      	var noPendingSection = document.createElement("div")
 	      	var noPendingHeader = document.createElement("h3")
 		
-		noPendingContainer.setAttribute("class", "no-sessions-container")
+		noPendingBlock.setAttribute("class", "upcoming-block")
+		noPendingContainer.setAttribute("class", "no-sessions-area")
 	      	noPendingImage.setAttribute("class", "upcoming-image")
-	      	noPendingSection.setAttribute("class", "no-sessions-section")
-	      	noPendingHeader.setAttribute("class", "no-sessions-section")
-	      
-	      	pendingSection.appendChild(noPendingContainer)
-	      	noPendingContainer.appendChild(noPendingImage)
+	      	noPendingSection.setAttribute("class", "no-sessions-title")
+	      	noPendingHeader.setAttribute("class", "no-sessions-header")
+	      	
+	      	noPendingBlock.appendChild(noPendingContainer)
+	      	noUPendingContainer.appendChild(noPendingImage)
 	      	noPendingContainer.appendChild(noPendingSection)
 	      	noPendingSection.appendChild(noPendingHeader)
+	      	
+	      	noPendingHeader.innerHTML = "No Pending Sessions"
 	      
-	      	noPending.innerHTML = "No Pending Sessions"
+	      	pendingSection.appendChild(noPendingBlock)
         }
     })
 
