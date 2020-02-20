@@ -231,7 +231,7 @@ dataRef.once("value", function(snapshot) {
 	      	noPendingHeader.setAttribute("class", "no-sessions-header")
 	      	
 	      	noPendingBlock.appendChild(noPendingContainer)
-	      	noUPendingContainer.appendChild(noPendingImage)
+	      	noPendingContainer.appendChild(noPendingImage)
 	      	noPendingContainer.appendChild(noPendingSection)
 	      	noPendingSection.appendChild(noPendingHeader)
 	      	
