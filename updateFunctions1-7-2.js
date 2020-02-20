@@ -347,19 +347,21 @@ function reschedule(userId,sessionId) {
     var dateAndTime = convertEpochTime(startTimeEpoch)
     console.log(studentsId, tutorsName, startTimeEpoch, dateAndTime)
     if(snapshot.child(studentsId+'/smsNotifications/').val() == true) {
-    		var studentsNumber = snapshot.child(studentsId+'/phone/').val()
+    	var studentsNumber = snapshot.child(studentsId+'/phone/').val()
         var sendMessage = "Session Rescheduled%0A" + tutorsName + " has rescheduled your upcoming session to " + dateAndTime
-    		sendSMSTo(studentsNumber,sendMessage)
+    	sendSMSTo(studentsNumber,sendMessage)
     } 
     if(snapshot.child(studentsId+'/emailNotifications/').val() == true) {
-    		var studentsEmail = snapshot.child(studentsId+'/email/').val()
+    	var studentsEmail = snapshot.child(studentsId+'/email/').val()
+	var titleMessage = "Session Rescheduled"
         var emailMessage = tutorsName+ " has rescheduled your upcoming session to "+dateAndTime
-        sendEmailTo(studentsEmail,sendMessage)
+        sendEmailTo(studentsEmail, titleMessage, sendMessage)
     }
     if(snapshot.child(studentsId+'/pushNotifications/').val() == true) {
-    		var studentsToken = snapshot.child(studentsId+'/token/').val()
+    	var studentsToken = snapshot.child(studentsId+'/token/').val()
+	var titleMessage = "Session Rescheduled"
         var pushMessage = tutorsName+ " has rescheduled your upcoming session to " + dateAndTime
-        sendPushTo(studentsToken,pushMessage)
+        sendPushTo(studentsToken, titleMessage, pushMessage)
     }
     	
     })
