@@ -203,7 +203,7 @@ dataRef.once("value", function(snapshot) {
 		
 		noUpcomingBlock.setAttribute("class", "upcoming-block")
 		noUpcomingContainer.setAttribute("class", "no-sessions-area")
-	      	noUpcomingImage.setAttribute("class", "upcoming-image")
+	      	noUpcomingImage.setAttribute("class", "students-image")
 	      	noUpcomingSection.setAttribute("class", "no-sessions-title")
 	      	noUpcomingHeader.setAttribute("class", "no-sessions-header")
 	      
@@ -228,7 +228,7 @@ dataRef.once("value", function(snapshot) {
 		
 		noPendingBlock.setAttribute("class", "upcoming-block")
 		noPendingContainer.setAttribute("class", "no-sessions-area")
-	      	noPendingImage.setAttribute("class", "upcoming-image")
+	      	noPendingImage.setAttribute("class", "students-image")
 	      	noPendingSection.setAttribute("class", "no-sessions-title")
 	      	noPendingHeader.setAttribute("class", "no-sessions-header")
 	      	
