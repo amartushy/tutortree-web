@@ -41,16 +41,23 @@ function loadAvailableCourses(userId) {
         for(subject in snapshot.child(tutorsUniversity).val()) {
 	    var isTutorRegistered = false
       	    var subjectBlock = document.createElement('div')
+	    var courseButtonSection = document.createElement('div')
             var subjectHeader = document.createElement("h2")
+	    
             subjectBlock.setAttribute('class', 'course-container')
             subjectBlock.setAttribute('id', subject)
+		//new:
+	    courseButtonSection.setAttribute('class', 'course-button-section')
             subjectHeader.setAttribute('class', 'subject-heading')
             subjectHeader.innerText = subject
             subjectBlock.appendChild(subjectHeader)
+	    subjectBlock.appendChild(courseButtonSection)
           
             for(course in snapshot.child(tutorsUniversity+"/"+subject).val()) {
           	//var subjectBlock = document.getElementById(subject)
+		var courseContainer = document.createElement("div")
                 var courseButton = document.createElement('button')
+		courseContainer.setAttribute('class', 'course-button-container')
                 courseButton.setAttribute('id', subject+'-'+course)
                 courseButton.setAttribute('onClick', 'userDidRegisterForCourse("'+tutorsUniversity+'","'+subject+'","'+course+'","'+userId+'")')
                 courseButton.setAttribute('class', 'course-button w-button')
@@ -68,10 +75,13 @@ function loadAvailableCourses(userId) {
                 }
 		
                 var tutorLabel = document.createElement('p')
-                tutorLabel.innerText =tutorCount + " tutors"
+                tutorLabel.innerText = tutorCount + " tutors"
                 tutorLabel.setAttribute('class', 'tutor-label')
-                courseButton.appendChild(tutorLabel)
-                subjectBlock.appendChild(courseButton)
+		    
+		courseButtonSection.appendChild(courseContainer)
+		courseContainer.appendChild(courseButton)
+		courseContainer.appendChild(tutorLabel)
+
                 tutorCount = 0
 	    
         }
