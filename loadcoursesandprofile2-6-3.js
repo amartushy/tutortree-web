@@ -199,7 +199,7 @@ dataRef.once("value", function(snapshot) {
 		pendingContainer.appendChild(pendingButton)
 		
 		cancelButton.innerHTML = "CANCEL"
-		//cancelButton.setAttribute("onClick", "userCanceledSession('"+userId+"', '"+sessionId+"')")
+		cancelButton.setAttribute("onClick", "userCanceledSession('"+userId+"', '"+sessionId+"')")
 		cancelButton.setAttribute('id', sessionId+"cancel-button")
 		pendingContainer.appendChild(cancelButton)
 		
