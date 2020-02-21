@@ -360,8 +360,6 @@ function createIdentifier() {
     	return result
 }
 
-}
-</script>
 
 
 
