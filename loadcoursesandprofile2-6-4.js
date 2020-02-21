@@ -164,8 +164,12 @@ dataRef.once("value", function(snapshot) {
 	cancelButton.setAttribute('class', 'cancel-session-button cancel-session w-button')
 	rescheduleButton.setAttribute('class', 'reschedule-button w-button')
 	rescheduleButton.setAttribute('onClick', 'initializeReschedule("'+userId+'","'+sessionId+'")')
+	cancelButton.setAttribute("onClick", "userCanceledSession('"+userId+"', '"+sessionId+"')")
+	
+	cancelButton.setAttribute('id', sessionId+"cancel-button")
         upcomingDate.setAttribute('class', 'date-and-time')
         
+	
 	//Data assignment
         upcomingStudent.innerHTML = snapshot.child(studentId+'/name/').val()
         upcomingCourse.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/course').val()
@@ -185,22 +189,26 @@ dataRef.once("value", function(snapshot) {
 	studentContainer.appendChild(headerAndDate)
 	upcomingBlock.appendChild(studentContainer)
  	
+	
 	if (isPending == 1) {
 		upcomingSection.appendChild(upcomingBlock)
 		rescheduleButton.innerHTML = "RESCHEDULE"
+		cancelButton.innerHTML = "CANCEL"
+		
 		pendingContainer.appendChild(rescheduleButton)
+		pendingContainer.appendChild(cancelButton)
+		
 		updateUpcomingArray(startTimeEpoch)
 		
 	} else  {
 		hasPending = true
 		pendingButton.innerHTML = "CONFIRM"
+		cancelButton.innerHTML = "CANCEL"
+		
 		pendingButton.setAttribute("onClick", "userConfirmedSession('"+userId+"','"+sessionId+"')")
 		pendingButton.setAttribute('id', sessionId+"-button")
-		pendingContainer.appendChild(pendingButton)
 		
-		cancelButton.innerHTML = "CANCEL"
-		cancelButton.setAttribute("onClick", "userCanceledSession('"+userId+"', '"+sessionId+"')")
-		cancelButton.setAttribute('id', sessionId+"cancel-button")
+		pendingContainer.appendChild(pendingButton)
 		pendingContainer.appendChild(cancelButton)
 		
 		pendingContainer.setAttribute('id', sessionId+"-container")
