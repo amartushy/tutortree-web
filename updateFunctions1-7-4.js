@@ -161,6 +161,54 @@ function userConfirmedSession(userId, sessionID) {
     })
 }
 
+//CANCEL SESSION
+function userCanceledSession(userId, sessionId) {
+		
+  	dataRef.once("value", function(snapshot) {
+    //send notifications
+    var studentsId = snapshot.child(userId+"/sessions/"+sessionId+'/other/').val()
+    var tutorsName = snapshot.child(userId+'/name/').val()
+    var startTimeEpoch = snapshot.child(userId+'/sessions/'+sessionId+'/start').val()
+    var dateAndTime = convertEpochTime(startTimeEpoch)
+    
+   	if(snapshot.child(studentsId+'/smsNotifications/').val() == true) {
+    	var studentsNumber = snapshot.child(studentsId+'/phone/').val()
+      var sendMessage = "Booking Refunded%0A"+tutorsName+ " is unable to meet on "
+      									+dateAndTime+", you have been refunded"
+    	sendSMSTo(studentsNumber,sendMessage)
+    } 
+    if(snapshot.child(studentsId+'/emailNotifications/').val() == true) {
+    	var studentsEmail = snapshot.child(studentsId+'/email/').val()
+			var titleMessage = "Booking Refunded"
+      var emailMessage = tutorsName+ " is unable to meet on "
+       										+dateAndTime+", you have been refunded"
+      sendEmailTo(studentsEmail, titleMessage, sendMessage)
+    }
+    if(snapshot.child(studentsId+'/pushNotifications/').val() == true) {
+    	var studentsToken = snapshot.child(studentsId+'/token/').val()
+			var titleMessage = "Booking Refunded"
+      var pushMessage = tutorsName+ " is unable to meet on "+dateAndTime
+      									+", you have been refunded"
+      sendPushTo(studentsToken,titleMessage, pushMessage)
+    }
+    
+    //refund
+    var xhttp = new XMLHttpRequest();
+    var herokuURL = "https://tutortree-development.herokuapp.com/refund/"+sessionId
+    xhttp.open("GET", herokuURL, true);
+		xhttp.send();
+    
+    //remove from tutors sessions
+    dataRef.child(userId+'/sessions/'+sessionId).remove()
+    //remove from students sessions
+    dataRef.child(studentsId+'/sessions/'+sessionId).remove()
+    
+    })
+    setTimeout(() => { location.reload(); }, 5000);
+
+}
+
+
 //HELPER FUNCTION TO CONVERT TIME
 function convertEpochTime(startEpoch) {
   var startTime = new Date(startEpoch*1000)
