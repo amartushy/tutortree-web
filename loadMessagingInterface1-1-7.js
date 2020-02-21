@@ -1,14 +1,14 @@
 var allConnectionsRef = schoolRef.child("/connections/")
 
 function loadAllConnections(userId) {
-		allConnectionsRef.once("value", function(snapshot) {
+	allConnectionsRef.once("value", function(snapshot) {
     
-    for ( connection in snapshot.val() ) {
+    	for ( connection in snapshot.val() ) {
     		if (snapshot.child(connection+"/tutor/").val() == userId) {
         		createMessagingBlock(connection)
     		}
-    }
-    })
+    	}
+   	})
 }
 
 function createMessagingBlock(connectionId) {
@@ -158,64 +158,64 @@ function listenForIncomingMessages(connection, student) {
 
 
 function sortAndFormatMessages(array1, array2) {
-		array1.sort(function(a, b){return a-b})
+	array1.sort(function(a, b){return a-b})
     
-		for(i=0;i< array1.length;i++) {
+	for(i=0;i< array1.length;i++) {
     		for(j=0;j<array2.length;j++) {
       			if(array1[i] == array2[j][0]) {
-            formatMessage( array2[j][1][0], array2[j][1][1], array2[j][1][2] )
-         		array2[j][0]=0
-      }
-    }
+            			formatMessage( array2[j][1][0], array2[j][1][1], array2[j][1][2] )
+         			array2[j][0]=0
+      			}
+    		}
 	}
 }
 
 function addListenerToField(connectionId) {
     var oldMessageField = document.getElementById("message-field")
-		var newMessageField = oldMessageField.cloneNode(true)
-		oldMessageField.parentNode.replaceChild(newMessageField, oldMessageField)
-		newMessageField.addEventListener("keydown", function (e) {
+	var newMessageField = oldMessageField.cloneNode(true)
+	oldMessageField.parentNode.replaceChild(newMessageField, oldMessageField)
+	newMessageField.addEventListener("keydown", function (e) {
     		if (e.keyCode === 13) {
     				sendMessage(connectionId)
     		}
-    })
+    	})
 }
 
 
 
 function sendMessage(connectionId) {
-		var connectionRef = schoolRef.child("/connections/"+connectionId)
-		var messageValue = document.getElementById("message-field").value
-    var currentDate = new Date()
-    var currentTimeStamp = (currentDate.getTime() / 1000)
-    var identifier = createIdentifier()
-    var newDate = 0
+	var connectionRef = schoolRef.child("/connections/"+connectionId)
+	var messageValue = document.getElementById("message-field").value
+    	var currentDate = new Date()
+    	var currentTimeStamp = (currentDate.getTime() / 1000)
+    	var identifier = createIdentifier()
+    	var newDate = 0
     
-		formatMessage("tutor", messageValue)
-    console.log( connectionId )
+	formatMessage("tutor", messageValue)
+    	console.log( connectionId )
     
-    connectionRef.once("value", function(snapshot) {
-    		var sender = snapshot.child("tutor").val()
+    	connectionRef.once("value", function(snapshot) {
+    	var sender = snapshot.child("tutor").val()
         var recipient = snapshot.child("student").val()
        
-				var messagesObject = snapshot.child("/messages/").val()
+	var messagesObject = snapshot.child("/messages/").val()
         try { 
-        		var maxCount = Object.keys(messagesObject).length 
-            newDate = maxCount + 1
+        	var maxCount = Object.keys(messagesObject).length 
+            	newDate = maxCount + 1
         } catch { 
-        		console.log("No messages") 
+        	console.log("No messages") 
         }
         
         var metadataDict = { 
-        		"date" : newDate,
-            "timeStamp" : currentTimeStamp,
-            "identifier" : createIdentifier(),
+        	"date" : newDate,
+            	"timeStamp" : currentTimeStamp,
+            	"identifier" : createIdentifier(),
         }
         
         var messagesObject = { 
-            "message" : messageValue,
-            "metadata" : metadataDict,
-						"sender" : userId  
+            	"message" : messageValue,
+            	"metadata" : metadataDict,
+		"sender" : userId  
         }
        	
         var newIdentifier = createIdentifierMain()
@@ -231,13 +231,11 @@ function sendMessage(connectionId) {
         sendMessageNotifications(sender, recipient, messageValue)
     })
     
-    document.getElementById("message-field").value = ""
-    
-    
+    document.getElementById("message-field").value = ""  
 }
 
 function sendMessageNotifications(sender, recipient, messageValue) {
-		//Get Tutors Name
+	//Get Tutors Name
     var tutorsName = ""
     var tutorsRef = dataRef.child(sender+'/name/')
     tutorsRef.once('value', function(snapshot) {
@@ -269,44 +267,44 @@ function sendMessageNotifications(sender, recipient, messageValue) {
 }
 
 function initializeMessageArea(connectionId, blockId, studentId) {
-		var messageArea = document.getElementById("messages-area")
-    while (messageArea.firstChild) {
+	var messageArea = document.getElementById("messages-area")
+    	while (messageArea.firstChild) {
     		messageArea.removeChild(messageArea.firstChild);
   	}
     
-    var allStudents = document.querySelectorAll(".messages-block")
-    allStudents.forEach(function(studentItem) {
+    	var allStudents = document.querySelectorAll(".messages-block")
+    	allStudents.forEach(function(studentItem) {
     		studentItem.style.backgroundColor = 'transparent'
-    })
-    document.getElementById(blockId).style.backgroundColor = "rgba(51, 51, 51, 0.14)"
+    	})
+    	document.getElementById(blockId).style.backgroundColor = "rgba(51, 51, 51, 0.14)"
 
-    initializeMessagingHeader(studentId)
-		var messageRef = schoolRef.child("/connections/"+connectionId+"/messages/")
-    messageRef.once("value", function(snapshot) {
+    	initializeMessagingHeader(studentId)
+    	var messageRef = schoolRef.child("/connections/"+connectionId+"/messages/")
+    	messageRef.once("value", function(snapshot) {
     
    	var messagesMainArray = []
-    var dateIdentifiers = []
-    for (message in snapshot.val()) {
-       var sender = snapshot.child(message+"/sender/").val()
-       var date = snapshot.child(message+'/metadata/date/').val()
+    	var dateIdentifiers = []
+    	for (message in snapshot.val()) {
+       		var sender = snapshot.child(message+"/sender/").val()
+       		var date = snapshot.child(message+'/metadata/date/').val()
        
-       var messagesArray = []
-       var messageSubArray = []
+       		var messagesArray = []
+       		var messageSubArray = []
        
-       if (sender == studentId) {
-           messageSubArray.push( "student" )
-       } else {
-           messageSubArray.push( "tutor" )
-       }
-       messageSubArray.push( snapshot.child(message+'/message/').val(), message )
-     	 dateIdentifiers.push(date)
-       messagesArray.push(date, messageSubArray)
-       messagesMainArray.push(messagesArray)
-    }
+       		if (sender == studentId) {
+           		messageSubArray.push( "student" )
+       		} else {
+           		messageSubArray.push( "tutor" )
+       		}
+       		messageSubArray.push( snapshot.child(message+'/message/').val(), message )
+     	 	dateIdentifiers.push(date)
+       		messagesArray.push(date, messageSubArray)
+       		messagesMainArray.push(messagesArray)
+    	}
     
-    sortAndFormatMessages( dateIdentifiers, messagesMainArray )
-    addListenerToField(connectionId)
-    listenForIncomingMessages(connectionId, studentId)
+    	sortAndFormatMessages( dateIdentifiers, messagesMainArray )
+    	addListenerToField(connectionId)
+    	listenForIncomingMessages(connectionId, studentId)
 	})
 }
 
@@ -314,55 +312,55 @@ function initializeMessageArea(connectionId, blockId, studentId) {
 
 //Hide contact info when clicked outside of it
 var hideMe = document.getElementById("students-contact-info")
-document.onclick = function(e){
-		if(e.target.id !== 'hideMe'){
-  	hideMe.style.display = 'none';
+	document.onclick = function(e){
+	if(e.target.id !== 'hideMe'){
+  		hideMe.style.display = 'none';
   	}
 }
 
 function formatMessage(individual, message, messageId) {
-		var messageArea = document.getElementById("messages-area")
-		var messageContainer = document.createElement("div")
-    var messageBubble = document.createElement("div")
+	var messageArea = document.getElementById("messages-area")
+	var messageContainer = document.createElement("div")
+    	var messageBubble = document.createElement("div")
     
-    if ( individual == "tutor" ) {
+    	if ( individual == "tutor" ) {
     		messageContainer.setAttribute('class', 'tutor-message-container')
     		messageBubble.setAttribute('class', 'tutor-message')
         
-    } else if ( individual == "student" ){
+    	} else if ( individual == "student" ){
     		messageContainer.setAttribute('class', 'student-message-container')
     		messageBubble.setAttribute('class', 'student-message')
-    }
+    	}
     
-    messageBubble.innerHTML = message
-    messageContainer.setAttribute('id', messageId)
-    messageContainer.appendChild(messageBubble)
-    messageArea.appendChild(messageContainer)
-}
+    	messageBubble.innerHTML = message
+    	messageContainer.setAttribute('id', messageId)
+    	messageContainer.appendChild(messageBubble)
+    	messageArea.appendChild(messageContainer)
+}	
 
 function createIdentifierMain() {
-		var result = "-"
-		var collection = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_'
-    var collectionLength = collection.length
+	var result = "-"
+	var collection = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_'
+    	var collectionLength = collection.length
     
-    for (i = 0; i < 18; i++) {
+    	for (i = 0; i < 18; i++) {
     		result += collection.charAt(Math.floor(Math.random() * collectionLength))
-    }
-		return (result)
+    	}
+	return (result)
 }
 
 function createIdentifier() {
-		var result = ""
-		var characters = 'abcdefghijklmnopqrstuvwxyz'
-    var charactersLength = characters.length
+	var result = ""
+	var characters = 'abcdefghijklmnopqrstuvwxyz'
+    	var charactersLength = characters.length
     
-    for (i = 0; i < 8; i++) {
+    	for (i = 0; i < 8; i++) {
     		result += characters.charAt(Math.floor(Math.random() * charactersLength))
-    }
-    return result
+    	}
+    	return result
 }
 
-
+}
 </script>
 
 
