@@ -42,7 +42,7 @@ function loadAvailableCourses(userId) {
 	    var isTutorRegistered = false
       	    var subjectBlock = document.createElement('div')
 	    var courseButtonSection = document.createElement('div')
-            var subjectHeader = document.createElement("h1")
+            var subjectHeader = document.createElement("h3")
 	    
             subjectBlock.setAttribute('class', 'course-container')
             subjectBlock.setAttribute('id', subject)
