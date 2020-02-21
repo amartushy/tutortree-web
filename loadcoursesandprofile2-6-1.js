@@ -131,6 +131,7 @@ dataRef.once("value", function(snapshot) {
         var upcomingStudent = document.createElement("h3")
         var upcomingCourse = document.createElement("button")
 	var pendingButton = document.createElement("button")
+	var cancelButton = document.createElement("button")
 	var rescheduleButton = document.createElement("button")
         var upcomingDate = document.createElement("h4")
         var studentId = snapshot.child(userId+"/sessions/"+sessionId+'/other').val()
@@ -160,6 +161,7 @@ dataRef.once("value", function(snapshot) {
 	upcomingBlock.setAttribute('id', startTimeEpoch)
         upcomingStudent.setAttribute('class', 'upcoming-header')
 	pendingButton.setAttribute('class', 'pending-course pending-session w-button')
+	cancelButton.setAttribute('class', 'cancel-session-button cancel-session w-button')
 	rescheduleButton.setAttribute('class', 'reschedule-button w-button')
 	rescheduleButton.setAttribute('onClick', 'initializeReschedule("'+userId+'","'+sessionId+'")')
         upcomingDate.setAttribute('class', 'date-and-time')
@@ -188,16 +190,22 @@ dataRef.once("value", function(snapshot) {
 		rescheduleButton.innerHTML = "RESCHEDULE"
 		pendingContainer.appendChild(rescheduleButton)
 		updateUpcomingArray(startTimeEpoch)
-	} else {
+		
+	} else  {
 		hasPending = true
-		pendingButton.innerHTML = "PENDING"
+		pendingButton.innerHTML = "CONFIRM"
 		pendingButton.setAttribute("onClick", "userConfirmedSession('"+userId+"','"+sessionId+"')")
 		pendingButton.setAttribute('id', sessionId+"-button")
 		pendingContainer.appendChild(pendingButton)
+		
+		cancelButton.innerHTML = "CANCEL"
+		//cancelButton.setAttribute("onClick", "userCanceledSession('"+userId+"', '"+sessionId+"')")
+		cancelButton.setAttribute('id', sessionId+"cancel-button")
+		pendingContainer.appendChild(cancelButton)
+		
 		pendingContainer.setAttribute('id', sessionId+"-container")
         	pendingSection.appendChild(upcomingBlock)
-		
-	}
+		}
         }
       }
 	
