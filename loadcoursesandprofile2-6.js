@@ -60,7 +60,7 @@ function loadAvailableCourses(userId) {
 		courseContainer.setAttribute('class', 'course-button-container')
                 courseButton.setAttribute('id', subject+'-'+course)
                 courseButton.setAttribute('onClick', 'userDidRegisterForCourse("'+tutorsUniversity+'","'+subject+'","'+course+'","'+userId+'")')
-                courseButton.setAttribute('class', 'course-button w-button')
+                courseButton.setAttribute('class', 'new-course-button w-button')
                 courseButton.innerHTML = course
               
                 var tutorCount = 0
