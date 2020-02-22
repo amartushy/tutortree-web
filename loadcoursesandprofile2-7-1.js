@@ -383,11 +383,11 @@ function loadTutorProfile(userId) {
         }
 		
 		
-	tutorsEmailField.setAttribute('onblur', updateProfile.disbled = false)
-	tutorsNameField.setAttribute('onblur', updateProfile.disbled = false)
-	tutorsBioField.setAttribute('onblur', updateProfile.disbled = false)
-	tutorsRateField.setAttribute('onblur', updateProfile.disbled = false)
-	tutorsMaxHoursField.setAttribute('onblur', updateProfile.disbled = false)
+	tutorsEmailField.setAttribute('onblur', 'userDidUpdateProfile("'+userId+'")')
+	tutorsNameField.setAttribute('onblur', 'userDidUpdateProfile("'+userId+'")')
+	tutorsBioField.setAttribute('onblur', 'userDidUpdateProfile("'+userId+'")')
+	tutorsRateField.setAttribute('onblur', 'userDidUpdateProfile("'+userId+'")')
+	tutorsMaxHoursField.setAttribute('onblur', 'userDidUpdateProfile("'+userId+'")')
 		
 	
         currentBalance = totalIncome - totalSpending
@@ -401,10 +401,10 @@ function loadTutorProfile(userId) {
 	emailButton.setAttribute('onClick', 'updateUserEmail("' + userId + '")')
         if (emailNotifications) {
 		emailButton.innerHTML = "ON"
-		emailButton.style.backgroundColor = "#EC7764"
+		emailButton.style.backgroundColor = "#ADDCCB"
 	} else {
 		emailButton.innerHTML = "OFF"
-		emailButton.style.backgroundColor = "#ADDCCB"
+		emailButton.style.backgroundColor = "#EC7764"
 	}
 	var smsNotifications = snapshot.child("smsNotifications").val()
 	smsButton.setAttribute('onClick', 'updateUserSMS("' + userId + '")')
