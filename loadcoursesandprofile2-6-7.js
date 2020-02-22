@@ -330,7 +330,6 @@ function loadTutorProfile(userId) {
 	
 	tutorRef.on("value", function(snapshot) {
         //SET FIELDS
-        console.log(snapshot.val())
         tutorsEmailField.value = snapshot.child("email").val()
         tutorsNameField.value = snapshot.child("name").val()
         tutorsBioField.value = snapshot.child("bio").val()
@@ -360,8 +359,6 @@ function loadTutorProfile(userId) {
 	averageLabel.innerHTML = (averageScore/averageCount).toFixed(2)
 	hourlyLabel.innerHTML = "$" + parseFloat(tutorsRateField.value)*2
 	
-	
-		
         //CALCULATE CURRENT BALANCE
         var totalIncome = 0
         var totalSpending = 0
@@ -374,7 +371,7 @@ function loadTutorProfile(userId) {
             spendingString = snapshot.child("spending/"+spendingId+"/amount").val()
             totalSpending += parseFloat(spendingString)
             if(snapshot.child("spending/"+spendingId+"/usedBalance").val()=="0"){
-                totalSpending -=parseFloat(spendingString)
+                totalSpending -= parseFloat(spendingString)
             }
         }
         currentBalance = totalIncome - totalSpending
