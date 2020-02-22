@@ -341,11 +341,7 @@ function loadTutorProfile(userId) {
         tutorsRateField.value = snapshot.child("PPH").val()
         tutorsMaxHoursField.value = snapshot.child("MAX").val()
 	
-	tutorsEmailField.setAttribute('onblur', updateProfile.disbled = false)
-	tutorsNameField.setAttribute('onblur', updateProfile.disbled = false)
-	tutorsBioField.setAttribute('onblur', updateProfile.disbled = false)
-	tutorsRateField.setAttribute('onblur', updateProfile.disbled = false)
-	tutorsMaxHoursField.setAttribute('onblur', updateProfile.disbled = false)
+
 		
 	//UPDATE SESSIONS, AVERAGE, AND HOURLY LABELS
 	var sessionsLabel = document.getElementById("sessions-label")
@@ -385,6 +381,15 @@ function loadTutorProfile(userId) {
                 totalSpending -= parseFloat(spendingString)
             }
         }
+		
+		
+	tutorsEmailField.setAttribute('onblur', updateProfile.disbled = false)
+	tutorsNameField.setAttribute('onblur', updateProfile.disbled = false)
+	tutorsBioField.setAttribute('onblur', updateProfile.disbled = false)
+	tutorsRateField.setAttribute('onblur', updateProfile.disbled = false)
+	tutorsMaxHoursField.setAttribute('onblur', updateProfile.disbled = false)
+		
+	
         currentBalance = totalIncome - totalSpending
         tutorsBalanceButton.innerHTML = "$" + currentBalance.toFixed(2) + " Withdraw Balance"
         //WITHDRAW BALANCE BUTTON
