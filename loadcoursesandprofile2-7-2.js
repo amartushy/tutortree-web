@@ -383,9 +383,9 @@ function loadTutorProfile(userId) {
         }
 		
 		
-	tutorsEmailField.setAttribute('onblur', 'userDidUpdateProfile("'+userId+'")')
-	tutorsNameField.setAttribute('onblur', 'userDidUpdateProfile("'+userId+'")')
-	tutorsBioField.setAttribute('onblur', 'userDidUpdateProfile("'+userId+'")')
+	tutorsEmailField.addEventListener('blur', 'userDidUpdateProfile("'+userId+'")')
+	tutorsNameField.addEventListener('blur', userDidUpdateProfile(userId))
+	tutorsBioField.addEventListener('blur', userDidUpdateProfile('"'+userId+'"'))
 	tutorsRateField.setAttribute('onblur', 'userDidUpdateProfile("'+userId+'")')
 	tutorsMaxHoursField.setAttribute('onblur', 'userDidUpdateProfile("'+userId+'")')
 		
