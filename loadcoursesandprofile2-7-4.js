@@ -331,7 +331,7 @@ function loadTutorProfile(userId) {
 	//UPDATE PROFILE BUTTON
     	var updateProfile = document.getElementById('update-profile')
     	updateProfile.setAttribute('onClick', 'userDidUpdateProfile("'+userId+'")')
-    	updateProfile.disabled = true
+
 	
 	tutorRef.on("value", function(snapshot) {
         //SET FIELDS
@@ -381,13 +381,6 @@ function loadTutorProfile(userId) {
                 totalSpending -= parseFloat(spendingString)
             }
         }
-		
-		
-	//tutorsEmailField.addEventListener('blur', 'userDidUpdateProfile("'+userId+'")')
-	tutorsNameField.addEventListener('blur', userDidUpdateProfile(userId))
-	tutorsBioField.addEventListener('blur', userDidUpdateProfile('"'+userId+'"'))
-	tutorsRateField.setAttribute('onblur', 'userDidUpdateProfile("'+userId+'")')
-	tutorsMaxHoursField.setAttribute('onblur', 'userDidUpdateProfile("'+userId+'")')
 		
 	
         currentBalance = totalIncome - totalSpending
