@@ -383,7 +383,7 @@ function loadTutorProfile(userId) {
         }
 		
 		
-	tutorsEmailField.addEventListener('blur', 'userDidUpdateProfile("'+userId+'")')
+	//tutorsEmailField.addEventListener('blur', 'userDidUpdateProfile("'+userId+'")')
 	tutorsNameField.addEventListener('blur', userDidUpdateProfile(userId))
 	tutorsBioField.addEventListener('blur', userDidUpdateProfile('"'+userId+'"'))
 	tutorsRateField.setAttribute('onblur', 'userDidUpdateProfile("'+userId+'")')
