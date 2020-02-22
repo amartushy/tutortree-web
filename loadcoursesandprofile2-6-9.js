@@ -328,6 +328,11 @@ function loadTutorProfile(userId) {
         tutorsPhotoField.appendChild(createPhoto)
 	})
 	
+	//UPDATE PROFILE BUTTON
+    	var updateProfile = document.getElementById('update-profile')
+    	updateProfile.setAttribute('onClick', 'userDidUpdateProfile("'+userId+'")')
+    	updateProfile.disabled = true
+	
 	tutorRef.on("value", function(snapshot) {
         //SET FIELDS
         tutorsEmailField.value = snapshot.child("email").val()
@@ -335,6 +340,12 @@ function loadTutorProfile(userId) {
         tutorsBioField.value = snapshot.child("bio").val()
         tutorsRateField.value = snapshot.child("PPH").val()
         tutorsMaxHoursField.value = snapshot.child("MAX").val()
+	
+	tutorsEmailField.setAttribute('onblur', updateProfile.disbled = false)
+	tutorsNameField.setAttribute('onblur', updateProfile.disbled = false)
+	tutorsBioField.setAttribute('onblur', updateProfile.disbled = false)
+	tutorsRateField.setAttribute('onblur', updateProfile.disbled = false)
+	tutorsMaxHoursField.setAttribute('onblur', updateProfile.disbled = false)
 		
 	//UPDATE SESSIONS, AVERAGE, AND HOURLY LABELS
 	var sessionsLabel = document.getElementById("sessions-label")
@@ -404,10 +415,9 @@ function loadTutorProfile(userId) {
     }, function (error) {
         console.log("Error: " + error.code);
     });
+	
       
-    //UPDATE PROFILE BUTTON
-    var updateProfile = document.getElementById('update-profile')
-    updateProfile.setAttribute('onClick', 'userDidUpdateProfile("'+userId+'")')
+
 
 }
 
