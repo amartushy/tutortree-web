@@ -248,16 +248,13 @@ function updateUserEmail() {
  	var emailButton = document.getElementById("email-notifications")
   
     emailRef.once("value", function(snapshot) {
-    		console.log(snapshot.child('emailNotifications/').val())
-    		if (snapshot.child('emailNotifications/').val() == true) {
-        		emailRef.update( {emailNotifications : false} )
-            emailButton.innerHTML = "OFF"
-            emailButton.style.backgroundColor = "#EC7764"
+    	console.log(snapshot.child('emailNotifications/').val())
+    	if (snapshot.child('emailNotifications/').val() == true) {
+        	emailRef.update( {emailNotifications : false} )
             
         } else {
-        		emailRef.update( {emailNotifications : true} )
-            emailButton.innerHTML = "ON "
-            emailButton.style.backgroundColor = "#ADDCCB"
+        	emailRef.update( {emailNotifications : true} )
+
         }
     })
 }
@@ -268,15 +265,11 @@ function updateUserSMS() {
  	var smsButton = document.getElementById("sms-notifications")
   
     smsRef.once("value", function(snapshot) {
-    		if (snapshot.child('smsNotifications/').val() == true) {
-        		smsRef.update( {smsNotifications : false} )
-            smsButton.innerHTML = "OFF"
-            smsButton.style.backgroundColor = "#EC7764"
+    	if (snapshot.child('smsNotifications/').val() == true) {
+        	smsRef.update( {smsNotifications : false} )
             
         } else {
-        		smsRef.update( {smsNotifications : true} )
-            smsButton.innerHTML = "ON "
-            smsButton.style.backgroundColor = "#ADDCCB"
+        	smsRef.update( {smsNotifications : true} )
         }
     })
 }
