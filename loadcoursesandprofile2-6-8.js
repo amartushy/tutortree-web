@@ -394,10 +394,10 @@ function loadTutorProfile(userId) {
 	smsButton.setAttribute('onClick', 'updateUserSMS("' + userId + '")')
 	if (smsNotifications) {
 		smsButton.innerHTML = "ON"
-		smsButton.style.backgroundColor = "#EC7764"
+		smsButton.style.backgroundColor = "#ADDCCB"
 	} else {
 		smsButton.innerHTML = "OFF"
-		smsButton.style.backgroundColor = "#ADDCCB"
+		smsButton.style.backgroundColor = "#EC7764"
 	}
         
           
