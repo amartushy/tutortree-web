@@ -269,12 +269,12 @@ function updateUserSMS() {
   
     smsRef.once("value", function(snapshot) {
     		if (snapshot.child('smsNotifications/').val() == true) {
-        		smsRef.update( {emailNotifications : false} )
+        		smsRef.update( {smsNotifications : false} )
             smsButton.innerHTML = "OFF"
             smsButton.style.backgroundColor = "#EC7764"
             
         } else {
-        		smsRef.update( {emailNotifications : true} )
+        		smsRef.update( {smsNotifications : true} )
             smsButton.innerHTML = "ON "
             smsButton.style.backgroundColor = "#ADDCCB"
         }
