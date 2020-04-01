@@ -111,3 +111,93 @@ function create8CharID() {
     }
     return result
 }
+
+
+/*
+		const viewerVideoElem = document.getElementById("remote");
+		const startElem = document.getElementById("start-screen-recording");
+		const stopElem = document.getElementById("stop-screen-recording");
+
+		// Options for getDisplayMedia()
+		var displayMediaOptions = {
+  		video: {
+    		cursor: "always"
+  		},
+  		audio: {
+    		echoCancellation: true,
+    		noiseSuppression: true,
+    		sampleRate: 44100
+  		}
+		};
+
+		// Set event listeners for the start and stop buttons
+		startElem.addEventListener("click", function(evt) {
+  			startCapture();
+		}, false);
+		stopElem.addEventListener("click", function(evt) {
+  		stopCapture();
+		}, false);
+
+		const viewer = new RTCPeerConnection()
+		const streamer = new RTCPeerConnection()
+
+		viewer.onicecandidate = e => {
+				if( e.candidate) {
+    				streamer.addIceCandidate(e.candidate)
+    		}
+		}
+
+    streamer.onicecandidate = e => {
+        if( e.candidate ) {
+            viewer.addIceCandidate(e.candidate)
+        }
+    }
+    
+		async function startCapture() {
+
+  			try {
+   				await navigator.mediaDevices.getDisplayMedia(displayMediaOptions).then(stream => {
+          		document.getElementById("local").srcObject = stream
+          		viewer.addTrack(stream)
+              return viewer.createOffer()
+          })
+          .then(offer => viewer.setLocalDescription(new RTCSessionDescription(offer)))
+          .then(() => streamer.setRemoteDescription(viewer.localDescription))
+          .then(() => streamer.createAnswer())
+          .then(answer => streamer.setLocalDescription(new RTCSessionDescription(answer)))
+          .then(() => viewer.setRemoteDescription(streamer.localDescription))
+					
+          //viewer.ontrack = ({streams: [stream]} => viewerVideoElem.srcObject = stream);
+          
+          } catch(err) {
+          console.log("something wong")
+          //console.error("Error: " + err);
+  			}
+  			
+		}
+
+function stopCapture(evt) {
+  let tracks = viewerVideo.srcObject.getTracks();
+  tracks.forEach(track => track.stop());
+  viewerVideo.srcObject = null;
+} */
+
+
+//INSIDE ONAUTH:
+/*
+const domain = 'meet.jit.si';
+			const options = {
+    			roomName: userId,
+    			width: 1000,
+    			height: 600,
+    			parentNode: document.querySelector('.live-feed-area'),
+          interfaceConfigOverwrite: { SHOW_JITSI_WATERMARK: false,
+          														JITSI_WATERMARK_LINK: 'https://www.jointutortree.com',
+          														SHOW_WATERMARK_FOR_GUESTS: false,
+                                      SHOW_BRAND_WATERMARK: false,},
+       
+			};
+			
+			const api = new JitsiMeetExternalAPI(domain, options);
+			
+	*/
