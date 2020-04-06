@@ -50,7 +50,7 @@ function appendToPendingStudent() {
 }
 
 //Main load function
-function loadStudentsUpcomingAndPending(userId) {
+async function loadStudentsUpcomingAndPending(userId) {
     var sessionsRef = dataRef.child(userId+"/sessions/")
     var upcomingSectionStudent = document.getElementById('upcoming-section-student')
     var pendingSectionStudent = document.getElementById('pending-section-student')
@@ -79,7 +79,7 @@ function loadStudentsUpcomingAndPending(userId) {
       	hasUpcoming = true
 	//tutors info
     	var tutorId = snapshot.child(sessionId+'/other/').val()
-    	var tutorInfoArray = getTutorsInfo(tutorId)
+    	var tutorInfoArray = await getTutorsInfo(tutorId)
     
         //session info
         var startTimeEpoch = snapshot.child(sessionId+'/start').val()
