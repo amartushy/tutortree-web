@@ -26,10 +26,6 @@ function appendToUpcomingStudent() {
     	var upcomingBlockStudent = document.getElementById(timestampID)
         upcomingSectionStudent.appendChild(upcomingBlockStudent)
     }
-	
-    if (items > 0) {
-	document.getElementById("student-no-upcoming").style.display = "none"
-    }
 }
 function appendToPendingStudent() {
     var items = pendingArrayStudent.length
@@ -40,9 +36,7 @@ function appendToPendingStudent() {
     	var upcomingBlockStudent = document.getElementById(timestampID)
         pendingSectionStudent.appendChild(upcomingBlockStudent)
     }
-    if (items > 0) {
-	 document.getElementById("student-no-pending").style.display = "none"   
-    }
+    
 }
 
 //Main load function
@@ -227,13 +221,14 @@ function loadStudentsUpcomingAndPending(userId) {
 	    pendingLabelStudent.style.display = "none"
 	    confirmedLabelStudent.style.display = "block"
 
-              
+            document.getElementById("student-no-upcoming").style.display = "none"  
         } else {
             pendingSectionStudent.appendChild(upcomingBlockStudent)
 	    pendingArrayStudent.push(startTimeEpoch)
 	    pendingLabelStudent.style.display = "block"
 	    confirmedLabelStudent.style.display = "none"
-		
+	    
+	    document.getElementById("student-no-pending").style.display = "none"
         }
           
         
