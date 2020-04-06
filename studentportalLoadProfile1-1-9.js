@@ -35,18 +35,34 @@ function loadProfileInformation(studentsId) {
         if(emailNotifications) {
               emailOnButton.style.backgroundColor = "#ADDCCB"
               emailOnButton.style.color = "white"
+            
+              emailOffButton.style.backgroundColor = "transparent"
+              emailOffButton.style.color = "#EC7764"
+              emailOffButton.style.borderColor = "#EC7764"
         } else {
               emailOffButton.style.backgroundColor = "#EC7764"
               emailOffButton.style.color = "white"
+            
+              emailOnButton.style.backgroundColor = "transparent"
+              emailOnButton.style.color = "#ADDCCB"
+              emailOnButton.style.borderColor = "#ADDCCB"
         }
       
         if(smsNotifications) {
               smsOnButton.style.backgroundColor = "#ADDCCB"
               smsOnButton.style.color = "white"
+            
+              smsOffButton.style.backgroundColor = "transparent"
+              smsOffButton.style.color = "#EC7764"
+              smsOffButton.style.borderColor = "#EC7764"
               
         } else {
               smsOffButton.style.backgroundColor = "#EC7764"
               smsOffButton.style.color = "white"
+            
+              smsOnButton.style.backgroundColor = "transparent"
+              smsOnButton.style.color = "#EC7764"
+              smsOnButton.style.borderColor = "#EC7764"
         }      
     })
 }
