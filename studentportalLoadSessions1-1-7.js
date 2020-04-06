@@ -47,8 +47,8 @@ function loadStudentsUpcomingAndPending(userId) {
     var currentTime = todaysEpoch.setHours(0,0,0,0)/1000
     var hasUpcoming = false
     var hasPending = false
-    var upcomingSection = document.getElementById('upcoming-section-student')
-    var pendingSection = document.getElementById('pending-section-student')
+    var upcomingSectionStudent = document.getElementById('upcoming-section-student')
+    var pendingSectionStudent = document.getElementById('pending-section-student')
     
     for (sessionId in snapshot.val()) {
 	  console.log(snapshot.child(sessionId+"/start/").val())
