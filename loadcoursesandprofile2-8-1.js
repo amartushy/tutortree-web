@@ -211,6 +211,7 @@ dataRef.once("value", function(snapshot) {
 	zoomLogoAndUpdate.appendChild(updateIdButton)
 	updateIdButton.setAttribute("onClick", "updateZoomCredentials('"+sessionId+"','"+studentId+"','"+userId+"')")
 	//updateIdButton.style.display = 'none'
+	updateIdButton.innerHTML = "Update ID's"
 		
 	var zoomIdBlock = document.createElement("div")
 	zoomIdBlock.setAttribute("class", "zoom-id-block")
@@ -244,10 +245,11 @@ dataRef.once("value", function(snapshot) {
 	meetingPasswordInput.setAttribute("class", "meeting-password-input")
 	passwordIdBlock.appendChild(meetingPasswordInput)
 		
-	try {
+	if(snapshot.child(userId+'/sessions/'+sessionId+'/online/')) {
 		meetingIdInput.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/online/meetingId').val()
 		meetingPasswordInput.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/online/passwordId').val()
-	} catch {
+	}
+	else {
 		var onlineDict = {}
 		var credentialsDict =
 			{
