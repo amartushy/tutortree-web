@@ -91,12 +91,12 @@ function loadStudentsUpcomingAndPending(userId) {
         headerAndDateTutor.setAttribute("class", "header-and-date-tutor")
         tutorContainer.appendChild(headerAndDateTutor)
           
-        var upcomingHeaderTutor = document.createElement("h5")
+        var upcomingHeaderTutor = document.createElement("h3")
         upcomingHeaderTutor.setAttribute("class", "upcoming-header-tutor")
         headerAndDateTutor.appendChild(upcomingHeaderTutor)
         upcomingHeaderTutor.innerHTML = tutorInfoArray[0]
           
-        var dateAndTimeStudent = document.createElement("div")
+        var dateAndTimeStudent = document.createElement("h4")
         dateAndTimeStudent.setAttribute("class", "date-and-time-student")
         headerAndDateTutor.appendChild(dateAndTimeStudent)
         //TIME FORMATTING
@@ -152,7 +152,7 @@ function loadStudentsUpcomingAndPending(userId) {
           
         var zoomIdBlockStudent = document.createElement("div")
         zoomIdBlockStudent.setAttribute("class", "zoom-id-block-student")
-        logoAndJoinStudent.appendChild(zoomIdBlockStudent)
+        zoomContainerStudent.appendChild(zoomIdBlockStudent)
         
         var meetingIdBlockStudent = document.createElement("div")
         meetingIdBlockStudent.setAttribute("class", "meeting-id-block-student")
