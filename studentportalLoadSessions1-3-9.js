@@ -15,13 +15,13 @@ function getTutorsInfo(ID) {
 function getTutorsName(ID) {
 	dataRef.once("value", function(snapshot) {
 		var tutorsName = snapshot.child(ID+"/name/").val()	
-	}
+	})
 	return (tutorsName)
 }
 function getTutorsName(ID) {
 	dataRef.once("value", function(snapshot) {
 		var tutorsImage = snapshot.child(ID+"/profileURL/").val()	
-	}
+	})
 	return (tutorsImage)
 }
 
