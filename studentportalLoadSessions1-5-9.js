@@ -46,7 +46,7 @@ function loadStudentsUpcomingAndPending(userId) {
     
     var tutortreeLogo = "https://firebasestorage.googleapis.com/v0/b/tutor-faa48.appspot.com/o/images%2Fzqrvuzfvgdkxnpew.jpg?alt=media&token=e898937e-8cdc-4180-8a6a-6e5aeb3ed676"
         
-    sessionsRef.on("value", async function(snapshot) {
+    sessionsRef.on("value", function(snapshot) {
     //remove all elements
     while(upcomingSectionStudent.firstChild) {
           upcomingSectionStudent.removeChild(upcomingSectionStudent.firstChild)
@@ -202,7 +202,7 @@ function loadStudentsUpcomingAndPending(userId) {
         var meetingPasswordIdStudent = document.createElement("div")
         meetingPasswordIdStudent.setAttribute("class", "meeting-password-id-student")
         passwordIdBlockStudent.appendChild(meetingPasswordIdStudent)
-	console.log(snapshot.val())
+	console.log(snapshot.child("onlineSession").val())
 	console.log(snapshot.child("/onlineSession/passwordId/").val())
         var meetingPasswordId = snapshot.child("/onlineSession/passwordId/").val()
         if ( meetingPasswordId == null ) {
