@@ -30,7 +30,7 @@ function loadProfileInformation(studentsId) {
         var smsNotifications = snapshot.child("/smsNotifications/").val()
         document.getElementById("profile-name").placeholder = studentsName
         document.getElementById("profile-email-address").placeholder = studentsEmail
-        document.getElementById("profile-image-student").src = studentsImage
+
         
         if(emailNotifications) {
               emailOnButton.style.backgroundColor = "#ADDCCB"
