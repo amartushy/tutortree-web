@@ -136,7 +136,7 @@ dataRef.once("value", function(snapshot) {
         var upcomingDate = document.createElement("h4")
         var studentId = snapshot.child(userId+"/sessions/"+sessionId+'/other').val()
         var isPending = snapshot.child(userId+"/sessions/"+sessionId+'/status').val()
-	
+
         //TIME FORMATTING
         var startTimeEpoch = snapshot.child(userId+'/sessions/'+sessionId+'/start').val()
         var endTimeEpoch = snapshot.child(userId+'/sessions/'+sessionId+'/end').val()
@@ -189,7 +189,68 @@ dataRef.once("value", function(snapshot) {
 	studentContainer.appendChild(headerAndDate)
 	upcomingBlock.appendChild(studentContainer)
  	
+	//Create Zoom input element
+	var zoomForm = document.createElement("FORM")
+	zoomForm.setAttribute("class", "zoom-form")
+		
+	var zoomContainerForm = document.createElement("FORM")
+	zoomContainerForm.setAttribute("class", "zoom-container-form")
+		
+	var zoomLogoAndUpdate = document.createElement("div")
+	zoomLogoAndUpdate.setAttribute("class", "zoom-logo-and-update")
+		
+	var zoomLogo = document.createElement("img")
+	zoomLogo.setAttribute("class", "zoom-logo")
+	zoomLogo.src = snapshot.child('M7nAacU7kANeklFALvsvkLGsbrp1/profileURL/').val()	
+		
+	var updateIdButton = document.createElement("div")
+	updateIdButton.setAttribute("class", "update-id-button")
+	updateIdButton.setAttribute("onClick", "updateZoomCredentials('"+sessionId+"','"+studentID+"','"+userId+"')")
+	updateIdButton.style.display = 'none'
+		
+	var zoomIdBlock = document.createElement("div")
+	zoomIdBlock.setAttribute("class", "zoom-id-block")
+		
+	var meetingIdBlock = document.createElement("div")
+	meetingIdBlock.setAttribute("class", "meeting-id-block")
+		
+	var meetingIdHeader = document.createElement("h5")
+	meetingIdHeader.setAttribute("class", "meeting-id-header")
+	meetingIdHeader.innerHTML = "Meeting ID:"
+		
+	var meetingIdInput = document.createElement("INPUT")
+	meetingIdInput.setAttribute("type", "text")
+	meetingIdInput.setAttribute("class", "meeting-id-input")
+		
+	var passwordIdBlock = document.createElement("div")
+	passwordIdBlock.setAttribute("class", "password-id-block")
+
+	var meetingPasswordHeader = document.createElement("h5")
+	meetingPasswordHeader.setAttribute("class", "meeting-password-header")
+	meetingPasswordHeader.innerHTML = "Meeting Password:"
+		
+	var meetingPasswordInput = document.createElement("INPUT")
+	meetingPasswordInput.setAttribute("type", "text")
+	meetingPasswordInput.setAttribute("class", "meeting-password-input")
 	
+	try {
+		meetingIdInput.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/online/meetingId').val()
+		meetingPasswordInput.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/online/passwordId').val()
+	} catch {
+		var onlineDict = {}
+		var credentialsDict =
+			{
+			'meetingId' : '000000000',
+			'passwordId' : '000000'
+			}
+		onlineDict['onlineSession'] = credentialsDict
+		console.log(onlineDict)
+		console.log(dataRef.child(userId+'/sessions/'+sessionId)
+		
+	}
+			    
+			    
+			    
 	if (isPending == 1) {
 		upcomingSection.appendChild(upcomingBlock)
 		rescheduleButton.innerHTML = "RESCHEDULE"
@@ -273,6 +334,9 @@ dataRef.once("value", function(snapshot) {
 
 }
 
+function updateZoomCredentials(session, student, tutor) {
+	console.log(session + ", "+student+", "+tutor)	
+}
 //ASSIGNMENT VARS FOR RESCHEDULING
 var daySeconds = 0
 var startSeconds = 0
