@@ -155,7 +155,7 @@ function loadStudentsUpcomingAndPending(userId) {
         meetingIdBlockStudent.setAttribute("class", "meeting-id-block-student")
         zoomIdBlockStudent.appendChild(meetingIdBlockStudent)
           
-        var meetingIdHeaderStudent = document.creatElement("h5")
+        var meetingIdHeaderStudent = document.createElement("h5")
         meetingIdHeaderStudent.setAttribute("class", "meeting-id-header-student")
         meetingIdBlockStudent.appendChild(meetingIdHeaderStudent)
         meetingIdHeaderStudent.innerHTML = "Meeting ID:"
