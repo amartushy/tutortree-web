@@ -147,7 +147,7 @@ function loadStudentsUpcomingAndPending(userId) {
         logoAndJoinStudent.appendChild(joinSessionStudent)
         joinSessionStudent.innerHTML = "Join Session"
           
-        var zoomIdBlockStudent = document.creatElement("div")
+        var zoomIdBlockStudent = document.createElement("div")
         zoomIdBlockStudent.setAttribute("class", "zoom-id-block-student")
         logoAndJoinStudent.appendChild(zoomIdBlockStudent)
         
