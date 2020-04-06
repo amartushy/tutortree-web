@@ -40,7 +40,7 @@ function loadProfileInformation(studentsId) {
               smsOffButton.style.backgroundColor = "#EC7764"
               smsOffButton.style.color = "white"
         }      
-    }
+    })
 }
 
 function updateEmail(value, ID) {
