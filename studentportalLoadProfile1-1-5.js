@@ -51,12 +51,12 @@ function loadProfileInformation(studentsId) {
 function updateEmail(value, ID) {
       console.log(ID)
       console.log(value)
-      console.log(dataRef.child(ID+"/emailNotifications/").val())   
+      console.log(dataRef.child(ID+"/emailNotifications/"))   
 }
 function updateSms(value, ID) {
       console.log(ID)
       console.log(value)
-      console.log(dataRef.child(ID+"/smsNotifications/").val())   
+      console.log(dataRef.child(ID+"/smsNotifications/"))   
 }
                        
                    
