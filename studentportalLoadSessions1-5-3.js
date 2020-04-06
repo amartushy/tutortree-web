@@ -223,8 +223,9 @@ function loadStudentsUpcomingAndPending(userId) {
         
         }
     }
-    appendToUpcomingStudent()
+    
     appendToPendingStudent()
+    appendToUpcomingStudent()	    
 })
 
 }		   
