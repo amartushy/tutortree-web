@@ -79,6 +79,7 @@ function loadStudentsUpcomingAndPending(userId) {
 	const tutorImageRef = dataRef.child(tutorId+"/profileURL/")
 	const tutorsImageSnapshot = await tutorImageRef.once('value')
 	var tutorsImage = tutorsImageSnapshot.val()
+	console.log(tutorsImage)
 
         //session info
         var startTimeEpoch = snapshot.child(sessionId+'/start').val()
