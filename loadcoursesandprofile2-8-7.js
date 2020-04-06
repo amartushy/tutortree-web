@@ -229,6 +229,7 @@ dataRef.once("value", function(snapshot) {
 	var meetingIdInput = document.createElement("INPUT")
 	meetingIdInput.setAttribute("type", "text")
 	meetingIdInput.setAttribute("class", "meeting-id-input")
+	meetingIdInput.setAttribute("id", sessionId+"-meetingId")
 	meetingIdBlock.appendChild(meetingIdInput)
 	meetingIdInput.onfocus = function() {
     		updateIdButton.style.display = 'block'	
@@ -246,16 +247,13 @@ dataRef.once("value", function(snapshot) {
 	var meetingPasswordInput = document.createElement("INPUT")
 	meetingPasswordInput.setAttribute("type", "text")
 	meetingPasswordInput.setAttribute("class", "meeting-password-input")
+	meetingPasswordInput.setAttribute("id", sessionId+"-passwordId")	
 	passwordIdBlock.appendChild(meetingPasswordInput)
 	meetingPasswordInput.onfocus =  function() {
     		updateIdButton.style.display = 'block'	
 	}
 		
-	if(!(snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/') == null)) {
-		meetingIdInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/meetingId').val()
-		meetingPasswordInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/passwordId').val()
-	}
-	else {
+	if(snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/') == null) {
 		var onlineDict = {}
 		var credentialsDict =
 			{
@@ -264,6 +262,10 @@ dataRef.once("value", function(snapshot) {
 			}
 		onlineDict['onlineSession'] = credentialsDict
 		dataRef.child(userId+'/sessions/'+sessionId).update(onlineDict)
+	}
+	else {
+		meetingIdInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/meetingId').val()
+		meetingPasswordInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/passwordId').val()
 	}
 			    
 			    
