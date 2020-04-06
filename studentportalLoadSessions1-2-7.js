@@ -5,10 +5,11 @@ function getTutorsInfo(ID) {
    dataRef.once("value", async function(snapshot) {
       var tutorsName = await snapshot.child(ID+"/name/").val()
       infoArray.push(tutorsName)
-      var tutorsImage = awaitsnapshot.child(ID+"/profileURL/").val()
+      var tutorsImage = await snapshot.child(ID+"/profileURL/").val()
       infoArray.push(tutorsImage)
 
    })
+   console.log(infoArray)
    return(infoArray)              
 }
 
