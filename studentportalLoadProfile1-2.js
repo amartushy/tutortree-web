@@ -61,8 +61,8 @@ function loadProfileInformation(studentsId) {
               smsOffButton.style.color = "white"
             
               smsOnButton.style.backgroundColor = "transparent"
-              smsOnButton.style.color = "#EC7764"
-              smsOnButton.style.borderColor = "#EC7764"
+              smsOnButton.style.color = "#ADDCCB"
+              smsOnButton.style.borderColor = "#ADDCCB"
         }      
     })
 }
