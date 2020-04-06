@@ -201,6 +201,6 @@ function loadStudentsUpcomingAndPending(userId) {
         appendToUpcomingStudent()
         }
     }
-})
 }
+
 		   
