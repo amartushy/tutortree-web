@@ -361,8 +361,10 @@ async function updateZoomCredentials(session, student, tutor) {
 			}
 	onlineDict['onlineSession'] = credentialsDict
 	await dataRef.child(tutor+'/sessions/'+session).update(onlineDict)
+	await dataRef.child(student+'/sessions/'+session).update(onlineDict)
 	
 	alert("Thanks for updating the sessions Meeting Id's! Your student has been notified of the change.")
+	//TODO: Notifications for if meeting id is updated
 }
 //ASSIGNMENT VARS FOR RESCHEDULING
 var daySeconds = 0
