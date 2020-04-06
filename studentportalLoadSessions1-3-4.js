@@ -55,7 +55,13 @@ function loadStudentsUpcomingAndPending(userId) {
     var upcomingSectionStudent = document.getElementById('upcoming-section-student')
     var pendingSectionStudent = document.getElementById('pending-section-student')
     
+    var tutortreeLogo = "https://firebasestorage.googleapis.com/v0/b/tutor-faa48.appspot.com/o/images%2Fzqrvuzfvgdkxnpew.jpg?alt=media&token=e898937e-8cdc-4180-8a6a-6e5aeb3ed676"
+        
     sessionsRef.on("value", function(snapshot) {
+    //tutors info
+    var tutorId = snapshot.child(sessionId+'/other/').val()
+    var tutorInfoArray = getTutorsInfo(tutorId)
+    
     //remove all elements
     while(upcomingSectionStudent.firstChild) {
           upcomingSectionStudent.removeChild(upcomingSectionStudent.firstChild)
@@ -97,7 +103,7 @@ function loadStudentsUpcomingAndPending(userId) {
         tutorsImage.setAttribute("class", "tutors-image")
         tutorContainer.appendChild(tutorsImage)
         if (tutorInfoArray[1].length > 100) {
-		        tutorsImage.src =  getTutorsInfo(tutorId)[1]
+		        tutorsImage.src =  tutorInfoArray[1]
 	      } else {	
 		        tutorsImage.src = tutortreeLogo
 	      }
@@ -109,7 +115,7 @@ function loadStudentsUpcomingAndPending(userId) {
         var upcomingHeaderTutor = document.createElement("h3")
         upcomingHeaderTutor.setAttribute("class", "upcoming-header-tutor")
         headerAndDateTutor.appendChild(upcomingHeaderTutor)
-        upcomingHeaderTutor.innerHTML = getTutorsInfo(tutorId)[0]
+        upcomingHeaderTutor.innerHTML = tutorInfoArray[0]
           
         var dateAndTimeStudent = document.createElement("h4")
         dateAndTimeStudent.setAttribute("class", "date-and-time-student")
