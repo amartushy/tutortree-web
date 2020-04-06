@@ -82,8 +82,6 @@ function loadStudentsUpcomingAndPending(userId) {
         
         //tutor info
         var tutorId = snapshot.child(sessionId+'/other/').val()
-        var tutorInfoArray = getTutorsInfo(tutorId)
-
         var tutortreeLogo = "https://firebasestorage.googleapis.com/v0/b/tutor-faa48.appspot.com/o/images%2Fzqrvuzfvgdkxnpew.jpg?alt=media&token=e898937e-8cdc-4180-8a6a-6e5aeb3ed676"
         
         var upcomingBlockStudent = document.createElement("div")
@@ -99,7 +97,7 @@ function loadStudentsUpcomingAndPending(userId) {
         tutorsImage.setAttribute("class", "tutors-image")
         tutorContainer.appendChild(tutorsImage)
         if (tutorInfoArray[1].length > 100) {
-		        tutorsImage.src =  tutorInfoArray[1]
+		        tutorsImage.src =  getTutorsInfo(tutorId)[1]
 	      } else {	
 		        tutorsImage.src = tutortreeLogo
 	      }
@@ -111,7 +109,7 @@ function loadStudentsUpcomingAndPending(userId) {
         var upcomingHeaderTutor = document.createElement("h3")
         upcomingHeaderTutor.setAttribute("class", "upcoming-header-tutor")
         headerAndDateTutor.appendChild(upcomingHeaderTutor)
-        upcomingHeaderTutor.innerHTML = tutorInfoArray[0]
+        upcomingHeaderTutor.innerHTML = getTutorsInfo(tutorId)[0]
           
         var dateAndTimeStudent = document.createElement("h4")
         dateAndTimeStudent.setAttribute("class", "date-and-time-student")
