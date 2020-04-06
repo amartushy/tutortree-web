@@ -1,5 +1,5 @@
 var dataRef = database.ref("updateDatabase/users/")
-
+    
 function getTutorsInfo(ID) {
    var infoArray = []
    dataRef.once("value", function(snapshot) {
@@ -26,10 +26,6 @@ function appendToUpcomingStudent() {
     var items = upcomingArrayStudent.length
     var upcomingSectionStudent = document.getElementById('upcoming-section-student')
     
-    //remove all elements
-    while(upcomingSectionStudent.firstChild) {
-          upcomingSectionStudent.removeChild(upcomingSectionStudent.firstChild)
-    }
     for( i=0 ; i < items ; i++ ) {
     	var timestampID = upcomingArrayStudent[i]
     	var upcomingBlockStudent = document.getElementById(timestampID)
@@ -40,20 +36,27 @@ function appendToUpcomingStudent() {
 //Main load function
 function loadStudentsUpcomingAndPending(userId) {
     var sessionsRef = dataRef.child(userId+"/sessions/")
+    var upcomingSectionStudent = document.getElementById('upcoming-section-student')
+    var pendingSectionStudent = document.getElementById('pending-section-student')
     
     sessionsRef.on("value", function(snapshot) {
+    //remove all elements
+    while(upcomingSectionStudent.firstChild) {
+          upcomingSectionStudent.removeChild(upcomingSectionStudent.firstChild)
+    }
+    while(pendingSectionStudent.firstChild) {
+          pendingSectionStudent.removeChild(pendingSectionStudent.firstChild)
+    }	   
     //var currentTime = Math.round((new Date()).getTime() / 1000);
     var todaysEpoch = new Date()
     var currentTime = todaysEpoch.setHours(0,0,0,0)/1000
     var hasUpcoming = false
     var hasPending = false
-    var upcomingSectionStudent = document.getElementById('upcoming-section-student')
-    var pendingSectionStudent = document.getElementById('pending-section-student')
+
     
     for (sessionId in snapshot.val()) {
-	  console.log(snapshot.child(sessionId+"/start/").val())
-	    console.log(currentTime)
-    	  if(snapshot.child(sessionId+"/start/").val() > currentTime){
+	  
+    	if(snapshot.child(sessionId+"/start/").val() > currentTime){
 	console.log(sessionId)
       	hasUpcoming = true
         //session info
@@ -199,9 +202,10 @@ function loadStudentsUpcomingAndPending(userId) {
             pendingSectionStudent.appendChild(upcomingBlockStudent)
         }
           
-        appendToUpcomingStudent()
+        
         }
     }
+    appendToUpcomingStudent()
 })
 
 }		   
