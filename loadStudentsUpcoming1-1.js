@@ -7,7 +7,7 @@ async function getTutorsInfo(ID) {
       var tutorsImage = snapshot.child(ID+"/profileURL/").val()
      
       infoArray.push(tutorsName, tutorsImage)
-   }
+   })
    return(infoArray)              
 }
 
