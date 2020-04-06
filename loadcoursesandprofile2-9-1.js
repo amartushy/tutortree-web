@@ -355,18 +355,18 @@ dataRef.once("value", function(snapshot) {
 }
 
 async function updateZoomCredentials(session, student, tutor) {
-	var meetingId = document.getElementById(session+"-meetingId").value
-	var passwordId = document.getElementById(session+"-passwordId").value
+	var meetingId = document.getElementById(session+"-meetingId")
+	var passwordId = document.getElementById(session+"-passwordId")
 	var onlineDict = {}
 		var credentialsDict =
 			{
-			'meetingId' : meetingId,
-			'passwordId' : passwordId
+			'meetingId' : meetingId.value,
+			'passwordId' : passwordId.value
 			}
 	onlineDict['onlineSession'] = credentialsDict
 	await dataRef.child(tutor+'/sessions/'+session).update(onlineDict)
 	
-	location.reload()
+	alert("Thanks for updating the sessions Meeting Id's! Your student has been notified of the change.")
 }
 //ASSIGNMENT VARS FOR RESCHEDULING
 var daySeconds = 0
