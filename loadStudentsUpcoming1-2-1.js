@@ -1,8 +1,8 @@
 var dataRef = database.ref("updateDatabase/users/")
 
-async function getTutorsInfo(ID) {
+function getTutorsInfo(ID) {
    var infoArray = []
-   await dataRef.once("value", function(snapshot) {
+   dataRef.once("value", function(snapshot) {
       var tutorsName = snapshot.child(ID+"/name/").val()
       var tutorsImage = snapshot.child(ID+"/profileURL/").val()
      
