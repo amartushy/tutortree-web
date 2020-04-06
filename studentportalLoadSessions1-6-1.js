@@ -183,7 +183,7 @@ function loadStudentsUpcomingAndPending(userId) {
         var meetingIdStudent = document.createElement("div")
         meetingIdStudent.setAttribute("class", "meeting-id-student")
         meetingIdBlockStudent.appendChild(meetingIdStudent)
-        var meetingId = snapshot.child("/onlineSession/meetingId/").val()
+        var meetingId = snapshot.child(sessionId+"/onlineSession/meetingId/").val()
         if ( meetingId == null ) {
             meetingIdStudent.innerHTML = "Not updated yet"
         } else {
@@ -202,9 +202,8 @@ function loadStudentsUpcomingAndPending(userId) {
         var meetingPasswordIdStudent = document.createElement("div")
         meetingPasswordIdStudent.setAttribute("class", "meeting-password-id-student")
         passwordIdBlockStudent.appendChild(meetingPasswordIdStudent)
-	console.log(snapshot.child("onlineSession").val())
-	console.log(snapshot.child("/onlineSession/passwordId/").val())
-        var meetingPasswordId = snapshot.child("/onlineSession/passwordId/").val()
+
+        var meetingPasswordId = snapshot.child(sessionId+"/onlineSession/passwordId/").val()
         if ( meetingPasswordId == null ) {
             meetingPasswordIdStudent.innerHTML = "Not updated yet"
         } else {
@@ -216,10 +215,20 @@ function loadStudentsUpcomingAndPending(userId) {
         if (isPending == 1) {
             upcomingSectionStudent.appendChild(upcomingBlockStudent)
             upcomingArrayStudent.push(startTimeEpoch)
+	    pendingLabelStudent.style.display = "none"
+	    confirmedLabelStudent.style.display = "block"
+	
+	    document.getElementById("student-no-pending").style.display = "none"
+            document.getElementById("student-no-pending").style.display = "flex"
               
         } else {
             pendingSectionStudent.appendChild(upcomingBlockStudent)
 	    pendingArrayStudent.push(startTimeEpoch)
+	    pendingLabelStudent.style.display = "block"
+	    confirmedLabelStudent.style.display = "none"
+		
+ 	    document.getElementById("student-no-pending").style.display = "flex"
+            document.getElementById("student-no-pending").style.display = "none"
         }
           
         
