@@ -71,15 +71,15 @@ function loadStudentsUpcomingAndPending(userId) {
       	hasUpcoming = true
 	//tutors info
     	var tutorId = snapshot.child(sessionId+'/other/').val()
-	var tutorsSnapshot = null
+	var tutorsName;
+	var tutorsImage;
+
 	var tutorRef = dataRef.child(tutorId)
 	tutorRef.once("value", function(snapshot) {
-      		//tutorsName =  snapshot.child(tutorId+"/name/").val()
-      		//tutorsImage = snapshot.child(tutorId+"/profileURL/").val()
-		tutorsSnapshot = snapshot
+      		tutorsName =  snapshot.child(tutorId+"/name/").val()
+      		tutorsImage = snapshot.child(tutorId+"/profileURL/").val()
    	})
-	console.log(tutorsSnapshot.child("/name/").val())
-	
+
         //session info
         var startTimeEpoch = snapshot.child(sessionId+'/start').val()
         var endTimeEpoch = snapshot.child(sessionId+'/end').val()
@@ -101,8 +101,8 @@ function loadStudentsUpcomingAndPending(userId) {
 	      var tutorsImage = document.createElement("img")
         tutorsImage.setAttribute("class", "tutors-image")
         tutorContainer.appendChild(tutorsImage)
-        if (tutorsSnapshot.child("/profileURL/").val().length > 100) {
-		        tutorsImage.src =  tutorsSnapshot.child("/profileURL/").val()
+        if (tutorsImage.length > 100) {
+		        tutorsImage.src =  tutorsImage
 	      } else {	
 		        tutorsImage.src = tutortreeLogo
 	      }
@@ -114,7 +114,7 @@ function loadStudentsUpcomingAndPending(userId) {
         var upcomingHeaderTutor = document.createElement("h3")
         upcomingHeaderTutor.setAttribute("class", "upcoming-header-tutor")
         headerAndDateTutor.appendChild(upcomingHeaderTutor)
-        upcomingHeaderTutor.innerHTML = tutorsSnapshot.child("/name/").val()
+        upcomingHeaderTutor.innerHTML = tutorsName
           
         var dateAndTimeStudent = document.createElement("h4")
         dateAndTimeStudent.setAttribute("class", "date-and-time-student")
