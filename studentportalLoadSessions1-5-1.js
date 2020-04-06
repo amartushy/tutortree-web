@@ -75,7 +75,7 @@ function loadStudentsUpcomingAndPending(userId) {
       		//tutorsImage = snapshot.child(tutorId+"/profileURL/").val()
 		tutorsSnapshot = snapshot
    	})
-	console.log(tutorsSnapshot.child(tutorId+"/name/").val())
+	console.log(tutorsSnapshot.child("/name/").val())
 	
         //session info
         var startTimeEpoch = snapshot.child(sessionId+'/start').val()
@@ -98,7 +98,7 @@ function loadStudentsUpcomingAndPending(userId) {
 	      var tutorsImage = document.createElement("img")
         tutorsImage.setAttribute("class", "tutors-image")
         tutorContainer.appendChild(tutorsImage)
-        if (tutorsSnapshot.child(tutorId+"/profileURL/").val().length > 100) {
+        if (tutorsSnapshot.child("/profileURL/").val().length > 100) {
 		        tutorsImage.src =  tutorsSnapshot.child(tutorId+"/profileURL/").val()
 	      } else {	
 		        tutorsImage.src = tutortreeLogo
@@ -111,7 +111,7 @@ function loadStudentsUpcomingAndPending(userId) {
         var upcomingHeaderTutor = document.createElement("h3")
         upcomingHeaderTutor.setAttribute("class", "upcoming-header-tutor")
         headerAndDateTutor.appendChild(upcomingHeaderTutor)
-        upcomingHeaderTutor.innerHTML = tutorsSnapshot.child(tutorId+"/name/").val()
+        upcomingHeaderTutor.innerHTML = tutorsSnapshot.child("/name/").val()
           
         var dateAndTimeStudent = document.createElement("h4")
         dateAndTimeStudent.setAttribute("class", "date-and-time-student")
