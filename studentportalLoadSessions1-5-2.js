@@ -99,7 +99,7 @@ function loadStudentsUpcomingAndPending(userId) {
         tutorsImage.setAttribute("class", "tutors-image")
         tutorContainer.appendChild(tutorsImage)
         if (tutorsSnapshot.child("/profileURL/").val().length > 100) {
-		        tutorsImage.src =  tutorsSnapshot.child(tutorId+"/profileURL/").val()
+		        tutorsImage.src =  tutorsSnapshot.child("/profileURL/").val()
 	      } else {	
 		        tutorsImage.src = tutortreeLogo
 	      }
