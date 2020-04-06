@@ -1,5 +1,5 @@
 var dataRef = database.ref("updateDatabase/users/")
-    
+/*    
 function getTutorsInfo(ID) {
    var infoArray = []
    dataRef.once("value", function(snapshot) {
@@ -10,7 +10,7 @@ function getTutorsInfo(ID) {
 
    })
    return(infoArray)              
-}
+}*/
 
 function getTutorsName(ID) {
 	dataRef.once("value", function(snapshot) {
@@ -92,7 +92,7 @@ function loadStudentsUpcomingAndPending(userId) {
       	hasUpcoming = true
 	//tutors info
     	var tutorId = snapshot.child(sessionId+'/other/').val()
-    	var tutorInfoArray = await getTutorsInfo(tutorId)
+    	//var tutorInfoArray = await getTutorsInfo(tutorId)
     
         //session info
         var startTimeEpoch = snapshot.child(sessionId+'/start').val()
