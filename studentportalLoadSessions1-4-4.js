@@ -70,9 +70,9 @@ function loadStudentsUpcomingAndPending(userId) {
     	var tutorId = snapshot.child(sessionId+'/other/').val()
     	var tutorsName = ""
 	var tutorsImage = ""
-	dataRef.once("value", function(snapshot) {
-      		tutorsName = snapshot.child(tutorId+"/name/").val()
-      		tutorsImage = snapshot.child(tutorId+"/profileURL/").val()
+	dataRef.once("value", async function(snapshot) {
+      		tutorsName = await snapshot.child(tutorId+"/name/").val()
+      		tutorsImage = await snapshot.child(tutorId+"/profileURL/").val()
    	})
 	
     
