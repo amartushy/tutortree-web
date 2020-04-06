@@ -245,7 +245,7 @@ dataRef.once("value", function(snapshot) {
 	meetingPasswordInput.setAttribute("class", "meeting-password-input")
 	passwordIdBlock.appendChild(meetingPasswordInput)
 		
-	if(snapshot.child(userId+'/sessions/'+sessionId+'/online/')) {
+	if(snapshot.child(userId+'/sessions/'+sessionId+'/online/') == null) {
 		meetingIdInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/online/meetingId').val()
 		meetingPasswordInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/online/passwordId').val()
 	}
