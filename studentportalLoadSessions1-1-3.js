@@ -51,9 +51,9 @@ function loadStudentsUpcomingAndPending(userId) {
     var pendingSection = document.getElementById('pending-section-student')
     
     for (sessionId in Object.keys(snapshot.val())) {
+	  console.log(sessionId) 
     	  if(snapshot.child(sessionId+"/start/").val() > currentTime){
-          
-	   console.log(sessionId)
+
       	hasUpcoming = true
         //session info
         var startTimeEpoch = snapshot.child(sessionId+'/start').val()
