@@ -76,7 +76,7 @@ function loadStudentsUpcomingAndPending(userId) {
       		tutorsImage = snapshot.child(tutorId+"/profileURL/").val()
 		tutorsSnapshot = snapshot
    	})
-	console.log(tutorsSnapshot)
+	console.log(tutorsSnapshot.child(tutorId+"/name/").val())
 	
         //session info
         var startTimeEpoch = snapshot.child(sessionId+'/start').val()
