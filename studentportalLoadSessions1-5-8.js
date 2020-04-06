@@ -202,7 +202,7 @@ function loadStudentsUpcomingAndPending(userId) {
         var meetingPasswordIdStudent = document.createElement("div")
         meetingPasswordIdStudent.setAttribute("class", "meeting-password-id-student")
         passwordIdBlockStudent.appendChild(meetingPasswordIdStudent)
-	console.log(snapshot.child("/onlineSession/").val())
+	console.log(snapshot.val())
 	console.log(snapshot.child("/onlineSession/passwordId/").val())
         var meetingPasswordId = snapshot.child("/onlineSession/passwordId/").val()
         if ( meetingPasswordId == null ) {
