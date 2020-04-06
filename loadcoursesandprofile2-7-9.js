@@ -209,7 +209,7 @@ dataRef.once("value", function(snapshot) {
 	var updateIdButton = document.createElement("div")
 	updateIdButton.setAttribute("class", "update-id-button")
 	zoomLogoAndUpdate.appendChild(updateIdButton)
-	updateIdButton.setAttribute("onClick", "updateZoomCredentials('"+sessionId+"','"+studentID+"','"+userId+"')")
+	updateIdButton.setAttribute("onClick", "updateZoomCredentials('"+sessionId+"','"+studentId+"','"+userId+"')")
 	//updateIdButton.style.display = 'none'
 		
 	var zoomIdBlock = document.createElement("div")
