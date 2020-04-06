@@ -12,7 +12,7 @@ function loadProfileInformation(studentsId) {
     smsOnButton.setAttribute("onClick", "updateSms('true','"+studentsId+"')")
 
     var smsOffButton = document.getElementById("sms-off-button")
-    smsOnButton.setAttribute("onClick", "updateSms('false','"+studentsId+"')")
+    smsOffButton.setAttribute("onClick", "updateSms('false','"+studentsId+"')")
     
     studentsRef.on("value", function(snapshot) {
         var studentsName = snapshot.child("/name/").val()
@@ -49,14 +49,14 @@ function loadProfileInformation(studentsId) {
 }
 
 function updateEmail(value, ID) {
-      console.log(ID)
-      console.log(value)
-      console.log(dataRef.child(ID+"/emailNotifications/"))   
+      var updateDict = {}
+      updateDict['emailNotifications'] = value
+      dataRef.child(ID).update(updateDict)
 }
 function updateSms(value, ID) {
-      console.log(ID)
-      console.log(value)
-      console.log(dataRef.child(ID+"/smsNotifications/"))   
+      var updateDict = {}
+      updateDict['smsNotifications'] = value
+      dataRef.child(ID).update(updateDict)  
 }
                        
                    
