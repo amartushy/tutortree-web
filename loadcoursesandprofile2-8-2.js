@@ -246,8 +246,8 @@ dataRef.once("value", function(snapshot) {
 	passwordIdBlock.appendChild(meetingPasswordInput)
 		
 	if(snapshot.child(userId+'/sessions/'+sessionId+'/online/')) {
-		meetingIdInput.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/online/meetingId').val()
-		meetingPasswordInput.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/online/passwordId').val()
+		meetingIdInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/online/meetingId').val()
+		meetingPasswordInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/online/passwordId').val()
 	}
 	else {
 		var onlineDict = {}
