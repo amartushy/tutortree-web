@@ -1,8 +1,8 @@
 var dataRef = database.ref("updateDatabase/users/")
     
-function getTutorsInfo(ID) {
+async function getTutorsInfo(ID) {
    var infoArray = []
-   dataRef.once("value", function(snapshot) {
+   await dataRef.once("value", function(snapshot) {
       var tutorsName = snapshot.child(ID+"/name/").val()
       var tutorsImage = snapshot.child(ID+"/profileURL/").val()
      
@@ -19,7 +19,12 @@ function sortNumberStudent(a,b) {
 var upcomingArrayStudent = []
 function updateUpcomingArrayStudent(timestamp) {
 		upcomingArrayStudent.push(timestamp)
-    upcomingArrayStudent.sort(sortNumber)
+    upcomingArrayStudent.sort(sortNumberStudent)
+}
+var pendingArrayStudent = []
+function updatependingArrayStudent(timeStamp) {
+	pendingArrayStudent.push(timeStamp)
+	pendingArrayStudent.sort(sortNumberStudent)
 }
 
 function appendToUpcomingStudent() {
@@ -30,6 +35,16 @@ function appendToUpcomingStudent() {
     	var timestampID = upcomingArrayStudent[i]
     	var upcomingBlockStudent = document.getElementById(timestampID)
         upcomingSectionStudent.appendChild(upcomingBlockStudent)
+    }
+}
+function appendtoPendingStudent() {
+    var items = pendingArrayStudent.length
+    var pendingSectionStudent = document.getElementById('pending-section-student')
+    
+    for( i=0 ; i < items ; i++ ) {
+    	var timestampID = pendingArrayStudent[i]
+    	var upcomingBlockStudent = document.getElementById(timestampID)
+        pendingSectionStudent.appendChild(upcomingBlockStudent)
     }
 }
 
