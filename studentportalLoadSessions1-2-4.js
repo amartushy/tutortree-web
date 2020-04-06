@@ -215,12 +215,14 @@ function loadStudentsUpcomingAndPending(userId) {
               
         } else {
             pendingSectionStudent.appendChild(upcomingBlockStudent)
+	    pendingArrayStudent.push(startTimeEpoch)
         }
           
         
         }
     }
     appendToUpcomingStudent()
+    appendToPendingStudent()
 })
 
 }		   
