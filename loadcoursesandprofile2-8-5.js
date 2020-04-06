@@ -210,7 +210,7 @@ dataRef.once("value", function(snapshot) {
 	updateIdButton.setAttribute("class", "update-id-button")
 	zoomLogoAndUpdate.appendChild(updateIdButton)
 	updateIdButton.setAttribute("onClick", "updateZoomCredentials('"+sessionId+"','"+studentId+"','"+userId+"')")
-	//updateIdButton.style.display = 'none'
+	updateIdButton.style.display = 'none'
 	updateIdButton.innerHTML = "Update ID's"
 		
 	var zoomIdBlock = document.createElement("div")
@@ -230,6 +230,10 @@ dataRef.once("value", function(snapshot) {
 	meetingIdInput.setAttribute("type", "text")
 	meetingIdInput.setAttribute("class", "meeting-id-input")
 	meetingIdBlock.appendChild(meetingIdInput)
+	meetingIdInput.on("focus", function() {
+    		updateIdButton.style.display = 'block'
+		
+	});
 		
 	var passwordIdBlock = document.createElement("div")
 	passwordIdBlock.setAttribute("class", "password-id-block")
@@ -244,10 +248,14 @@ dataRef.once("value", function(snapshot) {
 	meetingPasswordInput.setAttribute("type", "text")
 	meetingPasswordInput.setAttribute("class", "meeting-password-input")
 	passwordIdBlock.appendChild(meetingPasswordInput)
+	meetingPasswordInput.on("focus", function() {
+    		updateIdButton.style.display = 'block'
 		
-	if(snapshot.child(userId+'/sessions/'+sessionId+'/online/') == null) {
-		meetingIdInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/online/meetingId').val()
-		meetingPasswordInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/online/passwordId').val()
+	});
+		
+	if(!(snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/') == null)) {
+		meetingIdInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/meetingId').val()
+		meetingPasswordInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/passwordId').val()
 	}
 	else {
 		var onlineDict = {}
@@ -257,8 +265,7 @@ dataRef.once("value", function(snapshot) {
 			'passwordId' : '000000'
 			}
 		onlineDict['onlineSession'] = credentialsDict
-		console.log(onlineDict)
-		console.log(dataRef.child(userId+'/sessions/'+sessionId))	
+		dataRef.child(userId+'/sessions/'+sessionId).update(onlineDict)
 	}
 			    
 			    
@@ -347,8 +354,19 @@ dataRef.once("value", function(snapshot) {
 
 }
 
-function updateZoomCredentials(session, student, tutor) {
-	console.log(session + ", "+student+", "+tutor)	
+async function updateZoomCredentials(session, student, tutor) {
+	var meetingId = document.getElementById(session+"-meetingId").value
+	var passwordId = document.getElementById(session+"-passwordId").value
+	var onlineDict = {}
+		var credentialsDict =
+			{
+			'meetingId' : meetingId,
+			'passwordId' : passwordId
+			}
+	onlineDict['onlineSession'] = credentialsDict
+	await dataRef.child(tutor+'/sessions/'+session).update(onlineDict)
+	
+	location.reload()
 }
 //ASSIGNMENT VARS FOR RESCHEDULING
 var daySeconds = 0
