@@ -256,7 +256,7 @@ dataRef.once("value", function(snapshot) {
 			}
 		onlineDict['onlineSession'] = credentialsDict
 		console.log(onlineDict)
-		console.log(dataRef.child(userId+'/sessions/'+sessionId)	
+		console.log(dataRef.child(userId+'/sessions/'+sessionId))	
 	}
 			    
 			    
