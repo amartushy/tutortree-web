@@ -1,18 +1,6 @@
 var dataRef = database.ref("updateDatabase/users/")
 
 
-function getTutorsInfo(ID) {
-   var infoArray = []
-   dataRef.once("value", function(snapshot) {
-      var tutorsName = snapshot.child(ID+"/name/").val()
-      infoArray.push(tutorsName)
-      var tutorsImage = snapshot.child(ID+"/profileURL/").val()
-      infoArray.push(tutorsImage)
-
-   })
-   return(infoArray)              
-}
-
 //Associated sort upcoming functions
 function sortNumberStudent(a,b) {
 	return(a-b)
@@ -80,8 +68,13 @@ function loadStudentsUpcomingAndPending(userId) {
       	hasUpcoming = true
 	//tutors info
     	var tutorId = snapshot.child(sessionId+'/other/').val()
-    	var tutorInfoArray = await getTutorsInfo(tutorId)
-	console.log(tutorInfoArray)
+    	var tutorsName = ""
+	var tutorsImage = ""
+	dataRef.once("value", function(snapshot) {
+      		tutorsName = snapshot.child(ID+"/name/").val()
+      		tutorsImage = snapshot.child(ID+"/profileURL/").val()
+   	})
+	
     
         //session info
         var startTimeEpoch = snapshot.child(sessionId+'/start').val()
@@ -104,8 +97,8 @@ function loadStudentsUpcomingAndPending(userId) {
 	      var tutorsImage = document.createElement("img")
         tutorsImage.setAttribute("class", "tutors-image")
         tutorContainer.appendChild(tutorsImage)
-        if (tutorInfoArray[1].length > 100) {
-		        tutorsImage.src =  tutorInfoArray[1]
+        if (tutorsImage.length > 100) {
+		        tutorsImage.src =  tutorsImage
 	      } else {	
 		        tutorsImage.src = tutortreeLogo
 	      }
@@ -117,7 +110,7 @@ function loadStudentsUpcomingAndPending(userId) {
         var upcomingHeaderTutor = document.createElement("h3")
         upcomingHeaderTutor.setAttribute("class", "upcoming-header-tutor")
         headerAndDateTutor.appendChild(upcomingHeaderTutor)
-        upcomingHeaderTutor.innerHTML = tutorInfoArray[1]
+        upcomingHeaderTutor.innerHTML = tutorsName
           
         var dateAndTimeStudent = document.createElement("h4")
         dateAndTimeStudent.setAttribute("class", "date-and-time-student")
