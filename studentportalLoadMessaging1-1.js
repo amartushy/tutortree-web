@@ -6,7 +6,7 @@ function loadAllConnections(userId) {
 	allConnectionsRef.once("value", function(snapshot) {
     
     	for ( connection in snapshot.val() ) {
-    		if (snapshot.child(connection+"/tutor/").val() == userId) {
+    		if (snapshot.child(connection+"/student/").val() == userId) {
         		createMessagingBlock(connection)
     		}
     	}
