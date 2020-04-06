@@ -268,7 +268,8 @@ dataRef.once("value", function(snapshot) {
 		
 		pendingContainer.appendChild(rescheduleButton)
 		pendingContainer.appendChild(cancelButton)
-		
+		upcomingBlock.appendChild(zoomForm)
+
 		updateUpcomingArray(startTimeEpoch)
 		
 	} else  {
@@ -283,7 +284,6 @@ dataRef.once("value", function(snapshot) {
 		pendingContainer.appendChild(cancelButton)
 		
 		pendingContainer.setAttribute('id', sessionId+"-container")
-		upcomingBlock.appendChild(zoomForm)
         	pendingSection.appendChild(upcomingBlock)
 		}
         }
