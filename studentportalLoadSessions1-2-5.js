@@ -37,7 +37,7 @@ function appendToUpcomingStudent() {
         upcomingSectionStudent.appendChild(upcomingBlockStudent)
     }
 }
-function appendtoPendingStudent() {
+function appendToPendingStudent() {
     var items = pendingArrayStudent.length
     var pendingSectionStudent = document.getElementById('pending-section-student')
     
