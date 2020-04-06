@@ -14,7 +14,7 @@ function loadProfileInformation(studentsId) {
     var smsOffButton = document.getElementById("sms-off-button")
     smsOnButton.setAttribute("onClick", "updateSms('false','"+studentsId+"')")
     
-    var studentsRef.on("value", function(snapshot) {
+    studentsRef.on("value", function(snapshot) {
         var studentsName = snapshot.child("/name/").val()
         var studentsEmail = snapshot.child("/email/").val()
         var studentsImage = snapshot.child("/profileURL/").val()
