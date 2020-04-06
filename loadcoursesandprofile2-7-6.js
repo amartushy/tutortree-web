@@ -195,44 +195,55 @@ dataRef.once("value", function(snapshot) {
 		
 	var zoomContainerForm = document.createElement("FORM")
 	zoomContainerForm.setAttribute("class", "zoom-container-form")
+	zoomForm.appendChild(zoomContainerForm)
 		
 	var zoomLogoAndUpdate = document.createElement("div")
 	zoomLogoAndUpdate.setAttribute("class", "zoom-logo-and-update")
+	zoomContainerForm.appendChild(zoomLogoAndUpdate)
 		
 	var zoomLogo = document.createElement("img")
 	zoomLogo.setAttribute("class", "zoom-logo")
+	zoomLogoAndUpdate.appendChild(zoomLogo)	
 	zoomLogo.src = snapshot.child('M7nAacU7kANeklFALvsvkLGsbrp1/profileURL/').val()	
 		
 	var updateIdButton = document.createElement("div")
 	updateIdButton.setAttribute("class", "update-id-button")
+	zoomLogoAndUpdate.appendChild(updateIdButton)
 	updateIdButton.setAttribute("onClick", "updateZoomCredentials('"+sessionId+"','"+studentID+"','"+userId+"')")
-	updateIdButton.style.display = 'none'
+	//updateIdButton.style.display = 'none'
 		
 	var zoomIdBlock = document.createElement("div")
 	zoomIdBlock.setAttribute("class", "zoom-id-block")
+	zoomContainerForm.appendChild(zoomIdBlock)
 		
 	var meetingIdBlock = document.createElement("div")
 	meetingIdBlock.setAttribute("class", "meeting-id-block")
+	zoomIdBlock.appendChild(meetingIdBlock)
 		
 	var meetingIdHeader = document.createElement("h5")
 	meetingIdHeader.setAttribute("class", "meeting-id-header")
 	meetingIdHeader.innerHTML = "Meeting ID:"
+	meetingIdBlock.appendChild(meetingIdHeader)
 		
 	var meetingIdInput = document.createElement("INPUT")
 	meetingIdInput.setAttribute("type", "text")
 	meetingIdInput.setAttribute("class", "meeting-id-input")
+	meetingIdBlock.appendChild(meetingIdInput)
 		
 	var passwordIdBlock = document.createElement("div")
 	passwordIdBlock.setAttribute("class", "password-id-block")
-
+	zoomIdBlock.appendChild(passwordIdBlock)
+		
 	var meetingPasswordHeader = document.createElement("h5")
 	meetingPasswordHeader.setAttribute("class", "meeting-password-header")
+	passwordIdBlock.appendChild(meetingPasswordHeader)	
 	meetingPasswordHeader.innerHTML = "Meeting Password:"
 		
 	var meetingPasswordInput = document.createElement("INPUT")
 	meetingPasswordInput.setAttribute("type", "text")
 	meetingPasswordInput.setAttribute("class", "meeting-password-input")
-	
+	passwordIdBlock.appendChild(meetingPasswordInput)
+		
 	try {
 		meetingIdInput.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/online/meetingId').val()
 		meetingPasswordInput.innerHTML = snapshot.child(userId+'/sessions/'+sessionId+'/online/passwordId').val()
@@ -245,8 +256,7 @@ dataRef.once("value", function(snapshot) {
 			}
 		onlineDict['onlineSession'] = credentialsDict
 		console.log(onlineDict)
-		console.log(dataRef.child(userId+'/sessions/'+sessionId)
-		
+		console.log(dataRef.child(userId+'/sessions/'+sessionId)	
 	}
 			    
 			    
@@ -273,6 +283,7 @@ dataRef.once("value", function(snapshot) {
 		pendingContainer.appendChild(cancelButton)
 		
 		pendingContainer.setAttribute('id', sessionId+"-container")
+		upcomingBlock.appendChild(zoomForm)
         	pendingSection.appendChild(upcomingBlock)
 		}
         }
