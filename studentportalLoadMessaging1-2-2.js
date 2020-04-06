@@ -312,7 +312,7 @@ var hideMe = document.getElementById("tutors-contact-info")
 }
 
 function formatMessage(individual, message, messageId) {
-	var messageArea = document.getElementById("sp-messages-area")
+	var messageArea = document.getElementById("messages-area")
 	var messageContainer = document.createElement("div")
     	var messageBubble = document.createElement("div")
     
