@@ -312,17 +312,17 @@ var hideMe = document.getElementById("tutors-contact-info")
 }
 
 function formatMessage(individual, message, messageId) {
-	var messageArea = document.getElementById("messages-area")
+	var messageArea = document.getElementById("sp-messages-area")
 	var messageContainer = document.createElement("div")
     	var messageBubble = document.createElement("div")
     
     	if ( individual == "tutor" ) {
-    		messageContainer.setAttribute('class', 'SP-tutor-message-container')
-    		messageBubble.setAttribute('class', 'SP-tutor-message')
+    		messageContainer.setAttribute('class', 'sp-tutor-message-container')
+    		messageBubble.setAttribute('class', 'sp-tutor-message')
         
     	} else if ( individual == "student" ){
-    		messageContainer.setAttribute('class', 'SP-student-message-container')
-    		messageBubble.setAttribute('class', 'SP-student-message')
+    		messageContainer.setAttribute('class', 'sp-student-message-container')
+    		messageBubble.setAttribute('class', 'sp-student-message')
     	}
     
     	messageBubble.innerHTML = message
