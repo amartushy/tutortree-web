@@ -3,25 +3,28 @@
 function loadProfileInformation(studentsId) {
     var studentsRef = dataRef.child(studentsId)
     var emailOnButton = document.getElementById("email-on-button")
-    emailOnButton.setAttribute("onClick", "updateEmail('true','"+studentsId+"')")
+    emailOnButton.setAttribute("onClick", "updateEmail(true,'"+studentsId+"')")
   
     var emailOffButton = document.getElementById("email-off-button")
-    emailOffButton.setAttribute("onClick", "updateEmail('false','"+studentsId+"')")
+    emailOffButton.setAttribute("onClick", "updateEmail(false,'"+studentsId+"')")
   
     var smsOnButton = document.getElementById("sms-on-button")
-    smsOnButton.setAttribute("onClick", "updateSms('true','"+studentsId+"')")
+    smsOnButton.setAttribute("onClick", "updateSms(true,'"+studentsId+"')")
 
     var smsOffButton = document.getElementById("sms-off-button")
-    smsOffButton.setAttribute("onClick", "updateSms('false','"+studentsId+"')")
+    smsOffButton.setAttribute("onClick", "updateSms(false,'"+studentsId+"')")
     
     studentsRef.on("value", function(snapshot) {
         var studentsName = snapshot.child("/name/").val()
         var studentsEmail = snapshot.child("/email/").val()
+        var studentsImageArea = document.getElementById("profile-image-area")
+        while(studentsImageArea.firstChild) {
+                studentsImageArea.removeChild(studentsImageArea.firstChild)
+        }
         var studentsImage = document.createElement("img")
         studentsImage.setAttribute("class", "profile-image-student")
-        document.getElementById("profile-image-area").appendChild(studentsImage)
+        studentsImageArea.appendChild(studentsImage)
         studentsImage.src = snapshot.child("/profileURL/").val()
-        document.getElementById("profile-image-student").style.display = "none"
         
         var emailNotifications = snapshot.child("/emailNotifications/").val()
         var smsNotifications = snapshot.child("/smsNotifications/").val()
