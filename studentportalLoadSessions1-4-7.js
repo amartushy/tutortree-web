@@ -71,7 +71,7 @@ function loadStudentsUpcomingAndPending(userId) {
     	var tutorsName = ""
 	var tutorsImage = ""
 	var tutorsSnapshot = null
-	dataRef.once("value", function(snapshot) {
+	dataRef.on("value", function(snapshot) {
       		tutorsName =  snapshot.child(tutorId+"/name/").val()
       		tutorsImage = snapshot.child(tutorId+"/profileURL/").val()
 		tutorsSnapshot = snapshot
