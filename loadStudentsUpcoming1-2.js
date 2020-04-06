@@ -23,17 +23,16 @@ function updateUpcomingArrayStudent(timestamp) {
 }
 
 function appendToUpcomingStudent() {
-		var items = upcomingArrayStudent.length
+    var items = upcomingArrayStudent.length
     var upcomingSectionStudent = document.getElementById('upcoming-section-student')
     
     //remove all elements
     while(upcomingSectionStudent.firstChild) {
           upcomingSectionStudent.removeChild(upcomingSectionStudent.firstChild)
     }
-    
-		for( i=0 ; i < items ; i++ ) {
-    		var timestampID = upcomingArrayStudent[i]
-    		var upcomingBlockStudent = document.getElementById(timestampID)
+    for( i=0 ; i < items ; i++ ) {
+    	var timestampID = upcomingArrayStudent[i]
+    	var upcomingBlockStudent = document.getElementById(timestampID)
         upcomingSectionStudent.appendChild(upcomingBlockStudent)
     }
 }
@@ -202,4 +201,6 @@ function loadStudentsUpcomingAndPending(userId) {
         appendToUpcomingStudent()
         }
     }
+})
 }
+		   
