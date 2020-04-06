@@ -50,14 +50,14 @@ function appendToPendingStudent() {
 }
 
 //Main load function
-async function loadStudentsUpcomingAndPending(userId) {
+function loadStudentsUpcomingAndPending(userId) {
     var sessionsRef = dataRef.child(userId+"/sessions/")
     var upcomingSectionStudent = document.getElementById('upcoming-section-student')
     var pendingSectionStudent = document.getElementById('pending-section-student')
     
     var tutortreeLogo = "https://firebasestorage.googleapis.com/v0/b/tutor-faa48.appspot.com/o/images%2Fzqrvuzfvgdkxnpew.jpg?alt=media&token=e898937e-8cdc-4180-8a6a-6e5aeb3ed676"
         
-    sessionsRef.on("value", function(snapshot) {
+    sessionsRef.on("value", async function(snapshot) {
     //remove all elements
     while(upcomingSectionStudent.firstChild) {
           upcomingSectionStudent.removeChild(upcomingSectionStudent.firstChild)
