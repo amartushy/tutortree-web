@@ -107,7 +107,7 @@ function updateUpcomingArray(timestamp) {
 }
 
 // LOAD UPCOMING SESSIONS
-function loadUpcomingSessions(userID) {
+async function loadUpcomingSessions(userID) {
 dataRef.once("value", function(snapshot) {
     //var currentTime = Math.round((new Date()).getTime() / 1000);
     var todaysEpoch = new Date()
@@ -252,8 +252,10 @@ dataRef.once("value", function(snapshot) {
 	meetingPasswordInput.onfocus =  function() {
     		updateIdButton.style.display = 'block'	
 	}
+	var meetingIdValue = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/meetingId').val()
+	console.log(meetingIdValue)
 		
-	if(snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/') == null) {
+	if(meetingIdValue == null) {
 		var onlineDict = {}
 		var credentialsDict =
 			{
@@ -261,12 +263,12 @@ dataRef.once("value", function(snapshot) {
 			'passwordId' : '000000'
 			}
 		onlineDict['onlineSession'] = credentialsDict
-		dataRef.child(userId+'/sessions/'+sessionId).update(onlineDict)
+		await dataRef.child(userId+'/sessions/'+sessionId).update(onlineDict)
 	}
-	else {
-		meetingIdInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/meetingId').val()
-		meetingPasswordInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/passwordId').val()
-	}
+	
+	meetingIdInput.placeholder = meetingIdValue
+	meetingPasswordInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/passwordId').val()
+	
 			    
 			    
 			    
