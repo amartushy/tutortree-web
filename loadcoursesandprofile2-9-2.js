@@ -256,20 +256,16 @@ dataRef.once("value", function(snapshot) {
 	console.log(meetingIdValue)
 		
 	if(meetingIdValue == null) {
-		var onlineDict = {}
-		var credentialsDict =
-			{
-			'meetingId' : '000000000',
-			'passwordId' : '000000'
-			}
-		onlineDict['onlineSession'] = credentialsDict
-		dataRef.child(userId+'/sessions/'+sessionId).update(onlineDict)
+	
+		meetingIdInput.placeholder = "Please Update"
+		meetingPasswordInput.placeholder = "Please Update"
+		
+	} else {
+		meetingIdInput.placeholder = meetingIdValue
+		meetingPasswordInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/passwordId').val()
+		
 	}
-	
-	meetingIdInput.placeholder = meetingIdValue
-	meetingPasswordInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/passwordId').val()
-	
-			    		    
+		    		    
 	if (isPending == 1) {
 		upcomingSection.appendChild(upcomingBlock)
 		rescheduleButton.innerHTML = "RESCHEDULE"
