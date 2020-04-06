@@ -58,10 +58,6 @@ function loadStudentsUpcomingAndPending(userId) {
     var tutortreeLogo = "https://firebasestorage.googleapis.com/v0/b/tutor-faa48.appspot.com/o/images%2Fzqrvuzfvgdkxnpew.jpg?alt=media&token=e898937e-8cdc-4180-8a6a-6e5aeb3ed676"
         
     sessionsRef.on("value", function(snapshot) {
-    //tutors info
-    var tutorId = snapshot.child(sessionId+'/other/').val()
-    var tutorInfoArray = getTutorsInfo(tutorId)
-    
     //remove all elements
     while(upcomingSectionStudent.firstChild) {
           upcomingSectionStudent.removeChild(upcomingSectionStudent.firstChild)
@@ -81,6 +77,10 @@ function loadStudentsUpcomingAndPending(userId) {
     	if(snapshot.child(sessionId+"/start/").val() > currentTime){
 	console.log(sessionId)
       	hasUpcoming = true
+	//tutors info
+    	var tutorId = snapshot.child(sessionId+'/other/').val()
+    	var tutorInfoArray = getTutorsInfo(tutorId)
+    
         //session info
         var startTimeEpoch = snapshot.child(sessionId+'/start').val()
         var endTimeEpoch = snapshot.child(sessionId+'/end').val()
