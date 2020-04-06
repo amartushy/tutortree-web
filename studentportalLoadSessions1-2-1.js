@@ -183,7 +183,7 @@ function loadStudentsUpcomingAndPending(userId) {
         meetingPasswordHeaderStudent.innerHTML = "Meeting Password:"
           
         var meetingPasswordIdStudent = document.createElement("div")
-        meetingIdStudent.setAttribute("class", "meeting-password-id-student")
+        meetingPasswordIdStudent.setAttribute("class", "meeting-password-id-student")
         passwordIdBlockStudent.appendChild(meetingPasswordIdStudent)
         var meetingPasswordId = snapshot.child("/onlineSession/passwordId/").val()
         if ( meetingPasswordId == null ) {
