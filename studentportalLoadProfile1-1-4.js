@@ -5,10 +5,10 @@ function loadProfileInformation(studentsId) {
     var emailOnButton = document.getElementById("email-on-button")
     emailOnButton.setAttribute("onClick", "updateEmail('true','"+studentsId+"')")
   
-    var emailOffButton = document.getElementById("email-on-button")
+    var emailOffButton = document.getElementById("email-off-button")
     emailOffButton.setAttribute("onClick", "updateEmail('false','"+studentsId+"')")
   
-    var smsOnButton = document.getElementById("email-off-button")
+    var smsOnButton = document.getElementById("sms-on-button")
     smsOnButton.setAttribute("onClick", "updateSms('true','"+studentsId+"')")
 
     var smsOffButton = document.getElementById("sms-off-button")
@@ -17,11 +17,16 @@ function loadProfileInformation(studentsId) {
     studentsRef.on("value", function(snapshot) {
         var studentsName = snapshot.child("/name/").val()
         var studentsEmail = snapshot.child("/email/").val()
-        var studentsImage = snapshot.child("/profileURL/").val()
+        var studentsImage = document.createElement("img")
+        studentsImage.setAttribute("class", "profile-image-student")
+        document.getElementById("profile-image-area").appendChild(studentsImage)
+        studentsImage.src = snapshot.child("/profileURL/").val()
+        document.getElementById("profile-image-student").style.display = "none"
+        
         var emailNotifications = snapshot.child("/emailNotifications/").val()
         var smsNotifications = snapshot.child("/smsNotifications/").val()
-        document.getElementById("profile-name").innerHTML = studentsName
-        document.getElementById("profile-email-address").innerHTML = studentsEmail
+        document.getElementById("profile-name").placeholder = studentsName
+        document.getElementById("profile-email-address").placeholder = studentsEmail
         document.getElementById("profile-image-student").src = studentsImage
         
         if(emailNotifications) {
