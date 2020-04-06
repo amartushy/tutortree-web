@@ -47,7 +47,7 @@ function loadStudentsUpcomingAndPending(userId) {
     
     var tutortreeLogo = "https://firebasestorage.googleapis.com/v0/b/tutor-faa48.appspot.com/o/images%2Fzqrvuzfvgdkxnpew.jpg?alt=media&token=e898937e-8cdc-4180-8a6a-6e5aeb3ed676"
         
-    sessionsRef.on("value", function(snapshot) {
+    sessionsRef.on("value", async function(snapshot) {
     document.getElementById("student-no-pending").style.display = "flex"
     document.getElementById("student-no-upcoming").style.display = "flex"
     //remove all elements
@@ -71,14 +71,14 @@ function loadStudentsUpcomingAndPending(userId) {
       	hasUpcoming = true
 	//tutors info
     	var tutorId = snapshot.child(sessionId+'/other/').val()
-	var tutorsName;
-	var tutorsImage;
-
-	var tutorRef = dataRef.child(tutorId)
-	tutorRef.once("value", function(snapshot) {
-      		tutorsName =  snapshot.child(tutorId+"/name/").val()
-      		tutorsImage = snapshot.child(tutorId+"/profileURL/").val()
-   	})
+		
+	const tutorNameRef = dataRef.child(tutorId+"/name/")
+	const tutorsNameSnapshot = await tutorNameRef.once('value')
+	var tutorsName = tutorsNameSnapshot.val()
+	
+	const tutorImageRef = dataRef.child(tutorId+"/profileURL/")
+	const tutorsImageSnapshot = await tutorImageRef.once('value')
+	var tutorsImage = tutorsImageSnapshot.bal()
 
         //session info
         var startTimeEpoch = snapshot.child(sessionId+'/start').val()
