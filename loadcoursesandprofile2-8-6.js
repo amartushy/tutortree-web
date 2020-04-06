@@ -230,10 +230,9 @@ dataRef.once("value", function(snapshot) {
 	meetingIdInput.setAttribute("type", "text")
 	meetingIdInput.setAttribute("class", "meeting-id-input")
 	meetingIdBlock.appendChild(meetingIdInput)
-	meetingIdInput.on("focus", function() {
-    		updateIdButton.style.display = 'block'
-		
-	});
+	meetingIdInput.onfocus = function() {
+    		updateIdButton.style.display = 'block'	
+	}
 		
 	var passwordIdBlock = document.createElement("div")
 	passwordIdBlock.setAttribute("class", "password-id-block")
@@ -248,10 +247,9 @@ dataRef.once("value", function(snapshot) {
 	meetingPasswordInput.setAttribute("type", "text")
 	meetingPasswordInput.setAttribute("class", "meeting-password-input")
 	passwordIdBlock.appendChild(meetingPasswordInput)
-	meetingPasswordInput.on("focus", function() {
-    		updateIdButton.style.display = 'block'
-		
-	});
+	meetingPasswordInput.onfocus =  function() {
+    		updateIdButton.style.display = 'block'	
+	}
 		
 	if(!(snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/') == null)) {
 		meetingIdInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/meetingId').val()
