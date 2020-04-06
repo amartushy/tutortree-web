@@ -107,7 +107,7 @@ function updateUpcomingArray(timestamp) {
 }
 
 // LOAD UPCOMING SESSIONS
-async function loadUpcomingSessions(userID) {
+function loadUpcomingSessions(userID) {
 dataRef.once("value", function(snapshot) {
     //var currentTime = Math.round((new Date()).getTime() / 1000);
     var todaysEpoch = new Date()
@@ -263,15 +263,13 @@ dataRef.once("value", function(snapshot) {
 			'passwordId' : '000000'
 			}
 		onlineDict['onlineSession'] = credentialsDict
-		await dataRef.child(userId+'/sessions/'+sessionId).update(onlineDict)
+		dataRef.child(userId+'/sessions/'+sessionId).update(onlineDict)
 	}
 	
 	meetingIdInput.placeholder = meetingIdValue
 	meetingPasswordInput.placeholder = snapshot.child(userId+'/sessions/'+sessionId+'/onlineSession/passwordId').val()
 	
-			    
-			    
-			    
+			    		    
 	if (isPending == 1) {
 		upcomingSection.appendChild(upcomingBlock)
 		rescheduleButton.innerHTML = "RESCHEDULE"
