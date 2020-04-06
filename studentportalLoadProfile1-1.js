@@ -2,11 +2,6 @@
 
 function loadProfileInformation(studentsId) {
     var studentsRef = dataRef.child(studentsId)
-    var studentsName = snapshot.child("/name/").val()
-    var studentsEmail = snapshot.child("/email/").val()
-    var studentsImage = snapshot.child("/profileURL/").val()
-    var emailNotifications = snapshot.child("/emailNotifications/").val()
-    var smsNotifications = snapshot.child("/smsNotifications/").val()
     var emailOnButton = document.getElementById("email-on-button")
     emailOnButton.setAttribute("onClick", "updateEmail('true','"+studentsId+"')")
   
@@ -20,7 +15,11 @@ function loadProfileInformation(studentsId) {
     smsOnButton.setAttribute("onClick", "updateSms('false','"+studentsId+"')")
     
     var studentsRef.on("value", function(snapshot) {
-  
+        var studentsName = snapshot.child("/name/").val()
+        var studentsEmail = snapshot.child("/email/").val()
+        var studentsImage = snapshot.child("/profileURL/").val()
+        var emailNotifications = snapshot.child("/emailNotifications/").val()
+        var smsNotifications = snapshot.child("/smsNotifications/").val()
         document.getElementById("profile-name").innerHTML = studentsName
         document.getElementById("profile-email-address").innerHTML = studentsEmail
         document.getElementById("profile-image-student").src = studentsImage
