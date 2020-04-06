@@ -2,8 +2,8 @@ var dataRef = database.ref("updateDatabase/users/")
     
 function getTutorsInfo(ID) {
    var infoArray = []
-   dataRef.once("value", async function(snapshot) {
-      var tutorsName = await snapshot.child(ID+"/name/").val()
+   dataRef.once("value", function(snapshot) {
+      var tutorsName = snapshot.child(ID+"/name/").val()
       infoArray.push(tutorsName)
       var tutorsImage = await snapshot.child(ID+"/profileURL/").val()
       infoArray.push(tutorsImage)
@@ -84,6 +84,7 @@ function loadStudentsUpcomingAndPending(userId) {
         //tutor info
         var tutorId = snapshot.child(sessionId+'/other/').val()
         var tutorInfoArray = getTutorsInfo(tutorId)
+	console.log(getTutorsInfo(tutorId))
 	console.log(tutorInfoArray[0])
 	console.log(tutorInfoArray[1])
         var tutortreeLogo = "https://firebasestorage.googleapis.com/v0/b/tutor-faa48.appspot.com/o/images%2Fzqrvuzfvgdkxnpew.jpg?alt=media&token=e898937e-8cdc-4180-8a6a-6e5aeb3ed676"
