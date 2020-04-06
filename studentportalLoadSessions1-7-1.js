@@ -78,7 +78,7 @@ function loadStudentsUpcomingAndPending(userId) {
 	
 	const tutorImageRef = dataRef.child(tutorId+"/profileURL/")
 	const tutorsImageSnapshot = await tutorImageRef.once('value')
-	var tutorsImage = tutorsImageSnapshot.val()
+	var tutorImage = tutorsImageSnapshot.val()
 
         //session info
         var startTimeEpoch = snapshot.child(sessionId+'/start').val()
@@ -101,9 +101,9 @@ function loadStudentsUpcomingAndPending(userId) {
 	      var tutorsImage = document.createElement("img")
         tutorsImage.setAttribute("class", "tutors-image")
         tutorContainer.appendChild(tutorsImage)
-	console.log(tutorsImage)
-        if (tutorsImage.length > 100) {
-		        tutorsImage.src =  tutorsImage
+	console.log(tutorImage)
+        if (tutorImage.length > 100) {
+		        tutorsImage.src =  tutorImage
 	      } else {	
 		        tutorsImage.src = tutortreeLogo
 	      }
