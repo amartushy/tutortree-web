@@ -192,11 +192,11 @@ function loadStudentsUpcomingAndPending(userId) {
           
         //Logic to append
         if (isPending == 1) {
-            upcomingSection.appendChild(upcomingBlockStudent)
+            upcomingSectionStudent.appendChild(upcomingBlockStudent)
             upcomingArrayStudent.push(startTimeEpoch)
               
         } else {
-            pendingSection.appendChild(upcomingBlockStudent)
+            pendingSectionStudent.appendChild(upcomingBlockStudent)
         }
           
         appendToUpcomingStudent()
