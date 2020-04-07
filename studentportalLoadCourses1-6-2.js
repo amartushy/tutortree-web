@@ -354,7 +354,13 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			var checkoutTotalAmount = document.getElementById("checkout-total-cost")
 			var tutorsPPH = snapshot.child(tutor+"/PPH/")
 			checkoutTotalAmount.innerHTML = "$" + (durationVal*tutorsPPH + 2.95)
-	
+			
+			var closeCheckoutModal = document.getElementById("checkout-close-modal")
+			
+			closeCheckoutModal.addEventListener('click', function() {
+						document.getElementById("checkout-modal-wrapper").style.display = "none"
+			}
+																					
 			})
 
 }
