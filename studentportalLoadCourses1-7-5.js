@@ -346,13 +346,10 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 	
 			var checkoutMinusMinutes = document.getElementById("checkout-minus-minutes")
 			checkoutMinusMinutes.addEventListener('click', function(){
-						if (durationArray.length = 1) {
-									return
-						} else {
+						
 									durationArray.pop()
 									checkoutDuration.innerHTML = (durationArray.length*30) +" Minutes"
 									checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 2.95)
-						}
 			})
 	
 			var checkoutDiscount = document.getElementById("checkout-discount")
