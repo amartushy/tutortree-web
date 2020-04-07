@@ -360,7 +360,7 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			
 			closeCheckoutModal.addEventListener('click', function() {
 						document.getElementById("checkout-modal-wrapper").style.display = "none"
-			}
+			})
 																					
 			})
 
