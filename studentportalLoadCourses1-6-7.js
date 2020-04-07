@@ -295,8 +295,6 @@ function padAndChop(str, padChar, length) {
 
 
 
-var checkoutArray = [tutor, student, tutorsName, tutorsImage, day, binaryAvailability, i]
-
 function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, binaryAvailability, timeslot) {
 	
 			dataRef.once("value", function(snapshot) {
