@@ -55,7 +55,7 @@ function loadAvailableCourses(studentId) {
 										
 												//Get count of tutors and apply label
 												var tutorCount = 0
-												for (tutor in snapshot.child(studentsUniversity+"/"+subject+"/"+"/"course+"/tutors/").val()) {
+												for (tutor in snapshot.child(studentsUniversity+"/"+subject+"/"+course+"/tutors/").val()) {
 															tutorCount++
 												}
 												var tutorLabel = document.createElement('p')
