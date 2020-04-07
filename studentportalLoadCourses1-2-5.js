@@ -166,7 +166,7 @@ async function loadTutorsAvailabilityBlock( tutor, student, decimalAvailability 
 			availabilityContainer.appendChild(tutorBadge)
 	
 			var tutorsScheduleBlock = document.createElement("div")
-			tutorsScheduleBlock.appendChild("class", "tutors-schedule-block")
+			tutorsScheduleBlock.setAttribute("class", "tutors-schedule-block")
 			tutorBadge.appendChild(tutorsScheduleBlock)
 			
 			var tutorsScheduleImage = document.createElement("img")
