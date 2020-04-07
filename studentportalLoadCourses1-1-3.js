@@ -95,7 +95,7 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 function loadTutorsAvailability(day, school, subject, course, studentId) {
 			//Get all possible tutors for that course
 			var allTutorsForCourse = []
-			courseRef = database.ref("/updateDatabase/"+school+"/"+subject+"/"course)
+			courseRef = database.ref("/updateDatabase/"+school+"/"+subject+"/"+course)
 			courseRef.once("value", function(snapshot) {
 						for (tutor in snapshot.child("/tutors/").val()) {
 								allTutorsForCourse.push(snapshot.child("/tutors/"+tutor).val())
