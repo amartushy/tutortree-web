@@ -155,7 +155,7 @@ function formatMonthAndDayFromEpoch(day) {
 
 function loadTutorsAvailability(day, school, subject, course, studentId) {
 			//Update day buttons to be inactive
-			for ( i = 0; i < 8; i++ ) {
+			/*for ( i = 0; i < 8; i++ ) {
 						if (i = day) {
 									var activeButton = document.getElementById(i+"-day-choice")
 									activeButton.removeAttribute("class")
@@ -177,7 +177,7 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 									inActiveButtonDay.removeAttribute("class")
 									inActiveButtonDay.setAttribute("class", "day-choice-day")
 						}
-			}
+			}*/
 			//Remove previous availabilities
 			var availabilityArea = document.getElementById("availability-area")
 			while(availabilityArea.childNodes.length > 1 ) {
