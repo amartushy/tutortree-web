@@ -163,11 +163,16 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 			while(availabilityArea.childNodes.length > 1 ) {
 						availabilityArea.removeChild(availabilityArea.lastChild)
 			}
-			
+			// show which day is currently active
+			var dayArray = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+			var firebaseArray = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+			var currentDay = firebaseArray[day]
+			var buttonVal = dayArray.indexOf(currentDay)
 			for( i = 0; i < 7; i++ ) {
 					document.getElementById(i+"-day-choice").setAttribute("class", "day-choice")
 			}
-			document.getElementById(day+"-day-choice").setAttribute("class", "day-choice-active")
+			
+			document.getElementById(buttonVal+"-day-choice").setAttribute("class", "day-choice-active")
 			
 			//Get all possible tutors for that course
 			var allTutorsForCourse = []
