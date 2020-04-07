@@ -93,8 +93,6 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 }
 
 function loadTutorsAvailability(day, school, subject, course, studentId) {
-			//day onclick: loop through tutors for course -> if availability at index[day] > 0 then:
-	
 			//Get all possible tutors for that course
 			var allTutorsForCourse = []
 			courseRef = database.ref("/updateDatabase/"+school+"/"+subject+"/"course)
