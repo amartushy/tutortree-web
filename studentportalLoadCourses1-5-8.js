@@ -98,6 +98,7 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 			
 			//initialize day buttons with onclicks
 			var dayArray = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+			var firebaseArray = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
 			for (i = 0 ; i < 7; i++) {
 						var dayButton = document.createElement("div")
 						dayButton.setAttribute("class", "day-choice")
@@ -119,10 +120,11 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 						var dayFromSeconds = new Date(getSecondsFromEpoch(i))
 						var getDay = dayFromSeconds.getDay()
 						dayChoiceDay.innerHTML = dayArray[getDay]
-				
+						
+						var buttonVal = firebaseArray.indexOf(dayArray[getDay])
 
 						dayButton.setAttribute("onClick", "loadTutorsAvailability('"
-																	 + getDay + "','"
+																	 + buttonVal + "','"
 																	 + schoolId + "','" 
 																	 + subjectId + "','"
 																	 + courseId + "','"
