@@ -159,6 +159,10 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 			while(availabilityArea.childNodes.length > 1 ) {
 						availabilityArea.removeChild(availabilityArea.lastChild)
 			}
+			
+			for( i = 0; i < 6; i++ ) {
+					document.getElementById(i+"-day-choice").setAttribute("class", "day-choice")
+			}
 			document.getElementById(day+"-day-choice").setAttribute("class", "day-choice-active")
 	
 			//Get all possible tutors for that course
