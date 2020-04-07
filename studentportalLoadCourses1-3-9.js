@@ -159,29 +159,8 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 			while(availabilityArea.childNodes.length > 1 ) {
 						availabilityArea.removeChild(availabilityArea.lastChild)
 			}
-			//Update day buttons to be inactive
-			for ( i = 0; i < 7; i++ ) {
-						if (i = day) {
-									var activeButton = document.getElementById(i+"-day-choice")
-									activeButton.removeAttribute("class")
-									activeButton.setAttribute("class", "day-choice-active")
-									var activeButtonNum = document.getElementById(i+"-day-choice-num")
-									activeButtonNum.removeAttribute("class")
-									activeButtonNum.setAttribute("class", "day-choice-num-active")
-									var activeButtonDay = document.getElementById(i+"-day-choice-day")
-									activeButtonDay.removeAttribute("class")
-									activeButtonDay.setAttribute("class", "day-choice-day-active")
-						} else {
-									var inActiveButton = document.getElementById(i+"-day-choice")
-									inActiveButton.removeAttribute("class")
-									inActiveButton.setAttribute("class", "day-choice")
-									var inActiveButtonNum = document.getElementById(i+"-day-choice-num")
-									inActiveButtonNum.removeAttribute("class")
-									inActiveButtonNum.setAttribute("class", "day-choice-num")
-									var inActiveButtonDay = document.getElementById(i+"-day-choice-day")
-									inActiveButtonDay.removeAttribute("class")
-									inActiveButtonDay.setAttribute("class", "day-choice-day")
-						}
+			document.getElementById(day+"-day-choice").setAttribute("class", "day-choice-active")
+			
 			}
 			//Get all possible tutors for that course
 			var allTutorsForCourse = []
