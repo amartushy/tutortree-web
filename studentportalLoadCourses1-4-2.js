@@ -152,13 +152,16 @@ function formatMonthAndDayFromEpoch(day) {
     var formattedString =  monthString + "/" + dayString
     return ( formattedString )
 }
-
-async function loadTutorsAvailability(day, school, subject, course, studentId) {
+function clearPreviousAvailabilities() {
 			//Remove previous availabilities
 			var availabilityArea = document.getElementById("availability-area")
-			await while(availabilityArea.childNodes.length > 1 ) {
+			while(availabilityArea.childNodes.length > 1 ) {
 						availabilityArea.removeChild(availabilityArea.lastChild)
 			}
+}
+async function loadTutorsAvailability(day, school, subject, course, studentId) {
+			await clearPreviousAvailabilities()
+	
 			document.getElementById(day+"-day-choice").setAttribute("class", "day-choice-active")
 			document.getElementById(0+"-day-choice").removeAttribute("class")
 	
