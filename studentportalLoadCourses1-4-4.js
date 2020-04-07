@@ -160,7 +160,7 @@ function clearPreviousAvailabilities() {
 			}
 }
 async function loadTutorsAvailability(day, school, subject, course, studentId) {
-			//await clearPreviousAvailabilities()
+			await clearPreviousAvailabilities()
 	
 			document.getElementById(day+"-day-choice").setAttribute("class", "day-choice-active")
 			document.getElementById(0+"-day-choice").removeAttribute("class", "day-choice-active")
@@ -180,16 +180,18 @@ async function loadTutorsAvailability(day, school, subject, course, studentId) {
 					for (i = 0; i < allTutorsForCourse.length; i++) {
 								var tutorVal = allTutorsForCourse[i]
 								var decimalAvailability = snapshot.child(tutorVal+"/availability/"+day).val()
+								var tutorsName = snapshot.child(tutorVal+"/name/").val()
+								var tutorsImage = snapshot.child(tutorVal+"/profileURL/").val()
 								if ( decimalAvailability > 0 ) {
 											//build their block
 											console.log(decimalAvailability)
-											loadTutorsAvailabilityBlock(tutorVal, studentId, decimalAvailability)
+											loadTutorsAvailabilityBlock(tutorVal,tutorsName,tutorsImage, studentId, decimalAvailability)
 								}
 					}
 			})
 }
 
-async function loadTutorsAvailabilityBlock( tutor, student, decimalAvailability ) {
+function loadTutorsAvailabilityBlock( tutor, tutorsName, tutorsImage, student, decimalAvailability ) {
 			var timeSlotArray = new Array(48)
 			var binaryAvailability = convertToBinaryFromDecimal( decimalAvailability )
 			timeSlotArray = binaryAvailability.split("")
@@ -216,15 +218,6 @@ async function loadTutorsAvailabilityBlock( tutor, student, decimalAvailability 
 						}
 						tutorsAvailabilityArea.appendChild(timeSlot)
 			}
-	
-			//Get tutors info
-			const tutorNameRef = dataRef.child(tutor+"/name/")
-			const tutorsNameSnapshot = await tutorNameRef.once('value')
-			var tutorsName = tutorsNameSnapshot.val()
-	
-			const tutorImageRef = dataRef.child(tutor+"/profileURL/")
-			const tutorsImageSnapshot = await tutorImageRef.once('value')
-			var tutorImage = tutorsImageSnapshot.val()
 			
 			//Build tutor's label block
 			var tutorBadge = document.createElement("div")
@@ -238,7 +231,7 @@ async function loadTutorsAvailabilityBlock( tutor, student, decimalAvailability 
 			var tutorsScheduleImage = document.createElement("img")
 			tutorsScheduleImage.setAttribute("class", "tutors-schedule-image")
 			tutorsScheduleBlock.appendChild(tutorsScheduleImage)
-			tutorsScheduleImage.src = tutorImage
+			tutorsScheduleImage.src = tutorsImage
 	
 			var tutorsScheduleContainer = document.createElement("div")
 			tutorsScheduleContainer.setAttribute("class", "tutors-schedule-container")
