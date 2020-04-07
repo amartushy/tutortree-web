@@ -304,17 +304,18 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			var checkoutTutorsImageBlock = document.getElementById("checkout-tutors-image-block")
 			var checkoutTutorsImage = document.createElement("img")
 			checkoutTutorsImage.setAttribute("class", "checkout-tutors-image")
+			checkoutTutorsImageBlock.appendChild(checkoutTutorsImage)
 			checkoutTutorsImage.src = tutorsImage
 	
 			var tutorsNameHeader = document.getElementById("tutors-name-header")
 			tutorsNameHeader.innerHTML = tutorsName
 			
 			var checkoutCourse = document.getElementById("checkout-course")
-			checkoutCourse.innerHTML = document.getElementById("course-header")
+			checkoutCourse.innerHTML = document.getElementById("course-header").innerHTML
 			
 			var checkoutDate = document.getElementById("checkout-date")
 			checkoutDate.innerHTML = document.getElementById(day+"-day-choice-day").innerHTML 
-															 + ", " + document.getElementById(day+"-day-choice-num")
+															 + ", " + document.getElementById(day+"-day-choice-num").innerHTML
 				
 			var checkoutTime = document.getElementById("checkout-time")
 			var timeDict = ["6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM", "9:00 AM",
@@ -351,7 +352,7 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			checkoutDiscount = "$0.00"
 	
 			var checkoutTotalAmount = document.getElementById("checkout-total-cost")
-			var tutorsPPH = snapshot.child(tutor+"/PPH/")
+			var tutorsPPH = parseFloat(snapshot.child(tutor+"/PPH/"))
 			checkoutTotalAmount.innerHTML = "$" + (durationVal*tutorsPPH + 2.95)
 			
 			var closeCheckoutModal = document.getElementById("checkout-close-modal")
