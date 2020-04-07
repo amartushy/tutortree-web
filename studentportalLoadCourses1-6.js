@@ -166,8 +166,8 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 			// show which day is currently active
 			var dayArray = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
 			var firebaseArray = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
-			var currentDay = firebaseArray[day]
-			var buttonVal = dayArray.indexOf(currentDay)
+			var currentDay = dayArray[day]
+			var buttonVal = firebaseArray.indexOf(currentDay)
 			for( i = 0; i < 7; i++ ) {
 					document.getElementById(i+"-day-choice").setAttribute("class", "day-choice")
 			}
