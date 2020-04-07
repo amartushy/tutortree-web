@@ -120,10 +120,9 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 						var getDay = dayFromSeconds.getDay()
 						dayChoiceDay.innerHTML = dayArray[getDay]
 				
-						//I think arrays in FB are initialized to Monday, not Sunday
-						var buttonVal = getDay + 1
+
 						dayButton.setAttribute("onClick", "loadTutorsAvailability('"
-																	 + buttonVal + "','"
+																	 + getDay + "','"
 																	 + schoolId + "','" 
 																	 + subjectId + "','"
 																	 + courseId + "','"
