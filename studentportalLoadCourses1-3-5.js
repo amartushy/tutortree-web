@@ -93,7 +93,7 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 			}
 			var dayButtonsArea = document.getElementById("day-buttons-area")
 			while( dayButtonsArea.firstChild ) {
-						dayButtonsArea.removechild(dayButtonsArea.firstChild)
+						dayButtonsArea.removeChild(dayButtonsArea.firstChild)
 			}
 			
 			//initialize day buttons with onclicks
