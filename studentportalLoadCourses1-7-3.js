@@ -330,28 +330,28 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			checkoutTime.innerHTML = timeDict[timeSlot-12]
 	
 			var checkoutDuration = document.getElementById("checkout-duration")
-			var durationVal = 1
+			var durationArray = ['1']
 			checkoutDuration.innerHTML = (durationVal*30) + " Minutes"
 				
 			var checkoutTotalAmount = document.getElementById("checkout-total-cost")
 			var tutorsPPH = parseFloat(snapshot.child(tutor+"/PPH/").val())
-			checkoutTotalAmount.innerHTML = "$" + (durationVal*tutorsPPH + 2.95)
+			checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 2.95)
 			
 			var checkoutAddMinutes = document.getElementById("checkout-add-minutes")
 			checkoutAddMinutes.addEventListener('click', function(){
-						durationVal++
-						checkoutDuration.innerHTML = (durationVal*30) + " Minutes"
-						checkoutTotalAmount.innerHTML = "$" + (durationVal*tutorsPPH + 2.95)
+						durationArray.push('1')
+						checkoutDuration.innerHTML = (durationArray.length*30) + " Minutes"
+						checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 2.95)
 			})
 	
 			var checkoutMinusMinutes = document.getElementById("checkout-minus-minutes")
 			checkoutMinusMinutes.addEventListener('click', function(){
-						if (durationVal = 1) {
+						if (durationArray.length = 1) {
 									return
 						} else {
-									durationVal--
-									checkoutDuration.innerHTML = (durationVal*30) +" Minutes"
-									checkoutTotalAmount.innerHTML = "$" + (durationVal*tutorsPPH + 2.95)
+									durationArray.pop()
+									checkoutDuration.innerHTML = (durationArray.length*30) +" Minutes"
+									checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 2.95)
 						}
 			})
 	
