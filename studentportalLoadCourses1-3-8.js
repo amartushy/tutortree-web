@@ -154,6 +154,11 @@ function formatMonthAndDayFromEpoch(day) {
 }
 
 function loadTutorsAvailability(day, school, subject, course, studentId) {
+			//Remove previous availabilities
+			var availabilityArea = document.getElementById("availability-area")
+			while(availabilityArea.childNodes.length > 1 ) {
+						availabilityArea.removeChild(availabilityArea.lastChild)
+			}
 			//Update day buttons to be inactive
 			for ( i = 0; i < 7; i++ ) {
 						if (i = day) {
@@ -177,11 +182,6 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 									inActiveButtonDay.removeAttribute("class")
 									inActiveButtonDay.setAttribute("class", "day-choice-day")
 						}
-			}
-			//Remove previous availabilities
-			var availabilityArea = document.getElementById("availability-area")
-			while(availabilityArea.childNodes.length > 1 ) {
-						availabilityArea.removeChild(availabilityArea.lastChild)
 			}
 			//Get all possible tutors for that course
 			var allTutorsForCourse = []
