@@ -152,16 +152,13 @@ function formatMonthAndDayFromEpoch(day) {
     var formattedString =  monthString + "/" + dayString
     return ( formattedString )
 }
-function clearPreviousAvailabilities() {
-			//Remove previous availabilities
+
+function loadTutorsAvailability(day, school, subject, course, studentId) {
+			//clear area for new tutors
 			var availabilityArea = document.getElementById("availability-area")
 			while(availabilityArea.childNodes.length > 1 ) {
 						availabilityArea.removeChild(availabilityArea.lastChild)
 			}
-}
-function loadTutorsAvailability(day, school, subject, course, studentId) {
-			//clearPreviousAvailabilities()
-	
 			document.getElementById(day+"-day-choice").setAttribute("class", "day-choice-active")
 	
 			//Get all possible tutors for that course
@@ -173,21 +170,27 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 								allTutorsForCourse.push(snapshot.child("/tutors/"+tutor).val())
 						}
 			})
-			console.log(allTutorsForCourse)
+	
+			buildAllTutorBlocks(allTutorsForCourse, studentId, day)
+												
+}
+
+function buildAllTutorBlocks(allTutorsForCourse, studentId, day) {
+
 			tutorsRef = database.ref("/updateDatabase/users")
-			tutorsRef.once("value", async function(snapshot) {
-					for (i = 0; i < allTutorsForCourse.length; i++) {
-								var tutorVal = allTutorsForCourse[i]
-								var decimalAvailability = snapshot.child(tutorVal+"/availability/"+day).val()
-								var tutorsName = snapshot.child(tutorVal+"/name/").val()
-								var tutorsImage = snapshot.child(tutorVal+"/profileURL/").val()
-								if ( decimalAvailability > 0 ) {
-											//build their block
-											console.log(decimalAvailability)
-											await loadTutorsAvailabilityBlock(tutorVal,tutorsName,tutorsImage, studentId, decimalAvailability)
+						tutorsRef.once("value", function(snapshot) {
+								for (i = 0; i < allTutorsForCourse.length; i++) {
+											var tutorVal = allTutorsForCourse[i]
+											var decimalAvailability = snapshot.child(tutorVal+"/availability/"+day).val()
+											var tutorsName = snapshot.child(tutorVal+"/name/").val()
+											var tutorsImage = snapshot.child(tutorVal+"/profileURL/").val()
+											if ( decimalAvailability > 0 ) {
+														//build their block
+														console.log(decimalAvailability)
+														loadTutorsAvailabilityBlock(tutorVal,tutorsName,tutorsImage, studentId, decimalAvailability)
+											}
 								}
-					}
-			})
+				})
 }
 
 function loadTutorsAvailabilityBlock( tutor, tutorsName, tutorsImage, student, decimalAvailability ) {
