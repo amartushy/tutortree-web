@@ -97,7 +97,7 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 			}
 			
 			//initialize day buttons with onclicks
-			var dayArray = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+			var dayArray = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
 			for (i = 0 ; i < 7; i++) {
 						var dayButton = document.createElement("div")
 						dayButton.setAttribute("class", "day-choice")
@@ -108,6 +108,7 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 						dayChoiceNum.setAttribute("class", "day-choice-num")
 						dayChoiceNum.setAttribute("id", i+"-day-choice-num")
 						dayButton.appendChild(dayChoiceNum)
+						
 						var dayAndMonth = formatMonthAndDayFromEpoch(i)
 						dayChoiceNum.innerHTML = dayAndMonth
 				
@@ -120,7 +121,7 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 						dayChoiceDay.innerHTML = dayArray[getDay]
 				
 						dayButton.setAttribute("onClick", "loadTutorsAvailability('"
-																	 + i + "','"
+																	 + getDay + "','"
 																	 + schoolId + "','" 
 																	 + subjectId + "','"
 																	 + courseId + "','"
@@ -160,11 +161,11 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 						availabilityArea.removeChild(availabilityArea.lastChild)
 			}
 			
-			for( i = 0; i < 6; i++ ) {
+			for( i = 0; i < 7; i++ ) {
 					document.getElementById(i+"-day-choice").setAttribute("class", "day-choice")
 			}
 			document.getElementById(day+"-day-choice").setAttribute("class", "day-choice-active")
-	
+			
 			//Get all possible tutors for that course
 			var allTutorsForCourse = []
 			courseRef = database.ref("/updateDatabase/"+school+"/"+subject+"/"+course)
