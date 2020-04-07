@@ -67,7 +67,8 @@ function loadAvailableCourses(studentId) {
 										
 												tutorCount = 0
 									}
-									courseLayoutArea.appendChild(subjectBlock)
+							
+									document.getElementById("course-layout-area").appendChild(subjectBlock)
 						}
 			})			
 }
