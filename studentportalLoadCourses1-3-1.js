@@ -11,7 +11,7 @@ schoolRef.once("value", function(snapshot) {
 									"University of Oregon" : "uoregon.edu",
             			"UCLA" : "ucla.edu",
             			"Oregon State University" : "oregonstate.edu",
-									"Chico State" : "csuchico.edu,
+									"Chico State" : "csuchico.edu",
             			"University of Southern California" : "usc.edu",
            				"Cal" : "berkeley.edu"
 						}
