@@ -208,7 +208,7 @@ function buildAllTutorBlocks(allTutorsForCourse, studentId, day) {
 				})
 }
 
-function loadTutorsAvailabilityBlock( tutor, tutorsName, tutorsImage, student, decimalAvailability ) {
+function loadTutorsAvailabilityBlock( tutor, tutorsName, tutorsImage, student, decimalAvailability, day ) {
 			var timeSlotArray = new Array(48)
 			var binaryAvailability = convertToBinaryFromDecimal( decimalAvailability )
 			timeSlotArray = binaryAvailability.split("")
