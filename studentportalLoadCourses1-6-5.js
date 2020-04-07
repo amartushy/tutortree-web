@@ -336,7 +336,7 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 						durationVal += 1
 						checkoutDuration.innerHTML = durationVal*30 + " Minutes"
 						checkoutTotalAmount.innerHTML = "$" + (durationVal*tutorsPPH + 2.95)
-			}
+			})
 	
 			var checkoutMinusMinutes = document.getElementById("checkout-minus-minutes")
 			checkoutMinusMinutes.addEventListener('click', function(){
@@ -347,7 +347,7 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 									checkoutDuration.innerHTML = durationVal*30 +" Minutes"
 									checkoutTotalAmount.innerHTML = "$" + (durationVal*tutorsPPH + 2.95)
 						}
-			}
+			})
 	
 			var checkoutDiscount = document.getElementById("checkout-discount")
 			checkoutDiscount = "$0.00"
