@@ -98,6 +98,11 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 }
 
 function loadTutorsAvailability(day, school, subject, course, studentId) {
+			//Remove previous availabilities
+			var availabilityArea = document.getElementById("availability-area")
+			while(availabilityArea.childNodes.length > 1 ) {
+						availabilityArea.removeChild(availabilityArea.lastChild)
+			}
 			//Get all possible tutors for that course
 			var allTutorsForCourse = []
 			courseRef = database.ref("/updateDatabase/"+school+"/"+subject+"/"+course)
