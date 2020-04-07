@@ -103,6 +103,7 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 			courseRef = database.ref("/updateDatabase/"+school+"/"+subject+"/"+course)
 			courseRef.once("value", function(snapshot) {
 						for (tutor in snapshot.child("/tutors/").val()) {
+								console.log(tutor)
 								allTutorsForCourse.push(snapshot.child("/tutors/"+tutor).val())
 						}
 			})
@@ -110,10 +111,12 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 			tutorsRef = database.ref("/updateDatabase/users")
 			tutorsRef.once("value", function(snapshot) {
 					for (i = 0; i < allTutorsForCourse.length; i++) {
-								var tutor = allTutorsForCourse[i]
+								var tutorVal = allTutorsForCourse[i]
+								console.log(tutorVal)
 								var decimalAvailability = snapshot.child(tutor+"/availability/"+day).val()
 								if ( decimalAvailability > 0 ) {
 											//build their block
+											console.log(decimalAvailability)
 											loadTutorsAvailabilityBlock(tutor, student, decimalAvailability)
 								}
 					}
