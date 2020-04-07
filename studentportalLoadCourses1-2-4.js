@@ -152,11 +152,11 @@ async function loadTutorsAvailabilityBlock( tutor, student, decimalAvailability 
 			}
 	
 			//Get tutors info
-			const tutorNameRef = dataRef.child(tutorId+"/name/")
+			const tutorNameRef = dataRef.child(tutor+"/name/")
 			const tutorsNameSnapshot = await tutorNameRef.once('value')
 			var tutorsName = tutorsNameSnapshot.val()
 	
-			const tutorImageRef = dataRef.child(tutorId+"/profileURL/")
+			const tutorImageRef = dataRef.child(tutor+"/profileURL/")
 			const tutorsImageSnapshot = await tutorImageRef.once('value')
 			var tutorImage = tutorsImageSnapshot.val()
 			
