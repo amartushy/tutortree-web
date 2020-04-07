@@ -315,7 +315,7 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			checkoutCourse.innerHTML = document.getElementById("course-header")
 			
 			var checkoutDate = document.getElementById("checkout-date")
-			checkoutDate.innerHTML = ??
+			checkoutDate.innerHTML = "TODO"
 				
 			var checkoutTime = document.getElementById("checkout-time")
 			var timeDict = ["6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM", "9:00 AM",
