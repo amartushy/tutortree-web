@@ -7,13 +7,21 @@ schoolRef.once("value", function(snapshot) {
 						var studentsUniversity = ""
 						
 						//current Available Universities
-						var universityDict = {
+						var universityNamesDict = {
 									"University of Oregon" : "uoregon.edu",
             			"UCLA" : "ucla.edu",
             			"Oregon State University" : "oregonstate.edu",
-									"Chico State" : "csuchico.edu",
+									//"Chico State" : "csuchico.edu",
             			"University of Southern California" : "usc.edu",
            				"Cal" : "berkeley.edu"
+						}
+						var universityDict = {
+									uoregon : "uoregon.edu",
+            			ucla : "ucla.edu",
+            			oregonstate : "oregonstate.edu",
+									//chicostate : "csuchico.edu",
+            			usc : "usc.edu",
+           				berkeley : "berkeley.edu"
 						}
 						
 						for (school in universityDict) {
