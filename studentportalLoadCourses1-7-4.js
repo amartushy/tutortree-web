@@ -331,7 +331,7 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 	
 			var checkoutDuration = document.getElementById("checkout-duration")
 			var durationArray = ['1']
-			checkoutDuration.innerHTML = (durationVal*30) + " Minutes"
+			checkoutDuration.innerHTML = (durationArray.length*30) + " Minutes"
 				
 			var checkoutTotalAmount = document.getElementById("checkout-total-cost")
 			var tutorsPPH = parseFloat(snapshot.child(tutor+"/PPH/").val())
