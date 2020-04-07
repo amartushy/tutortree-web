@@ -181,7 +181,7 @@ async function loadTutorsAvailabilityBlock( tutor, student, decimalAvailability 
 			var tutorsScheduleHeader = document.createElement("h5")
 			tutorsScheduleHeader.setAttribute("class", "tutors-schedule-header")
 			tutorsScheduleContainer.appendChild(tutorsScheduleHeader)	
-			tutorScheduleHeader.innerHTML = tutorsName
+			tutorsScheduleHeader.innerHTML = tutorsName
 }
 
 function convertToBinaryFromDecimal(decVal) {
