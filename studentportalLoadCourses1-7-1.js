@@ -327,34 +327,34 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			checkoutTime.innerHTML = timeDict[timeSlot]
 	
 			var checkoutDuration = document.getElementById("checkout-duration")
-			var durationVal = 1
-			checkoutDuration.innerHTML = durationVal*30 + " Minutes"
-	
+			var durationArray = ['1']
+			checkoutDuration.innerHTML = durationArray.length*30 + " Minutes"
+				
+			var checkoutTotalAmount = document.getElementById("checkout-total-cost")
+			var tutorsPPH = parseFloat(snapshot.child(tutor+"/PPH/").val())
+			checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 2.95)
+			
 			var checkoutAddMinutes = document.getElementById("checkout-add-minutes")
 			checkoutAddMinutes.addEventListener('click', function(){
-						durationVal += 1
-						checkoutDuration.innerHTML = durationVal*30 + " Minutes"
-						checkoutTotalAmount.innerHTML = "$" + (durationVal*tutorsPPH + 2.95)
+						durationArray = durationArray.push('1')
+						checkoutDuration.innerHTML = durationArray.length*30 + " Minutes"
+						checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 2.95)
 			})
 	
 			var checkoutMinusMinutes = document.getElementById("checkout-minus-minutes")
 			checkoutMinusMinutes.addEventListener('click', function(){
-						if (durationVal = 1) {
+						if (durationArray.length = 1) {
 									return
 						} else {
-									durationVal -= 1
-									checkoutDuration.innerHTML = durationVal*30 +" Minutes"
-									checkoutTotalAmount.innerHTML = "$" + (durationVal*tutorsPPH + 2.95)
+									durationArray = durationArray.pop()
+									checkoutDuration.innerHTML = durationArray.length*30 +" Minutes"
+									checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 2.95)
 						}
 			})
 	
 			var checkoutDiscount = document.getElementById("checkout-discount")
 			checkoutDiscount = "$0.00"
 	
-			var checkoutTotalAmount = document.getElementById("checkout-total-cost")
-			var tutorsPPH = parseFloat(snapshot.child(tutor+"/PPH/"))
-			checkoutTotalAmount.innerHTML = "$" + (durationVal*tutorsPPH + 2.95)
-			
 			var closeCheckoutModal = document.getElementById("checkout-close-modal")
 			
 			closeCheckoutModal.addEventListener('click', function() {
