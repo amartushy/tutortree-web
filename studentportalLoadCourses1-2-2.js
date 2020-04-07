@@ -112,12 +112,11 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 			tutorsRef.once("value", function(snapshot) {
 					for (i = 0; i < allTutorsForCourse.length; i++) {
 								var tutorVal = allTutorsForCourse[i]
-								console.log(tutorVal)
-								var decimalAvailability = snapshot.child(tutor+"/availability/"+day).val()
+								var decimalAvailability = snapshot.child(tutorVal+"/availability/"+day).val()
 								if ( decimalAvailability > 0 ) {
 											//build their block
 											console.log(decimalAvailability)
-											loadTutorsAvailabilityBlock(tutor, student, decimalAvailability)
+											loadTutorsAvailabilityBlock(tutorVal, studentId, decimalAvailability)
 								}
 					}
 			})
