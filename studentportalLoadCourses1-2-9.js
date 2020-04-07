@@ -76,6 +76,11 @@ schoolRef.once("value", function(snapshot) {
 function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 			document.getElementById("schedule-wrapper").style.display = "flex"
 			document.getElementById("course-header").innerHTML = subjectId + " : " + courseId
+	
+			var availabilityArea = document.getElementById("availability-area")
+			while(availabilityArea.childNodes.length > 1 ) {
+						availabilityArea.removeChild(availabilityArea.lastChild)
+			}
 			
 			//initialize day buttons with onclicks to load tutors
 			var dayButtonsArea = document.getElementById("day-buttons-area")
