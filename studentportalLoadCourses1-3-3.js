@@ -99,7 +99,7 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 						var dayButton = document.createElement("div")
 						dayButton.setAttribute("class", "day-choice")
 						dayButton.setAttribute("id", i+"-day-choice")
-						dayButtonsArea.appendChild(dayButton)
+						document.getElementById("day-buttons-area").appendChild(dayButton)
 				
 						var dayChoiceNum = document.createElement("div")
 						dayChoiceNum.setAttribute("class", "day-choice-num")
