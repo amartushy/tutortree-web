@@ -178,7 +178,7 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 function buildAllTutorBlocks(allTutorsForCourse, studentId, day) {
 			console.log(allTutorsForCourse)
 			tutorsRef = database.ref("/updateDatabase/users")
-						tutorsRef.once("value", function(snapshot) {
+						tutorsRef.once("value", async function(snapshot) {
 								for (i = 0; i < allTutorsForCourse.length; i++) {
 											console.log(i)
 											var tutorVal = allTutorsForCourse[i]
@@ -190,8 +190,7 @@ function buildAllTutorBlocks(allTutorsForCourse, studentId, day) {
 											var tutorsImage = snapshot.child(tutorVal+"/profileURL/").val()
 											if ( decimalAvailability > 0 ) {
 														//build their block
-														console.log(decimalAvailability)
-														loadTutorsAvailabilityBlock(tutorVal,tutorsName,tutorsImage, studentId, decimalAvailability)
+														await loadTutorsAvailabilityBlock(tutorVal,tutorsName,tutorsImage, studentId, decimalAvailability)
 											}
 								}
 				})
