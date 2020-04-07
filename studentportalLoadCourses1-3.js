@@ -84,17 +84,30 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 						availabilityArea.removeChild(availabilityArea.lastChild)
 			}
 			
-			//initialize day buttons with onclicks to load tutors
-			var dayButtonsArea = document.getElementById("day-buttons-area")
-			while(dayButtonsArea.firstChild) {
-						dayButtonsArea.removeChild(dayButtonsArea.firstChild)
-			}
-			var dayArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+			//initialize day buttons with onclicks
+			
+			var dayArray = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
 			for (i = 0 ; i < 7; i++) {
 						var dayButton = document.createElement("div")
 						dayButton.setAttribute("class", "day-choice")
-						dayButton.innerHTML = dayArray[i]
+						dayButton.setAttribute("id", i+"-day-choice")
 						dayButtonsArea.appendChild(dayButton)
+				
+						var dayChoiceNum = document.createElement("div")
+						dayChoiceNum.setAttribute("class", "day-choice-num")
+						dayChoiceNum.setAttribute("id", i+"-day-choice-num")
+						dayButton.appendChild(dayChoiceNum)
+						var dayAndMonth = formatMonthAndDayFromEpoch(i)
+						dayChoiceNum.innerHTML = dayAndMonth
+				
+						var dayChoiceDay = document.createElement("div")
+						dayChoiceDay.setAttribute("class", "day-choice-day")
+						dayChoiceDay.setAttribute("id", i+"-day-choice-day")
+						dayButton.appendChild(dayChoiceDay)
+						var dayFromSeconds = new Date(getSecondsFromEpoch(i))
+						var getDay = dayFromSeconds.getDay()
+						dayChoiceDay.innerHTML = dayArray[getDay]
+				
 						dayButton.setAttribute("onClick", "loadTutorsAvailability('"
 																	 + i + "','"
 																	 + schoolId + "','" 
@@ -104,7 +117,56 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 			}
 }
 
+function getSecondsFromEpoch(day) {
+		var todaysEpoch = new Date()
+    todaysEpoch.setHours(0,0,0,0)
+    var secondsToAdd = 86400*day
+    var todaysSeconds = todaysEpoch.getTime()/1000
+    var daySeconds = todaysSeconds+secondsToAdd
+    
+    var outputSeconds = daySeconds*1000
+    return(outputSeconds)
+}
+
+function formatMonthAndDayFromEpoch(day) {
+		var todaysEpoch = new Date()
+    todaysEpoch.setHours(0,0,0,0)
+    var secondsToAdd = 86400*day
+    var todaysSeconds = todaysEpoch.getTime()/1000
+    var daySeconds = todaysSeconds+secondsToAdd
+    
+    var whichDay = new Date(daySeconds*1000)
+    var monthString = whichDay.getMonth()+1
+    var dayString = whichDay.getDate()
+    var formattedString =  monthString + "/" + dayString
+    return ( formattedString )
+}
+
 function loadTutorsAvailability(day, school, subject, course, studentId) {
+			//Update day buttons to be inactive
+			for ( i = 0; i < 8; i++ ) {
+						if (i = day) {
+									var activeButton = document.getElementById(i+"-day-choice")
+									activeButton.removeAttribute("class")
+									activeButton.setAttribute("class", "day-choice-active")
+									var activeButtonNum = document.getElementById(i+"-day-choice-num")
+									activeButtonNum.removeAttribute("class")
+									activeButtonNum.setAttribute("class", "day-choice-num-active")
+									var activeButtonDay = document.getElementById(i+"-day-choice-day")
+									activeButtonDay.removeAttribute("class")
+									activeButtonDay.setAttribute("class", "day-choice-day-active")
+						} else {
+									var inActiveButton = document.getElementById(i+"-day-choice")
+									inActiveButton.removeAttribute("class")
+									inActiveButton.setAttribute("class", "day-choice")
+									var inActiveButtonNum = document.getElementById(i+"-day-choice-num")
+									inActiveButtonNum.removeAttribute("class")
+									inActiveButtonNum.setAttribute("class", "day-choice-num")
+									var inActiveButtonDay = document.getElementById(i+"-day-choice-day")
+									inActiveButtonDay.removeAttribute("class")
+									inActiveButtonDay.setAttribute("class", "day-choice-day")
+						}
+			}
 			//Remove previous availabilities
 			var availabilityArea = document.getElementById("availability-area")
 			while(availabilityArea.childNodes.length > 1 ) {
@@ -158,7 +220,6 @@ async function loadTutorsAvailabilityBlock( tutor, student, decimalAvailability 
 									//set onclick
 						} else {
 									timeSlot.setAttribute("class", "not-available-block")
-									timeSlot.innerHTML = "Unavailable"
 						}
 						tutorsAvailabilityArea.appendChild(timeSlot)
 			}
