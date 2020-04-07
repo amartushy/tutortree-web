@@ -79,11 +79,15 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 			
 			//initialize day buttons with onclicks to load tutors
 			var dayButtonsArea = document.getElementById("day-buttons-area")
+			while(dayButtonsArea.firstChild) {
+						dayButtonsArea.removeChild(daybuttonsArea.firstChild)
+			}
 			var dayArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 			for (i = 0 ; i < 7; i++) {
 						var dayButton = document.createElement("div")
 						dayButton.setAttribute("class", "day-choice")
 						dayButton.innerHTML = dayArray[i]
+						dayButtonsArea.appendChild(dayButton)
 						dayButton.setAttribute("onClick", "loadTutorsAvailability('"
 																	 + i + "','"
 																	 + schoolId + "','" 
