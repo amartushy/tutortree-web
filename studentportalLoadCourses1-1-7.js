@@ -1,8 +1,8 @@
 var schoolRef = dataRef.parent
 
 function loadAvailableCourses(studentId) {
-    	schoolRef.once("value", function(snapshot) {
-						//Set students university
+schoolRef.once("value", function(snapshot) {
+	//Set students university
 						var studentsEmail = snapshot.child("users/"+studentId+"/email/").val()
 						var studentsUniversity = ""
 						
