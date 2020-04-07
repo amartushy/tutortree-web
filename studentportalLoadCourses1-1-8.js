@@ -81,7 +81,7 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 			var dayButtonsArea = document.getElementById("day-buttons-area")
 			var dayArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 			for (i = 0 ; i < 7; i++) {
-						var dayButton = document.creatElement("div")
+						var dayButton = document.createElement("div")
 						dayButton.setAttribute("class", "day-choice")
 						dayButton.innerHTML = dayArray[i]
 						dayButton.setAttribute("onClick", "loadTutorsAvailability('"
@@ -136,9 +136,11 @@ async function loadTutorsAvailabilityBlock( tutor, student, decimalAvilability )
 						var timeSlot = document.createElement("div")
 						if (timeSlotArray[i] == 1) {
 									timeSlot.setAttribute("class", "available-block")
+									timeSlot.innerHTML = "Available"
 									//set onclick
 						} else {
 									timeSlot.setAttribute("class", "not-available-block")
+									timeSlot.innerHTML = "Unavailable"
 						}
 						tutorsAvailabilityArea.appendChild(timeSlot)
 			}
