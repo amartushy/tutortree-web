@@ -88,12 +88,15 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 			document.getElementById("course-header").innerHTML = subjectId + " : " + courseId
 			
 			var availabilityArea = document.getElementById("availability-area")
-			while(availabilityArea.childNodes.length > 1 ) {
-						availabilityArea.removeChild(availabilityArea.lastChild)
+			while( availabilityArea.childNodes.length > 1 ) {
+						availabilityArea.removeChild( availabilityArea.lastChild )
+			}
+			var dayButtonsArea = document.getElementById("day-buttons-area")
+			while( dayButtonsArea.firstChild ) {
+						dayButtonsArea.removechild(dayButtonsArea.firstChild)
 			}
 			
 			//initialize day buttons with onclicks
-			
 			var dayArray = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
 			for (i = 0 ; i < 7; i++) {
 						var dayButton = document.createElement("div")
