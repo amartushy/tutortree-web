@@ -201,7 +201,7 @@ function buildAllTutorBlocks(allTutorsForCourse, studentId, day) {
 														//build their block
 														var tutorsImage = snapshot.child(element+"/profileURL/").val()
 														var tutorsName = snapshot.child(element+"/name/").val()
-														loadTutorsAvailabilityBlock(element,tutorsName,tutorsImage, studentId, decimalAvailability)
+														loadTutorsAvailabilityBlock(element, tutorsName, tutorsImage, studentId, decimalAvailability, day)
 											}
 								})
 								
@@ -230,6 +230,14 @@ function loadTutorsAvailabilityBlock( tutor, tutorsName, tutorsImage, student, d
 									timeSlot.setAttribute("class", "available-block")
 									timeSlot.innerHTML = "Available"
 									//set onclick
+									timeSlot.setAttribute("onClick", "loadCheckoutModal('"
+																				+ tutor + "','"
+																				+ student + "','"
+																				+ tutorsName + "','"
+																				+ tutorsImage + "','"
+																				+ day + "','"
+																				+ binaryAvailability + "','"
+																				+ i + "')")
 						} else {
 									timeSlot.setAttribute("class", "not-available-block")
 						}
@@ -283,4 +291,70 @@ function twosComplement(value, bitCount) {
 }
 function padAndChop(str, padChar, length) {
   return (Array(length).fill(padChar).join('') + str).slice(length*-1);
+}
+
+
+
+var checkoutArray = [tutor, student, tutorsName, tutorsImage, day, binaryAvailability, i]
+
+function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, binaryAvailability, timeslot) {
+	
+			dataRef.once("value", function(snapshot) {
+			document.getElementById("checkout-modal-wrapper").style.display = "flex"
+				
+			//Aesthetics
+			var checkoutTutorsImageBlock = document.getElementById("checkout-tutors-image-block")
+			var checkoutTutorsImage = document.createElement("img")
+			checkoutTutorsImage.setAttribute("class", "checkout-tutors-image")
+			checkoutTutorsImage.src = tutorsImage
+	
+			var tutorsNameHeader = document.getElementById("tutors-name-header")
+			tutorsNameHeader.innerHTML = tutorsName
+			
+			var checkoutCourse = document.getElementById("checkout-course")
+			checkoutCourse.innerHTML = document.getElementById("course-header")
+			
+			var checkoutDate = document.getElementById("checkout-date")
+			checkoutDate.innerHTML = ??
+				
+			var checkoutTime = document.getElementById("checkout-time")
+			var timeDict = ["6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM", "9:00 AM",
+											"9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM",
+											"1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM",
+											"5:00 PM", "5:30 PM", "6:00 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM", "9:00 PM",
+											"9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM"]
+											
+			checkoutTime.innerHTML = timeDict[timeSlot]
+	
+			var checkoutDuration = document.getElementById("checkout-duration")
+			var durationVal = 1
+			checkoutDuration.innerHTML = durationVal*30 + " Minutes"
+	
+			var checkoutAddMinutes = document.getElementById("checkout-add-minutes")
+			checkoutAddMinutes.addEventListener('click', function(){
+						durationVal += 1
+						checkoutDuration.innerHTML = durationVal*30 + " Minutes"
+						checkoutTotalAmount.innerHTML = "$" + (durationVal*tutorsPPH + 2.95)
+			}
+	
+			var checkoutMinusMinutes = document.getElementById("checkout-minus-minutes")
+			checkoutMinusMinutes.addEventListener('click', function(){
+						if (durationVal = 1) {
+									return
+						} else {
+									durationVal -= 1
+									checkoutDuration.innerHTML = durationVal*30 +" Minutes"
+									checkoutTotalAmount.innerHTML = "$" + (durationVal*tutorsPPH + 2.95)
+						}
+			}
+	
+			var checkoutDiscount = document.getElementById("checkout-discount")
+			checkoutDiscount = "$0.00"
+	
+			var checkoutTotalAmount = document.getElementById("checkout-total-cost")
+			var tutorsPPH = snapshot.child(tutor+"/PPH/")
+			checkoutTotalAmount.innerHTML = "$" + (durationVal*tutorsPPH + 2.95)
+	
+			})
+
 }
