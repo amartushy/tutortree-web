@@ -115,7 +115,7 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 			})
 }
 
-function loadTutorsAvailabilityBlock( tutor, student, decimalAvilability ) {
+async function loadTutorsAvailabilityBlock( tutor, student, decimalAvilability ) {
 			var timeSlotArray = new Array(48)
 			var binaryAvailability = convertToBinaryFromDecimal( decimalAvailability )
 			timeSlotArray = binaryAvailability.split("")
