@@ -161,7 +161,6 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 			}
 			document.getElementById(day+"-day-choice").setAttribute("class", "day-choice-active")
 			
-			}
 			//Get all possible tutors for that course
 			var allTutorsForCourse = []
 			courseRef = database.ref("/updateDatabase/"+school+"/"+subject+"/"+course)
