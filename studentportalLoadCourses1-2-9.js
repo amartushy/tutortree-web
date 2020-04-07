@@ -8,12 +8,14 @@ schoolRef.once("value", function(snapshot) {
 						
 						//current Available Universities
 						var universityDict = {
-									uoregon : "uoregon.edu",
-            			ucla : "ucla.edu",
-            			oregonstate : "oregonstate.edu",
-            			usc : "usc.edu",
-           				berkeley : "berkeley.edu"
+									"University of Oregon" : "uoregon.edu",
+            			"UCLA" : "ucla.edu",
+            			"Oregon State University" : "oregonstate.edu",
+									"Chico State" : "csuchico.edu,
+            			"University of Southern California" : "usc.edu",
+           				"Cal" : "berkeley.edu"
 						}
+						
 						for (school in universityDict) {
 									if(studentsEmail.includes(universityDict[school])) {
 												studentsUniversity = school
@@ -76,7 +78,7 @@ schoolRef.once("value", function(snapshot) {
 function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 			document.getElementById("schedule-wrapper").style.display = "flex"
 			document.getElementById("course-header").innerHTML = subjectId + " : " + courseId
-	
+			
 			var availabilityArea = document.getElementById("availability-area")
 			while(availabilityArea.childNodes.length > 1 ) {
 						availabilityArea.removeChild(availabilityArea.lastChild)
