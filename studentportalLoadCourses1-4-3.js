@@ -160,10 +160,10 @@ function clearPreviousAvailabilities() {
 			}
 }
 async function loadTutorsAvailability(day, school, subject, course, studentId) {
-			await clearPreviousAvailabilities()
+			//await clearPreviousAvailabilities()
 	
 			document.getElementById(day+"-day-choice").setAttribute("class", "day-choice-active")
-			document.getElementById(0+"-day-choice").removeAttribute("class")
+			document.getElementById(0+"-day-choice").removeAttribute("class", "day-choice-active")
 	
 			//Get all possible tutors for that course
 			var allTutorsForCourse = []
