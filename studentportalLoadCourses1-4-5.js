@@ -159,24 +159,23 @@ function clearPreviousAvailabilities() {
 						availabilityArea.removeChild(availabilityArea.lastChild)
 			}
 }
-async function loadTutorsAvailability(day, school, subject, course, studentId) {
-			await clearPreviousAvailabilities()
+function loadTutorsAvailability(day, school, subject, course, studentId) {
+			//clearPreviousAvailabilities()
 	
 			document.getElementById(day+"-day-choice").setAttribute("class", "day-choice-active")
-			document.getElementById(0+"-day-choice").removeAttribute("class", "day-choice-active")
 	
 			//Get all possible tutors for that course
 			var allTutorsForCourse = []
 			courseRef = database.ref("/updateDatabase/"+school+"/"+subject+"/"+course)
 			courseRef.once("value", function(snapshot) {
 						for (tutor in snapshot.child("/tutors/").val()) {
-								console.log(tutor)
+
 								allTutorsForCourse.push(snapshot.child("/tutors/"+tutor).val())
 						}
 			})
-	
+			console.log(allTutorsForCourse)
 			tutorsRef = database.ref("/updateDatabase/users")
-			tutorsRef.once("value", function(snapshot) {
+			tutorsRef.once("value", async function(snapshot) {
 					for (i = 0; i < allTutorsForCourse.length; i++) {
 								var tutorVal = allTutorsForCourse[i]
 								var decimalAvailability = snapshot.child(tutorVal+"/availability/"+day).val()
@@ -185,7 +184,7 @@ async function loadTutorsAvailability(day, school, subject, course, studentId) {
 								if ( decimalAvailability > 0 ) {
 											//build their block
 											console.log(decimalAvailability)
-											loadTutorsAvailabilityBlock(tutorVal,tutorsName,tutorsImage, studentId, decimalAvailability)
+											await loadTutorsAvailabilityBlock(tutorVal,tutorsName,tutorsImage, studentId, decimalAvailability)
 								}
 					}
 			})
