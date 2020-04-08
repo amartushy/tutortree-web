@@ -131,7 +131,7 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 																	 + courseId + "','"
 																	 + studentsId + "')" )
 			}
-			dayButtonsArea.firstChild().click()
+			dayButtonsArea.firstChild.click()
 }
 
 function getSecondsFromEpoch(day) {
