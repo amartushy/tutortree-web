@@ -514,7 +514,8 @@ function checkoutWithNonceAndAmount(nonce, amount) {
         var herokuURL = "https://tutortree-development.herokuapp.com/checkoutWithNonceAndAmount/"+nonce+"/"+amount
         xhttp.open("GET", herokuURL, true);
         xhttp.send();
-				return (xhttp.response)
+	console.log(xhttp.response)
+	return (xhttp.response)
 }
 
 //HELPER FUNCTION TO CONVERT TIME
