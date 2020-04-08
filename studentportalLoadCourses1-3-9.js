@@ -519,14 +519,14 @@ async function checkoutWithNonceAndAmount(nonce, amount) {
         var xhttp = new XMLHttpRequest();
         var herokuURL = "https://tutortree-development.herokuapp.com/checkoutWithNonceAndAmount/"+nonce+"/"+amount
 				
-				await xhttp.onreadystatechange = function() {
+				xhttp.onreadystatechange = function() {
 						if (xhttp.readyState == XMLHttpRequest.DONE) {
 								var response = xhttp.responseText
 						}
 				}
 	
-        xhttp.open("GET", herokuURL, true);
-        xhttp.send();
+        await xhttp.open("GET", herokuURL, true);
+        await xhttp.send();
 				//console.log(response)
 				console.log(xhttp.response.transaction.id)
 				return(xhttp.response)
