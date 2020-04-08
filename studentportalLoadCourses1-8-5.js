@@ -398,7 +398,7 @@ function createSession( braintreeId ) {
 						console.log(amountHTML)
 						console.log(amountHTML.split(""))
 						console.log(amountHTML.split("").unshift())
-						console.log(amountHTML.split("").unshift().join()
+						console.log(amountHTML.split("").unshift().join())
 						var amount = parseFloat(amountHTML.split("").unshift().join())
 						
 						var currentTime = new Date()
