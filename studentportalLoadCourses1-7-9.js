@@ -302,27 +302,35 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			dataRef.once("value", function(snapshot) {
 			document.getElementById("checkout-modal-wrapper").style.display = "flex"
 				
-			//Aesthetics
+			//Assignment of values and attributes
+			var checkoutModal = document.querySelector("checkout-modal-form")
+			checkoutModal.setAttribute("id", studentsId)
+				
 			var checkoutTutorsImageBlock = document.getElementById("checkout-tutors-image-block")
 			while (checkoutTutorsImageBlock.firstChild) {
 						checkoutTutorsImageBlock.removeChild(checkoutTutorsImageBlock.firstChild)
 			}
+				
 			var checkoutTutorsImage = document.createElement("img")
 			checkoutTutorsImage.setAttribute("class", "checkout-tutors-image")
 			checkoutTutorsImageBlock.appendChild(checkoutTutorsImage)
 			checkoutTutorsImage.src = tutorsImage
 	
-			var tutorsNameHeader = document.getElementById("tutors-name-header")
+			var tutorsNameHeader = document.querySelector(."tutors-name-header")
+			tutorsNameHeader.setAttribute("id", tutorsId)
 			tutorsNameHeader.innerHTML = tutorsName
 			
 			var checkoutCourse = document.getElementById("checkout-course")
-			checkoutCourse.innerHTML = document.getElementById("course-header").innerHTML
+			var course = document.getElementById("course-header").innerHTML
+			checkoutCourse.innerHTML = course
 			
 			var checkoutDate = document.getElementById("checkout-date")
 			checkoutDate.innerHTML = document.getElementById(day+"-day-choice-day").innerHTML 
 															 + ", " + document.getElementById(day+"-day-choice-num").innerHTML
 				
-			var checkoutTime = document.getElementById("checkout-time")
+			var checkoutTime = document.querySelector(."checkout-time")
+			var start = getSecondsFromEpoch(day) + i*1800
+			checkoutTime.setAttribute("id", start)
 			var timeDict = ["6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM", "9:00 AM",
 											"9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM",
 											"1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM",
@@ -362,8 +370,190 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			closeCheckoutModal.addEventListener('click', function() {
 						document.getElementById("checkout-modal-wrapper").style.display = "none"
 			})
-																					
-			})
+			
+			
+			var updateAndNotifyButton = document.getElementById("checkout-update-firebase")
+																		
+	})
+}
 
+function createSession( braintreeId ) {
+			dataRef.once("value", function(snapshot) {
+				
+						//verify that tutor is still available
+
+						//get necessary values
+						var course = document.getElementById("checkout-course").innerHTML
+						
+						var start = document.querySelector("checkout-time").id
+						
+						var tutor = document.querySelector(."tutors-name-header").id
+						
+						var student = document.querySelector("checkout-modal-form").id
+						
+						var durationHTML = document.getElementById("checkout-duration").innerHTML
+						var end = start + (parseInt(durationHTML.split(" ")[0])-30)*60
+
+						var amountHTML = document.getElementById("checkout-total-cost").innerHTML
+						var amount = parseFloat(amountHTML.split("").shift().join())
+						
+						var currentTime = new Date()
+						var formattedDate = convertEpochTime(currentTime)
+						
+						//create session for student
+						var studentsSessionDict = {
+												"course" : course,
+												"start" : start,
+												"end" : end,
+												"other" : tutor,
+												"status" : 0,
+												"student" : student
+												}
+
+						var studentsUpdateDict = {}
+						studentsUpdateDict[braintreeId] = studentsSessionDict
+						//dataRef.child(student+"/sessions/").update(studentsUpdateDict)
+						console.log(studentsUpdateDict)
+
+						var transactionDict = {
+												"amount" : amount,
+												"date" : formattedDate,
+												"numberDate" : currentTime/1000,
+												"type" : "Web",
+												"usedBalance" : 0
+												}
+
+						//create spending for student
+						var studentsSpendingDict = {}
+						studentsSpendingDict[braintreeId] = transactionDict
+						//dataRef.child(student+"/spending/").update(studentsSpendingDict)
+						console.log(studentsSpendingDict)
+
+						//create income for tutor
+						var tutorsIncomeDict = {}
+						tutorsIncomeDict[braintreeId] = transactionDict
+						//dataRef.child(tutor+"/income/").update(tutorsIncomeDict)
+						console.log(tutorsIncomeDict)
+
+						//create session for tutor
+						var tutorsSessionDict = {
+												"course" : course,
+												"start" : start,
+												"end" : end,
+												"other" : student,
+												"status" : 0,
+												"student" : tutor
+												}
+						var tutorsUpdateDict = {}
+						tutorsUpdateDict[braintreeId] = tutorsSessionDict
+						//dataRef.child(tutor+"/sessions/").update(tutorsUpdateDict)
+						console.log(tutorsUpdateDict)
+						
+						//create connection for messaging
+						var connectionsDict = {
+												"course": course,
+												"date" : start,
+												"value" : 0,
+												"weekInt" : 1
+												}
+						var updateConnectionDict = {}
+						updateConnectionDict[braintreeId] = updateConnectionDict
+						console.log(snapshot.child("/connections/"+student+":"+tutor).val())
+						//dataRef.child("/connections/"+student+":"+tutor).update(updateConnectionDict)
+						
+						//notify tutor of new session
+						var studentsName = snapshot.child(student+"/name/").val()
+						if(snapshot.child(tutor+'/smsNotifications/').val() == true) {
+    							var tutorsNumber = snapshot.child(tutor+'/phone/').val()
+									var sendMessage = "New Booking%0A"+studentsName+ " has booked you for " + course +" on "+ formattedDate +". This session is awaiting your confirmation. "
+									sendSMSTo(tutorsNumber,sendMessage)
+    				} 
+						if(snapshot.child(tutor+'/emailNotifications/').val() == true) {
+									var tutorsEmail = snapshot.child(tutor+'/email/').val()
+									var titleMessage = "New Booking"
+									var emailMessage = studentsName + " has confirmed your session on " + formattedDate
+									sendEmailTo(tutorsEmail, titleMessage, emailMessage)
+						}
+						if(snapshot.child(tutor+'/pushNotifications/').val() == true) {
+									var tutorsToken = snapshot.child(tutor+'/token/').val()
+									var titleMessage = "New Booking"
+									var pushMessage = studentsName + " has confirmed your session on " + formattedDate
+									sendPushTo(tutorsToken, titleMessage, pushMessage)
+						}
+						//close modal
+						document.getElementById("checkout-modal-wrapper").style.display = "none"
+			})	
+}
+
+var checkoutButton = document.querySelector('#checkout-button');
+
+braintree.dropin.create({
+		authorization: 'sandbox_yks4fjkg_j3thkst7k9j6mkvc',
+		container: '#dropin-container',
+
+		}, function (createErr, instance) {
+					checkoutButton.addEventListener('click', function () {
+					instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
+					// Submit payload.nonce to your server
+					var nonce = payload.nonce
+					var amount = document.getElementById("checkout-total-cost").innerHTML
+
+					var transactionAmount = amount
+					var checkStatus = checkoutWithNonceAndAmount(nonce, transactionAmount)
+					console.log(checkStatus)
+					//createSession(checkStatus)
+					
+					})
+			})
+})
+
+function checkoutWithNonceAndAmount(nonce, amount) {
+        var xhttp = new XMLHttpRequest();
+        var herokuURL = "https://tutortree-development.herokuapp.com/checkoutWithNonceAndAmount/"+nonce+"/"+amount
+        xhttp.open("GET", herokuURL, true);
+        xhttp.send();
+				return (xhttp.response)
+}
+
+//HELPER FUNCTION TO CONVERT TIME
+function convertEpochTime(startEpoch) {
+  var startDayandMonth = startTime.toLocaleDateString("en-US",{weekday:'long',
+  hour:'numeric', minute:'numeric', month:'long',day:'numeric',})
+	var output = String(startDayandMonth).split(", ")
+  var sendMessage = output[0] + ", " + output[1] +" at "+ output[2]
+  
+  return(sendMessage)
+}
+
+//NOTIFICATIONS PUSH FUNCTIONS
+function sendSMSTo(number, message) {
+		var xhttp = new XMLHttpRequest();
+    var herokuURL = "https://tutortree-development.herokuapp.com/sendSMSTo/+1"+number+"/"+message
+		xhttp.open("GET", herokuURL, true);
+		xhttp.send();
+}
+function sendPushTo(token, title, message) {
+		var xhttp = new XMLHttpRequest();
+    var herokuURL = "https://tutortree-development.herokuapp.com/sendNotification/"+title+"/"+message+"/"+token+"/1"
+    xhttp.open("GET", herokuURL, true);
+		xhttp.send();
+}
+function sendEmailTo(email, title, message) {
+		var xhttp = new XMLHttpRequest();
+    var herokuURL = "https://tutortree-development.herokuapp.com/sendEmailTo/"+email+"/"+title+"/"+message
+    console.log(herokuURL)
+		xhttp.open("GET", herokuURL, true);
+		xhttp.send();
+}
+
+function create8CharID() {
+		var result =''
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    var charactersLength = characters.length
+    
+    for (i = 0; i < 8; i++) {
+    		result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return result
 }
 
