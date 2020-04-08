@@ -345,13 +345,13 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 				
 			var checkoutTotalAmount = document.getElementById("checkout-total-cost")
 			var tutorsPPH = parseFloat(snapshot.child(tutorsId+"/PPH/").val())
-			checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 2.95)
+			checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 0.01)
 			
 			var checkoutAddMinutes = document.getElementById("checkout-add-minutes")
 			checkoutAddMinutes.addEventListener('click', function(){
 						durationArray.push('1')
 						checkoutDuration.innerHTML = (durationArray.length*30) + " Minutes"
-						checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 2.95)
+						checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 0.01)
 			})
 	
 			var checkoutMinusMinutes = document.getElementById("checkout-minus-minutes")
@@ -359,7 +359,7 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 						
 									durationArray.pop()
 									checkoutDuration.innerHTML = (durationArray.length*30) +" Minutes"
-									checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 2.95)
+									checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 0.01) 
 			})
 	
 			var checkoutDiscount = document.getElementById("checkout-discount")
