@@ -527,7 +527,8 @@ function checkoutWithNonceAndAmount(nonce, amount) {
 			
         xhttp.open("GET", herokuURL, true);
         xhttp.send();
-				console.log(xhttp.response)
+				
+				return(xhttp.response)
 }
 
 //HELPER FUNCTION TO CONVERT TIME
