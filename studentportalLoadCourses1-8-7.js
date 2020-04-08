@@ -395,11 +395,9 @@ function createSession( braintreeId ) {
 						var end = start + (parseInt(durationHTML.split(" ")[0])-30)*60
 
 						var amountHTML = document.getElementById("checkout-total-cost").innerHTML
-						console.log(amountHTML)
-						console.log(amountHTML.split(""))
-						console.log(amountHTML.split("").unshift())
-						console.log(amountHTML.split("").unshift().join())
-						var amount = parseFloat(amountHTML.split("").unshift().join())
+						var shiftedAmountHTML = amountHTML.split("").shift()
+
+						var amount = parseFloat(shiftedAmountHTML.join())
 						
 						var currentTime = new Date()
 						var formattedDate = convertEpochTime(currentTime)
