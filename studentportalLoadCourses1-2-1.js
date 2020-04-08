@@ -101,14 +101,18 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 			var firebaseArray = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
 			var dayButtonsArea = document.getElementById("day-buttons-area")
 			for (i = 0 ; i < 7; i++) {
+						//get id of current day to append to each block
+						var dayFromSeconds = new Date(getSecondsFromEpoch(i))
+						var getDay = dayFromSeconds.getDay()
+						
 						var dayButton = document.createElement("div")
 						dayButton.setAttribute("class", "day-choice")
-						dayButton.setAttribute("id", i+"-day-choice")
+						dayButton.setAttribute("id", getDay+"-day-choice")
 						dayButtonsArea.appendChild(dayButton)
 				
 						var dayChoiceNum = document.createElement("div")
 						dayChoiceNum.setAttribute("class", "day-choice-num")
-						dayChoiceNum.setAttribute("id", i+"-day-choice-num")
+						dayChoiceNum.setAttribute("id", getDay+"-day-choice-num")
 						dayButton.appendChild(dayChoiceNum)
 						
 						var dayAndMonth = formatMonthAndDayFromEpoch(i)
@@ -116,10 +120,9 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 				
 						var dayChoiceDay = document.createElement("div")
 						dayChoiceDay.setAttribute("class", "day-choice-day")
-						dayChoiceDay.setAttribute("id", i+"-day-choice-day")
+						dayChoiceDay.setAttribute("id", getDay+"-day-choice-day")
 						dayButton.appendChild(dayChoiceDay)
-						var dayFromSeconds = new Date(getSecondsFromEpoch(i))
-						var getDay = dayFromSeconds.getDay()
+			
 						dayChoiceDay.innerHTML = dayArray[getDay]
 						
 						var buttonVal = firebaseArray.indexOf(dayArray[getDay])
