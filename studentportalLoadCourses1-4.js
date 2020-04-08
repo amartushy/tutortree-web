@@ -528,7 +528,6 @@ async function checkoutWithNonceAndAmount(nonce, amount) {
         await xhttp.open("GET", herokuURL, true);
         await xhttp.send();
 				//console.log(response)
-				console.log(xhttp.response.transaction.id)
 				return(xhttp.response)
 }
 
