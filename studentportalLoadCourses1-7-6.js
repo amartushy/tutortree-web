@@ -99,11 +99,12 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 			//initialize day buttons with onclicks
 			var dayArray = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
 			var firebaseArray = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+			var dayButtonsArea = document.getElementById("day-buttons-area")
 			for (i = 0 ; i < 7; i++) {
 						var dayButton = document.createElement("div")
 						dayButton.setAttribute("class", "day-choice")
 						dayButton.setAttribute("id", i+"-day-choice")
-						document.getElementById("day-buttons-area").appendChild(dayButton)
+						dayButtonsArea.appendChild(dayButton)
 				
 						var dayChoiceNum = document.createElement("div")
 						dayChoiceNum.setAttribute("class", "day-choice-num")
@@ -130,6 +131,7 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 																	 + courseId + "','"
 																	 + studentsId + "')" )
 			}
+			dayButtonsArea.firstChild().click()
 }
 
 function getSecondsFromEpoch(day) {
@@ -158,7 +160,7 @@ function formatMonthAndDayFromEpoch(day) {
 }
 
 function loadTutorsAvailability(day, school, subject, course, studentId) {
-			//clear area for new tutors
+			//Clear area for new tutors
 			var availabilityArea = document.getElementById("availability-area")
 			while(availabilityArea.childNodes.length > 1 ) {
 						availabilityArea.removeChild(availabilityArea.lastChild)
