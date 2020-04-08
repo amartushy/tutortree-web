@@ -174,7 +174,7 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 					document.getElementById(i+"-day-choice").setAttribute("class", "day-choice")
 			}
 			
-			document.getElementById(buttonVal+"-day-choice").setAttribute("class", "day-choice-active")
+			document.getElementById(day+"-day-choice").setAttribute("class", "day-choice-active")
 			
 			//Get all possible tutors for that course
 			var allTutorsForCourse = []
@@ -396,6 +396,7 @@ function createSession( braintreeId ) {
 
 						var amountHTML = document.getElementById("checkout-total-cost").innerHTML
 						amountHTML = amountHTML.split("").shift()
+						console.log(amountHTML)
 						var amount = parseFloat(amountHTML.join(""))
 						
 						var currentTime = new Date()
