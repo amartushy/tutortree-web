@@ -166,13 +166,11 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 						availabilityArea.removeChild(availabilityArea.lastChild)
 			}
 			// show which day is currently active
-			/*
 			var dayArray = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
 			var firebaseArray = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
-			var currentDay = dayArray[day]
-			var buttonVal = firebaseArray.indexOf(currentDay)
-			*/
-			var buttonVal = day
+			var currentDay = firebaseArray[day]
+			var buttonVal = dayArray.indexOf(currentDay)
+			
 			for( i = 0; i < 7; i++ ) {
 					document.getElementById(i+"-day-choice").setAttribute("class", "day-choice")
 			}
@@ -521,7 +519,7 @@ function checkoutWithNonceAndAmount(nonce, amount) {
 
 //HELPER FUNCTION TO CONVERT TIME
 function convertEpochTime(startEpoch) {
-  var startDayandMonth = startTime.toLocaleDateString("en-US",{weekday:'long',
+  var startDayandMonth = startEpoch.toLocaleDateString("en-US",{weekday:'long',
   hour:'numeric', minute:'numeric', month:'long',day:'numeric',})
 	var output = String(startDayandMonth).split(", ")
   var sendMessage = output[0] + ", " + output[1] +" at "+ output[2]
