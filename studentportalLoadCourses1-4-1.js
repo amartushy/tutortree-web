@@ -507,9 +507,8 @@ braintree.dropin.create({
 					amountHTML.shift()
 					var transactionAmount = parseFloat(amountHTML.join(""))
 
-					var checkStatus = checkoutWithNonceAndAmount(nonce, transactionAmount)
-					console.log(checkStatus)
-					//createSession(checkStatus)
+					checkoutWithNonceAndAmount(nonce, transactionAmount)
+
 					
 					})
 			})
@@ -522,12 +521,12 @@ async function checkoutWithNonceAndAmount(nonce, amount) {
 				xhttp.onreadystatechange = function() {
 						if (xhttp.readyState == XMLHttpRequest.DONE) {
 								var response = xhttp.responseText
+								createSession( response )
 						}
 				}
 	
         await xhttp.open("GET", herokuURL, true);
         await xhttp.send();
-				//console.log(response)
 				return(xhttp.response)
 }
 
