@@ -166,10 +166,13 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 						availabilityArea.removeChild(availabilityArea.lastChild)
 			}
 			// show which day is currently active
+			/*
 			var dayArray = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
 			var firebaseArray = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
 			var currentDay = dayArray[day]
 			var buttonVal = firebaseArray.indexOf(currentDay)
+			*/
+			var buttonVal = day
 			for( i = 0; i < 7; i++ ) {
 					document.getElementById(i+"-day-choice").setAttribute("class", "day-choice")
 			}
@@ -394,7 +397,7 @@ function createSession( braintreeId ) {
 						var end = start + (parseInt(durationHTML.split(" ")[0])-30)*60
 
 						var amountHTML = document.getElementById("checkout-total-cost").innerHTML
-						amountHTML = amountHTML.split("").shift()
+						amountHTML.split("").shift()
 						console.log(amountHTML)
 						var amount = parseFloat(amountHTML.join(""))
 						
