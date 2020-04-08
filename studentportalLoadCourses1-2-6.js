@@ -501,9 +501,12 @@ braintree.dropin.create({
 					instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
 					// Submit payload.nonce to your server
 					var nonce = payload.nonce
-					var amount = document.getElementById("checkout-total-cost").innerHTML
+					
+					var amountHTML = document.getElementById("checkout-total-cost").innerHTML
+					amountHTML = amountHTML.split("")
+					amountHTML.shift()
+					var transactionAmount = parseFloat(amountHTML.join(""))
 
-					var transactionAmount = amount
 					var checkStatus = checkoutWithNonceAndAmount(nonce, transactionAmount)
 					console.log(checkStatus)
 					//createSession(checkStatus)
