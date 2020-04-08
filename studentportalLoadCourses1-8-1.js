@@ -488,7 +488,7 @@ function createSession( braintreeId ) {
 var checkoutButton = document.querySelector('#checkout-button');
 
 braintree.dropin.create({
-		authorization: 'sandbox_yks4fjkg_j3thkst7k9j6mkvc',
+		authorization: 'production_yks4fjkg_j3thkst7k9j6mkvc',
 		container: '#dropin-container',
 
 		}, function (createErr, instance) {
