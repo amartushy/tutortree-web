@@ -515,9 +515,15 @@ braintree.dropin.create({
 function checkoutWithNonceAndAmount(nonce, amount) {
         var xhttp = new XMLHttpRequest();
         var herokuURL = "https://tutortree-development.herokuapp.com/checkoutWithNonceAndAmount/"+nonce+"/"+amount
+				
+				xhttp.onreadystatechange = function() {
+						if (xhttp.readyState == XMLHttpRequest.DONE) {
+								var response = xhttp.responseText
+						}
+				}
         xhttp.open("GET", herokuURL, true);
         xhttp.send();
-				console.log(result.transaction.id)
+				console.log(response)
 }
 
 //HELPER FUNCTION TO CONVERT TIME
