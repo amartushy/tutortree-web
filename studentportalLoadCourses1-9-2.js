@@ -135,28 +135,28 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 }
 
 function getSecondsFromEpoch(day) {
-		var todaysEpoch = new Date()
-    todaysEpoch.setHours(0,0,0,0)
-    var secondsToAdd = 86400*day
-    var todaysSeconds = todaysEpoch.getTime()/1000
-    var daySeconds = todaysSeconds+secondsToAdd
-    
-    var outputSeconds = daySeconds*1000
-    return(outputSeconds)
+			var todaysEpoch = new Date()
+			todaysEpoch.setHours(0,0,0,0)
+			var secondsToAdd = 86400*day
+			var todaysSeconds = todaysEpoch.getTime()/1000
+			var daySeconds = todaysSeconds+secondsToAdd
+
+			var outputSeconds = daySeconds*1000
+			return(outputSeconds)
 }
 
 function formatMonthAndDayFromEpoch(day) {
-		var todaysEpoch = new Date()
-    todaysEpoch.setHours(0,0,0,0)
-    var secondsToAdd = 86400*day
-    var todaysSeconds = todaysEpoch.getTime()/1000
-    var daySeconds = todaysSeconds+secondsToAdd
-    
-    var whichDay = new Date(daySeconds*1000)
-    var monthString = whichDay.getMonth()+1
-    var dayString = whichDay.getDate()
-    var formattedString =  monthString + "/" + dayString
-    return ( formattedString )
+			var todaysEpoch = new Date()
+			todaysEpoch.setHours(0,0,0,0)
+			var secondsToAdd = 86400*day
+			var todaysSeconds = todaysEpoch.getTime()/1000
+			var daySeconds = todaysSeconds+secondsToAdd
+
+			var whichDay = new Date(daySeconds*1000)
+			var monthString = whichDay.getMonth()+1
+			var dayString = whichDay.getDate()
+			var formattedString =  monthString + "/" + dayString
+			return ( formattedString )
 }
 
 function loadTutorsAvailability(day, school, subject, course, studentId) {
@@ -174,7 +174,7 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 					document.getElementById(i+"-day-choice").setAttribute("class", "day-choice")
 			}
 			
-			document.getElementById(day+"-day-choice").setAttribute("class", "day-choice-active")
+			document.getElementById(buttonVal+"-day-choice").setAttribute("class", "day-choice-active")
 			
 			//Get all possible tutors for that course
 			var allTutorsForCourse = []
@@ -191,7 +191,6 @@ function loadTutorsAvailability(day, school, subject, course, studentId) {
 }
 
 function buildAllTutorBlocks(allTutorsForCourse, studentId, day, buttonVal) {
-			console.log(allTutorsForCourse)
 			tutorsRef = database.ref("/updateDatabase/users")
 						tutorsRef.once("value", function(snapshot) {
 								allTutorsForCourse.forEach(element => {
