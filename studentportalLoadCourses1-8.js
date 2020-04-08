@@ -303,7 +303,7 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			document.getElementById("checkout-modal-wrapper").style.display = "flex"
 				
 			//Assignment of values and attributes
-			var checkoutModal = document.querySelector("checkout-modal-form")
+			var checkoutModal = document.querySelector(".checkout-modal-form")
 			checkoutModal.setAttribute("id", studentsId)
 				
 			var checkoutTutorsImageBlock = document.getElementById("checkout-tutors-image-block")
@@ -316,7 +316,7 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			checkoutTutorsImageBlock.appendChild(checkoutTutorsImage)
 			checkoutTutorsImage.src = tutorsImage
 	
-			var tutorsNameHeader = document.querySelector(."tutors-name-header")
+			var tutorsNameHeader = document.querySelector(".tutors-name-header")
 			tutorsNameHeader.setAttribute("id", tutorsId)
 			tutorsNameHeader.innerHTML = tutorsName
 			
@@ -328,7 +328,7 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			checkoutDate.innerHTML = document.getElementById(day+"-day-choice-day").innerHTML 
 															 + ", " + document.getElementById(day+"-day-choice-num").innerHTML
 				
-			var checkoutTime = document.querySelector(."checkout-time")
+			var checkoutTime = document.querySelector(".checkout-time")
 			var start = getSecondsFromEpoch(day) + i*1800
 			checkoutTime.setAttribute("id", start)
 			var timeDict = ["6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM", "9:00 AM",
@@ -344,7 +344,7 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			checkoutDuration.innerHTML = (durationArray.length*30) + " Minutes"
 				
 			var checkoutTotalAmount = document.getElementById("checkout-total-cost")
-			var tutorsPPH = parseFloat(snapshot.child(tutor+"/PPH/").val())
+			var tutorsPPH = parseFloat(snapshot.child(tutorsId+"/PPH/").val())
 			checkoutTotalAmount.innerHTML = "$" + (durationArray.length*tutorsPPH + 2.95)
 			
 			var checkoutAddMinutes = document.getElementById("checkout-add-minutes")
@@ -385,11 +385,11 @@ function createSession( braintreeId ) {
 						//get necessary values
 						var course = document.getElementById("checkout-course").innerHTML
 						
-						var start = document.querySelector("checkout-time").id
+						var start = document.querySelector(".checkout-time").id
 						
-						var tutor = document.querySelector(."tutors-name-header").id
+						var tutor = document.querySelector(".tutors-name-header").id
 						
-						var student = document.querySelector("checkout-modal-form").id
+						var student = document.querySelector(".checkout-modal-form").id
 						
 						var durationHTML = document.getElementById("checkout-duration").innerHTML
 						var end = start + (parseInt(durationHTML.split(" ")[0])-30)*60
