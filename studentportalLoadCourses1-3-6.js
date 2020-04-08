@@ -524,10 +524,11 @@ function checkoutWithNonceAndAmount(nonce, amount) {
 								var response = xhttp.responseText
 						}
 				}
-			
+	
         xhttp.open("GET", herokuURL, true);
         xhttp.send();
-				
+				console.log(response)
+				console.log(xhttp.response.transaction.id)
 				return(xhttp.response)
 }
 
