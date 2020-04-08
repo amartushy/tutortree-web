@@ -527,7 +527,7 @@ function checkoutWithNonceAndAmount(nonce, amount) {
 	
         xhttp.open("GET", herokuURL, true);
         xhttp.send();
-				console.log(response)
+				//console.log(response)
 				console.log(xhttp.response.transaction.id)
 				return(xhttp.response)
 }
