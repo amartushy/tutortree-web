@@ -409,7 +409,7 @@ function createSession( braintreeId ) {
 												"end" : end,
 												"other" : tutor,
 												"status" : 0,
-												"student" : student
+												"student" : 1
 												}
 
 						var studentsUpdateDict = {}
@@ -444,7 +444,7 @@ function createSession( braintreeId ) {
 												"end" : end,
 												"other" : student,
 												"status" : 0,
-												"student" : tutor
+												"student" : 0
 												}
 						var tutorsUpdateDict = {}
 						tutorsUpdateDict[braintreeId] = tutorsSessionDict
