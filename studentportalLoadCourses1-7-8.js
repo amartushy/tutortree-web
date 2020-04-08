@@ -366,3 +366,4 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 			})
 
 }
+
