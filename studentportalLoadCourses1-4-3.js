@@ -392,7 +392,11 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 
 function createSession( braintreeId ) {
 			dataRef.once("value", function(snapshot) {
-				
+						document.getElementById("schedule-wrapper").style.display = "none"
+						document.getElementById("checkout-close-modal").addEventListener("click", function () {
+										document.getElementById("schedule-wrapper").style.display = "flex"
+						}
+						
 						//verify that tutor is still available
 
 						//get necessary values
