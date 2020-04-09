@@ -27,8 +27,18 @@ schoolRef.once("value", function(snapshot) {
 						for (school in universityDict) {
 									if(studentsEmail.includes(universityDict[school])) {
 												studentsUniversity = school
-												document.getElementById("university-header").innerHTML = "All Courses for " + studentsUniversity
-										
+												var schoolHeader = document.getElementById("university-header").innerHTML
+												if (studentsUniversity == "uoregon" ){
+															schoolHeader = "University of Oregon"
+												} else if (studentsUniversity == "ucla") {
+															schoolHeader = "UC, Los Angeles"
+												} else if (studentsUniversity == "oregonstate" ) {
+															schoolHeader = "Oregon State University"
+												} else if (studentsUniversity == "usc") {
+													
+												} else if (studentsUniversity == "berkeley") {
+															schoolHeader = "Cal"
+												}
 									}
 						}
 						//Create new blocks for each subject
