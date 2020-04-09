@@ -28,17 +28,17 @@ schoolRef.once("value", function(snapshot) {
 									if(studentsEmail.includes(universityDict[school])) {
 												studentsUniversity = school
 												console.log(studentsUniversity)
-												var schoolHeader = document.getElementById("university-header").innerHTML
+												var schoolHeader = document.getElementById("university-header")
 												if (studentsUniversity == "uoregon" ){
-															schoolHeader = "University of Oregon"
+															schoolHeader.innerHTML = "University of Oregon"
 												} else if (studentsUniversity == "ucla") {
-															schoolHeader = "UC, Los Angeles"
+															schoolHeader.innerHTML = "UC, Los Angeles"
 												} else if (studentsUniversity == "oregonstate" ) {
-															schoolHeader = "Oregon State University"
+															schoolHeader.innerHTML = "Oregon State University"
 												} else if (studentsUniversity == "usc") {
 													
 												} else if (studentsUniversity == "berkeley") {
-															schoolHeader = "Cal"
+															schoolHeader.innerHTML = "Cal"
 												}
 									}
 						}
