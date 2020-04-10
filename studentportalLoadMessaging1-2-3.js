@@ -167,6 +167,7 @@ function sortAndFormatMessages(array1, array2) {
 	}
 }
 
+
 function addListenerToField(connectionId) {
     var oldMessageField = document.getElementById("message-field")
 	var newMessageField = oldMessageField.cloneNode(true)
@@ -177,6 +178,7 @@ function addListenerToField(connectionId) {
     		}
     	})
 }
+
 
 function sendMessage(connectionId) {
 	var connectionRef = schoolRef.child("/connections/"+connectionId)
@@ -299,6 +301,7 @@ function initializeMessageArea(connectionId, blockId, tutorId) {
     
     		sortAndFormatMessages( dateIdentifiers, messagesMainArray )
     		addListenerToField(connectionId)
+		document.getElementById("send-message").setAttribute("onClick", "sendMessage('"+connectionId+"')")
     		listenForIncomingMessages(connectionId, tutorId)
 	})
 }
