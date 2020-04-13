@@ -40,6 +40,10 @@ schoolRef.once("value", function(snapshot) {
 												} else if (studentsUniversity == "berkeley") {
 															schoolHeader.innerHTML = "Cal"
 												}
+									} else {
+												studentsUniversity = "uoregon"
+												schoolHeader = document.getElementById("university-header")
+												schoolHeader.innerHTML = "University of Oregon"
 									}
 						}
 						//Create new blocks for each subject
