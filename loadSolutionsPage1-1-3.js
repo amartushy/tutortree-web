@@ -1,3 +1,6 @@
+var solutionsRef = database.ref("/updateDatabase/solutions/")
+
+
 //UPLOAD NEW SOLUTION REQUEST MODAL
 function loadNewSolutionModal(usersId) {
 
