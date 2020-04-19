@@ -159,6 +159,123 @@ function loadUploadModal(tutorsID) {
 
 
 
+
+//LOAD SOLUTION FLOW: CLICK SUBJECT -> CLICK COURSE -> LOAD PROBLEMS FOR COURSE
+solutionsRef.once("value", function(snapshot) {
+		// load all subjects and add onclicks to load courses
+    while(subjectOptionsArea.firstChild) {
+        		subjectOptionsArea.removeChild(subjectOptionsArea.firstChild);
+    }
+		for (i=0; i< Object.keys(snapshot.val()).length; i++ ) {
+    		var subject = Object.keys(snapshot.val())[i]
+        
+    		var subjectOption = document.createElement("div")
+        subjectOption.setAttribute("class", "subject-option")
+        subjectOption.innerHTML = subject
+        subjectOption.setAttribute("onClick", "loadCourseOptions('"+subject+"')")
+        //Should be doin gthis -->subjectOption.addEventListener("click", loadCourseOptions(subject))
+    		subjectOptionsArea.appendChild(subjectOption)
+    }
+})
+
+
+//load all courses for given subject and add onclicks to load problem area
+function loadCourseOptions(subject) {
+   	solutionsRef.once("value", function(snapshot) {
+    		while(courseOptionsArea.firstChild) {
+        		courseOptionsArea.removeChild(courseOptionsArea.firstChild);
+   			}
+    		for ( i=0; i < Object.keys(snapshot.child("/"+subject+"/").val()).length; i++ ) {
+        		var course = Object.keys(snapshot.child("/"+subject+"/").val())[i]
+            
+        		var courseOption = document.createElement("div")
+            courseOption.setAttribute("class", "course-choice")
+            courseOption.innerHTML = course
+            courseOption.setAttribute("onClick", "loadSolutionsArea('"+subject+"','"+course+"')")
+            //Again, should be doing this --> courseOption.addEventListener("click", loadSolutionsArea(subject, course))
+            courseOptionsArea.appendChild(courseOption) 
+        }
+    })
+}
+    
+    
+function loadSolutionsArea(subject, course) {
+    solutionsRef.once("value", function(snapshot) {
+    		while(solutionsArea.firstChild) {
+        		solutionsArea.removeChild(solutionsArea.firstChild);
+    		}
+    		for ( problem in snapshot.child(subject+"/"+course+"/").val() ) {
+        		problemRef = snapshot.child(subject+"/"+course+"/"+problem)
+            // build header
+            var headerString = subject + " - " + course + " Solutions"
+            solutionsAreaHeader.innerHTML = headerString
+        		//build the block
+            var solutionBlock = document.createElement("div")
+            solutionBlock.setAttribute("class", "solution-block")
+            solutionsArea.appendChild(solutionBlock)
+            
+            var solutionTitleAndDescription = document.createElement("div")
+            solutionTitleAndDescription.setAttribute("class", "solution-title-and-description")
+            solutionBlock.appendChild(solutionTitleAndDescription)
+            
+            var solutionTitle = document.createElement("h4")
+            solutionTitle.setAttribute("class", "solution-header")
+            solutionTitle.innerHTML = problemRef.child("/title/").val()
+            solutionTitleAndDescription.appendChild(solutionTitle)
+            
+            var solutionDescription = document.createElement("div")
+            solutionDescription.setAttribute("class", "solution-description")
+            solutionDescription.innerHTML = problemRef.child("/problemText/").val()
+            solutionTitleAndDescription.appendChild(solutionDescription)
+            
+            var solutionLabelsAndViews = document.createElement("div")
+            solutionLabelsAndViews.setAttribute("class", "solution-labels-and-views")
+            solutionBlock.appendChild(solutionLabelsAndViews)
+            
+            var solutionLabelsBlock = document.createElement("div")
+            solutionLabelsBlock.setAttribute("class", "solution-labels-block")
+            solutionLabelsAndViews.appendChild(solutionLabelsBlock)
+            
+            var solutionLabels = document.createElement("div")
+            solutionLabels.setAttribute("class", "solution-labels")
+            solutionLabelsBlock.appendChild(solutionLabels)
+            
+            var isSolution  = problemRef.child("/solution/").val()
+            if (isSolution == 0) {
+            		var noSolutionLabel = document.createElement("div")
+                noSolutionLabel.setAttribute("class", "no-solution-yet")
+                noSolutionLabel.innerHTML = "No solution yet"
+                solutionLabels.appendChild(noSolutionLabel)
+            
+            } else {
+            		var solutionLabelText = document.createElement("div")
+            		solutionLabelText.setAttribute("class", "solution-label-text")
+            		solutionLabelText.innerHTML = "Text Solution"
+            		solutionLabels.appendChild(solutionLabelText)
+            }
+      
+            var solutionViewsAndUpvotes = document.createElement("div")
+            solutionViewsAndUpvotes.setAttribute("class", "solution-views-and-upvotes")
+            solutionLabelsAndViews.appendChild(solutionViewsAndUpvotes)
+            
+            var solutionViews = document.createElement("div")
+            solutionViews.setAttribute("class", "views-count")
+            solutionViews.innerHTML = problemRef.child("/metadata/views/").val() + " "
+            solutionViewsAndUpvotes.appendChild(solutionViews)
+            
+            var solutionUpvotes = document.createElement("div")
+            solutionUpvotes.setAttribute("class", "solution-upvotes")
+            solutionUpvotes.innerHTML = problemRef.child("/metadata/views/").val() + " "
+            solutionViewsAndUpvotes.appendChild(solutionUpvotes)
+            
+        }
+		})	
+}
+
+
+
+
+//HELPER FUNCTIONS
 function create8CharID() {
 		var result =''
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
@@ -169,3 +286,5 @@ function create8CharID() {
     }
     return result
 }
+
+
