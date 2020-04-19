@@ -244,11 +244,12 @@ function loadSolutionsArea(subject, course) {
             solutionLabelsBlock.appendChild(solutionLabels)
             
             var isSolution  = problemRef.child("/solution/").val()
-            if (isSolution == 0) {
+	    console.log(isSolution)
+            if (isSolution == "0") {
             		var noSolutionLabel = document.createElement("div")
-                noSolutionLabel.setAttribute("class", "no-solution-yet")
-                noSolutionLabel.innerHTML = "No solution yet"
-                solutionLabels.appendChild(noSolutionLabel)
+                	noSolutionLabel.setAttribute("class", "no-solution-yet")
+                	noSolutionLabel.innerHTML = "No solution yet"
+                	solutionLabels.appendChild(noSolutionLabel)
             
             } else {
             		var solutionLabelText = document.createElement("div")
