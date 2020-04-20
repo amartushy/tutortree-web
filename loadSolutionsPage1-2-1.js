@@ -209,7 +209,7 @@ function loadWeekOptions(subject, course) {
 	
 	solutionsRef.once("value", function(snapshot) {
 		while(weekOptionsArea.firstChild) {
-			weekOptionsArea.removeChild(firstChild);
+			weekOptionsArea.removeChild(weekOptionsArea.firstChild);
 		}
 		for ( i=0; i <Object.keys(snapshot.child("/"+subject+"/"+course+"/").val()).length; i++) {
 			var week = Object.keys(snapshot.child("/"+subject+"/"+course+"/").val())[i]
