@@ -356,11 +356,11 @@ function loadSolutionsArea(subject, course, week) {
 				var problemRef = snapshot.child(subject+"/"+course+"/"+week)
 							
 				var problemId = problem
-				var problemTitle = problemRef.child("/title/").val()
-				var problemText = problemRef.child("/title/").val()
-				var isSolution = problemRef.child("/solution/").val()
-				var problemViews = problemRef.child("/metadata/views/").val()
-				var problemUpvotes = problemRef.child("/metadata/upvotes/").val()
+				var problemTitle = problemRef.child(problem+"/title/").val()
+				var problemText = problemRef.child(problem+"/title/").val()
+				var isSolution = problemRef.child(problem+"/solution/").val()
+				var problemViews = problemRef.child(problem+"/metadata/views/").val()
+				var problemUpvotes = problemRef.child(problem+"/metadata/upvotes/").val()
 				
 				buildProblemBlock(problemId, problemTitle, problemText, isSolution, problemViews, 
 						  problemUpvotes)
