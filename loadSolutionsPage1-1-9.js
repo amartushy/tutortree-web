@@ -240,7 +240,7 @@ function loadSolutionsArea(subject, course, week) {
 					for (weekOp in snapshot.child(subjectOp+"/"+courseOp).val()) {
 						//loop through problems and build the blocks
 						for (problem in snapshot.child(subjectOp+"/"+courseOp+"/"+weekOp).val()){
-							var problemRef = snapshot.child(subjectOp+"/"+courseOp+"/"weekOp)
+							var problemRef = snapshot.child(subjectOp+"/"+courseOp+"/"+weekOp)
 							
 							var problemId = problem
 							var problemTitle = problemRef.child("/title/").val()
@@ -264,8 +264,8 @@ function loadSolutionsArea(subject, course, week) {
 				//loop through weeks for that course
 				for (weekOp in snapshot.child(subject+"/"+courseOp).val()) {
 					//loop through problems and build the blocks
-					for (problem in snapshot.child(subject+"/"+courseOp+"/"weekOp).val()){
-						var problemRef = snapshot.child(subject+"/"+courseOp+"/"weekOp)
+					for (problem in snapshot.child(subject+"/"+courseOp+"/"+weekOp).val()){
+						var problemRef = snapshot.child(subject+"/"+courseOp+"/"+weekOp)
 							
 						var problemId = problem
 						var problemTitle = problemRef.child("/title/").val()
@@ -285,8 +285,8 @@ function loadSolutionsArea(subject, course, week) {
 			//loop through weeks for given subject and course
 			for (weekOp in snapshot.child(subject+"/"+course).val()) {
 				//loop through problems and build the blocks
-				for (problem in snapshot.child(subject+"/"+course+"/"weekOp).val()){
-					var problemRef = snapshot.child(subject+"/"+course+"/"weekOp)
+				for (problem in snapshot.child(subject+"/"+course+"/"+weekOp).val()){
+					var problemRef = snapshot.child(subject+"/"+course+"/"+weekOp)
 							
 						var problemId = problem
 						var problemTitle = problemRef.child("/title/").val()
@@ -302,8 +302,8 @@ function loadSolutionsArea(subject, course, week) {
 
 		//load problems for a given subject, course, and week
 		} else {
-			for (problem in snapshot.child(subject+"/"+course+"/"week).val()){
-				var problemRef = snapshot.child(subject+"/"+course+"/"week)
+			for (problem in snapshot.child(subject+"/"+course+"/"+week).val()){
+				var problemRef = snapshot.child(subject+"/"+course+"/"+week)
 							
 				var problemId = problem
 				var problemTitle = problemRef.child("/title/").val()
