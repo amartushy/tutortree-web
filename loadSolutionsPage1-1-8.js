@@ -239,7 +239,7 @@ function loadSolutionsArea(subject, course, week) {
 					//loop through weeks for that course
 					for (weekOp in snapshot.child(subjectOp+"/"+courseOp).val()) {
 						//loop through problems and build the blocks
-						for (problem in snapshot.child(subjectOp+"/"+courseOp+"/"weekOp).val()){
+						for (problem in snapshot.child(subjectOp+"/"+courseOp+"/"+weekOp).val()){
 							var problemRef = snapshot.child(subjectOp+"/"+courseOp+"/"weekOp)
 							
 							var problemId = problem
