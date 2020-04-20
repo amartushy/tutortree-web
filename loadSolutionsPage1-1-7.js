@@ -217,7 +217,7 @@ function loadWeekOptions(subject, course) {
 			var weekOption = document.createElement("div")
 			weekOption.setAttribute("class", "week-option")
 			weekOption.innerHTML = course
-			weekOption.setAttribute("onClick", "loadSolutionsArea('"+subject+"','"+course+"','"+week+"')"
+			weekOption.setAttribute("onClick", "loadSolutionsArea('"+subject+"','"+course+"','"+week+"')")
 			weekOptionsArea.appendChild(weekOption)
 		}	
 	})	
