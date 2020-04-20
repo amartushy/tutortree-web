@@ -231,6 +231,10 @@ function loadSolutionsArea(subject, course, week) {
     		//load all existing problems
 		if(subject = "undefined") {
 			//build header
+			var subjectLabel = document.createElement("div")
+			subjectLabel.setAttribute("class", "subject-option")
+			subjectLabel.innerHTML = "All Solutions"
+			solutionsAreaHeader.appendChild(subjectLabel)
 			
 			//loop through subjects
 			for(subjectOp in snapshot.val()) {
@@ -259,6 +263,15 @@ function loadSolutionsArea(subject, course, week) {
 		
 		//load all problems for a subject
 		} else if (course == "undefined") {
+			//build header
+			while(solutionsAreaHeader.firstChild) {
+				solutionsAreaHeader.removeChild(solutionsAreaHeader.firstChild)
+			}
+			var subjectLabel = document.createElement("div")
+			subjectLabel.setAttribute("class", "subject-option")
+			subjectLabel.innerHTML = subject
+			solutionsAreaHeader.appendChild(subjectLabel)
+			
 			//loop through courses for defined subject
 			for (courseOp in snapshot.child(subject).val()) {
 				//loop through weeks for that course
@@ -281,7 +294,21 @@ function loadSolutionsArea(subject, course, week) {
 			}	
 		
 		//load all problems for a subject and course
-		}else if (week == "undefined") {
+		} else if (week == "undefined") {
+			//build header
+			while(solutionsAreaHeader.firstChild) {
+				solutionsAreaHeader.removeChild(solutionsAreaHeader.firstChild)
+			}
+			var subjectLabel = document.createElement("div")
+			subjectLabel.setAttribute("class", "subject-option")
+			subjectLabel.innerHTML = subject
+			solutionsAreaHeader.appendChild(subjectLabel)
+			
+			var courseLabel = document.createElement("div")
+			courseLabel.setAttribute("class", "subject-option")
+			courseLabel.innerHTML = course
+			solutionsAreaHeader.appendChild(courseLabel)
+			
 			//loop through weeks for given subject and course
 			for (weekOp in snapshot.child(subject+"/"+course).val()) {
 				//loop through problems and build the blocks
@@ -302,6 +329,25 @@ function loadSolutionsArea(subject, course, week) {
 
 		//load problems for a given subject, course, and week
 		} else {
+			//build header
+			while(solutionsAreaHeader.firstChild) {
+				solutionsAreaHeader.removeChild(solutionsAreaHeader.firstChild)
+			}
+			var subjectLabel = document.createElement("div")
+			subjectLabel.setAttribute("class", "subject-option")
+			subjectLabel.innerHTML = subject
+			solutionsAreaHeader.appendChild(subjectLabel)
+			
+			var courseLabel = document.createElement("div")
+			courseLabel.setAttribute("class", "subject-option")
+			courseLabel.innerHTML = course
+			solutionsAreaHeader.appendChild(courseLabel)
+			
+			var weekLabel = document.createElement("div")
+			weekLabel.setAttribute("class", "subject-option")
+			weekLabel.innerHTML = week
+			solutionsAreaHeader.appendChild(weekLabel)
+			
 			for (problem in snapshot.child(subject+"/"+course+"/"+week).val()){
 				var problemRef = snapshot.child(subject+"/"+course+"/"+week)
 							
