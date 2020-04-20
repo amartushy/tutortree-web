@@ -357,7 +357,7 @@ function loadSolutionsArea(subject, course, week) {
 							
 				var problemId = problem
 				var problemTitle = problemRef.child(problem+"/title/").val()
-				var problemText = problemRef.child(problem+"/title/").val()
+				var problemText = problemRef.child(problem+"/problemText/").val()
 				var isSolution = problemRef.child(problem+"/solution/").val()
 				var problemViews = problemRef.child(problem+"/metadata/views/").val()
 				var problemUpvotes = problemRef.child(problem+"/metadata/upvotes/").val()
