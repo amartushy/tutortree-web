@@ -178,7 +178,7 @@ solutionsRef.once("value", function(snapshot) {
         subjectOption.setAttribute("onClick", "loadCourseOptions('"+subject+"')")
     	subjectOptionsArea.appendChild(subjectOption)
 			
-	
+	loadSolutionsArea("undefined", "undefined", "undefined")
     	}
 })
 
@@ -224,12 +224,13 @@ function loadWeekOptions(subject, course) {
 }
     
 function loadSolutionsArea(subject, course, week) {
+	console.log(subject, course, week)
     	solutionsRef.once("value", function(snapshot) {
     		while(solutionsArea.firstChild) {
         		solutionsArea.removeChild(solutionsArea.firstChild);
     		}
     		//load all existing problems
-		if(subject = "undefined") {
+		if(subject == "undefined") {
 			while(solutionsAreaHeader.firstChild) {
 				solutionsAreaHeader.removeChild(solutionsAreaHeader.firstChild)
 			}
