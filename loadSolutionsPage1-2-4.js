@@ -273,8 +273,7 @@ function loadSolutionsArea(subject, course, week) {
 						var isSolution = problemRef.child("/solution/").val()
 						var problemViews = problemRef.child("/metadata/views/").val()
 						var problemUpvotes = problemRef.child("/metadata/upvotes/").val()
-						var arrayToLog = [problemId,problemTitle,problemText,isSolution,problemViews,problemUpvotes]
-				console.log(arrayToLog)	
+		
 						buildProblemBlock(problemId, problemTitle, problemText, isSolution, problemViews, 
 								  problemUpvotes)
 					}
@@ -295,8 +294,7 @@ function loadSolutionsArea(subject, course, week) {
 						var isSolution = problemRef.child("/solution/").val()
 						var problemViews = problemRef.child("/metadata/views/").val()
 						var problemUpvotes = problemRef.child("/metadata/upvotes/").val()
-						var arrayToLog = [problemId,problemTitle,problemText,isSolution,problemViews,problemUpvotes]
-				console.log(arrayToLog)	
+						
 						buildProblemBlock(problemId, problemTitle, problemText, isSolution, problemViews, 
 								  problemUpvotes)
 				}
@@ -314,8 +312,6 @@ function loadSolutionsArea(subject, course, week) {
 				var problemViews = problemRef.child("/metadata/views/").val()
 				var problemUpvotes = problemRef.child("/metadata/upvotes/").val()
 				
-				var arrayToLog = [problemId,problemTitle,problemText,isSolution,problemViews,problemUpvotes]
-				console.log(arrayToLog)
 				buildProblemBlock(problemId, problemTitle, problemText, isSolution, problemViews, 
 						  problemUpvotes)
 				}
@@ -327,7 +323,9 @@ function loadSolutionsArea(subject, course, week) {
 }
 
 function buildProblemBlock(problemId, problemTitle, problemText, isSolution, problemViews, problemUpvotes) {
-
+	var arrayToLog = [problemId,problemTitle,problemText,isSolution,problemViews,problemUpvotes]
+	console.log(arrayToLog)
+	
         var solutionBlock = document.createElement("div")
         solutionBlock.setAttribute("class", "solution-block")
         solutionsArea.appendChild(solutionBlock)
