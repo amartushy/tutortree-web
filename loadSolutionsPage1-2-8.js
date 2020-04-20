@@ -230,9 +230,12 @@ function loadSolutionsArea(subject, course, week) {
     		}
     		//load all existing problems
 		if(subject = "undefined") {
+			while(solutionsAreaHeader.firstChild) {
+				solutionsAreaHeader.removeChild(solutionsAreaHeader.firstChild)
+			}
 			//build header
 			var subjectLabel = document.createElement("div")
-			subjectLabel.setAttribute("class", "subject-option")
+			subjectLabel.setAttribute("class", "solution-nav-header")
 			subjectLabel.innerHTML = "All Solutions"
 			solutionsAreaHeader.appendChild(subjectLabel)
 			
@@ -268,7 +271,7 @@ function loadSolutionsArea(subject, course, week) {
 				solutionsAreaHeader.removeChild(solutionsAreaHeader.firstChild)
 			}
 			var subjectLabel = document.createElement("div")
-			subjectLabel.setAttribute("class", "subject-option")
+			subjectLabel.setAttribute("class", "solution-nav-header")
 			subjectLabel.innerHTML = subject
 			solutionsAreaHeader.appendChild(subjectLabel)
 			
@@ -300,12 +303,12 @@ function loadSolutionsArea(subject, course, week) {
 				solutionsAreaHeader.removeChild(solutionsAreaHeader.firstChild)
 			}
 			var subjectLabel = document.createElement("div")
-			subjectLabel.setAttribute("class", "subject-option")
+			subjectLabel.setAttribute("class", "solution-nav-header")
 			subjectLabel.innerHTML = subject
 			solutionsAreaHeader.appendChild(subjectLabel)
 			
 			var courseLabel = document.createElement("div")
-			courseLabel.setAttribute("class", "subject-option")
+			courseLabel.setAttribute("class", "solution-nav-header")
 			courseLabel.innerHTML = course
 			solutionsAreaHeader.appendChild(courseLabel)
 			
@@ -334,17 +337,17 @@ function loadSolutionsArea(subject, course, week) {
 				solutionsAreaHeader.removeChild(solutionsAreaHeader.firstChild)
 			}
 			var subjectLabel = document.createElement("div")
-			subjectLabel.setAttribute("class", "subject-option")
+			subjectLabel.setAttribute("class", "solution-nav-header")
 			subjectLabel.innerHTML = subject
 			solutionsAreaHeader.appendChild(subjectLabel)
 			
 			var courseLabel = document.createElement("div")
-			courseLabel.setAttribute("class", "subject-option")
+			courseLabel.setAttribute("class", "solution-nav-header")
 			courseLabel.innerHTML = course
 			solutionsAreaHeader.appendChild(courseLabel)
 			
 			var weekLabel = document.createElement("div")
-			weekLabel.setAttribute("class", "subject-option")
+			weekLabel.setAttribute("class", "solution-nav-header")
 			weekLabel.innerHTML = week
 			solutionsAreaHeader.appendChild(weekLabel)
 			
