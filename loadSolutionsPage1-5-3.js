@@ -570,7 +570,7 @@ function openSolutionModal(subject, course, week, problem) {
         upvoteButton.addEventListener('click', function(){
                 if (usersID.length > 1) {
                     var updateUpvotes = currentUpvotes + 1
-                    document.getElementById("upvote-counter").innerHTML = udateUpvotes
+                    document.getElementById("upvote-counter").innerHTML = updateUpvotes
                 } else {
                     alert("Please login to rate solutions")
                 }
