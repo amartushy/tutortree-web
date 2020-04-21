@@ -75,92 +75,6 @@ function sendSolutionRequestEmail(problemId) {
 }
 
 
-//UPLOAD SOLUTION FROM TUTORS END
-function loadUploadModal(tutorsID) {
-		var storageRef = storageService.ref();
-    
-		var uploadSubjectMath = document.getElementById("mathematics")
-    var uploadSubjectChemistry = document.getElementById("chemistry")
-    var uploadSubjectBiology = document.getElementById("biology")
-		var uploadSubjectPhysics = document.getElementById("physics")
-    
-    uploadSubjectMath.addEventListener('click', changeMath)
-    uploadSubjectChemistry.addEventListener('click', changeChemistry)
-    uploadSubjectBiology.addEventListener('click', changeBiology)
-    uploadSubjectPhysics.addEventListener('click', changePhysics)
-    
-    var uploadSolutionSubject = ''
-    function changeMath() {
-        uploadSolutionSubject = 'Mathematics'
-        document.getElementById("subject-header-block").innerHTML = "Subject: " + uploadSolutionSubject
-    }
-    function changeChemistry() {
-        uploadSolutionSubject = 'Mathematics'
-        document.getElementById("subject-header-block").innerHTML = "Subject: " + uploadSolutionSubject
-    }
-    function changeBiology() {
-        uploadSolutionSubject = 'Mathematics'
-        document.getElementById("subject-header-block").innerHTML = "Subject: " + uploadSolutionSubject
-    }
-    function changePhysics() {
-        uploadSolutionSubject = 'Physics'
-        document.getElementById("subject-header-block").innerHTML = "Subject: " + uploadSolutionSubject
-    }
-
-    // Designate Fields
-    var uploadCourseHeader = document.getElementById("upload-course-header")
-    var uploadTitle = document.getElementById("upload-title")
-    var uploadProblemText = document.getElementById("upload-problem-text")
-		
-    
-    //HANDLE PROBLEM FILE UPLOAD
-		var uploadSolution = document.getElementById("upload-solution")
-    uploadSolution.addEventListener('click', openProblemDialog)
-    var hiddenFilebutton = document.getElementById('problem-select')
-    hiddenFilebutton.addEventListener('change', handleProblemUploadChange);
-
-    function openProblemDialog() {
-      hiddenFilebutton.click();
-    }
-    
-    var selectedSolutionFile;
-    function handleProblemUploadChange(e) {
-      selectedSolutionFile = e.target.files[0];
-      document.getElementById("upload-solution-preview").innerHTML = selectedSolutionFile.name
-    }
-    
-    document.getElementById('submit-solution-button').addEventListener('click', handleSolutionUpload);
-    async function handleSolutionUpload(e) {
-  			const uploadTask = await storageRef.child(`problems/${selectedSolutionFile.name}`).put(selectedSolutionFile);
-  			uploadAndUpdateFirebase()
-		}
-    
-    //Final Submit Button and Update Firebase
-    async function uploadAndUpdateFirebase() {
-    		var solutionFileURL = ""
-    		await storageRef.child('/problems/'+selectedSolutionFile.name).getDownloadURL().then(function(url) {
-    				solutionFileURL = url.toString()
-    		})
-        var dictToUpdate = {}
-    		var newProblemDict = {
-        		"title" : uploadTitle.value,
-            		"problemText" : uploadProblemText.value,
-            		"solutionURL" : solutionFileURL,
-           		 "metadata" : {
-            			"uploadedBy" : tutorsID,
-                		"dateUploaded" : Math.round((new Date()).getTime() / 1000),
-                		"views" : 0,
-                		"upvotes" : 0
-                		}
-        
-        		}
-        dictToUpdate[create8CharID()] = newProblemDict
-        console.log(dictToUpdate)
-    	solutionsRef.child("/"+uploadSolutionSubject+"/"+uploadCourseHeader.value+"/").update(dictToUpdate)
-    }
-		
-}
-
 
 
 //LOAD SOLUTION FLOW: CLICK SUBJECT -> CLICK COURSE -> CLICK WEEK -> LOAD PROBLEMS FOR COURSE
@@ -257,7 +171,7 @@ function loadSolutionsArea(subject, course, week) {
 							var problemViews = problemRef.child(problem+"/metadata/views/").val()
 							var problemUpvotes = problemRef.child(problem+"/metadata/upvotes/").val()
 							
-							buildProblemBlock(problemId, problemTitle, problemText, isSolution, problemViews, 
+							buildProblemBlock(subjectOp, courseOp, weekOp, problemId, problemTitle, problemText, isSolution, problemViews, 
 									  problemUpvotes)
 						}
 					}
@@ -291,7 +205,7 @@ function loadSolutionsArea(subject, course, week) {
 						var problemViews = problemRef.child(problem+"/metadata/views/").val()
 						var problemUpvotes = problemRef.child(problem+"/metadata/upvotes/").val()
 		
-						buildProblemBlock(problemId, problemTitle, problemText, isSolution, problemViews, 
+						buildProblemBlock(subject, courseOp, weekOp, problemId, problemTitle, problemText, isSolution, problemViews, 
 								  problemUpvotes)
 					}
 				}	
@@ -326,7 +240,7 @@ function loadSolutionsArea(subject, course, week) {
 						var problemViews = problemRef.child(problem+"/metadata/views/").val()
 						var problemUpvotes = problemRef.child(problem+"/metadata/upvotes/").val()
 						
-						buildProblemBlock(problemId, problemTitle, problemText, isSolution, problemViews, 
+						buildProblemBlock(subject, course, weekOp, problemId, problemTitle, problemText, isSolution, problemViews, 
 								  problemUpvotes)
 				}
 			}	
@@ -362,76 +276,250 @@ function loadSolutionsArea(subject, course, week) {
 				var problemViews = problemRef.child(problem+"/metadata/views/").val()
 				var problemUpvotes = problemRef.child(problem+"/metadata/upvotes/").val()
 				
-				buildProblemBlock(problemId, problemTitle, problemText, isSolution, problemViews, 
+				buildProblemBlock(subject, course, week, problemId, problemTitle, problemText, isSolution, problemViews, 
 						  problemUpvotes)
-				}
-			
-		}
-		
-            
+			}		
+		} 
 	})	
 }
 
-function buildProblemBlock(problemId, problemTitle, problemText, isSolution, problemViews, problemUpvotes) {
-	var arrayToLog = [problemId,problemTitle,problemText,isSolution,problemViews,problemUpvotes]
-	console.log(arrayToLog)
-	
-        var solutionBlock = document.createElement("div")
-        solutionBlock.setAttribute("class", "solution-block")
-        solutionsArea.appendChild(solutionBlock)
-            
-        var solutionTitleAndDescription = document.createElement("div")
-        solutionTitleAndDescription.setAttribute("class", "solution-title-and-description")
-        solutionBlock.appendChild(solutionTitleAndDescription)
-            
-        var solutionTitle = document.createElement("h4")
-        solutionTitle.setAttribute("class", "solution-header")
-        solutionTitle.innerHTML = problemTitle
-        solutionTitleAndDescription.appendChild(solutionTitle)
-            
-        var solutionDescription = document.createElement("div")
-        solutionDescription.setAttribute("class", "solution-description")
-        solutionDescription.innerHTML = problemText
-        solutionTitleAndDescription.appendChild(solutionDescription)
-            
-        var solutionLabelsAndViews = document.createElement("div")
-        solutionLabelsAndViews.setAttribute("class", "solution-labels-and-views")
-        solutionBlock.appendChild(solutionLabelsAndViews)
-            
-        var solutionLabelsBlock = document.createElement("div")
-        solutionLabelsBlock.setAttribute("class", "solution-labels-block")
-        solutionLabelsAndViews.appendChild(solutionLabelsBlock)
-            
-        var solutionLabels = document.createElement("div")
-        solutionLabels.setAttribute("class", "solution-labels")
-        solutionLabelsBlock.appendChild(solutionLabels)
-            
-        if (isSolution == "0") {
-            	var noSolutionLabel = document.createElement("div")
-                noSolutionLabel.setAttribute("class", "no-solution-yet")
-                noSolutionLabel.innerHTML = "No solution yet"
-                solutionLabels.appendChild(noSolutionLabel)
-            
-        } else {
-            	var solutionLabelText = document.createElement("div")
-            	solutionLabelText.setAttribute("class", "solution-label-text")
-            	solutionLabelText.innerHTML = "Text Solution"
-            	solutionLabels.appendChild(solutionLabelText)
+
+
+function openAnswerModal(subject, course, week, problem) {
+    var storageRef = storageService.ref();
+    var answerRef = problemRef.child(subject+"/"+course+"/"+week+"/"+problem)
+
+    var answerArea = document.getElementById("answer-area")
+    while (answerArea.firstChild) {
+        answerArea.removeChild(answerArea.firstChild)
+    }
+
+    //open modal
+    document.getElementById("answer-view-wrapper").style.display = "flex"
+
+
+    answerRef.once("value", function(snapshot) {
+        //get vals
+        var answerURL = snapshot.child(answerURL).val()
+        var answerText = snapshot.child(answerText).val()
+
+        //build header
+        var headerArea = document.getElementById("solution-identifiers")
+        while(headerArea.firstChild) {
+            headerArea.removeChild(headerArea.firstChild)
         }
-      
-        var solutionViewsAndUpvotes = document.createElement("div")
-        solutionViewsAndUpvotes.setAttribute("class", "solution-views-and-upvotes")
-        solutionLabelsAndViews.appendChild(solutionViewsAndUpvotes)
-            
-        var solutionViews = document.createElement("div")
-        solutionViews.setAttribute("class", "views-count")
-        solutionViews.innerHTML = problemViews + " "
-        solutionViewsAndUpvotes.appendChild(solutionViews)
-            
-        var solutionUpvotes = document.createElement("div")
-        solutionUpvotes.setAttribute("class", "solution-upvotes")
-        solutionUpvotes.innerHTML = problemUpvotes + " "
-        solutionViewsAndUpvotes.appendChild(solutionUpvotes)
+
+        var subjectLabel = document.createElement("div")
+		subjectLabel.setAttribute("class", "answer-nav-header")
+		subjectLabel.innerHTML = subject
+		headerArea.appendChild(subjectLabel)
+			
+		var courseLabel = document.createElement("div")
+		courseLabel.setAttribute("class", "answer-nav-header")
+		courseLabel.innerHTML = course
+		headerArea.appendChild(courseLabel)
+			
+		var weekLabel = document.createElement("div")
+		weekLabel.setAttribute("class", "answer-nav-header")
+		weekLabel.innerHTML = week
+        headerArea.appendChild(weekLabel)
+        
+        var titleLabel = document.createElement("div")
+        titleLabel.setAttribute("answer-nav-header")
+        titleLabel.innerHTML = snapshot.child("title")
+        headerArea.appendChild(titleLabel)
+
+        //build the block
+        var answerArea = document.getElementById("answer-identifiers")
+        while(answerArea.firstChild){
+            answerArea.removeChild(answerArea.firstChild)
+        }
+
+        var answerPreviewHeader = document.createElement("h4")
+        answerPreviewHeader.setAttribute("class", "answer-preview-header")
+        answerPreviewHeader.innerHTML = "Problem:"
+        answerArea.appendChild(answerPreviewHeader)
+
+        var previewImage = document.createElement("img")
+        previewImage.setAttribute("class", "answer-preview")
+        previewImage.src = problemURL
+        answerArea.appendChild(previewImage)
+
+        var previewTextHeader = document.createElement("h4")
+        previewTextHeader.setAttribute("class", "answer-preview-header")
+        previewTextHeader.innerHTML = "Problem Text:"
+        answerArea.appendChild(previewTextHeader)
+
+        var previewText = document.createElement("div")
+        previewText.setAttribute("class", "answer-preview-text")
+        previewText.innerHTML = problemText
+        answerArea.appendChild(previewText)
+
+        var previewSolutionHeader = document.createElement("h4")
+        previewSolutionHeader.setAttribute("class", "answer-preview-header")
+        previewSolutionHeader.innerHTML = "Solution:"
+        answerArea.appendChild(previewSolutionHeader)
+
+        var uploadButtonArea = document.createElement("div")
+        uploadButtonArea.setAttribute("class", "upload-div")
+        answerArea.appendChild(uploadButtonArea)
+
+        var answerUploadButton = document.createElement("div")
+        answerUploadButton.setAttribute("class", "answer-upload")
+        answerUploadButton.innerHTML = "Upload Solution"
+        //setOnclick
+        uploadButtonArea.appendChild(answerUploadButton)
+
+        var answerPreview = document.createElement("div")
+        answerPreview.setAttribute("class", "answer-preview-file")
+        answerPreview.style.display = "none"
+        uploadButtonArea.appendChild(answerPreview)
+
+        //upload functions
+        var hiddenFilebutton = document.getElementById('solution-select')
+        hiddenFilebutton.addEventListener('change', handleSolutionUploadChange);
+
+        function openProblemDialog() {
+            hiddenFilebutton.click();
+          }
+          
+          var selectedSolutionFile;
+          function handleSolutionUploadChange(e) {
+            selectedSolutionFile = e.target.files[0];
+            answerPreview.innerHTML = selectedSolutionFile.name
+          }
+          
+          answerUploadButton.addEventListener('click', handleSolutionUpload);
+          async function handleSolutionUpload(e) {
+                    const uploadTask = await storageRef.child(`solutions/${selectedSolutionFile.name}`).put(selectedSolutionFile);
+                    uploadAndUpdateFirebase()
+              }
+          
+          //Final Submit Button and Update Firebase
+          async function uploadAndUpdateFirebase() {
+                  var solutionFileURL = ""
+                  await storageRef.child('/solutions/'+selectedSolutionFile.name).getDownloadURL().then(function(url) {
+                          solutionFileURL = url.toString()
+                  })
+              var dictToUpdate = {}
+                  var newSolutionDict = {
+                          "solutionURL" : solutionFileURL,
+                          "metadata" : {
+                              "uploadedBy" : tutorsID,
+                              "dateUploaded" : Math.round((new Date()).getTime() / 1000),
+                              }
+                      }
+              dictToUpdate["solution"] = newProblemDict
+              console.log(dictToUpdate)
+              answerRef.child("/"+subject+"/"+course+"/"+week).update(dictToUpdate)
+          }
+    })
+}
+
+
+//MODALS
+function openSolutionModal(subject, course, week, problem) {
+    var solutionRef = problemRef.child(subject+"/"+course+"/"+week+"/"+problem)
+    //open modal
+    document.getElementById("solution-view-wrapper").style.display = "flex"
+
+    solutionRef.once("value", function(snapshot) {
+        //get vals
+        var problemURL = snapshot.child(problemURL).val()
+        var problemText = snapshot.child(problemText).val()
+        var solutionURL = snapshot.child(solution+"/"+solutionURL).val()
+        var currentViews = snapshot.child("/metadata/views/").val()
+        var currentUpvotes = snapshot.child("metadata/views/").val()
+
+        //build header
+        var headerArea = document.getElementById("solution-identifiers")
+
+		while(headerArea.firstChild) {
+			headerArea.removeChild(headerArea.firstChild)
+        }
+        
+		var subjectLabel = document.createElement("div")
+		subjectLabel.setAttribute("class", "solution-nav-header")
+		subjectLabel.innerHTML = subject
+		headerArea.appendChild(subjectLabel)
+			
+		var courseLabel = document.createElement("div")
+		courseLabel.setAttribute("class", "solution-nav-header")
+		courseLabel.innerHTML = course
+		headerArea.appendChild(courseLabel)
+			
+		var weekLabel = document.createElement("div")
+		weekLabel.setAttribute("class", "solution-nav-header")
+		weekLabel.innerHTML = week
+        headerArea.appendChild(weekLabel)
+        
+        var titleLabel = document.createElement("div")
+        titleLabel.setAttribute("solution-nav-header")
+        titleLabel.innerHTML = snapshot.child("title")
+        headerArea.appendChild(titleLabel)
+
+        //build the block
+        var previewArea = document.getElementById("solution-area")
+        while(previewArea.firstChild){
+                previewArea.removeChild(previewArea.firstChild)
+        }
+
+        var previewHeader = document.createElement("h4")
+        previewHeader.setAttribute("class", "problem-preview-header")
+        previewHeader.innerHTML = "Problem:"
+        previewArea.appendChild(previewHeader)
+
+        var previewImage = document.createElement("img")
+        previewImage.setAttribute("class", "problem-preview")
+        previewImage.src = problemURL
+        previewArea.appendChild(previewImage)
+
+        var previewTextHeader = document.createElement("h4")
+        previewTextHeader.setAttribute("class", "problem-preview-header")
+        previewTextHeader.innerHTML = "Problem Text:"
+        previewArea.appendChild(previewTextHeader)
+
+        var previewText = document.createElement("div")
+        previewText.setAttribute("class", "problem-preview-text")
+        previewText.innerHTML = problemText
+        previewArea.appendChild(previewText)
+
+        var previewSolutionHeader = document.createElement("h4")
+        previewSolutionHeader.setAttribute("class", "solution-preview-header")
+        previewSolutionHeader.innerHTML = "Solution:"
+        previewArea.appendChild(previewSolutionHeader)
+
+        var previewSolutionImage = document.createElement("img")
+        previewSolutionImage.setAttribute("class", "solution-preview")
+        previewSolutionImage.src = solutionURL
+        previewArea.appendChild(previewSolutionImage)
+
+        //update views
+        var updateViewCount = currentViews + 1
+        solutionRef.child("/metadata/").update({"views" : updateViewCount})
+
+        //create upvote button
+        var upvoteButton = document.getElementById("solution-preview-upvote")
+        var downvoteButton = document.getElementById("solution-preview-downvote")
+        
+        upvoteButton.addEventListener('click', function(){
+                if (userID.length > 1) {
+                    var updateUpvotes = currentUpvotes + 1
+                    document.getElementById("upvote-counter").innerHTML = udateUpvotes
+                } else {
+                    alert("Please login to rate solutions")
+                }
+        })
+
+        downvoteButton.addEventListener('click', function(){
+            if (userID.length > 1) {
+                var updateDownvotes = currentUpvotes - 1
+                document.getElementById("upvote-counter").innerHTML = updateDownvotes
+            } else {
+                alert("Please login to rate solutions")
+            }
+    })
+    })    
 }
 
 
