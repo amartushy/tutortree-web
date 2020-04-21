@@ -417,7 +417,7 @@ function openAnswerModal(subject, course, week, problem) {
 		answerArea.appendChild(previewText)
 
 		var previewSolutionHeader = document.createElement("h4")
-		previewSolutionHeader.setAttribute("class", "answer-preview-header")
+		previewSolutionHeader.setAttribute("class", "upload-preview-header")
 		previewSolutionHeader.innerHTML = "Solution:"
 		answerArea.appendChild(previewSolutionHeader)
 
