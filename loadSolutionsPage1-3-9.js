@@ -353,14 +353,13 @@ function buildProblemBlock(subject, course, week, problemId, problemTitle, probl
 function openAnswerModal(subject, course, week, problem) {
     var storageRef = storageService.ref();
     var answerRef = solutionsRef.child(subject+"/"+course+"/"+week+"/"+problem)
-
+	//open modal
+    	document.getElementById("answer-view-wrapper").style.display = "flex"
+	
     var answerArea = document.getElementById("answer-area")
     while (answerArea.firstChild) {
         answerArea.removeChild(answerArea.firstChild)
     }
-
-    //open modal
-    document.getElementById("answer-view-wrapper").style.display = "flex"
 
 
     answerRef.once("value", function(snapshot) {
@@ -387,58 +386,54 @@ function openAnswerModal(subject, course, week, problem) {
 		var weekLabel = document.createElement("div")
 		weekLabel.setAttribute("class", "answer-nav-header")
 		weekLabel.innerHTML = week
-        headerArea.appendChild(weekLabel)
+        	headerArea.appendChild(weekLabel)
         
-        var titleLabel = document.createElement("div")
-        titleLabel.setAttribute("class", "answer-nav-header")
-        titleLabel.innerHTML = snapshot.child("title")
-        headerArea.appendChild(titleLabel)
+        	var titleLabel = document.createElement("div")
+       	 	titleLabel.setAttribute("class", "answer-nav-header")
+        	titleLabel.innerHTML = snapshot.child("title")
+        	headerArea.appendChild(titleLabel)
 
-        //build the block
-        var answerArea = document.getElementById("answer-identifiers")
-        while(answerArea.firstChild){
-            answerArea.removeChild(answerArea.firstChild)
-        }
+        	//build the block
 
-        var answerPreviewHeader = document.createElement("h4")
-        answerPreviewHeader.setAttribute("class", "answer-preview-header")
-        answerPreviewHeader.innerHTML = "Problem:"
-        answerArea.appendChild(answerPreviewHeader)
+        	var answerPreviewHeader = document.createElement("h4")
+        	answerPreviewHeader.setAttribute("class", "answer-preview-header")
+		answerPreviewHeader.innerHTML = "Problem:"
+		answerArea.appendChild(answerPreviewHeader)
 
-        var previewImage = document.createElement("img")
-        previewImage.setAttribute("class", "answer-preview")
-        previewImage.src = answerURL
-        answerArea.appendChild(previewImage)
+		var previewImage = document.createElement("img")
+		previewImage.setAttribute("class", "answer-preview")
+		previewImage.src = answerURL
+		answerArea.appendChild(previewImage)
 
-        var previewTextHeader = document.createElement("h4")
-        previewTextHeader.setAttribute("class", "answer-preview-header")
-        previewTextHeader.innerHTML = "Problem Text:"
-        answerArea.appendChild(previewTextHeader)
+		var previewTextHeader = document.createElement("h4")
+		previewTextHeader.setAttribute("class", "answer-preview-header")
+		previewTextHeader.innerHTML = "Problem Text:"
+		answerArea.appendChild(previewTextHeader)
 
-        var previewText = document.createElement("div")
-        previewText.setAttribute("class", "answer-preview-text")
-        previewText.innerHTML = answerText
-        answerArea.appendChild(previewText)
+		var previewText = document.createElement("div")
+		previewText.setAttribute("class", "answer-preview-text")
+		previewText.innerHTML = answerText
+		answerArea.appendChild(previewText)
 
-        var previewSolutionHeader = document.createElement("h4")
-        previewSolutionHeader.setAttribute("class", "answer-preview-header")
-        previewSolutionHeader.innerHTML = "Solution:"
-        answerArea.appendChild(previewSolutionHeader)
+		var previewSolutionHeader = document.createElement("h4")
+		previewSolutionHeader.setAttribute("class", "answer-preview-header")
+		previewSolutionHeader.innerHTML = "Solution:"
+		answerArea.appendChild(previewSolutionHeader)
 
-        var uploadButtonArea = document.createElement("div")
-        uploadButtonArea.setAttribute("class", "upload-div")
-        answerArea.appendChild(uploadButtonArea)
+		var uploadButtonArea = document.createElement("div")
+		uploadButtonArea.setAttribute("class", "upload-div")
+		answerArea.appendChild(uploadButtonArea)
 
-        var answerUploadButton = document.createElement("div")
-        answerUploadButton.setAttribute("class", "answer-upload")
-        answerUploadButton.innerHTML = "Upload Solution"
-        //setOnclick
-        uploadButtonArea.appendChild(answerUploadButton)
+		var answerUploadButton = document.createElement("div")
+		answerUploadButton.setAttribute("class", "answer-upload")
+		answerUploadButton.innerHTML = "Upload Solution"
+		//setOnclick
+		uploadButtonArea.appendChild(answerUploadButton)
 
-        var answerPreview = document.createElement("div")
-        answerPreview.setAttribute("class", "answer-preview-file")
-        answerPreview.style.display = "none"
-        uploadButtonArea.appendChild(answerPreview)
+		var answerPreview = document.createElement("div")
+		answerPreview.setAttribute("class", "answer-preview-file")
+		answerPreview.style.display = "none"
+		uploadButtonArea.appendChild(answerPreview)
 
         //upload functions
         var hiddenFilebutton = document.getElementById('solution-select')
