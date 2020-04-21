@@ -517,7 +517,7 @@ function openSolutionModal(subject, course, week, problem) {
         headerArea.appendChild(weekLabel)
         
         var titleLabel = document.createElement("div")
-        titleLabel.setAttribute("solution-nav-header")
+        titleLabel.setAttribute("class", "solution-nav-header")
         titleLabel.innerHTML = snapshot.child("title")
         headerArea.appendChild(titleLabel)
 
