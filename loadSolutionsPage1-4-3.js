@@ -437,6 +437,7 @@ function openAnswerModal(subject, course, week, problem) {
 		uploadButtonArea.appendChild(answerPreview)
 
 		//upload functions
+      		answerUploadButton.addEventListener('click', openNewSolutionDialog)
 		var hiddenFilebutton = document.getElementById('solution-select')
 		hiddenFilebutton.addEventListener('change', handleSolutionUploadChange);
 
@@ -450,7 +451,7 @@ function openAnswerModal(subject, course, week, problem) {
             		answerPreview.innerHTML = selectedSolutionFile.name
           	}
           
-          	answerUploadButton.addEventListener('click', handleSolutionUpload);
+          	document.getElementById("submit-answer-button").addEventListener('click', handleSolutionUpload);
           	async function handleSolutionUpload(e) {
                     	const uploadTask = await storageRef.child(`solutions/${selectedSolutionFile.name}`).put(selectedSolutionFile);
                     	uploadAndUpdateFirebase()
