@@ -568,7 +568,7 @@ function openSolutionModal(subject, course, week, problem) {
         var downvoteButton = document.getElementById("solution-preview-downvote")
         
         upvoteButton.addEventListener('click', function(){
-                if (userID.length > 1) {
+                if (usersID.length > 1) {
                     var updateUpvotes = currentUpvotes + 1
                     document.getElementById("upvote-counter").innerHTML = udateUpvotes
                 } else {
