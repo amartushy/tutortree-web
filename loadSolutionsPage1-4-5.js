@@ -449,6 +449,7 @@ function openAnswerModal(subject, course, week, problem) {
           	function handleSolutionUploadChange(e) {
             		selectedSolutionFile = e.target.files[0];
             		answerPreview.innerHTML = selectedSolutionFile.name
+			answerPreview.style.display = "block"
           	}
           
           	document.getElementById("submit-answer-button").addEventListener('click', handleSolutionUpload);
@@ -467,7 +468,7 @@ function openAnswerModal(subject, course, week, problem) {
                 var newSolutionDict = {
                         "solutionURL" : solutionFileURL,
                         "metadata" : {
-                              	"uploadedBy" : tutorsID,
+                              	"uploadedBy" : usersID,
                               	"dateUploaded" : Math.round((new Date()).getTime() / 1000),
                               	}
                       	}
