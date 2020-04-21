@@ -390,7 +390,7 @@ function openAnswerModal(subject, course, week, problem) {
         headerArea.appendChild(weekLabel)
         
         var titleLabel = document.createElement("div")
-        titleLabel.setAttribute("answer-nav-header")
+        titleLabel.setAttribute("class", "answer-nav-header")
         titleLabel.innerHTML = snapshot.child("title")
         headerArea.appendChild(titleLabel)
 
