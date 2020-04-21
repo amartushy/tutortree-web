@@ -441,7 +441,7 @@ function openAnswerModal(subject, course, week, problem) {
 		var hiddenFilebutton = document.getElementById('solution-select')
 		hiddenFilebutton.addEventListener('change', handleSolutionUploadChange);
 
-		function openProblemDialog() {
+		function openNewSolutionDialog() {
 		    hiddenFilebutton.click();
 		}
           
