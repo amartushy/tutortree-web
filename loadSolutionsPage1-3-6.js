@@ -352,7 +352,7 @@ function buildProblemBlock(subject, course, week, problemId, problemTitle, probl
 
 function openAnswerModal(subject, course, week, problem) {
     var storageRef = storageService.ref();
-    var answerRef = problemRef.child(subject+"/"+course+"/"+week+"/"+problem)
+    var answerRef = solutionsRef.child(subject+"/"+course+"/"+week+"/"+problem)
 
     var answerArea = document.getElementById("answer-area")
     while (answerArea.firstChild) {
@@ -484,7 +484,7 @@ function openAnswerModal(subject, course, week, problem) {
 
 //MODALS
 function openSolutionModal(subject, course, week, problem) {
-    var solutionRef = problemRef.child(subject+"/"+course+"/"+week+"/"+problem)
+    var solutionRef = solutionsRef.child(subject+"/"+course+"/"+week+"/"+problem)
     //open modal
     document.getElementById("solution-view-wrapper").style.display = "flex"
 
