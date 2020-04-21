@@ -282,7 +282,70 @@ function loadSolutionsArea(subject, course, week) {
 		} 
 	})	
 }
+function buildProblemBlock(problemId, problemTitle, problemText, isSolution, problemViews, problemUpvotes) {
+	var arrayToLog = [problemId,problemTitle,problemText,isSolution,problemViews,problemUpvotes]
+	console.log(arrayToLog)
 
+        var solutionBlock = document.createElement("div")
+        solutionBlock.setAttribute("class", "solution-block")
+        solutionsArea.appendChild(solutionBlock)
+
+        var solutionTitleAndDescription = document.createElement("div")
+        solutionTitleAndDescription.setAttribute("class", "solution-title-and-description")
+        solutionBlock.appendChild(solutionTitleAndDescription)
+
+        var solutionTitle = document.createElement("h4")
+        solutionTitle.setAttribute("class", "solution-header")
+        solutionTitle.innerHTML = problemTitle
+        solutionTitleAndDescription.appendChild(solutionTitle)
+
+        var solutionDescription = document.createElement("div")
+        solutionDescription.setAttribute("class", "solution-description")
+        solutionDescription.innerHTML = problemText
+        solutionTitleAndDescription.appendChild(solutionDescription)
+
+        var solutionLabelsAndViews = document.createElement("div")
+        solutionLabelsAndViews.setAttribute("class", "solution-labels-and-views")
+        solutionBlock.appendChild(solutionLabelsAndViews)
+
+        var solutionLabelsBlock = document.createElement("div")
+        solutionLabelsBlock.setAttribute("class", "solution-labels-block")
+        solutionLabelsAndViews.appendChild(solutionLabelsBlock)
+
+        var solutionLabels = document.createElement("div")
+        solutionLabels.setAttribute("class", "solution-labels")
+        solutionLabelsBlock.appendChild(solutionLabels)
+
+        if (isSolution == "0") {
+            	var noSolutionLabel = document.createElement("div")
+                noSolutionLabel.setAttribute("class", "no-solution-yet")
+                noSolutionLabel.innerHTML = "No solution yet"
+                solutionLabels.appendChild(noSolutionLabel)
+
+        } else {
+            	var solutionLabelText = document.createElement("div")
+            	solutionLabelText.setAttribute("class", "solution-label-text")
+            	solutionLabelText.innerHTML = "Text Solution"
+            	solutionLabels.appendChild(solutionLabelText)
+		
+	}
+	
+	var solutionViewsAndUpvotes = document.createElement("div")
+        solutionViewsAndUpvotes.setAttribute("class", "solution-views-and-upvotes")
+        solutionLabelsAndViews.appendChild(solutionViewsAndUpvotes)
+
+        var solutionViews = document.createElement("div")
+        solutionViews.setAttribute("class", "views-count")
+        solutionViews.innerHTML = problemViews + " "
+        solutionViewsAndUpvotes.appendChild(solutionViews)
+
+        var solutionUpvotes = document.createElement("div")
+        solutionUpvotes.setAttribute("class", "solution-upvotes")
+        solutionUpvotes.innerHTML = problemUpvotes + " "
+        solutionViewsAndUpvotes.appendChild(solutionUpvotes)
+	
+}
+		
 
 
 function openAnswerModal(subject, course, week, problem) {
