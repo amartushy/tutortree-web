@@ -351,6 +351,7 @@ function buildProblemBlock(subject, course, week, problemId, problemTitle, probl
 
 
 function openAnswerModal(subject, course, week, problem) {
+	console.log(subject,course,week, problem)
     var storageRef = storageService.ref();
     var answerRef = solutionsRef.child(subject+"/"+course+"/"+week+"/"+problem)
 	//open modal
@@ -364,8 +365,8 @@ function openAnswerModal(subject, course, week, problem) {
 
     answerRef.once("value", function(snapshot) {
         //get vals
-        var answerURL = snapshot.child(answerURL).val()
-        var answerText = snapshot.child(answerText).val()
+        var answerURL = snapshot.child("/problemURL/").val()
+        var answerText = snapshot.child("/problemText/").val()
 
         //build header
         var headerArea = document.getElementById("solution-identifiers")
