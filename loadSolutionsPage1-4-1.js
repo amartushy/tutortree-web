@@ -352,29 +352,29 @@ function buildProblemBlock(subject, course, week, problemId, problemTitle, probl
 
 function openAnswerModal(subject, course, week, problem) {
 	console.log(subject,course,week, problem)
-    var storageRef = storageService.ref();
-    var answerRef = solutionsRef.child(subject+"/"+course+"/"+week+"/"+problem)
+    	var storageRef = storageService.ref();
+    	var answerRef = solutionsRef.child(subject+"/"+course+"/"+week+"/"+problem)
 	//open modal
     	document.getElementById("answer-view-wrapper").style.display = "flex"
 	
-    var answerArea = document.getElementById("answer-area")
-    while (answerArea.firstChild) {
-        answerArea.removeChild(answerArea.firstChild)
-    }
+    	var answerArea = document.getElementById("answer-area")
+    	while (answerArea.firstChild) {
+        	answerArea.removeChild(answerArea.firstChild)
+    	}
 
 
-    answerRef.once("value", function(snapshot) {
-        //get vals
-        var answerURL = snapshot.child("/problemURL/").val()
-        var answerText = snapshot.child("/problemText/").val()
+    	answerRef.once("value", function(snapshot) {
+        	//get vals
+        	var answerURL = snapshot.child("/problemURL/").val()
+        	var answerText = snapshot.child("/problemText/").val()
 
-        //build header
-        var headerArea = document.getElementById("solution-identifiers")
-        while(headerArea.firstChild) {
-            headerArea.removeChild(headerArea.firstChild)
-        }
+        	//build header
+        	var headerArea = document.getElementById("answer-identifiers")
+        	while(headerArea.firstChild) {
+            		headerArea.removeChild(headerArea.firstChild)
+        	}
 
-        var subjectLabel = document.createElement("div")
+        	var subjectLabel = document.createElement("div")
 		subjectLabel.setAttribute("class", "answer-nav-header")
 		subjectLabel.innerHTML = subject
 		headerArea.appendChild(subjectLabel)
@@ -436,43 +436,43 @@ function openAnswerModal(subject, course, week, problem) {
 		answerPreview.style.display = "none"
 		uploadButtonArea.appendChild(answerPreview)
 
-        //upload functions
-        var hiddenFilebutton = document.getElementById('solution-select')
-        hiddenFilebutton.addEventListener('change', handleSolutionUploadChange);
+		//upload functions
+		var hiddenFilebutton = document.getElementById('solution-select')
+		hiddenFilebutton.addEventListener('change', handleSolutionUploadChange);
 
-        function openProblemDialog() {
-            hiddenFilebutton.click();
-          }
+		function openProblemDialog() {
+		    hiddenFilebutton.click();
+		}
           
-          var selectedSolutionFile;
-          function handleSolutionUploadChange(e) {
-            selectedSolutionFile = e.target.files[0];
-            answerPreview.innerHTML = selectedSolutionFile.name
-          }
+          	var selectedSolutionFile;
+          	function handleSolutionUploadChange(e) {
+            		selectedSolutionFile = e.target.files[0];
+            		answerPreview.innerHTML = selectedSolutionFile.name
+          	}
           
-          answerUploadButton.addEventListener('click', handleSolutionUpload);
-          async function handleSolutionUpload(e) {
-                    const uploadTask = await storageRef.child(`solutions/${selectedSolutionFile.name}`).put(selectedSolutionFile);
-                    uploadAndUpdateFirebase()
-              }
+          	answerUploadButton.addEventListener('click', handleSolutionUpload);
+          	async function handleSolutionUpload(e) {
+                    	const uploadTask = await storageRef.child(`solutions/${selectedSolutionFile.name}`).put(selectedSolutionFile);
+                    	uploadAndUpdateFirebase()
+              	}
           
-          //Final Submit Button and Update Firebase
-          async function uploadAndUpdateFirebase() {
-                  var solutionFileURL = ""
-                  await storageRef.child('/solutions/'+selectedSolutionFile.name).getDownloadURL().then(function(url) {
-                          solutionFileURL = url.toString()
-                  })
-              var dictToUpdate = {}
-                  var newSolutionDict = {
-                          "solutionURL" : solutionFileURL,
-                          "metadata" : {
-                              "uploadedBy" : tutorsID,
-                              "dateUploaded" : Math.round((new Date()).getTime() / 1000),
-                              }
-                      }
-              dictToUpdate["solution"] = newProblemDict
-              console.log(dictToUpdate)
-              answerRef.child("/"+subject+"/"+course+"/"+week).update(dictToUpdate)
+          	//Final Submit Button and Update Firebase
+          	async function uploadAndUpdateFirebase() {
+                  	var solutionFileURL = ""
+                  	await storageRef.child('/solutions/'+selectedSolutionFile.name).getDownloadURL().then(function(url) {
+                          	solutionFileURL = url.toString()
+                  	})
+              	var dictToUpdate = {}
+                var newSolutionDict = {
+                        "solutionURL" : solutionFileURL,
+                        "metadata" : {
+                              	"uploadedBy" : tutorsID,
+                              	"dateUploaded" : Math.round((new Date()).getTime() / 1000),
+                              	}
+                      	}
+              	dictToUpdate["solution"] = newProblemDict
+              	console.log(dictToUpdate)
+              	answerRef.child("/"+subject+"/"+course+"/"+week).update(dictToUpdate)
           }
     })
 }
