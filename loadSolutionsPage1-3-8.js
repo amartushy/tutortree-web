@@ -407,7 +407,7 @@ function openAnswerModal(subject, course, week, problem) {
 
         var previewImage = document.createElement("img")
         previewImage.setAttribute("class", "answer-preview")
-        previewImage.src = problemURL
+        previewImage.src = answerURL
         answerArea.appendChild(previewImage)
 
         var previewTextHeader = document.createElement("h4")
@@ -417,7 +417,7 @@ function openAnswerModal(subject, course, week, problem) {
 
         var previewText = document.createElement("div")
         previewText.setAttribute("class", "answer-preview-text")
-        previewText.innerHTML = problemText
+        previewText.innerHTML = answerText
         answerArea.appendChild(previewText)
 
         var previewSolutionHeader = document.createElement("h4")
