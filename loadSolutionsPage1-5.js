@@ -488,8 +488,8 @@ function openSolutionModal(subject, course, week, problem) {
 
     solutionRef.once("value", function(snapshot) {
         //get vals
-        var problemURL = snapshot.child(problemURL).val()
-        var problemText = snapshot.child(problemText).val()
+        var problemURL = snapshot.child("/problemURL/").val()
+        var problemText = snapshot.child("/problemText/").val()
         var solutionURL = snapshot.child("/solution/"+solutionURL).val()
         var currentViews = snapshot.child("/metadata/views/").val()
         var currentUpvotes = snapshot.child("metadata/views/").val()
