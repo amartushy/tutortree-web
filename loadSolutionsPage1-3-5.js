@@ -282,8 +282,8 @@ function loadSolutionsArea(subject, course, week) {
 		} 
 	})	
 }
-function buildProblemBlock(problemId, problemTitle, problemText, isSolution, problemViews, problemUpvotes) {
-	var arrayToLog = [problemId,problemTitle,problemText,isSolution,problemViews,problemUpvotes]
+function buildProblemBlock(subject, course, week, problemId, problemTitle, problemText, isSolution, problemViews, problemUpvotes) {
+	var arrayToLog = [subject,course,week,problemId,problemTitle,problemText,isSolution,problemViews,problemUpvotes]
 	console.log(arrayToLog)
 
         var solutionBlock = document.createElement("div")
@@ -321,12 +321,14 @@ function buildProblemBlock(problemId, problemTitle, problemText, isSolution, pro
                 noSolutionLabel.setAttribute("class", "no-solution-yet")
                 noSolutionLabel.innerHTML = "No solution yet"
                 solutionLabels.appendChild(noSolutionLabel)
+		solutionBlock.setAttribute("onClick", "openAnswerModal('"+subject+"','"+course+"','"+week+"','"+problemId+"')")
 
         } else {
             	var solutionLabelText = document.createElement("div")
             	solutionLabelText.setAttribute("class", "solution-label-text")
             	solutionLabelText.innerHTML = "Text Solution"
             	solutionLabels.appendChild(solutionLabelText)
+		solutionBlock.setAttribute("onClick", "openSolutionModal('"+subject+"','"+course+"','"+week+"','"+problemId+"')")
 		
 	}
 	
