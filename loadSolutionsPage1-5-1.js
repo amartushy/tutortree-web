@@ -490,7 +490,9 @@ function openSolutionModal(subject, course, week, problem) {
         //get vals
         var problemURL = snapshot.child("/problemURL/").val()
         var problemText = snapshot.child("/problemText/").val()
-        var solutionURL = snapshot.child("/solution/"+solutionURL).val()
+        var solutionURL = snapshot.child("/solution/solutionURL/").val()
+	console.log(solutionURL)
+	
         var currentViews = snapshot.child("/metadata/views/").val()
         var currentUpvotes = snapshot.child("metadata/views/").val()
 
@@ -501,24 +503,24 @@ function openSolutionModal(subject, course, week, problem) {
 			headerArea.removeChild(headerArea.firstChild)
         }
         
-		var subjectLabel = document.createElement("div")
-		subjectLabel.setAttribute("class", "solution-nav-header")
-		subjectLabel.innerHTML = subject
-		headerArea.appendChild(subjectLabel)
+	var subjectLabel = document.createElement("div")
+	subjectLabel.setAttribute("class", "solution-nav-header")
+	subjectLabel.innerHTML = subject
+	headerArea.appendChild(subjectLabel)
 			
-		var courseLabel = document.createElement("div")
-		courseLabel.setAttribute("class", "solution-nav-header")
-		courseLabel.innerHTML = course
-		headerArea.appendChild(courseLabel)
+	var courseLabel = document.createElement("div")
+	courseLabel.setAttribute("class", "solution-nav-header")
+	courseLabel.innerHTML = course
+	headerArea.appendChild(courseLabel)
 			
-		var weekLabel = document.createElement("div")
-		weekLabel.setAttribute("class", "solution-nav-header")
-		weekLabel.innerHTML = week
+	var weekLabel = document.createElement("div")
+	weekLabel.setAttribute("class", "solution-nav-header")
+	weekLabel.innerHTML = week
         headerArea.appendChild(weekLabel)
         
         var titleLabel = document.createElement("div")
         titleLabel.setAttribute("class", "solution-nav-header")
-        titleLabel.innerHTML = snapshot.child("title")
+        titleLabel.innerHTML = snapshot.child("title").val()
         headerArea.appendChild(titleLabel)
 
         //build the block
