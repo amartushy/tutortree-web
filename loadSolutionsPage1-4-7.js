@@ -474,7 +474,7 @@ function openAnswerModal(subject, course, week, problem) {
                       	}
               	dictToUpdate["solution"] = newSolutionDict
               	console.log(dictToUpdate)
-              	answerRef.child("/"+subject+"/"+course+"/"+week).update(dictToUpdate)
+              	answerRef.update(dictToUpdate)
           }
     })
 }
