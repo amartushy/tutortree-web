@@ -494,7 +494,7 @@ function openSolutionModal(subject, course, week, problem) {
 	console.log(solutionURL)
 	
         var currentViews = snapshot.child("/metadata/views/").val()
-        var currentUpvotes = snapshot.child("metadata/views/").val()
+        var currentUpvotes = snapshot.child("metadata/upvotes/").val()
 
         //build header
         var headerArea = document.getElementById("solution-identifiers")
