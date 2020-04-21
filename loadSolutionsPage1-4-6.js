@@ -472,7 +472,7 @@ function openAnswerModal(subject, course, week, problem) {
                               	"dateUploaded" : Math.round((new Date()).getTime() / 1000),
                               	}
                       	}
-              	dictToUpdate["solution"] = newProblemDict
+              	dictToUpdate["solution"] = newSolutionDict
               	console.log(dictToUpdate)
               	answerRef.child("/"+subject+"/"+course+"/"+week).update(dictToUpdate)
           }
