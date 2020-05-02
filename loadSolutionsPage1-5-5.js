@@ -367,7 +367,8 @@ function openAnswerModal(subject, course, week, problem) {
         	//get vals
         	var answerURL = snapshot.child("/problemURL/").val()
         	var answerText = snapshot.child("/problemText/").val()
-
+		var answerTitle = snapshot.child("/title/").val()
+		
         	//build header
         	var headerArea = document.getElementById("answer-identifiers")
         	while(headerArea.firstChild) {
@@ -391,7 +392,7 @@ function openAnswerModal(subject, course, week, problem) {
         
         	var titleLabel = document.createElement("div")
        	 	titleLabel.setAttribute("class", "answer-nav-header")
-        	titleLabel.innerHTML = snapshot.child("title")
+        	titleLabel.innerHTML = answerTitle
         	headerArea.appendChild(titleLabel)
 
         	//build the block
