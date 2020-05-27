@@ -315,7 +315,7 @@ function padAndChop(str, padChar, length) {
 
 
 
-function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, binaryAvailability, timeSlot) {
+function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, binaryAvailability, i) {
 	
 			dataRef.once("value", function(snapshot) {
 			document.getElementById("checkout-modal-wrapper").style.display = "flex"
