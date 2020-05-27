@@ -421,7 +421,7 @@ function createSession( braintreeId ) {
 						var student = document.querySelector(".checkout-modal-form").id
 						
 						var durationHTML = document.getElementById("checkout-duration").innerHTML
-						var end = start + (parseInt(durationHTML.split(" ")[0])-30)*60
+						var end = parseInt(start) + (parseInt(durationHTML.split(" ")[0])-30)*60
 
 						var amountHTML = document.getElementById("checkout-total-cost").innerHTML
 						amountHTML = amountHTML.split("")
