@@ -139,6 +139,11 @@ function launchCourseModal(schoolId, subjectId, courseId, studentsId) {
 						dayButton.appendChild(dayChoiceDay)
 			
 						dayChoiceDay.innerHTML = dayArray[getDay]
+				
+						var dayArrayVal = document.createElement("div")
+						dayArrayVal.setAttribute("id", i)
+						dayButton.appendChild(dayArrayVal)
+						
 						
 						var buttonVal = firebaseArray.indexOf(dayArray[getDay])
 
@@ -347,12 +352,9 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 															 + ", " + document.getElementById(day+"-day-choice-num").innerHTML
 			
 			
-			var dayArray = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
-			var firebaseArray = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
-			var currentDay = firebaseArray[day]
-			var buttonVal = dayArray.indexOf(currentDay)
+			var whichButton = document.getElementById(day+"-day-choice").children[2].id
 			var checkoutTime = document.querySelector(".checkout-time")
-			var start = getSecondsFromEpoch(buttonVal) + timeSlot*1800
+			var start = getSecondsFromEpoch(whichDay) + timeSlot*1800
 			checkoutTime.setAttribute("id", start)
 			var timeDict = ["6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM", "9:00 AM",
 											"9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM",
