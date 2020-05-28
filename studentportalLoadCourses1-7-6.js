@@ -526,9 +526,9 @@ function sendTutorNotifications() {
 				var student = document.querySelector(".checkout-modal-form").id
 				var course = document.getElementById("checkout-course").innerHTML
 				var checkoutTime = parseInt( document.querySelector(".checkout-time").id )
-				console.log(checkoutTime)
-				console.log("wtf is up kyle")
-				var d = new Date(checkoutTime)
+				//console.log(checkoutTime)
+
+				var d = new Date(checkoutTime*1000)
 				var formattedDate = convertEpochTime(d)
 				
 				dataRef.once("value", function(snapshot) {
