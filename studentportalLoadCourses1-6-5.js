@@ -558,10 +558,9 @@ async function checkoutWithNonceAndAmount(nonce, amount) {
 						if (xhttp.readyState == XMLHttpRequest.DONE) {
 								var response = xhttp.responseText
 								createSession( response )
-								await sendTutorNotifications()
 						}
 				}
-	
+			  await sendTutorNotifications()
         await xhttp.open("GET", herokuURL, true);
         await xhttp.send();
 				return(xhttp.response)
