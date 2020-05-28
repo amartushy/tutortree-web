@@ -515,8 +515,12 @@ braintree.dropin.create({
 					amountHTML = amountHTML.split("")
 					amountHTML.shift()
 					var transactionAmount = parseFloat(amountHTML.join(""))
-
-					checkoutWithNonceAndAmount(nonce, transactionAmount)
+					
+					var course = document.getElementById("checkout-course").innerHTML
+					var checkoutTime = parseInt( document.querySelector(".checkout-time").id )
+					var d = new Date(checkoutTime*1000)
+					var formattedDate = convertEpochTime(d)
+					checkoutWithNonceAndAmount(nonce, transactionAmount, course, formattedDate)
 
 					
 					})
@@ -555,7 +559,7 @@ function sendTutorNotifications() {
 				})
 }
 
-function sendSendAlert() {
+function confirmationAlert(course, formattedDate) {
 				alert("Your session for "+course+" at "+"formattedDate" + "is processing. You'll be notified when your tutor has confirmed the session")
 }
 async function checkoutWithNonceAndAmount(nonce, amount) {
@@ -571,7 +575,7 @@ async function checkoutWithNonceAndAmount(nonce, amount) {
 			  await sendTutorNotifications()
         await xhttp.open("GET", herokuURL, true);
         await xhttp.send();
-				await sendSendAlert()
+				confirmationAlert()
 				return(xhttp.response)
 }
 
