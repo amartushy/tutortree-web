@@ -527,6 +527,7 @@ function sendTutorNotifications() {
 				var course = document.getElementById("checkout-course").innerHTML
 				var checkoutTime = parseInt( document.querySelector(".checkout-time").id )
 				console.log(checkoutTime)
+				console.log("wtf is up kyle")
 				var d = new Date(checkoutTime)
 				var formattedDate = convertEpochTime(d)
 				
