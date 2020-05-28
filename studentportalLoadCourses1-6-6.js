@@ -527,7 +527,7 @@ function sendTutorNotifications() {
 				var currentTime = new Date()
 				var formattedDate = convertEpochTime(currentTime)
 				
-				
+				dataRef.once("value", function(snapshot) {
 				//notify tutor of new session
 				var studentsName = snapshot.child(student+"/name/").val()
 						if(snapshot.child(tutor+'/smsNotifications/').val() == true) {
@@ -547,7 +547,7 @@ function sendTutorNotifications() {
 									var pushMessage = studentsName + " has booked you for " +course +" on " + formattedDate
 									sendPushTo(tutorsToken, titleMessage, pushMessage)
 						}
-	
+				})
 }
 
 async function checkoutWithNonceAndAmount(nonce, amount) {
