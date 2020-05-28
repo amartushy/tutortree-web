@@ -497,19 +497,19 @@ async function createSession( braintreeId ) {
 						if(snapshot.child(tutor+'/smsNotifications/').val() == true) {
     							var tutorsNumber = snapshot.child(tutor+'/phone/').val()
 									var sendMessage = "New Booking%0A"+studentsName+ " has booked you for " + course +" on "+ formattedDate +". This session is awaiting your confirmation. "
-									await sendSMSTo(tutorsNumber,sendMessage)
+									sendSMSTo(tutorsNumber,sendMessage)
     				} 
 						if(snapshot.child(tutor+'/emailNotifications/').val() == true) {
 									var tutorsEmail = snapshot.child(tutor+'/email/').val()
 									var titleMessage = "New Booking"
 									var emailMessage = studentsName + " has booked you for " +course +" on " + formattedDate
-									await sendEmailTo(tutorsEmail, titleMessage, emailMessage)
+									sendEmailTo(tutorsEmail, titleMessage, emailMessage)
 						}
 						if(snapshot.child(tutor+'/pushNotifications/').val() == true) {
 									var tutorsToken = snapshot.child(tutor+'/token/').val()
 									var titleMessage = "New Booking"
 									var pushMessage = studentsName + " has booked you for " +course +" on " + formattedDate
-									await sendPushTo(tutorsToken, titleMessage, pushMessage)
+									sendPushTo(tutorsToken, titleMessage, pushMessage)
 						}
 						//close modal
 						document.getElementById("checkout-modal-wrapper").style.display = "none"
