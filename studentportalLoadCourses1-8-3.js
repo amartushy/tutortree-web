@@ -568,13 +568,11 @@ async function checkoutWithNonceAndAmount(nonce, amount) {
 			  await sendTutorNotifications()
         await xhttp.open("GET", herokuURL, true);
         await xhttp.send();
-				sendAlert()
+				sendTutorNotifications()
 				return(xhttp.response)
 }
-function sendAlert() {
-		alert("Your session for " + course + " on " + formattedDate + " is processing. You will be notified when your tutor confirms the session.")
 
-}
+
 //HELPER FUNCTION TO CONVERT TIME
 function convertEpochTime(startEpoch) {
   var startDayandMonth = startEpoch.toLocaleDateString("en-US",{weekday:'long',
