@@ -402,7 +402,7 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 	})
 }
 
-function createSession( braintreeId ) {
+async function createSession( braintreeId ) {
 			dataRef.once("value", function(snapshot) {
 						document.getElementById("schedule-wrapper").style.display = "none"
 						document.getElementById("checkout-close-modal").addEventListener("click", function () {
@@ -443,7 +443,7 @@ function createSession( braintreeId ) {
 
 						var studentsUpdateDict = {}
 						studentsUpdateDict[braintreeId] = studentsSessionDict
-						dataRef.child(student+"/sessions/").update(studentsUpdateDict)
+						await dataRef.child(student+"/sessions/").update(studentsUpdateDict)
 						console.log(studentsUpdateDict)
 
 						var transactionDict = {
@@ -457,13 +457,13 @@ function createSession( braintreeId ) {
 						//create spending for student
 						var studentsSpendingDict = {}
 						studentsSpendingDict[braintreeId] = transactionDict
-						dataRef.child(student+"/spending/").update(studentsSpendingDict)
+						await dataRef.child(student+"/spending/").update(studentsSpendingDict)
 						console.log(studentsSpendingDict)
 
 						//create income for tutor
 						var tutorsIncomeDict = {}
 						tutorsIncomeDict[braintreeId] = transactionDict
-						dataRef.child(tutor+"/income/").update(tutorsIncomeDict)
+						await dataRef.child(tutor+"/income/").update(tutorsIncomeDict)
 						console.log(tutorsIncomeDict)
 
 						//create session for tutor
@@ -477,7 +477,7 @@ function createSession( braintreeId ) {
 												}
 						var tutorsUpdateDict = {}
 						tutorsUpdateDict[braintreeId] = tutorsSessionDict
-						dataRef.child(tutor+"/sessions/").update(tutorsUpdateDict)
+						await dataRef.child(tutor+"/sessions/").update(tutorsUpdateDict)
 						console.log(tutorsUpdateDict)
 						
 						//create connection for messaging
@@ -490,26 +490,26 @@ function createSession( braintreeId ) {
 						var updateConnectionDict = {}
 						updateConnectionDict[braintreeId] = updateConnectionDict
 						console.log(snapshot.child("/connections/"+student+":"+tutor).val())
-						dataRef.child("/connections/"+student+":"+tutor).update(updateConnectionDict)
+						await dataRef.child("/connections/"+student+":"+tutor).update(updateConnectionDict)
 						
 						//notify tutor of new session
 						var studentsName = snapshot.child(student+"/name/").val()
 						if(snapshot.child(tutor+'/smsNotifications/').val() == true) {
     							var tutorsNumber = snapshot.child(tutor+'/phone/').val()
 									var sendMessage = "New Booking%0A"+studentsName+ " has booked you for " + course +" on "+ formattedDate +". This session is awaiting your confirmation. "
-									sendSMSTo(tutorsNumber,sendMessage)
+									await sendSMSTo(tutorsNumber,sendMessage)
     				} 
 						if(snapshot.child(tutor+'/emailNotifications/').val() == true) {
 									var tutorsEmail = snapshot.child(tutor+'/email/').val()
 									var titleMessage = "New Booking"
 									var emailMessage = studentsName + " has booked you for " +course +" on " + formattedDate
-									sendEmailTo(tutorsEmail, titleMessage, emailMessage)
+									await sendEmailTo(tutorsEmail, titleMessage, emailMessage)
 						}
 						if(snapshot.child(tutor+'/pushNotifications/').val() == true) {
 									var tutorsToken = snapshot.child(tutor+'/token/').val()
 									var titleMessage = "New Booking"
 									var pushMessage = studentsName + " has booked you for " +course +" on " + formattedDate
-									sendPushTo(tutorsToken, titleMessage, pushMessage)
+									await sendPushTo(tutorsToken, titleMessage, pushMessage)
 						}
 						//close modal
 						document.getElementById("checkout-modal-wrapper").style.display = "none"
