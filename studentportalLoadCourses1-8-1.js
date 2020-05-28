@@ -568,9 +568,8 @@ async function checkoutWithNonceAndAmount(nonce, amount) {
 			  await sendTutorNotifications()
         await xhttp.open("GET", herokuURL, true);
         await xhttp.send();
+				alert("Your session for " + course + " on " + formattedDate + " is processing. You will be notified when your tutor confirms the session.")
 				return(xhttp.response)
-				alert("Your session for " + course + " at " + formattedDate + " has been sent, you will be notified when your tutor has confirmed.")
-
 }
 
 //HELPER FUNCTION TO CONVERT TIME
