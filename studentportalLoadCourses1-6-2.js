@@ -492,25 +492,6 @@ async function createSession( braintreeId ) {
 						console.log(snapshot.child("/connections/"+student+":"+tutor).val())
 						dataRef.child("/connections/"+student+":"+tutor).update(updateConnectionDict)
 						
-						//notify tutor of new session
-						var studentsName = snapshot.child(student+"/name/").val()
-						if(snapshot.child(tutor+'/smsNotifications/').val() == true) {
-    							var tutorsNumber = snapshot.child(tutor+'/phone/').val()
-									var sendMessage = "New Booking%0A"+studentsName+ " has booked you for " + course +" on "+ formattedDate +". This session is awaiting your confirmation. "
-									sendSMSTo(tutorsNumber,sendMessage)
-    				} 
-						if(snapshot.child(tutor+'/emailNotifications/').val() == true) {
-									var tutorsEmail = snapshot.child(tutor+'/email/').val()
-									var titleMessage = "New Booking"
-									var emailMessage = studentsName + " has booked you for " +course +" on " + formattedDate
-									sendEmailTo(tutorsEmail, titleMessage, emailMessage)
-						}
-						if(snapshot.child(tutor+'/pushNotifications/').val() == true) {
-									var tutorsToken = snapshot.child(tutor+'/token/').val()
-									var titleMessage = "New Booking"
-									var pushMessage = studentsName + " has booked you for " +course +" on " + formattedDate
-									sendPushTo(tutorsToken, titleMessage, pushMessage)
-						}
 						//close modal
 						document.getElementById("checkout-modal-wrapper").style.display = "none"
 			})	
@@ -539,6 +520,31 @@ braintree.dropin.create({
 					})
 			})
 })
+function sendTutorNotifications() {
+				var tutor = document.querySelector(".tutors-name-header").id
+						
+				var student = document.querySelector(".checkout-modal-form").id
+				//notify tutor of new session
+				var studentsName = snapshot.child(student+"/name/").val()
+						if(snapshot.child(tutor+'/smsNotifications/').val() == true) {
+    							var tutorsNumber = snapshot.child(tutor+'/phone/').val()
+									var sendMessage = "New Booking%0A"+studentsName+ " has booked you for " + course +" on "+ formattedDate +". This session is awaiting your confirmation. "
+									sendSMSTo(tutorsNumber,sendMessage)
+    				} 
+						if(snapshot.child(tutor+'/emailNotifications/').val() == true) {
+									var tutorsEmail = snapshot.child(tutor+'/email/').val()
+									var titleMessage = "New Booking"
+									var emailMessage = studentsName + " has booked you for " +course +" on " + formattedDate
+									sendEmailTo(tutorsEmail, titleMessage, emailMessage)
+						}
+						if(snapshot.child(tutor+'/pushNotifications/').val() == true) {
+									var tutorsToken = snapshot.child(tutor+'/token/').val()
+									var titleMessage = "New Booking"
+									var pushMessage = studentsName + " has booked you for " +course +" on " + formattedDate
+									sendPushTo(tutorsToken, titleMessage, pushMessage)
+						}
+	
+}
 
 async function checkoutWithNonceAndAmount(nonce, amount) {
         var xhttp = new XMLHttpRequest();
@@ -548,6 +554,7 @@ async function checkoutWithNonceAndAmount(nonce, amount) {
 						if (xhttp.readyState == XMLHttpRequest.DONE) {
 								var response = xhttp.responseText
 								createSession( response )
+								sendTutorNotifications()
 						}
 				}
 	
