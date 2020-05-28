@@ -405,6 +405,7 @@ function loadCheckoutModal(tutorsId, studentsId, tutorsName, tutorsImage, day, b
 async function createSession( braintreeId ) {
 			dataRef.once("value", function(snapshot) {
 						document.getElementById("schedule-wrapper").style.display = "none"
+						document.getElementById("checkout-modal-wrapper").style.display = "none"
 						document.getElementById("checkout-close-modal").addEventListener("click", function () {
 						document.getElementById("schedule-wrapper").style.display = "flex"
 							
@@ -552,6 +553,7 @@ function sendTutorNotifications() {
 									sendPushTo(tutorsToken, titleMessage, pushMessage)
 						}
 				})
+				alert("Your session for " + "course" + " at " + formattedDate + " + has been sent, you will be notified when your tutor has confirmed. Thanks!")
 }
 
 async function checkoutWithNonceAndAmount(nonce, amount) {
