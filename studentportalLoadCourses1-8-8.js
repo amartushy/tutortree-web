@@ -516,6 +516,7 @@ braintree.dropin.create({
 					amountHTML.shift()
 					var transactionAmount = parseFloat(amountHTML.join(""))
 					
+					
 					var course = document.getElementById("checkout-course").innerHTML
 					var checkoutTime = parseInt( document.querySelector(".checkout-time").id )
 					var d = new Date(checkoutTime*1000)
@@ -556,7 +557,7 @@ function sendTutorNotifications() {
 									var pushMessage = studentsName + " has booked you for " +course +" on " + formattedDate
 									sendPushTo(tutorsToken, titleMessage, pushMessage)
 						}
-						alert("Your session for "+course+" at "+"formattedDate" + "is processing. You'll be notified when your tutor has confirmed the session")
+						//alert("Your session for "+course+" on "+" formattedDate " + "is processing. You'll be notified when your tutor has confirmed the session")
 
 				})
 }
