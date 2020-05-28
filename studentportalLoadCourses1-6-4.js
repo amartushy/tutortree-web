@@ -521,9 +521,13 @@ braintree.dropin.create({
 			})
 })
 function sendTutorNotifications() {
-				var tutor = document.querySelector(".tutors-name-header").id
-						
+				var tutor = document.querySelector(".tutors-name-header").id	
 				var student = document.querySelector(".checkout-modal-form").id
+				var course = document.getElementById("checkout-course").innerHTML
+				var currentTime = new Date()
+				var formattedDate = convertEpochTime(currentTime)
+				
+				
 				//notify tutor of new session
 				var studentsName = snapshot.child(student+"/name/").val()
 						if(snapshot.child(tutor+'/smsNotifications/').val() == true) {
