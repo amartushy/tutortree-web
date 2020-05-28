@@ -443,7 +443,7 @@ async function createSession( braintreeId ) {
 
 						var studentsUpdateDict = {}
 						studentsUpdateDict[braintreeId] = studentsSessionDict
-						await dataRef.child(student+"/sessions/").update(studentsUpdateDict)
+						dataRef.child(student+"/sessions/").update(studentsUpdateDict)
 						console.log(studentsUpdateDict)
 
 						var transactionDict = {
@@ -457,13 +457,13 @@ async function createSession( braintreeId ) {
 						//create spending for student
 						var studentsSpendingDict = {}
 						studentsSpendingDict[braintreeId] = transactionDict
-						await dataRef.child(student+"/spending/").update(studentsSpendingDict)
+						dataRef.child(student+"/spending/").update(studentsSpendingDict)
 						console.log(studentsSpendingDict)
 
 						//create income for tutor
 						var tutorsIncomeDict = {}
 						tutorsIncomeDict[braintreeId] = transactionDict
-						await dataRef.child(tutor+"/income/").update(tutorsIncomeDict)
+						dataRef.child(tutor+"/income/").update(tutorsIncomeDict)
 						console.log(tutorsIncomeDict)
 
 						//create session for tutor
@@ -477,7 +477,7 @@ async function createSession( braintreeId ) {
 												}
 						var tutorsUpdateDict = {}
 						tutorsUpdateDict[braintreeId] = tutorsSessionDict
-						await dataRef.child(tutor+"/sessions/").update(tutorsUpdateDict)
+						dataRef.child(tutor+"/sessions/").update(tutorsUpdateDict)
 						console.log(tutorsUpdateDict)
 						
 						//create connection for messaging
@@ -490,7 +490,7 @@ async function createSession( braintreeId ) {
 						var updateConnectionDict = {}
 						updateConnectionDict[braintreeId] = updateConnectionDict
 						console.log(snapshot.child("/connections/"+student+":"+tutor).val())
-						await dataRef.child("/connections/"+student+":"+tutor).update(updateConnectionDict)
+						dataRef.child("/connections/"+student+":"+tutor).update(updateConnectionDict)
 						
 						//notify tutor of new session
 						var studentsName = snapshot.child(student+"/name/").val()
