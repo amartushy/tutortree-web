@@ -554,7 +554,7 @@ async function checkoutWithNonceAndAmount(nonce, amount) {
 						if (xhttp.readyState == XMLHttpRequest.DONE) {
 								var response = xhttp.responseText
 								createSession( response )
-								sendTutorNotifications()
+								await sendTutorNotifications()
 						}
 				}
 	
