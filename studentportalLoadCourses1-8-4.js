@@ -555,6 +555,9 @@ function sendTutorNotifications() {
 				})
 }
 
+function sendSendAlert() {
+				alert("Your session for "+course+" at "+"formattedDate" + "is processing. You'll be notified when your tutor has confirmed the session")
+}
 async function checkoutWithNonceAndAmount(nonce, amount) {
         var xhttp = new XMLHttpRequest();
         var herokuURL = "https://tutortree-development.herokuapp.com/checkoutWithNonceAndAmount/"+nonce+"/"+amount
@@ -568,7 +571,7 @@ async function checkoutWithNonceAndAmount(nonce, amount) {
 			  await sendTutorNotifications()
         await xhttp.open("GET", herokuURL, true);
         await xhttp.send();
-				sendTutorNotifications()
+				await sendSendAlert()
 				return(xhttp.response)
 }
 
