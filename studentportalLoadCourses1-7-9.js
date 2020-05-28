@@ -553,7 +553,7 @@ function sendTutorNotifications() {
 									sendPushTo(tutorsToken, titleMessage, pushMessage)
 						}
 				})
-				alert("Your session for " + "course" + " at " + formattedDate + " + has been sent, you will be notified when your tutor has confirmed. Thanks!")
+				alert("Your session for " + course + " at " + formattedDate + " has been sent, you will be notified when your tutor has confirmed.")
 }
 
 async function checkoutWithNonceAndAmount(nonce, amount) {
