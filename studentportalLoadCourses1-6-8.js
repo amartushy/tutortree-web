@@ -526,7 +526,7 @@ function sendTutorNotifications() {
 				var student = document.querySelector(".checkout-modal-form").id
 				var course = document.getElementById("checkout-course").innerHTML
 				var startTime = document.querySelector(".checkout-time").id
-				var formattedDate = convertEpochTime(startTime)
+				var formattedDate = parseInt(convertEpochTime(startTime))
 				
 				dataRef.once("value", function(snapshot) {
 				//notify tutor of new session
