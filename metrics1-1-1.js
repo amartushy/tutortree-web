@@ -1,4 +1,3 @@
-<script>
 var metricsRef = database.ref("updateDatabase/invoices/")
 
 metricsRef.once("value", function(snapshot) {
@@ -75,7 +74,3 @@ function setButtonState(index) {
     }		
 }
 
-
-
-
-</script>
