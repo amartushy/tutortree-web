@@ -77,8 +77,11 @@ firebase.auth().onAuthStateChanged(function(user) {
 	var selectedTranscriptFile;
 	function handleTranscriptUploadChange(e) {
 		selectedTranscriptFile = e.target.files[0];
-		handleTranscriptUpload()
+		document.getElementById("transcript-preview-block").style.display = "flex"
+		document.getElementById("transcript-file-preview").innerHTML = selectedTranscriptFile.name
+		document.getElementById("submit-transcript").addEventListener('click', handleTranscriptUpload )
 	}
+	  
 	var selectedFacultyFile;
 	function handleFacultyUploadChange(e) {
 		selectedFacultyFile = e.target.files[0];
@@ -92,7 +95,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 		uploadAndUpdateFirebaseTranscript()
 	}
 	async function handleFacultyUpload() {
-		console.log("I was clicked")
 		const uploadTask = await storageRef.child(`faculty/${selectedFacultyFile.name}`).put(selectedFacultyFile);
 		uploadAndUpdateFirebaseFaculty()
 	}
@@ -110,7 +112,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 	}
 	  
 	async function uploadAndUpdateFirebaseFaculty() {
-		console.log("I was called")
 		var facultyFileURL = ""
 		await storageRef.child('/faculty/'+selectedFacultyFile.name)
 			.getDownloadURL()
