@@ -57,7 +57,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	    	facultyIncomplete.style.display = "none"
             	facultyComplete.style.display = "block"
 	}
-	document.getElementById("upload-faculty").addEventListener('click', openFacultyDialog)    
+	document.getElementById("upload-faculty-rec").addEventListener('click', openFacultyDialog)    
     });
     storageRef = storageService.ref()
 	  
