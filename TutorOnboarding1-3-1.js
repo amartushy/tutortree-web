@@ -37,7 +37,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             	interviewComplete.style.display = "block"        
         }
         document.getElementById("schedule-interview")
-            	.setAttribute('onClick', 'scheduleInterview()')
+            	.setAttribute('onClick', 'scheduleInterview("'+userID+'")')
 
 	//Upload transcript view
 	if (doc.get("transcript") == false ) {
@@ -200,7 +200,7 @@ function submitAssessment(userID) {
 
 
 //Schedule Interview Functions
-function scheduleInterview() {
+function scheduleInterview(userID) {
 	var userDB = firebase.firestore()
     	userDB.collection("users").doc(userID).get().then(function(doc) {
     		var hasSubmittedAssessment = doc.get("preInterview")
@@ -212,13 +212,8 @@ function scheduleInterview() {
 			document.getElementById("request-interview-form").style.display = "block"
 		}
         } else {
-        		alert("Please complete your Pre-Interview Assessment before scheduling an interview")
+        	alert("Please complete your Pre-Interview Assessment before scheduling an interview")
         }
     })
 }
 
-//Upload Unofficial Transcript
-function uploadTranscript() {
-
-
-}
