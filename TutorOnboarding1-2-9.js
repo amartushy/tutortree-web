@@ -38,7 +38,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         }
         document.getElementById("schedule-interview")
             	.setAttribute('onClick', 'scheduleInterview()')
-	
+
 	//Upload transcript view
 	if (doc.get("transcript") == false ) {
 	    	transcriptIncomplete.style.display = "block"
@@ -201,13 +201,16 @@ function submitAssessment(userID) {
 
 //Schedule Interview Functions
 function scheduleInterview() {
-		var userDB = firebase.firestore()
-    userDB.collection("users").doc(userID).get().then(function(doc) {
+	var userDB = firebase.firestore()
+    	userDB.collection("users").doc(userID).get().then(function(doc) {
     		var hasSubmittedAssessment = doc.get("preInterview")
-				var isApproved = doc.get("interview")
-        
+		var isApproved = doc.get("interview")
         if (hasSubmittedAssessment) {
-        		alert("Thanks! You'll be notified at your preferred email with a referral code when your campus becomes available.")
+		if (isApproved) {
+			alert("Your tutor coordinator has been notified. Please check your email for a time to meet.")
+		} else {
+			document.getElementById("request-interview-form").style.display = "block"
+		}
         } else {
         		alert("Please complete your Pre-Interview Assessment before scheduling an interview")
         }
