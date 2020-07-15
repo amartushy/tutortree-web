@@ -92,6 +92,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		uploadAndUpdateFirebaseTranscript()
 	}
 	async function handleFacultyUpload() {
+		console.log("I was clicked")
 		const uploadTask = await storageRef.child(`faculty/${selectedFacultyFile.name}`).put(selectedFacultyFile);
 		uploadAndUpdateFirebaseFaculty()
 	}
@@ -109,6 +110,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	}
 	  
 	async function uploadAndUpdateFirebaseFaculty() {
+		console.log("I was called")
 		var facultyFileURL = ""
 		await storageRef.child('/faculty/'+selectedFacultyFile.name)
 			.getDownloadURL()
