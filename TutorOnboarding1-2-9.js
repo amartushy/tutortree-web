@@ -109,6 +109,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 		.doc(userID)
 		.update( {"transcriptFile" : transcriptFileURL,
 			  "transcript" : true })
+		document.getElementById("transcript-preview-block").style.display = "none"
+
 	}
 	  
 	async function uploadAndUpdateFirebaseFaculty() {
