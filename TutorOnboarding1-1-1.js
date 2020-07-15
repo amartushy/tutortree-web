@@ -1,9 +1,7 @@
-
-<input id='transcript-select' type='file' hidden/>
 <script>
 firebase.auth().onAuthStateChanged(function(user) {
 	var assessmentIncomplete = document.getElementById("assessment-incomplete")
-  var assessmentComplete = document.getElementById("assessment-complete")
+  	var assessmentComplete = document.getElementById("assessment-complete")
 	var interviewIncomplete = document.getElementById("interview-incomplete")
 	var interviewComplete = document.getElementById("interview-complete")
 	var transcriptIncomplete = document.getElementById("transcript-incomplete")
@@ -12,69 +10,119 @@ firebase.auth().onAuthStateChanged(function(user) {
 	var facultyComplete = document.getElementById("faculty-complete")
 
   if (user) {
-  	var userDB = firebase.firestore()
-		var userID = user.uid
-    console.log("user is signed in with uid: " + userID)
+	var userDB = firebase.firestore()
+	var userID = user.uid
+	console.log("user is signed in with uid: " + userID)
 
-    userDB.collection("users").doc(userID)
-    .onSnapshot(function(doc) {
+	userDB.collection("users").doc(userID)
+    		.onSnapshot(function(doc) {
     
-    		//Assessment completion view
-    		if (doc.get("preInterview") == false) {
-        		assessmentIncomplete.style.display = "block"
-            assessmentComplete.style.display = "none"
+	//Assessment completion view
+	if (doc.get("preInterview") == false) {
+		assessmentIncomplete.style.display = "block"
+		assessmentComplete.style.display = "none"
             
-						document.getElementById("onboarding-assessment")
-        			.setAttribute('onClick', 'assessmentForm("'+userID+'")')                
+	document.getElementById("onboarding-assessment")
+        	.setAttribute('onClick', 'assessmentForm("'+userID+'")')                
         } else {
-        		assessmentIncomplete.style.display = "none"
-            assessmentComplete.style.display = "block"
+        	assessmentIncomplete.style.display = "none"
+            	assessmentComplete.style.display = "block"
         } 
+		
         //Interview completion view
         if (doc.get("interview") == false) {
-        		interviewIncomplete.style.display = "block"
-            interviewComplete.style.display = "none"
+        	interviewIncomplete.style.display = "block"
+            	interviewComplete.style.display = "none"
         } else {
-        		interviewIncomplete.style.display = "none"
-            interviewComplete.style.display = "block"        
+        	interviewIncomplete.style.display = "none"
+            	interviewComplete.style.display = "block"        
         }
         document.getElementById("schedule-interview")
-            		.setAttribute('onClick', 'scheduleInterview()')
+            	.setAttribute('onClick', 'scheduleInterview()')
+	
+	//Upload transcript view
+	if (doc.get("transcript") == false {
+	    	transcriptIncomplete.style.display = "block"
+            	transcriptComplete.style.display = "none"
+	} else {
+	    	transcriptIncomplete.style.display = "none"
+            	transcriptComplete.style.display = "block"
+	}
+	document.getElementById("upload-transcript").addEventListener('click', openTranscriptDialog)
+		
+	//Upload faculty view
+	if (doc.get("transcript") == false {
+	    	facultyIncomplete.style.display = "block"
+            	facultyComplete.style.display = "none"
+	} else {
+	    	facultyIncomplete.style.display = "none"
+            	facultyComplete.style.display = "block"
+	}
+	document.getElementById("upload-faculty").addEventListener('click', openFacultyDialog)    
     });
     storageRef = storageService.ref()
-    
-    var hiddenFileButton = document.getElementById("transcript-select")
-    hiddenFileButton.addEventListener('change', handleTranscriptUploadChange);
-    var uploadTranscript = document.getElementById("upload-transcript")
-    uploadTranscript.addEventListener('click', openDialog)
+	  
+    	//HANDLE FILE UPLOADS
+	function openTranscriptDialog() {
+     	 	hiddenTranscriptButton.click();
+    	}
+	function openFacultyDialog() {
+		hiddenFacultyButton.click();
+	}
+	  
+    	var hiddenTranscriptButton = document.getElementById("transcript-select")
+   	hiddenTranscriptButton.addEventListener('change', handleTranscriptUploadChange);
+	var hiddenFacultyButton = document.getElementByID("faculty-select")
+	hiddenFacultyButton.addEventListener('change', handleFacultyUploadChange);
+	
+	var selectedTranscriptFile;
+	function handleTranscriptUploadChange(e) {
+		selectedTranscriptFile = e.target.files[0];
+		handleTranscriptUpload()
+	}
+	var selectedFacultyFile;
+	function handleFacultyUploadChange(e) {
+		selectedFacultyFile = e.target.files[0];
+		handleFacultyUploadChange()
+	}
 
-    function openDialog() {
-      hiddenFileButton.click();
-    }
+	async function handleTranscriptUpload() {
+		const uploadTask = await storageRef.child(`transcripts/${selectedTranscriptFile.name}`).put(selectedTranscriptFile);
+		uploadAndUpdateFirebaseTranscript()
+	}
+	async function handleFacultyUploadChange() {
+		const uploadTask = await storageRef.child(`faculty/${selectedFacultyFile.name}`).put(selectedFacultyFile);
+		uploadAndUpdateFirebaseFaculty()
+	}
 
-    var selectedTranscriptFile;
-    function handleTranscriptUploadChange(e) {
-      selectedTranscriptFile = e.target.files[0];
-      handleTranscriptUpload()
-    }
+	//Final Submit Button and Update Firebase
+	async function uploadAndUpdateFirebaseTranscript() {
+		var transcriptFileURL = ""
+		await storageRef.child('/transcripts/'+selectedTranscriptFile.name)
+			.getDownloadURL()
+			.then(function(url) { transcriptFileURL = url.toString() })
+		
+	async function uploadAndUpdateFirebaseFaculty() {
+		var facultyFileURL = ""
+		await storageRef.child('/faculty/'+selectedFacultyFile.name)
+			.getDownloadURL()
+			.then(function(url) { facultyFileURL = url.toString() })
+		
+	userDB.collection("users")
+		.doc(userID)
+		.update( {"transcriptFile" : transcriptFileURL,
+			  "transcript" : true })
+	}
+	userDB.collection("users")
+		.doc(userID)
+		.update( {"facultyFile" : facultyFileURL,
+			 "faculty" : true })
+	}
 
-    async function handleTranscriptUpload() {
-        const uploadTask = await storageRef.child(`transcripts/${selectedTranscriptFile.name}`).put(selectedTranscriptFile);
-        uploadAndUpdateFirebase()
-    }
-
-    //Final Submit Button and Update Firebase
-    async function uploadAndUpdateFirebase() {
-        var transcriptFileURL = ""
-        await storageRef.child('/transcripts/'+selectedTranscriptFile.name).getDownloadURL().then(function(url) {
-            transcriptFileURL = url.toString()
-        })
-        //dataRef.child(userId).update({"/profileURL/" : photoFileURL})
-        userDB.collection("users").doc(userID).update( {"transcriptFile" : transcriptFileURL})
-    }
-  } else {
-    location.href = "https://www.jointutortree.com"
-  }
+	//IF USER IS NOT LOGGED IN	  
+	} else {
+		location.href = "https://www.jointutortree.com"
+	}
 });
 
 
