@@ -82,7 +82,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 	var selectedFacultyFile;
 	function handleFacultyUploadChange(e) {
 		selectedFacultyFile = e.target.files[0];
-		handleFacultyUploadChange()
+		document.getElementById("faculty-preview-block").style.display = "block"
+		document.getElementById("faculty-file-preview").innerHTML = selectedFacultyFile
+		document.getElementById("submit-faculty").addEventListener('click', handleFacultyUploadChange() )		
 	}
 
 	async function handleTranscriptUpload() {
@@ -100,23 +102,24 @@ firebase.auth().onAuthStateChanged(function(user) {
 		await storageRef.child('/transcripts/'+selectedTranscriptFile.name)
 			.getDownloadURL()
 			.then(function(url) { transcriptFileURL = url.toString() })
-		
+		userDB.collection("users")
+		.doc(userID)
+		.update( {"transcriptFile" : transcriptFileURL,
+			  "transcript" : true })
+	}
+	  
 	async function uploadAndUpdateFirebaseFaculty() {
 		var facultyFileURL = ""
 		await storageRef.child('/faculty/'+selectedFacultyFile.name)
 			.getDownloadURL()
 			.then(function(url) { facultyFileURL = url.toString() })
-		
-	userDB.collection("users")
-		.doc(userID)
-		.update( {"transcriptFile" : transcriptFileURL,
-			  "transcript" : true })
-	}
-	userDB.collection("users")
+		userDB.collection("users")
 		.doc(userID)
 		.update( {"facultyFile" : facultyFileURL,
 			 "faculty" : true })
-	}
+		document.getElementById("faculty-preview-block").style.display = "none"
+
+	}	
 
 	//IF USER IS NOT LOGGED IN	  
 	} else {
