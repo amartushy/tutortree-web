@@ -71,7 +71,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	  
     	var hiddenTranscriptButton = document.getElementById("transcript-select")
    	hiddenTranscriptButton.addEventListener('change', handleTranscriptUploadChange);
-	var hiddenFacultyButton = document.getElementByID("faculty-select")
+	var hiddenFacultyButton = document.getElementById("faculty-select")
 	hiddenFacultyButton.addEventListener('change', handleFacultyUploadChange);
 	
 	var selectedTranscriptFile;
