@@ -40,7 +40,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             	.setAttribute('onClick', 'scheduleInterview()')
 	
 	//Upload transcript view
-	if (doc.get("transcript") == false {
+	if (doc.get("transcript") == false ) {
 	    	transcriptIncomplete.style.display = "block"
             	transcriptComplete.style.display = "none"
 	} else {
@@ -50,7 +50,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	document.getElementById("upload-transcript").addEventListener('click', openTranscriptDialog)
 		
 	//Upload faculty view
-	if (doc.get("transcript") == false {
+	if (doc.get("transcript") == false ) {
 	    	facultyIncomplete.style.display = "block"
             	facultyComplete.style.display = "none"
 	} else {
