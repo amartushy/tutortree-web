@@ -89,7 +89,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		const uploadTask = await storageRef.child(`transcripts/${selectedTranscriptFile.name}`).put(selectedTranscriptFile);
 		uploadAndUpdateFirebaseTranscript()
 	}
-	async function handleFacultyUploadChange() {
+	async function handleFacultyUpload() {
 		const uploadTask = await storageRef.child(`faculty/${selectedFacultyFile.name}`).put(selectedFacultyFile);
 		uploadAndUpdateFirebaseFaculty()
 	}
