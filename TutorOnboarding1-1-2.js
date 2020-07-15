@@ -1,4 +1,3 @@
-<script>
 firebase.auth().onAuthStateChanged(function(user) {
 	var assessmentIncomplete = document.getElementById("assessment-incomplete")
   	var assessmentComplete = document.getElementById("assessment-complete")
@@ -212,6 +211,3 @@ function uploadTranscript() {
 
 
 }
-
-
-</script>
