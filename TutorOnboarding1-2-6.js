@@ -84,7 +84,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		selectedFacultyFile = e.target.files[0];
 		document.getElementById("faculty-preview-block").style.display = "flex"
 		document.getElementById("faculty-file-preview").innerHTML = selectedFacultyFile.name
-		document.getElementById("submit-faculty").setAttribute('onClick', 'handleFacultyUpload()' )		
+		document.getElementById("submit-faculty").addEventListener('click', handleFacultyUpload )		
 	}
 
 	async function handleTranscriptUpload() {
