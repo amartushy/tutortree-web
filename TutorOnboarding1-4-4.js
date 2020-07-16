@@ -238,7 +238,7 @@ function scheduleInterview(userID) {
 		.doc(userID)
 		.update( { "interview" : true } )
 		document.getElementById("interview-complete").style.display = "flex"
-		document.getElementById("request-interview-form").style.display = "flex"
+		document.getElementById("request-interview-form").style.display = "none"
 	})
 }
 
