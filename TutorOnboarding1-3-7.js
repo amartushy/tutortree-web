@@ -132,30 +132,31 @@ firebase.auth().onAuthStateChanged(function(user) {
 	}
 });
 
-
 //Pre-interview functions
 var isFormShowing = false
 function assessmentForm(userID) {
-    if (isFormShowing) {
-        console.log(isFormShowing)
-        document.getElementById("assessment-form-block")
-        .style.display = "none"
-        isFormShowing = false
-    } else {
-        console.log(isFormShowing)
-        document.getElementById("assessment-form-block")
-        .style.display = "block"
-        isFormShowing = true
-    }
+	var userDB = firebase.firestore()
+	userDB.collection("users").doc(userID).get().then(function(doc) {
+		if (isFormShowing && !doc.get("preInterview") {
+			console.log(isFormShowing)
+			document.getElementById("assessment-form-block")
+				.style.display = "none"
+			isFormShowing = false
+		    } else if (!doc.get("preInterview")) {
+			console.log(isFormShowing)
+			document.getElementById("assessment-form-block")
+				.style.display = "block"
+			isFormShowing = true
+		    }
+	})
 
     document.getElementById("submit-assessment")
         .setAttribute('onClick', 'submitAssessment("'+userID+'")')
 }
 
 function submitAssessment(userID) {
-		var userDB = firebase.firestore()
-
-		userDB.collection("users").doc(userID).get().then(function(doc) {
+	var userDB = firebase.firestore()
+	userDB.collection("users").doc(userID).get().then(function(doc) {
     
         var firstName = doc.get("firstName")
         var lastName = doc.get("lastName")
@@ -196,34 +197,42 @@ function submitAssessment(userID) {
 		       	  "preInterview" : true } )
 	
         .then(function() {
-            console.log("sent")
+            	console.log("sent")
+		document.getElementById("interview-completion").style.display = "flex"
+		document.getElementById("assessment-form-block").style.display = "none"
         });
         //https://script.google.com/macros/s/AKfycbyn1b2w9_CFJ3zOFT-fapH2WMdOQVC1DfRjLy6REiM5jl1MQMY/exec
-		})
+})
 }
 
-
-//Schedule Interview Functions
-function scheduleInterview(userID) {
+//Schedule Interview
+var isScheduleShowing = false
+function scheduleForm(userID) {
 	var userDB = firebase.firestore()
-    	userDB.collection("users").doc(userID).get().then(function(doc) {
-    		var hasSubmittedAssessment = doc.get("preInterview")
-		var isApproved = doc.get("interview")
-        if (hasSubmittedAssessment) {
-		if (isApproved) {
+	userDB.collection("users").doc(userID).get().then(function(doc) {
+		if ( doc.get("interview") ) {
 			alert("Your tutor coordinator has been notified. Please check your email for a time to meet.")
 		} else {
-			document.getElementById("request-interview-form").style.display = "block"
+			if ( doc.get("preInterview") ) {
+				if (isScheduleShowing) {
+					document.getElementById("request-interview-form")
+						.style.display = "none"
+					isScheduleShowing = false
+		    		} else {
+					document.getElementById("request-interview-form")
+						.style.display = "block"
+					isScheduleShowing = true	
+				}
+			} else {
+				alert("Please complete your Pre-Interview Assessment before scheduling an interview")
+			}
+			
 		}
-        } else {
-        	alert("Please complete your Pre-Interview Assessment before scheduling an interview")
-        }
-		
+	})
 	document.getElementById("submit-interview-request").addEventListener('click', function() {
 		userDB.collection("users")
 		.doc(userID)
 		.update( { "interview" : true } )
 	})
-    })
 }
 
