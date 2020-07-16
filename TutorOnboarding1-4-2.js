@@ -137,17 +137,21 @@ var isFormShowing = false
 function assessmentForm(userID) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(userID).get().then(function(doc) {
-		if (isFormShowing && !doc.get("preInterview")) {
-			console.log(isFormShowing)
-			document.getElementById("assessment-form-block")
-				.style.display = "none"
-			isFormShowing = false
-		    } else if (!doc.get("preInterview")) {
-			console.log(isFormShowing)
-			document.getElementById("assessment-form-block")
-				.style.display = "block"
-			isFormShowing = true
-		    }
+		if (doc.get("preInterview") ) {
+		    	alert("You've already submitted a pre-interview")
+		} else {
+			if (isFormShowing ) {
+				console.log(isFormShowing)
+				document.getElementById("assessment-form-block")
+					.style.display = "none"
+				isFormShowing = false
+			} else  {
+				console.log(isFormShowing)
+				document.getElementById("assessment-form-block")
+					.style.display = "block"
+				isFormShowing = true
+			}
+		}
 	})
     	document.getElementById("submit-assessment")
         	.setAttribute('onClick', 'submitAssessment("'+userID+'")')
