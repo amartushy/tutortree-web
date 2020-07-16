@@ -223,7 +223,7 @@ function scheduleInterview(userID) {
 		userDB.collection("users")
 		.doc(userID)
 		.update( { "interview" : true } )
-	}
+	})
     })
 }
 
