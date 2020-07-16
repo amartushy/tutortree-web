@@ -218,6 +218,12 @@ function scheduleInterview(userID) {
         } else {
         	alert("Please complete your Pre-Interview Assessment before scheduling an interview")
         }
+		
+	document.getElementById("submit-interview-request").addEventListener('click', function() {
+		userDB.collection("users")
+		.doc(userID)
+		.update( { "interview" : true } )
+	}
     })
 }
 
