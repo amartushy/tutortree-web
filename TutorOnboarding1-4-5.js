@@ -19,14 +19,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 	//Assessment completion view
 	if (doc.get("preInterview") == false) {
 		assessmentIncomplete.style.display = "block"
-		assessmentComplete.style.display = "none"
-            
-	document.getElementById("onboarding-assessment")
-        	.setAttribute('onClick', 'assessmentForm("'+userID+'")')                
+		assessmentComplete.style.display = "none"              
         } else {
         	assessmentIncomplete.style.display = "none"
             	assessmentComplete.style.display = "block"
         } 
+	document.getElementById("onboarding-assessment")
+        	.setAttribute('onClick', 'assessmentForm("'+userID+'")')  
 		
         //Interview completion view
         if (doc.get("interview") == false) {
