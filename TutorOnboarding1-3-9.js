@@ -149,9 +149,8 @@ function assessmentForm(userID) {
 			isFormShowing = true
 		    }
 	})
-
-    document.getElementById("submit-assessment")
-        .setAttribute('onClick', 'submitAssessment("'+userID+'")')
+    	document.getElementById("submit-assessment")
+        	.setAttribute('onClick', 'submitAssessment("'+userID+'")')
 }
 
 function submitAssessment(userID) {
@@ -207,7 +206,7 @@ function submitAssessment(userID) {
 
 //Schedule Interview
 var isScheduleShowing = false
-function scheduleForm(userID) {
+function scheduleInterview(userID) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(userID).get().then(function(doc) {
 		if ( doc.get("interview") ) {
