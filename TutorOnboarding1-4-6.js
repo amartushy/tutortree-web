@@ -39,7 +39,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             	.setAttribute('onClick', 'scheduleInterview("'+userID+'")')
 
 	//Upload transcript view
-	if (doc.get("transcript") == false ) {
+	if (doc.get("faculty") == false ) {
 	    	transcriptIncomplete.style.display = "block"
             	transcriptComplete.style.display = "none"
 	} else {
