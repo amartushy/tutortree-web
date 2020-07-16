@@ -40,9 +40,11 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 	//Upload transcript view
 	if (doc.get("transcript") == false ) {
+		console.log("uh")
 	    	transcriptIncomplete.style.display = "block"
             	transcriptComplete.style.display = "none"
 	} else {
+		console.log("what")
 	    	transcriptIncomplete.style.display = "none"
             	transcriptComplete.style.display = "block"
 	}
@@ -104,7 +106,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		await storageRef.child('/transcripts/'+selectedTranscriptFile.name)
 			.getDownloadURL()
 			.then(function(url) { transcriptFileURL = url.toString() })
-		await userDB.collection("users")
+		userDB.collection("users")
 			.doc(userID)
 			.update( {"transcriptFile" : transcriptFileURL,
 			  	"transcript" : true })
@@ -118,7 +120,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		await storageRef.child('/faculty/'+selectedFacultyFile.name)
 			.getDownloadURL()
 			.then(function(url) { facultyFileURL = url.toString() })
-		await userDB.collection("users")
+		userDB.collection("users")
 			.doc(userID)
 			.update( {"facultyFile" : facultyFileURL,
 			 	"faculty" : true })
