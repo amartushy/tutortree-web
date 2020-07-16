@@ -39,7 +39,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             	.setAttribute('onClick', 'scheduleInterview("'+userID+'")')
 
 	//Upload transcript view
-	if (doc.get("faculty") == false ) {
+	if (doc.get("transcript") == false ) {
 	    	transcriptIncomplete.style.display = "block"
             	transcriptComplete.style.display = "none"
 	} else {
@@ -49,7 +49,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	document.getElementById("upload-transcript").addEventListener('click', openTranscriptDialog)
 		
 	//Upload faculty view
-	if (doc.get("transcript") == false ) {
+	if (doc.get("faculty") == false ) {
 	    	facultyIncomplete.style.display = "block"
             	facultyComplete.style.display = "none"
 	} else {
@@ -104,12 +104,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 		await storageRef.child('/transcripts/'+selectedTranscriptFile.name)
 			.getDownloadURL()
 			.then(function(url) { transcriptFileURL = url.toString() })
-		userDB.collection("users")
-		.doc(userID)
-		.update( {"transcriptFile" : transcriptFileURL,
-			  "transcript" : true })
-		document.getElementById("transcript-preview-block").style.display = "none"
-
+		await userDB.collection("users")
+			.doc(userID)
+			.update( {"transcriptFile" : transcriptFileURL,
+			  	"transcript" : true })
+		.then(
+			document.getElementById("transcript-preview-block").style.display = "none"
+		)
 	}
 	  
 	async function uploadAndUpdateFirebaseFaculty() {
@@ -117,12 +118,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 		await storageRef.child('/faculty/'+selectedFacultyFile.name)
 			.getDownloadURL()
 			.then(function(url) { facultyFileURL = url.toString() })
-		userDB.collection("users")
-		.doc(userID)
-		.update( {"facultyFile" : facultyFileURL,
-			 "faculty" : true })
-		document.getElementById("faculty-preview-block").style.display = "none"
-
+		await userDB.collection("users")
+			.doc(userID)
+			.update( {"facultyFile" : facultyFileURL,
+			 	"faculty" : true })
+		.then(
+			document.getElementById("faculty-preview-block").style.display = "none"
+		)
 	}	
 
 	//IF USER IS NOT LOGGED IN	  
