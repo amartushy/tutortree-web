@@ -108,9 +108,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 			.doc(userID)
 			.update( {"transcriptFile" : transcriptFileURL,
 			  	"transcript" : true })
-		.then(
+		.then(function() {
 			document.getElementById("transcript-preview-block").style.display = "none"
-		)
+		})
 	}
 	  
 	async function uploadAndUpdateFirebaseFaculty() {
@@ -122,9 +122,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 			.doc(userID)
 			.update( {"facultyFile" : facultyFileURL,
 			 	"faculty" : true })
-		.then(
+		.then(function() {
 			document.getElementById("faculty-preview-block").style.display = "none"
-		)
+		})
 	}	
 
 	//IF USER IS NOT LOGGED IN	  
