@@ -197,8 +197,9 @@ function submitAssessment(userID) {
 	
         .then(function() {
             	console.log("sent")
-		document.getElementById("interview-completion").style.display = "flex"
+		document.getElementById("assessment-completion").style.display = "flex"
 		document.getElementById("assessment-form-block").style.display = "none"
+		
         });
         //https://script.google.com/macros/s/AKfycbyn1b2w9_CFJ3zOFT-fapH2WMdOQVC1DfRjLy6REiM5jl1MQMY/exec
 })
@@ -232,6 +233,7 @@ function scheduleInterview(userID) {
 		userDB.collection("users")
 		.doc(userID)
 		.update( { "interview" : true } )
+		document.getElementById("interview-complete").style.display = "flex"
 	})
 }
 
