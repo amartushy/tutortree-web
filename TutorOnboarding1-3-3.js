@@ -192,8 +192,8 @@ function submitAssessment(userID) {
         }
         userDB.collection("users")
 		.doc(userID)
-		.update( {"assessment" : preInterviewData},
-		       	  "hasSubmittedAssessment" : true)
+		.update( {"assessment" : preInterviewData,
+		       	  "hasSubmittedAssessment" : true } )
 	
         .then(function() {
             console.log("sent")
