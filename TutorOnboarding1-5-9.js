@@ -199,7 +199,7 @@ function submitAssessment(userID) {
             "groups" : groups.value,            
         }
         userDB.collection("users")
-		.doc(userID+'.application')
+		.doc(userID+'/application')
 		.update( {"assessment" : preInterviewData,
 		       	  "didSubmitPreInterview" : true } )
 	
