@@ -108,8 +108,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 			.getDownloadURL()
 			.then(function(url) { transcriptFileURL = url.toString() })
 		userDB.collection("users")
-			.doc(userID+'.application')
-			.update( {"transcriptFile" : transcriptFileURL,
+			.doc(userID)
+			.update( {"application.transcriptFile" : transcriptFileURL,
 			  	"uploadedTranscript" : true })
 		.then(function() {
 			document.getElementById("transcript-preview-block").style.display = "none"
@@ -122,8 +122,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 			.getDownloadURL()
 			.then(function(url) { facultyFileURL = url.toString() })
 		userDB.collection("users")
-			.doc(userID+'.application')
-			.update( {"facultyFile" : facultyFileURL,
+			.doc(userID)
+			.update( {"application.facultyFile" : facultyFileURL,
 			 	"uploadedFaculty" : true })
 		.then(function() {
 			document.getElementById("faculty-preview-block").style.display = "none"
@@ -199,8 +199,8 @@ function submitAssessment(userID) {
             "groups" : groups.value,            
         }
         userDB.collection("users")
-		.doc(userID+'/application')
-		.update( {"assessment" : preInterviewData,
+		.doc(userID)
+		.update( {"application.assessment" : preInterviewData,
 		       	  "didSubmitPreInterview" : true } )
 	
         .then(function() {
@@ -239,8 +239,8 @@ function scheduleInterview(userID) {
 	})
 	document.getElementById("submit-interview-request").addEventListener('click', function() {
 		userDB.collection("users")
-		.doc(userID+'.application')
-		.update( { "didRequestInterview" : true } )
+		.doc(userID)
+		.update( { "application.didRequestInterview" : true } )
 		document.getElementById("interview-complete").style.display = "flex"
 		document.getElementById("request-interview-form").style.display = "none"
 	})
