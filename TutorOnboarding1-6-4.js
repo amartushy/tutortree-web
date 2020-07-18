@@ -15,7 +15,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 	userDB.collection("users").doc(userID)
     		.onSnapshot(function(doc) {
-    
+    	//Change header to include name
+	document.getElementById("onboarding-header").innerHTML = "Welcome back, "+doc.get("firstName")	
+		
 	//Assessment completion view
 	if (doc.get("application.didSubmitPreInterview") == false) {
 		assessmentIncomplete.style.display = "block"
@@ -58,7 +60,12 @@ firebase.auth().onAuthStateChanged(function(user) {
 	    	facultyIncomplete.style.display = "none"
             	facultyComplete.style.display = "block"
 	}
-	document.getElementById("upload-faculty-rec").addEventListener('click', openFacultyDialog)    
+	document.getElementById("upload-faculty-rec").addEventListener('click', openFacultyDialog)
+	
+	if( doc.get("application.isapproved") == true ) {
+		document.getElementById("final-block").style.display = "flex"
+	}
+		
     });
     storageRef = storageService.ref()
 	  
