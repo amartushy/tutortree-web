@@ -28,7 +28,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         	.setAttribute('onClick', 'assessmentForm("'+userID+'")')  
 		
         //Interview completion view
-        if (doc.get("didRequestInterview") == false) {
+        if (doc.get("application.didRequestInterview") == false) {
         	interviewIncomplete.style.display = "block"
             	interviewComplete.style.display = "none"
         } else {
@@ -39,7 +39,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             	.setAttribute('onClick', 'scheduleInterview("'+userID+'")')
 
 	//Upload transcript view
-	if (doc.get("uploadedTranscript") == false ) {
+	if (doc.get("application.uploadedTranscript") == false ) {
 		console.log("uh")
 	    	transcriptIncomplete.style.display = "block"
             	transcriptComplete.style.display = "none"
@@ -51,7 +51,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	document.getElementById("upload-transcript").addEventListener('click', openTranscriptDialog)
 		
 	//Upload faculty view
-	if (doc.get("uploadedFaculty") == false ) {
+	if (doc.get("application.uploadedFaculty") == false ) {
 	    	facultyIncomplete.style.display = "block"
             	facultyComplete.style.display = "none"
 	} else {
@@ -108,9 +108,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 			.getDownloadURL()
 			.then(function(url) { transcriptFileURL = url.toString() })
 		userDB.collection("users")
-			.doc(userID)
+			.doc(userID+'.application')
 			.update( {"transcriptFile" : transcriptFileURL,
-			  	"transcript" : true })
+			  	"uploadedTranscript" : true })
 		.then(function() {
 			document.getElementById("transcript-preview-block").style.display = "none"
 		})
@@ -122,9 +122,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 			.getDownloadURL()
 			.then(function(url) { facultyFileURL = url.toString() })
 		userDB.collection("users")
-			.doc(userID)
+			.doc(userID+'.application')
 			.update( {"facultyFile" : facultyFileURL,
-			 	"faculty" : true })
+			 	"uploadedFaculty" : true })
 		.then(function() {
 			document.getElementById("faculty-preview-block").style.display = "none"
 		})
@@ -141,7 +141,7 @@ var isFormShowing = false
 function assessmentForm(userID) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(userID).get().then(function(doc) {
-		if (doc.get("didSubmitPreInterview") ) {
+		if (doc.get("application.didSubmitPreInterview") ) {
 		    	alert("You've already submitted a pre-interview")
 		} else {
 			if (isFormShowing ) {
@@ -199,9 +199,9 @@ function submitAssessment(userID) {
             "groups" : groups.value,            
         }
         userDB.collection("users")
-		.doc(userID)
+		.doc(userID+'.application')
 		.update( {"assessment" : preInterviewData,
-		       	  "preInterview" : true } )
+		       	  "didSubmitPreInterview" : true } )
 	
         .then(function() {
             	console.log("sent")
@@ -218,10 +218,10 @@ var isScheduleShowing = false
 function scheduleInterview(userID) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(userID).get().then(function(doc) {
-		if ( doc.get("didRequestInterview") ) {
+		if ( doc.get("application.didRequestInterview") ) {
 			alert("Your tutor coordinator has been notified. Please check your email for a time to meet.")
 		} else {
-			if ( doc.get("didSubmitPreInterview") ) {
+			if ( doc.get("application.didSubmitPreInterview") ) {
 				if (isScheduleShowing) {
 					document.getElementById("request-interview-form")
 						.style.display = "none"
@@ -239,8 +239,8 @@ function scheduleInterview(userID) {
 	})
 	document.getElementById("submit-interview-request").addEventListener('click', function() {
 		userDB.collection("users")
-		.doc(userID)
-		.update( { "interview" : true } )
+		.doc(userID+'.application')
+		.update( { "didRequestInterview" : true } )
 		document.getElementById("interview-complete").style.display = "flex"
 		document.getElementById("request-interview-form").style.display = "none"
 	})
