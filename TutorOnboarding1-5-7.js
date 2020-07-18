@@ -17,7 +17,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     		.onSnapshot(function(doc) {
     
 	//Assessment completion view
-	if (doc.get("application/didSubmitPreInterview") == false) {
+	if (doc.get("application.didSubmitPreInterview") == false) {
 		assessmentIncomplete.style.display = "block"
 		assessmentComplete.style.display = "none"              
         } else {
