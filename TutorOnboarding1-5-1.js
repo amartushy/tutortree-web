@@ -92,6 +92,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	}
 
 	async function handleTranscriptUpload() {
+		console.log("I was clicked")
 		const uploadTask = await storageRef.child(`transcripts/${selectedTranscriptFile.name}`).put(selectedTranscriptFile);
 		uploadAndUpdateFirebaseTranscript()
 	}
