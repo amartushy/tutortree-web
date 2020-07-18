@@ -17,7 +17,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     		.onSnapshot(function(doc) {
     
 	//Assessment completion view
-	if (doc.get("preInterview") == false) {
+	if (doc.get("application/didSubmitPreInterview") == false) {
 		assessmentIncomplete.style.display = "block"
 		assessmentComplete.style.display = "none"              
         } else {
@@ -28,7 +28,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         	.setAttribute('onClick', 'assessmentForm("'+userID+'")')  
 		
         //Interview completion view
-        if (doc.get("interview") == false) {
+        if (doc.get("didRequestInterview") == false) {
         	interviewIncomplete.style.display = "block"
             	interviewComplete.style.display = "none"
         } else {
@@ -39,7 +39,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             	.setAttribute('onClick', 'scheduleInterview("'+userID+'")')
 
 	//Upload transcript view
-	if (doc.get("transcript") == false ) {
+	if (doc.get("uploadedTranscript") == false ) {
 		console.log("uh")
 	    	transcriptIncomplete.style.display = "block"
             	transcriptComplete.style.display = "none"
@@ -51,7 +51,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	document.getElementById("upload-transcript").addEventListener('click', openTranscriptDialog)
 		
 	//Upload faculty view
-	if (doc.get("faculty") == false ) {
+	if (doc.get("uploadedFaculty") == false ) {
 	    	facultyIncomplete.style.display = "block"
             	facultyComplete.style.display = "none"
 	} else {
@@ -141,7 +141,7 @@ var isFormShowing = false
 function assessmentForm(userID) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(userID).get().then(function(doc) {
-		if (doc.get("preInterview") ) {
+		if (doc.get("didSubmitPreInterview") ) {
 		    	alert("You've already submitted a pre-interview")
 		} else {
 			if (isFormShowing ) {
@@ -218,10 +218,10 @@ var isScheduleShowing = false
 function scheduleInterview(userID) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(userID).get().then(function(doc) {
-		if ( doc.get("interview") ) {
+		if ( doc.get("didRequestInterview") ) {
 			alert("Your tutor coordinator has been notified. Please check your email for a time to meet.")
 		} else {
-			if ( doc.get("preInterview") ) {
+			if ( doc.get("didSubmitPreInterview") ) {
 				if (isScheduleShowing) {
 					document.getElementById("request-interview-form")
 						.style.display = "none"
