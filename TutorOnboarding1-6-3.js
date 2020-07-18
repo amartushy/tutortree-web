@@ -110,7 +110,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		userDB.collection("users")
 			.doc(userID)
 			.update( {"application.transcriptFile" : transcriptFileURL,
-			  	"uploadedTranscript" : true })
+			  	"application.uploadedTranscript" : true })
 		.then(function() {
 			document.getElementById("transcript-preview-block").style.display = "none"
 		})
@@ -124,7 +124,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		userDB.collection("users")
 			.doc(userID)
 			.update( {"application.facultyFile" : facultyFileURL,
-			 	"uploadedFaculty" : true })
+			 	"application.uploadedFaculty" : true })
 		.then(function() {
 			document.getElementById("faculty-preview-block").style.display = "none"
 		})
