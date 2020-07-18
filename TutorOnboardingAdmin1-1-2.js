@@ -9,8 +9,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 			} else {
 				location.href = "https://www.jointutortree.com"
 			}
-		}
-
+		})
 	} else {
 		location.href = "https://www.jointutortree.com"
 	}
