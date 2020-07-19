@@ -189,7 +189,7 @@ function showAssessment(applicantsID) {
 	
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		document.getElementById('pia-score').value = doc.data.PIAscore
+		document.getElementById('pia-score').placeholder = doc.data.PIAscore
 		document.getElementById('pia-first').innerHTML = doc.data().firstName
 		document.getElementById('pia-last').innerHTML = doc.data().lastName
 		document.getElementById('pia-email').innerHTML = doc.data().email
