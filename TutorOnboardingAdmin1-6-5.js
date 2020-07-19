@@ -224,15 +224,25 @@ function showAssessment(applicantsID) {
 }
 
 function showTranscript(applicantsID) {
-	console.log(applicantsID)
+	var userDB = firebase.firestore()
+	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		window.open(doc.data().transcriptFile)
+	})
 }
 
 function showFaculty(applicantsID) {
-	console.log(applicantsID)
+	var userDB = firebase.firestore()
+	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		window.open(doc.data().facultyFile)
+	})
 }
 
 function grantTutorPrivileges(applicantsID) {
-	console.log(applicantsID)
+	var userDB = firebase.firestore()
+	userDB.collection("users")
+		.doc(applicantsID)
+		.update( {'tutorApplicant' : false,
+			  'tutorApplicationApproved' : true'} )
 }
 
 
