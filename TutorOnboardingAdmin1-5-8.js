@@ -49,7 +49,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
 	applicantBlock.setAttribute('id', timeApplied)
-	updateApplicantArray(timeApplied*1000)
+	updateApplicantArray(timeApplied)
 	
 	//Name Block
 	var nameBlock = document.createElement('div')
