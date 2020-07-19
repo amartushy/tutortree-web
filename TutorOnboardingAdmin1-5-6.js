@@ -37,8 +37,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 						    didTranscript, 
 						    didFaculty)
         		})
+			
+			appendToApplicantArea()
 		})
-		appendToApplicantArea()
 	} else {
 		location.href = "https://www.jointutortree.com"
 	}
