@@ -37,8 +37,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 						    didTranscript, 
 						    didFaculty)
         		})
-			
 		})
+		appendToApplicantArea()
 	} else {
 		location.href = "https://www.jointutortree.com"
 	}
@@ -49,7 +49,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
 	applicantBlock.setAttribute('id', timeApplied)
-	updateApplicantArray(timeApplied)
+	updateApplicantArray(timeApplied*1000)
 	
 	//Name Block
 	var nameBlock = document.createElement('div')
@@ -181,7 +181,6 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	applicantBlock.appendChild(accessButton)
 	
 	//Append to Body
-	appendToApplicantArea()
 	//document.getElementById('applicant-section').appendChild(applicantBlock)
 }
 
@@ -254,6 +253,7 @@ function appendToApplicantArea() {
     for( i=0 ; i < items ; i++ ) {
     	var timestampID = applicantArray[i]
     	var applicantBlock = document.getElementById(timestampID)
+	console.log(timestampID)
         applicantSection.appendChild(applicantBlock)
     }
 }
