@@ -227,15 +227,14 @@ function showAssessment(applicantsID) {
 function showTranscript(applicantsID) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		window.open(doc.data().transcriptFile)
+		window.open(doc.data().application.transcriptFile)
 	})
 }
 
 function showFaculty(applicantsID) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		var facultyLink = doc.data().facultyFile
-		console.log(facultyLink)
+		var facultyLink = doc.data().application.facultyFile
 		window.open(facultyLink)
 	})
 }
