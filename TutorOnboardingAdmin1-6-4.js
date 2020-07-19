@@ -13,7 +13,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 		userDB.collection("users").where("tutorApplicant", "==", true).onSnapshot(function(allTutors) {
 			while(applicantArea.firstChild) {
 				applicantArea.removeChild(applicantArea.firstChild)
-				console.log("removed")
 			}
 			
 			allTutors.forEach(function(doc) {
@@ -205,7 +204,7 @@ function showAssessment(applicantsID) {
 		var piaScoreBlock = document.getElementById('pia-score-block')
 		var scoreField = document.getElementById('pia-score-field')
 		scoreField.placeholder = doc.data().application.score
-		
+		console.log(doc.data().application.score)
 		var updateScoreButton = document.createElement('div')
 		updateScoreButton.setAttribute('class', 'update-pia-score')
 		updateScoreButton.innerHTML = 'Update'
@@ -236,8 +235,8 @@ function grantTutorPrivileges(applicantsID) {
 	console.log(applicantsID)
 }
 
-//Sort applicants by date applied
 
+//Sort applicants by date applied
 function sortNumberApplicant(a,b) {
 	return(a-b)
 }
@@ -255,7 +254,6 @@ function appendToApplicantArea() {
     for( i=0 ; i < items ; i++ ) {
     	var timestampID = applicantArray[i]
     	var applicantBlock = document.getElementById(timestampID)
-	console.log(timestampID)
         applicantSection.appendChild(applicantBlock)
     }
 }
