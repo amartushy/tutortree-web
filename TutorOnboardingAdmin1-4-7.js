@@ -203,14 +203,18 @@ function showAssessment(applicantsID) {
 		
 		var updateScoreButton = document.createElement('div')
 		updateScoreButton.setAttribute('class', 'update-pia-score')
+		updateScoreButton.innerHTML = 'Update'
 		updateScoreButton.setAttribute('onClick', 'updateApplicantScore("'+applicantsID+'")')
+		
 		document.getElementById('pia-score').onfocus = function() {
 			document.getElementById('pia-score-block').appendChild(updateScoreButton)
 		}
 	})
 }
 function updateApplicantScore(applicantsID) {
-	console.log(document.getElementById('pia-score-block').value)
+	var scoreField = document.getElementById('pia-score')
+	console.log(scoreField.value)
+	scoreField.style.display = 'none'
 }
 
 function showTranscript(applicantsID) {
