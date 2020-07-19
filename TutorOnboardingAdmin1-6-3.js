@@ -203,11 +203,8 @@ function showAssessment(applicantsID) {
 		document.getElementById('pia-groups').innerHTML = doc.data().groups
 		
 		var piaScoreBlock = document.getElementById('pia-score-block')
-
-		var scoreField = document.createElement('input')
-		scoreField.setAttribute('class',  'pia-score-field')
-		scoreField.placeholder = doc.data().PIAscore
-		piaScoreBlock.appendChild(scoreField)
+		var scoreField = document.getElementById('pia-score-field')
+		scoreField.placeholder = doc.data().application.score
 		
 		var updateScoreButton = document.createElement('div')
 		updateScoreButton.setAttribute('class', 'update-pia-score')
@@ -216,7 +213,7 @@ function showAssessment(applicantsID) {
 		updateScoreButton.addEventListener('click', function() {
 			userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.PIAscore" : scoreField.value } )
+				.update( { "application.score" : scoreField.value } )
 			updateScoreButton.style.display = 'none'
 		})
 		
