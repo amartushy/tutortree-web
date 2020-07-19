@@ -46,7 +46,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	var nameBlock = document.createElement('div')
 	nameBlock.setAttribute('class', 'name-block')
 	
-	var nameHeader = document.createElement('h2')
+	var nameHeader = document.createElement('h4')
 	nameHeader.setAttribute('class', 'applicants-name')
 	nameHeader.innerHTML = firstName + ' ' + lastName
 	nameBlock.appendChild(nameHeader)
