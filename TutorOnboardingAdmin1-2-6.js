@@ -102,7 +102,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		var requestIncomplete = document.createElement('div')
 		requestIncomplete.setAttribute('class', 'admin-incomplete')
 		requestIncomplete.innerHTML = 'circle'
-		requestedBlock.appendChild(assessmentIncomplete)
+		requestedBlock.appendChild(requestIncomplete)
 	}
 	
 	applicantBlock.appendChild(requestedBlock)
