@@ -97,7 +97,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		var requestCompleted = document.createElement('div')
 		requestCompleted.setAttribute('class', 'admin-complete')
 		requestCompleted.innerHTML = 'check-circle'
-		requestedBlock.appendChild(preInterviewBlock)
+		requestedBlock.appendChild(requestCompleted)
 	} else {
 		var requestIncomplete = document.createElement('div')
 		requestIncomplete.setAttribute('class', 'admin-incomplete')
