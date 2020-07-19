@@ -13,6 +13,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		userDB.collection("users").where("tutorApplicant", "==", true).onSnapshot(function(allTutors) {
 			while(applicantArea.firstChild) {
 				applicantArea.removeChild(applicantArea.firstChild)
+				console.log("removed")
 			}
 			
 			allTutors.forEach(function(doc) {
