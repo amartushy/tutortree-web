@@ -103,7 +103,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		requestedBlock.appendChild(assessmentIncomplete)
 	}
 	
-	applicantBlock(requestedBlock)
+	applicantBlock.appendChild(requestedBlock)
 	
 	//Transcript Block
 	var transcriptBlock = document.createElement('div')
@@ -127,7 +127,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		transcriptBlock.appendChild(transcriptComplete)
 	}
 	
-	applicantBlock(transcriptBlock)
+	applicantBlock.appendChild(transcriptBlock)
 	
 	//Uploaded Faculty Recommendation Block
 	var facultyBlock = document.createElement('div')
@@ -151,7 +151,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		transcriptBlock.appendChild(transcriptComplete)
 	}
 	
-	applicantBlock(transcriptBlock)
+	applicantBlock.appendChild(transcriptBlock)
 	
 	//Append to Body
 	document.getElementById('applicant-section').appendChild(applicantBlock)
