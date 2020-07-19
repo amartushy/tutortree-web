@@ -189,7 +189,6 @@ function showAssessment(applicantsID) {
 	
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		document.getElementById('pia-score').placeholder = doc.data.PIAscore
 		document.getElementById('pia-first').innerHTML = doc.data().firstName
 		document.getElementById('pia-last').innerHTML = doc.data().lastName
 		document.getElementById('pia-email').innerHTML = doc.data().email
@@ -203,11 +202,17 @@ function showAssessment(applicantsID) {
 		document.getElementById('pia-why').innerHTML = doc.data().whyTutor
 		document.getElementById('pia-groups').innerHTML = doc.data().groups
 		
+		var piaScoreBlock = document.getElementById('pia-score-block')
+
+		var scoreField = document.createElement('input')
+		scoreField.setAttribute('class',  'pia-score-field')
+		scoreField.placeholder = doc.data().PIAscore
+		piaScoreBlock.appendChild(scoreField)
+		
 		var updateScoreButton = document.createElement('div')
 		updateScoreButton.setAttribute('class', 'update-pia-score')
 		updateScoreButton.innerHTML = 'Update'
 		
-		var scoreField = document.getElementById('pia-score')
 		updateScoreButton.addEventListener('click', function() {
 			userDB.collection("users")
 				.doc(applicantsID)
@@ -217,7 +222,7 @@ function showAssessment(applicantsID) {
 		
 		scoreField.onfocus = function() {
 			updateScoreButton.style.display = 'block'
-			document.getElementById('pia-score-block').appendChild(updateScoreButton)
+			piaScoreBlock.appendChild(updateScoreButton)
 		}
 	})
 }
