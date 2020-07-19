@@ -62,7 +62,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	var preInterviewBlock = document.createElement('div')
 	preInterviewBlock.setAttribute('class', 'pre-interview-block')
 	
-	var preInterviewHeader = document.creatElement('h4')
+	var preInterviewHeader = document.createElement('h4')
 	preInterviewHeader.setAttribute('class', 'applicant-header')
 	preInterviewHeader.innerHTML = "Assessment"
 	preInterviewBlock.appendChild(preInterviewHeader)
@@ -86,7 +86,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	var requestedBlock = document.createElement('div')
 	requestedBlock.setAttribute('class', 'requested-block')
 	
-	var requestedHeader = document.creatElement('h4')
+	var requestedHeader = document.createElement('h4')
 	requestedHeader.setAttribute('class', 'applicant-header')
 	requestedHeader.innerHTML = "Requested Interview"
 	requestedBlock.appendChild(requestedHeader)
@@ -109,7 +109,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	var transcriptBlock = document.createElement('div')
 	transcriptBlock.setAttribute('class', 'transcript-block')
 	
-	var transcriptHeader = document.creatElement('h4')
+	var transcriptHeader = document.createElement('h4')
 	transcriptHeader.setAttribute('class', 'applicant-header')
 	transcriptHeader.innerHTML = "Uploaded Transcript"
 	transcriptBlock.appendChild(transcriptHeader)
@@ -133,7 +133,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	var facultyBlock = document.createElement('div')
 	facultyBlock.setAttribute('class', 'faculty-rec-block')
 	
-	var facultyHeader = document.creatElement('h4')
+	var facultyHeader = document.createElement('h4')
 	facultyHeader.setAttribute('class', 'applicant-header')
 	facultyHeader.innerHTML = "Faculty Rec"
 	facultyBlock.appendChild(facultyHeader)
