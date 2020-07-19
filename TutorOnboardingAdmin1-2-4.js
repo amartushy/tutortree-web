@@ -67,6 +67,8 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	preInterviewHeader.innerHTML = "Assessment"
 	preInterviewBlock.appendChild(preInterviewHeader)
 	
+	console.log(didSubmitPreInterview)
+	
 	if (didSubmitPreInterview) {
 		var assessmentCompleted = document.createElement('div')
 		assessmentCompleted.setAttribute('class', 'admin-complete')
