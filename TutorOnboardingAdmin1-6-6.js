@@ -242,7 +242,7 @@ function grantTutorPrivileges(applicantsID) {
 	userDB.collection("users")
 		.doc(applicantsID)
 		.update( {'tutorApplicant' : false,
-			  'tutorApplicationApproved' : true'} )
+			  'tutorApplicationApproved' : true } )
 }
 
 
