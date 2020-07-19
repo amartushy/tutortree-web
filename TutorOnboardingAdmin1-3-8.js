@@ -56,6 +56,11 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	emailHeader.innerHTML = email
 	nameBlock.appendChild(emailHeader)
 	
+	var dateHeader = document.createElement('div')
+	dateHeader.setAttribute('class', 'applicant-date')
+	dateHeader.innerHTML = timeApplied
+	nameBlock.appendChild(dateHeader)
+	
 	applicantBlock.appendChild(nameBlock)
 	
 	//Pre-interview block
@@ -155,6 +160,14 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	
 	applicantBlock.appendChild(facultyBlock)
 	
+	//Grant Access Code Block
+	var accessButton = document.createElement('div')
+	accessButton.setAttribute('class', 'applicant-access-button')
+	accessButton.innerHTML = 'Grant Access'
+	accessButton.setAttribute('onclick', 'grantTutorPrivileges("'+applicantID+'")')
+	
+	applicantBlock.appendChild(accessButton)
+	
 	//Append to Body
 	document.getElementById('applicant-section').appendChild(applicantBlock)
 }
@@ -168,6 +181,10 @@ function showTranscript(applicantsID) {
 }
 
 function showFaculty(applicantsID) {
+	console.log(applicantsID)
+}
+
+function grantTutorPrivileges(applicantsID) {
 	console.log(applicantsID)
 }
 
