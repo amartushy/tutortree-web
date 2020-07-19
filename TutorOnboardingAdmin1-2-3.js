@@ -71,7 +71,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		var assessmentCompleted = document.createElement('div')
 		assessmentCompleted.setAttribute('class', 'admin-complete')
 		assessmentCompleted.innerHTML = 'check-circle'
-		preInterviewBlock.appendChild(preInterviewBlock)
+		preInterviewBlock.appendChild(assessmentCompleted)
 		preInterviewBlock.setAttribute('onClick', 'showAssessment("'+applicantsID+'")')
 	} else {
 		var assessmentIncomplete = document.createElement('div')
@@ -151,7 +151,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		facultyBlock.appendChild(facultyIncomplete)
 	}
 	
-	applicantBlock.appendChild(transcriptBlock)
+	applicantBlock.appendChild(facultyBlock)
 	
 	//Append to Body
 	document.getElementById('applicant-section').appendChild(applicantBlock)
