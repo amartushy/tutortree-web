@@ -36,8 +36,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 						    didRequest, 
 						    didTranscript, 
 						    didFaculty)
-        		})
-			
+			})
 			appendToApplicantArea()
 		})
 	} else {
@@ -182,7 +181,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	applicantBlock.appendChild(accessButton)
 	
 	//Append to Body
-	//document.getElementById('applicant-section').appendChild(applicantBlock)
+	document.getElementById('applicant-section').appendChild(applicantBlock)
 }
 
 function showAssessment(applicantsID) {
