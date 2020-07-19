@@ -10,7 +10,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		//Get all applicant information and build blocks
 		userDB.collection("users").where("tutorApplicant", "==", true).onSnapshot(function(allTutors) {
 			allTutors.forEach(function(doc) {
-        			var applicantID = doc.data().parent,
+        			var applicantID = doc.data().parent.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
 				    email = doc.data().email,
