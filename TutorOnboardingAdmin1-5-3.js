@@ -37,6 +37,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 						    didTranscript, 
 						    didFaculty)
         		})
+			
+			appendToApplicantArea()
 		})
 	} else {
 		location.href = "https://www.jointutortree.com"
@@ -48,6 +50,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
 	applicantBlock.setAttribute('id', timeApplied)
+	updateApplicantArray(timeApplied)
 	
 	//Name Block
 	var nameBlock = document.createElement('div')
@@ -179,7 +182,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	applicantBlock.appendChild(accessButton)
 	
 	//Append to Body
-	document.getElementById('applicant-section').appendChild(applicantBlock)
+	//document.getElementById('applicant-section').appendChild(applicantBlock)
 }
 
 function showAssessment(applicantsID) {
@@ -230,6 +233,29 @@ function showFaculty(applicantsID) {
 
 function grantTutorPrivileges(applicantsID) {
 	console.log(applicantsID)
+}
+
+//Sort applicants by date applied
+
+function sortNumberApplicant(a,b) {
+	return(a-b)
+}
+
+var applicantArray = []
+function updateApplicantArray(timestamp) {
+		applicantArray.push(timestamp)
+    applicantArray.sort(sortNumberApplicant)
+}
+
+function appendToApplicantArea() {
+    var items = applicantArray.length
+    var applicantSection = document.getElementById('applicant-section')
+    
+    for( i=0 ; i < items ; i++ ) {
+    	var timestampID = applicantArray[i]
+    	var applicantBlock = document.getElementById(timestampID)
+        applicantSection.appendChild(applicantBlock)
+    }
 }
 
 
