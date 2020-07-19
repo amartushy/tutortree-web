@@ -207,7 +207,9 @@ function showAssessment(applicantsID) {
 		
 		var scoreField = document.getElementById('pia-score')
 		updateScoreButton.addEventListener('click', function() {
-			console.log(scoreField.value)
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.PIAscore" : scoreField.value } )
 			updateScoreButton.style.display = 'none'
 		})
 		
