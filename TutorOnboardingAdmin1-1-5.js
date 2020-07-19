@@ -70,13 +70,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	if (didSubmitPreInterview) {
 		var assessmentCompleted = document.createElement('div')
 		assessmentCompleted.setAttribute('class', 'admin-complete')
-		assessmentCompleted.innerHTML = 
+		assessmentCompleted.innerHTML = 'check-circle'
 		preInterviewBlock.appendChild(preInterviewBlock)
 		preInterviewBlock.setAttribute('onClick', 'showAssessment("'+applicantsID+'")')
 	} else {
 		var assessmentIncomplete = document.createElement('div')
 		assessmentIncomplete.setAttribute('class', 'admin-incomplete')
-		assessmentIncomplete.innerHTML = 
+		assessmentIncomplete.innerHTML = 'circle'
 		preInterviewBlock.appendChild(assessmentIncomplete)
 	}
 	
@@ -94,12 +94,12 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	if (didRequest) {
 		var requestCompleted = document.createElement('div')
 		requestCompleted.setAttribute('class', 'admin-complete')
-		requestCompleted.innerHTML = 
+		requestCompleted.innerHTML = 'check-circle'
 		requestedBlock.appendChild(preInterviewBlock)
 	} else {
 		var requestIncomplete = document.createElement('div')
 		requestIncomplete.setAttribute('class', 'admin-incomplete')
-		requestIncomplete.innerHTML = 
+		requestIncomplete.innerHTML = 'circle'
 		requestedBlock.appendChild(assessmentIncomplete)
 	}
 	
@@ -117,13 +117,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	if (didTranscript) {
 		var transcriptComplete = document.createElement('div')
 		transcriptComplete.setAttribute('class', 'admin-complete')
-		transcriptComplete.innerHTML = 
+		transcriptComplete.innerHTML = 'check-circle'
 		transcriptBlock.appendChild(transcriptComplete)
 		transcriptBlock.setAttribute('onClick', 'showTranscript("'+applicantsID+'")')
 	} else {
 		var transcriptIncomplete = document.createElement('div')
 		transcriptIncomplete.setAttribute('class', 'admin-incomplete')
-		transcriptIncomplete.innerHTML = 
+		transcriptIncomplete.innerHTML = 'circle'
 		transcriptBlock.appendChild(transcriptComplete)
 	}
 	
@@ -141,13 +141,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	if (didFaculty) {
 		var facultyComplete = document.createElement('div')
 		facultyComplete.setAttribute('class', 'admin-complete')
-		facultyComplete.innerHTML = 
+		facultyComplete.innerHTML = 'check-circle'
 		facultyBlock.appendChild(facultyComplete)
 		transcriptBlock.setAttribute('onClick', 'showFaculty("'+applicantsID+'")')
 	} else {
 		var transcriptIncomplete = document.createElement('div')
 		transcriptIncomplete.setAttribute('class', 'admin-incomplete')
-		transcriptIncomplete.innerHTML = 
+		transcriptIncomplete.innerHTML = 'circle'
 		transcriptBlock.appendChild(transcriptComplete)
 	}
 	
