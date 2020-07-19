@@ -205,6 +205,7 @@ function showAssessment(applicantsID) {
 		var scoreField = document.getElementById('pia-score-field')
 		scoreField.placeholder = doc.data().application.score
 		console.log(doc.data().application.score)
+		
 		var updateScoreButton = document.createElement('div')
 		updateScoreButton.setAttribute('class', 'update-pia-score')
 		updateScoreButton.innerHTML = 'Update'
@@ -233,7 +234,9 @@ function showTranscript(applicantsID) {
 function showFaculty(applicantsID) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		window.open(doc.data().facultyFile)
+		var facultyLink = doc.data().facultyFile
+		console.log(facultyLink)
+		window.open(facultyLink)
 	})
 }
 
