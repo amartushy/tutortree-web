@@ -38,7 +38,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 						    didFaculty)
         		})
 			
-			appendToApplicantArea()
 		})
 	} else {
 		location.href = "https://www.jointutortree.com"
@@ -182,6 +181,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	applicantBlock.appendChild(accessButton)
 	
 	//Append to Body
+	appendToApplicantArea()
 	//document.getElementById('applicant-section').appendChild(applicantBlock)
 }
 
