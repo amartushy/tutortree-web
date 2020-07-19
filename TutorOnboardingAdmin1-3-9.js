@@ -7,8 +7,14 @@ firebase.auth().onAuthStateChanged(function(user) {
 		userDB.collection("users").doc(userID).get().then(function(doc) {
 			console.log(doc.data().admin)
 		})
+		
 		//Get all applicant information and build blocks
+		var applicantArea = document.getElementById('applicant-section')
 		userDB.collection("users").where("tutorApplicant", "==", true).onSnapshot(function(allTutors) {
+			while(applicantArea.firstChild) {
+				applicantArea.removeChild(applicantArea.firstChild)
+			}
+			
 			allTutors.forEach(function(doc) {
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
