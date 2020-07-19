@@ -124,7 +124,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		var transcriptIncomplete = document.createElement('div')
 		transcriptIncomplete.setAttribute('class', 'admin-incomplete')
 		transcriptIncomplete.innerHTML = 'circle'
-		transcriptBlock.appendChild(transcriptComplete)
+		transcriptBlock.appendChild(transcriptIncomplete)
 	}
 	
 	applicantBlock.appendChild(transcriptBlock)
@@ -143,12 +143,12 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		facultyComplete.setAttribute('class', 'admin-complete')
 		facultyComplete.innerHTML = 'check-circle'
 		facultyBlock.appendChild(facultyComplete)
-		transcriptBlock.setAttribute('onClick', 'showFaculty("'+applicantsID+'")')
+		facultyBlock.setAttribute('onClick', 'showFaculty("'+applicantsID+'")')
 	} else {
-		var transcriptIncomplete = document.createElement('div')
-		transcriptIncomplete.setAttribute('class', 'admin-incomplete')
-		transcriptIncomplete.innerHTML = 'circle'
-		transcriptBlock.appendChild(transcriptComplete)
+		var facultyIncomplete = document.createElement('div')
+		facultyIncomplete.setAttribute('class', 'admin-incomplete')
+		facultyIncomplete.innerHTML = 'circle'
+		facultyBlock.appendChild(facultyIncomplete)
 	}
 	
 	applicantBlock.appendChild(transcriptBlock)
