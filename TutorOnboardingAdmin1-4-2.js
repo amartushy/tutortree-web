@@ -65,7 +65,10 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	
 	var dateHeader = document.createElement('div')
 	dateHeader.setAttribute('class', 'applicant-date')
-	dateHeader.innerHTML = timeApplied
+	var applicantDate = timeApplied * 1000
+	var formattedTimeApplied = applicantDate.toLocaleDateString("en-US", {weekday:'long',
+        		hour: 'numeric', minute:'numeric'}
+	dateHeader.innerHTML = formattedTimeApplied
 	nameBlock.appendChild(dateHeader)
 	
 	applicantBlock.appendChild(nameBlock)
