@@ -24,7 +24,40 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    didSubmitPreInterview = doc.data().application.didSubmitPreInterview,
 				    didRequest = doc.data().application.didRequestInterview,
 				    didTranscript = doc.data().application.uploadedTranscript,
-				    didFaculty = doc.data().application.uploadedFaculty
+				    didFaculty = doc.data().application.uploadedFaculty,
+				    completed = false
+				buildApplicantBlock(applicantID, 
+						    firstName, 
+						    lastName, 
+						    email, 
+						    timeApplied, 
+						    didSubmitPreInterview, 
+						    didRequest, 
+						    didTranscript, 
+						    didFaculty,
+						    completed)
+			})
+			appendToApplicantArea()
+		})
+		
+		//Get all COMPLETED applicant information and build blocks
+		var completedApplicantArea = document.getElementById('completed-applicant-section')
+		userDB.collection("users").where("tutorApplicationApproved", "==", true).onSnapshot(function(allTutors) {
+			while(applicantArea.firstChild) {
+				applicantArea.removeChild(applicantArea.firstChild)
+			}
+			
+			allTutors.forEach(function(doc) {
+        			var applicantID = doc.id,
+				    firstName = doc.data().firstName,
+				    lastName = doc.data().lastName,
+				    email = doc.data().email,
+				    timeApplied = doc.data().timeCreated,
+				    didSubmitPreInterview = doc.data().application.didSubmitPreInterview,
+				    didRequest = doc.data().application.didRequestInterview,
+				    didTranscript = doc.data().application.uploadedTranscript,
+				    didFaculty = doc.data().application.uploadedFaculty,
+				    completed = true
 				    
 				buildApplicantBlock(applicantID, 
 						    firstName, 
@@ -34,21 +67,26 @@ firebase.auth().onAuthStateChanged(function(user) {
 						    didSubmitPreInterview, 
 						    didRequest, 
 						    didTranscript, 
-						    didFaculty)
+						    didFaculty,
+						    completed)
 			})
-			appendToApplicantArea()
+			appendToCompletedApplicantArea()
 		})
 	} else {
 		location.href = "https://www.jointutortree.com"
 	}
 })
 
-function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplied, didSubmitPreInterview, didRequest, didTranscript, didFaculty) {
+function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplied, didSubmitPreInterview, didRequest, didTranscript, didFaculty, completed) {
 	//Main Container
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
 	applicantBlock.setAttribute('id', timeApplied)
-	updateApplicantArray(timeApplied)
+	if (completed) {
+		updateCompletedApplicantArray(timeApplied)
+	} else {
+		updateApplicantArray(timeApplied)
+	}
 	
 	//Name Block
 	var nameBlock = document.createElement('div')
@@ -268,6 +306,23 @@ function appendToApplicantArea() {
     	var applicantBlock = document.getElementById(timestampID)
         applicantSection.appendChild(applicantBlock)
     }
+}
+
+var completedApplicantArray = []
+function updateCompletedApplicantArray(timestamp) {
+		completedApplicantArray.push(timestamp)
+    completedApplicantArray.sort(sortNumberApplicant)
+}
+
+function appendToCompletedApplicantArea() {
+	var items = completedApplicantArray.length
+	var completedApplicantSection = document.getElementById('completed-applicant-section')
+
+	for( i=0 ; i < items ; i++ ) {
+		var timestampID = completedApplicantArray[i]
+		var applicantBlock = document.getElementById(timestampID)
+		completedApplicantSection.appendChild(applicantBlock)
+	}
 }
 
 
