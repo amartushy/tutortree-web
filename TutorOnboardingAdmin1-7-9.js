@@ -289,7 +289,7 @@ function grantTutorPrivileges(applicantsID, shouldRemove) {
 		userDB.collection("users")
 		.doc(applicantsID)
 		.update( {'tutorApplicant' : !doc.data().tutorApplicant,
-		  	  'tutorApplicationApproved' : !doc.data.tutorApplicationApproved } )
+		  	  'tutorApplicationApproved' : !doc.data().tutorApplicationApproved } )
 	})
 }
 
