@@ -284,15 +284,17 @@ function showFaculty(applicantsID) {
 	})
 }
 
-function grantTutorPrivileges(applicantsID, completed) {
+async function grantTutorPrivileges(applicantsID, completed) {
 	var userDB = firebase.firestore()
 	if (completed) {
-		userDB.collection("users")
+		console.log("yep")
+		await userDB.collection("users")
 		.doc(applicantsID)
 		.update( {'tutorApplicant' : true,
 			  'tutorApplicationApproved' : false } )
 	} else if(!completed) {
-		userDB.collection("users")
+		console.log("nope")
+		await userDB.collection("users")
 		.doc(applicantsID)
 		.update( {'tutorApplicant' : false,
 			  'tutorApplicationApproved' : true } )
