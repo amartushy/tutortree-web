@@ -286,6 +286,7 @@ function showFaculty(applicantsID) {
 
 function grantTutorPrivileges(applicantsID, completed) {
 	var userDB = firebase.firestore()
+	console.log(completed)
 	if (completed) {
 		userDB.collection("users")
 		.doc(applicantsID)
