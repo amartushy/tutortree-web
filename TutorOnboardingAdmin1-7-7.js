@@ -217,11 +217,14 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	
 	if (completed) {
 		accessButton.innerHTML = 'Remove Access'
+		accessButton.setAttribute('onclick', 'grantTutorPrivileges("'+applicantID+'","'+true+'")')
+
 	} else {
 		accessButton.innerHTML = 'Grant Access'
+		accessButton.setAttribute('onclick', 'grantTutorPrivileges("'+applicantID+'","'+false+'")')
+
 	}
 	
-	accessButton.setAttribute('onclick', 'grantTutorPrivileges("'+applicantID+'","'+completed+'")')
 	applicantBlock.appendChild(accessButton)
 	
 	//Append to Body
@@ -284,16 +287,16 @@ function showFaculty(applicantsID) {
 	})
 }
 
-async function grantTutorPrivileges(applicantsID, completed) {
+async function grantTutorPrivileges(applicantsID, shouldRemove) {
 	var userDB = firebase.firestore()
-	if (completed) {
-		console.log("yep")
+	if (shouldRemove) {
+		console.log("removed")
 		await userDB.collection("users")
 		.doc(applicantsID)
 		.update( {'tutorApplicant' : true,
 			  'tutorApplicationApproved' : false } )
-	} else if(!completed) {
-		console.log("nope")
+	} else {
+		console.log("added")
 		await userDB.collection("users")
 		.doc(applicantsID)
 		.update( {'tutorApplicant' : false,
