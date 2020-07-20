@@ -44,7 +44,7 @@ function signUp(){
 						})
 
 						//metrics navigation
-						document.getElementById('applicants-nav').addEventListener('click', function() {
+						document.getElementById('metrics-nav').addEventListener('click', function() {
 							alert('Not available yet, sorry Jack :(')
 						})
 					} else if (doc.data().tutorApplicant) {
