@@ -43,8 +43,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 		//Get all COMPLETED applicant information and build blocks
 		var completedApplicantArea = document.getElementById('completed-applicant-section')
 		userDB.collection("users").where("tutorApplicationApproved", "==", true).onSnapshot(function(allTutors) {
-			while(applicantArea.firstChild) {
-				applicantArea.removeChild(applicantArea.firstChild)
+			while(completedApplicantArea.firstChild) {
+				completedApplicantArea.removeChild(completedApplicantArea.firstChild)
 			}
 			
 			allTutors.forEach(function(doc) {
@@ -212,9 +212,14 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	//Grant Access Code Block
 	var accessButton = document.createElement('div')
 	accessButton.setAttribute('class', 'applicant-access-button')
-	accessButton.innerHTML = 'Grant Access'
-	accessButton.setAttribute('onclick', 'grantTutorPrivileges("'+applicantID+'")')
 	
+	if (completed) {
+		accessButton.innerHTML = 'Remove Access'
+	} else {
+		accessButton.innerHTML = 'Grant Access'
+	}
+	
+	accessButton.setAttribute('onclick', 'grantTutorPrivileges("'+applicantID+'","'+completed+'")')
 	applicantBlock.appendChild(accessButton)
 	
 	//Append to Body
@@ -277,12 +282,19 @@ function showFaculty(applicantsID) {
 	})
 }
 
-function grantTutorPrivileges(applicantsID) {
+function grantTutorPrivileges(applicantsID, completed) {
 	var userDB = firebase.firestore()
-	userDB.collection("users")
+	if (completed) {
+		userDB.collection("users")
+		.doc(applicantsID)
+		.update( {'tutorApplicant' : true,
+			  'tutorApplicationApproved' : false } )
+	} else {
+		userDB.collection("users")
 		.doc(applicantsID)
 		.update( {'tutorApplicant' : false,
 			  'tutorApplicationApproved' : true } )
+	}
 }
 
 
