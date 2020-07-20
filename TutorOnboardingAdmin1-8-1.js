@@ -286,6 +286,8 @@ function showFaculty(applicantsID) {
 function grantTutorPrivileges(applicantsID, shouldRemove) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		console.log(doc.data().tutorApplicant)
+		console.log(doc.data().tutorApplicationApproved)
 		userDB.collection("users")
 		.doc(applicantsID)
 		.update( {'tutorApplicant' : !doc.data().tutorApplicant,
