@@ -11,6 +11,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		//Get all applicant information and build blocks
 		var applicantArea = document.getElementById('applicant-section')
 		userDB.collection("users").where("tutorApplicant", "==", true).onSnapshot(function(allTutors) {
+			applicantArray = []
 			while(applicantArea.firstChild) {
 				applicantArea.removeChild(applicantArea.firstChild)
 			}
@@ -43,6 +44,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		//Get all COMPLETED applicant information and build blocks
 		var completedApplicantArea = document.getElementById('completed-applicant-section')
 		userDB.collection("users").where("tutorApplicationApproved", "==", true).onSnapshot(function(allTutors) {
+			completedApplicantArray = []
 			while(completedApplicantArea.firstChild) {
 				completedApplicantArea.removeChild(completedApplicantArea.firstChild)
 			}
