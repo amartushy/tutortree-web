@@ -143,6 +143,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	}
 });
 
+
 //Pre-interview functions
 var isFormShowing = false
 function assessmentForm(userID) {
@@ -223,8 +224,12 @@ function submitAssessment(userID) {
 //Schedule Interview
 var isScheduleShowing = false
 function scheduleInterview(userID) {
+	var applicantsName = ''
+	var applicantsEmail = ''
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(userID).get().then(function(doc) {
+		applicantsName = doc.data().firstName + ' ' + doc.data().lastName
+		applicantsEmail = doc.data().email
 		if ( doc.get("application.didRequestInterview") ) {
 			alert("Your tutor coordinator has been notified. Please check your email for a time to meet.")
 		} else {
@@ -250,6 +255,16 @@ function scheduleInterview(userID) {
 		.update( { "application.didRequestInterview" : true } )
 		document.getElementById("interview-complete").style.display = "flex"
 		document.getElementById("request-interview-form").style.display = "none"
+		var messageString = applicantsName + ' has completed their PIA and is requesting to schedule an interview. Their email is ' + applicantsEmail
+		sendEmailTo('adrian@jointutortree.com', 'New Interview Schedule Request', messageString)
 	})
+}
+
+function sendEmailTo(email, title, message) {
+	var xhttp = new XMLHttpRequest();
+    	var herokuURL = "https://tutortree-development.herokuapp.com/sendEmailTo/"+email+"/"+title+"/"+message
+   	console.log(herokuURL)
+	xhttp.open("GET", herokuURL, true);
+	xhttp.send();
 }
 
