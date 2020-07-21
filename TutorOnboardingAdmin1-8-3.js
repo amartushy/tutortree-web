@@ -220,7 +220,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	} else {
 		accessButton.innerHTML = 'Grant Access'
 	}
-	accessButton.setAttribute('onclick', 'grantTutorPrivileges("'+applicantID+'","'+email'")')
+	accessButton.setAttribute('onclick', 'grantTutorPrivileges("'+applicantID+'","'+email+'")')
 	applicantBlock.appendChild(accessButton)
 	
 	//Append to Body
