@@ -256,7 +256,7 @@ function scheduleInterview(userID) {
 		document.getElementById("interview-complete").style.display = "flex"
 		document.getElementById("request-interview-form").style.display = "none"
 		var messageString = applicantsName + ' has completed their PIA and is requesting to schedule an interview. Their email is ' + applicantsEmail
-		sendEmailTo('adrian@jointutortree.com', 'New Interview Schedule Request', messageString)
+		sendEmailTo('mcloftus@jointutortree.com', 'New Interview Schedule Request', messageString)
 	})
 }
 
