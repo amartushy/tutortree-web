@@ -220,7 +220,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	} else {
 		accessButton.innerHTML = 'Grant Access'
 	}
-	accessButton.setAttribute('onclick', 'grantTutorPrivileges("'+applicantID+'")')
+	accessButton.setAttribute('onclick', 'grantTutorPrivileges("'+applicantID+'","'+email'")')
 	applicantBlock.appendChild(accessButton)
 	
 	//Append to Body
@@ -283,16 +283,26 @@ function showFaculty(applicantsID) {
 	})
 }
 
-function grantTutorPrivileges(applicantsID, shouldRemove) {
+function grantTutorPrivileges(applicantsID, applicantsEmail) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
 		console.log(doc.data().tutorApplicant)
 		console.log(doc.data().tutorApplicationApproved)
+		
 		userDB.collection("users")
 		.doc(applicantsID)
 		.update( {'tutorApplicant' : !doc.data().tutorApplicant,
 		  	  'tutorApplicationApproved' : !doc.data().tutorApplicationApproved } )
+		
+		if(doc.data().tutorApplicationApproved) {
+			var acceptanceMessage = "Your application to tutor has been approved. Your tutor coordinator will reach out soon with more information."
+			sendEmailTo(applicantsEmail, 'Welcome to TutorTree!', acceptanceMessage)
+		} else {
+			var declinedMessage = "Unfortunately at this time your application to tutor has been declined. Your tutor coordinator will reach out soon with more information."
+			sendEmailTo(applicantsEmail, 'Tutor Application Status', declinedMessage)
+		}
 	})
+	
 }
 
 
@@ -333,6 +343,14 @@ function appendToCompletedApplicantArea() {
 		var applicantBlock = document.getElementById(timestampID)
 		completedApplicantSection.appendChild(applicantBlock)
 	}
+}
+
+function sendEmailTo(email, title, message) {
+	var xhttp = new XMLHttpRequest();
+    	var herokuURL = "https://tutortree-development.herokuapp.com/sendEmailTo/"+email+"/"+title+"/"+message
+   	console.log(herokuURL)
+	xhttp.open("GET", herokuURL, true);
+	xhttp.send();
 }
 
 
