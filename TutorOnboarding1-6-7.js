@@ -216,8 +216,20 @@ function submitAssessment(userID) {
 		document.getElementById("assessment-completion").style.display = "flex"
 		document.getElementById("assessment-form-block").style.display = "none"
 		
+		var url = 'https://script.google.com/macros/s/AKfycbyn1b2w9_CFJ3zOFT-fapH2WMdOQVC1DfRjLy6REiM5jl1MQMY/exec'
+		var $form = $('form#assessment-form')
+
+		var jqxhr = $.ajax ({
+			url: url,
+			method: "GET",
+			dataType: "json",
+			data: $form.serializeArray(),
+
+			success: function (rooms) {
+				console.log("submitted")
+			}
+		})		
         });
-        //https://script.google.com/macros/s/AKfycbyn1b2w9_CFJ3zOFT-fapH2WMdOQVC1DfRjLy6REiM5jl1MQMY/exec
 })
 }
 
