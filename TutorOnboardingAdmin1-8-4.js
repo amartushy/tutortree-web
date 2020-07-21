@@ -294,7 +294,7 @@ function grantTutorPrivileges(applicantsID, applicantsEmail) {
 		.update( {'tutorApplicant' : !doc.data().tutorApplicant,
 		  	  'tutorApplicationApproved' : !doc.data().tutorApplicationApproved } )
 		
-		if(doc.data().tutorApplicationApproved) {
+		if(!doc.data().tutorApplicationApproved) {
 			var acceptanceMessage = "Your application to tutor has been approved. Your tutor coordinator will reach out soon with more information."
 			sendEmailTo(applicantsEmail, 'Welcome to TutorTree!', acceptanceMessage)
 		} else {
