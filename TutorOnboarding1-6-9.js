@@ -174,12 +174,15 @@ function submitAssessment(userID) {
 	userDB.collection("users").doc(userID).get().then(function(doc) {
     
         var firstName = doc.get("firstName")
+	document.getElementById('firstName') = firstName
         var lastName = doc.get("lastName")
+	document.getElementById('lastName') = lastName
         var major = document.getElementById("major")
         var year = document.getElementById("year")
         var email = document.getElementById("email")
         var hours = document.getElementById("hours")
         var school = doc.get("school")
+	document.getElementById('school') = school
         var courses = document.getElementById("courses")
         var experience = document.getElementById("experience")
         var qualities = document.getElementById("qualities")
