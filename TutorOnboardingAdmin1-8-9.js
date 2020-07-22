@@ -26,6 +26,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    didRequest = doc.data().application.didRequestInterview,
 				    didTranscript = doc.data().application.uploadedTranscript,
 				    didFaculty = doc.data().application.uploadedFaculty,
+				    assessmentScore = doc.data().application.assessmentScore,
+				    interviewScore = doc.data().application.interviewScore,
 				    completed = false
 				buildApplicantBlock(applicantID, 
 						    firstName, 
@@ -36,7 +38,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 						    didRequest, 
 						    didTranscript, 
 						    didFaculty,
-						    completed)
+						    completed,
+						    assessmentScore,
+						    interviewScore)
 			})
 			appendToApplicantArea()
 		})
