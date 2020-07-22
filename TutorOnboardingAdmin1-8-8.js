@@ -217,12 +217,14 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 
 	//Score Blocks
 	var userDB = firebase.firestore()
-		
+	console.log(assessmentScore)
+	console.log(interviewScore)
+
 	var formContainer = document.createElement('form')
 	formContainer.setAttribute('class', 'score-form')
 	var mainScore = document.createElement('div')
 	mainScore.setAttribute('class', 'main-score')
-	mainScore.innerHTML = assessmentScore + interviewScore
+	mainScore.innerHTML = parseInt(assessmentScore) + parseInt(interviewScore)
 		formContainer.appendChild(mainScore)
 
 	var individualScores = document.createElement('div')
