@@ -242,7 +242,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	piaScoreField.placeholder = assessmentScore
 	piaScoreField.onblur = function() {
 		userDB.collection("users")
-			.doc(applicantsID)
+			.doc(applicantID)
 			.update( { "application.piaScore" : piaScoreField.value } )
 	}
 	
@@ -261,7 +261,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	interviewScoreField.placeholder = interviewScore
 	interviewScoreField.onblur = function() {
 		userDB.collection("users")
-			.doc(applicantsID)
+			.doc(applicantID)
 			.update( { "application.assessmentScore" : interviewScoreField.value } )
 	}
 		interviewScoreContainer.appendChild(interviewScoreField)
