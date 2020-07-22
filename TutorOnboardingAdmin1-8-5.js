@@ -59,6 +59,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    didRequest = doc.data().application.didRequestInterview,
 				    didTranscript = doc.data().application.uploadedTranscript,
 				    didFaculty = doc.data().application.uploadedFaculty,
+				    assessmentScore = doc.data().application.assessmentScore,
+				    interviewScore = doc.data().application.interviewScore,
 				    completed = true
 				    
 				buildApplicantBlock(applicantID, 
@@ -70,7 +72,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 						    didRequest, 
 						    didTranscript, 
 						    didFaculty,
-						    completed)
+						    completed,
+						    assessmentScore,
+						    interviewScore)
 			})
 			appendToCompletedApplicantArea()
 		})
@@ -79,7 +83,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	}
 })
 
-function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplied, didSubmitPreInterview, didRequest, didTranscript, didFaculty, completed) {
+function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplied, didSubmitPreInterview, didRequest, didTranscript, didFaculty, completed, assessmentScore, interviewScore) {
 	//Main Container
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
@@ -89,42 +93,42 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	} else {
 		updateApplicantArray(timeApplied)
 	}
-	
+
 	//Name Block
 	var nameBlock = document.createElement('div')
 	nameBlock.setAttribute('class', 'name-block')
-	
+
 	var nameHeader = document.createElement('h4')
 	nameHeader.setAttribute('class', 'applicants-name')
 	nameHeader.innerHTML = firstName + ' ' + lastName
 	nameBlock.appendChild(nameHeader)
-	
+
 	var emailHeader = document.createElement('div')
 	emailHeader.setAttribute('class', 'applicants-email')
 	emailHeader.innerHTML = email
 	nameBlock.appendChild(emailHeader)
-	
+
 	var dateHeader = document.createElement('div')
 	dateHeader.setAttribute('class', 'applicant-date')
 	var applicantDate = new Date(timeApplied * 1000)
 	var formattedTimeApplied = applicantDate.toLocaleDateString("en-US", {month:'long', day: 'numeric',
-        		hour: 'numeric', minute:'numeric'})
+			hour: 'numeric', minute:'numeric'})
 	dateHeader.innerHTML = formattedTimeApplied
 	nameBlock.appendChild(dateHeader)
-	
+
 	applicantBlock.appendChild(nameBlock)
-	
+
 	//Pre-interview block
 	var preInterviewBlock = document.createElement('div')
 	preInterviewBlock.setAttribute('class', 'pre-interview-block')
-	
+
 	var preInterviewHeader = document.createElement('h4')
 	preInterviewHeader.setAttribute('class', 'applicant-header')
 	preInterviewHeader.innerHTML = "Assessment"
 	preInterviewBlock.appendChild(preInterviewHeader)
-	
+
 	console.log(didSubmitPreInterview)
-	
+
 	if (didSubmitPreInterview) {
 		var assessmentCompleted = document.createElement('div')
 		assessmentCompleted.setAttribute('class', 'admin-complete')
@@ -137,18 +141,18 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		assessmentIncomplete.innerHTML = 'circle'
 		preInterviewBlock.appendChild(assessmentIncomplete)
 	}
-	
+
 	applicantBlock.appendChild(preInterviewBlock)
-	
+
 	//Requested Interview Block
 	var requestedBlock = document.createElement('div')
 	requestedBlock.setAttribute('class', 'requested-block')
-	
+
 	var requestedHeader = document.createElement('h4')
 	requestedHeader.setAttribute('class', 'applicant-header')
 	requestedHeader.innerHTML = "Requested Interview"
 	requestedBlock.appendChild(requestedHeader)
-	
+
 	if (didRequest) {
 		var requestCompleted = document.createElement('div')
 		requestCompleted.setAttribute('class', 'admin-complete')
@@ -160,18 +164,18 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		requestIncomplete.innerHTML = 'circle'
 		requestedBlock.appendChild(requestIncomplete)
 	}
-	
+
 	applicantBlock.appendChild(requestedBlock)
-	
+
 	//Transcript Block
 	var transcriptBlock = document.createElement('div')
 	transcriptBlock.setAttribute('class', 'transcript-block')
-	
+
 	var transcriptHeader = document.createElement('h4')
 	transcriptHeader.setAttribute('class', 'applicant-header')
 	transcriptHeader.innerHTML = "Uploaded Transcript"
 	transcriptBlock.appendChild(transcriptHeader)
-	
+
 	if (didTranscript) {
 		var transcriptComplete = document.createElement('div')
 		transcriptComplete.setAttribute('class', 'admin-complete')
@@ -184,18 +188,18 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		transcriptIncomplete.innerHTML = 'circle'
 		transcriptBlock.appendChild(transcriptIncomplete)
 	}
-	
+
 	applicantBlock.appendChild(transcriptBlock)
-	
+
 	//Uploaded Faculty Recommendation Block
 	var facultyBlock = document.createElement('div')
 	facultyBlock.setAttribute('class', 'faculty-rec-block')
-	
+
 	var facultyHeader = document.createElement('h4')
 	facultyHeader.setAttribute('class', 'applicant-header')
 	facultyHeader.innerHTML = "Faculty Rec"
 	facultyBlock.appendChild(facultyHeader)
-	
+
 	if (didFaculty) {
 		var facultyComplete = document.createElement('div')
 		facultyComplete.setAttribute('class', 'admin-complete')
@@ -208,13 +212,67 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		facultyIncomplete.innerHTML = 'circle'
 		facultyBlock.appendChild(facultyIncomplete)
 	}
-	
+
 	applicantBlock.appendChild(facultyBlock)
+
+	//Score Blocks
+	var userDB = firebase.firestore()
+		
+	var formContainer = document.createElement('form')
+	formContainer.setAttribute('class', 'score-form')
+	var mainScore = document.createElement('div')
+	mainScore.setAttribute('class', 'main-score')
+	mainScore.innerHTML = assessmentScore + interviewScore
+		formContainer.appendChild(mainScore)
+
+	var individualScores = document.createElement('div')
+	individualScores.setAttribute('class', 'individual-scores')
+		formContainer.appendChild(individualScores)
+
+	var piaScoreContainer = document.createElement('div')
+	piaScoreContainer.setAttribute('class', 'pia-score-container')
+		individualScores.appendChild(piaScoreContainer)
+
+	var piaScoreHeader = document.createElement('div')
+	piaScoreHeader.setAttribute('class', 'pia-score-header')
+	piaScoreHeader.innerHTML = 'PIA:'
+		piaScoreContainer.appendChild(piaScoreHeader)
+	var piaScoreField = document.createElement('input')
+	piaScoreField.setAttribute('class', 'pia-score')
+	piaScoreField.placeholder = assessmentScore
+	piaScoreField.onblur = function() {
+		userDB.collection("users")
+			.doc(applicantsID)
+			.update( { "application.piaScore" : piaScoreField.value } )
+	}
 	
+		piaScoreContainer.appendChild(piaScoreField)
+
+	var interviewScoreContainer = document.createElement('div')
+	interviewScoreContainer.setAttribute('class', 'interview-score-container')
+		individualScores.appendChild(interviewScoreContainer)
+	var interviewScoreHeader = document.createElement('div')
+	interviewScoreHeader.setAttribute('class', 'pia-score-header')
+	interviewScoreHeader.innerHTML = 'Interview:'
+		interviewScoreContainer.appendChild(interviewScoreHeader)
+
+	var interviewScoreField = document.createElement('input')
+	interviewScoreField.setAttribute('class', 'interview-score-field')
+	interviewScoreField.placeholder = interviewScore
+	interviewScoreField.onblur = function() {
+		userDB.collection("users")
+			.doc(applicantsID)
+			.update( { "application.assessmentScore" : interviewScoreField.value } )
+	}
+		interviewScoreContainer.appendChild(interviewScoreField)
+
+	applicantBlock.appendChild(formContainer)
+
+
 	//Grant Access Code Block
 	var accessButton = document.createElement('div')
 	accessButton.setAttribute('class', 'applicant-access-button')
-	
+
 	if (completed) {
 		accessButton.innerHTML = 'Remove Access'
 	} else {
@@ -222,10 +280,11 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	}
 	accessButton.setAttribute('onclick', 'grantTutorPrivileges("'+applicantID+'","'+email+'")')
 	applicantBlock.appendChild(accessButton)
-	
+
 	//Append to Body
 	document.getElementById('applicant-section').appendChild(applicantBlock)
 }
+
 
 function showAssessment(applicantsID) {
 	document.getElementById("assessment-wrapper").style.display = 'flex'
@@ -257,7 +316,7 @@ function showAssessment(applicantsID) {
 		updateScoreButton.addEventListener('click', function() {
 			userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.score" : scoreField.value } )
+				.update( { "application.piaScore" : scoreField.value } )
 			updateScoreButton.style.display = 'none'
 		})
 		
