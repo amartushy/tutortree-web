@@ -243,7 +243,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	piaScoreField.onblur = function() {
 		userDB.collection("users")
 			.doc(applicantID)
-			.update( { "application.piaScore" : piaScoreField.value } )
+			.update( { "application.assessmentScore" : piaScoreField.value } )
 	}
 	
 		piaScoreContainer.appendChild(piaScoreField)
@@ -262,7 +262,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	interviewScoreField.onblur = function() {
 		userDB.collection("users")
 			.doc(applicantID)
-			.update( { "application.assessmentScore" : interviewScoreField.value } )
+			.update( { "application.interviewScore" : interviewScoreField.value } )
 	}
 		interviewScoreContainer.appendChild(interviewScoreField)
 
@@ -316,7 +316,7 @@ function showAssessment(applicantsID) {
 		updateScoreButton.addEventListener('click', function() {
 			userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.piaScore" : scoreField.value } )
+				.update( { "application.assessmentScore" : scoreField.value } )
 			updateScoreButton.style.display = 'none'
 		})
 		
