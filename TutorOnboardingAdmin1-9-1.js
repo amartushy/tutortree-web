@@ -300,15 +300,15 @@ function showAssessment(applicantsID) {
 		document.getElementById('pia-first').innerHTML = doc.data().firstName
 		document.getElementById('pia-last').innerHTML = doc.data().lastName
 		document.getElementById('pia-email').innerHTML = doc.data().email
-		document.getElementById('pia-year').innerHTML = doc.data().year
-		document.getElementById('pia-major').innerHTML = doc.data().major
-		document.getElementById('pia-hours').innerHTML = doc.data().hours
+		document.getElementById('pia-year').innerHTML = doc.data().application.assessment.year
+		document.getElementById('pia-major').innerHTML = doc.data().application.assessment.major
+		document.getElementById('pia-hours').innerHTML = doc.data().application.assessment.hours
 		document.getElementById('pia-school').innerHTML = doc.data().school
-		document.getElementById('pia-courses').innerHTML = doc.data().courses
-		document.getElementById('pia-experience').innerHTML = doc.data().experience
-		document.getElementById('pia-qualities').innerHTML = doc.data().qualites
-		document.getElementById('pia-why').innerHTML = doc.data().whyTutor
-		document.getElementById('pia-groups').innerHTML = doc.data().groups
+		document.getElementById('pia-courses').innerHTML = doc.data().application.assessment.courses
+		document.getElementById('pia-experience').innerHTML = doc.data().application.assessment.experience
+		document.getElementById('pia-qualities').innerHTML = doc.data().application.assessment.qualites
+		document.getElementById('pia-why').innerHTML = doc.data().application.assessment.whyTutor
+		document.getElementById('pia-groups').innerHTML = doc.data().application.assessment.groups
 		
 		var piaScoreBlock = document.getElementById('pia-score-block')
 		var scoreField = document.getElementById('pia-score-field')
