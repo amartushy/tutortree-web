@@ -306,7 +306,7 @@ function showAssessment(applicantsID) {
 		document.getElementById('pia-school').innerHTML = doc.data().school
 		document.getElementById('pia-courses').innerHTML = doc.data().application.assessment.courses
 		document.getElementById('pia-experience').innerHTML = doc.data().application.assessment.experience
-		document.getElementById('pia-qualities').innerHTML = doc.data().application.assessment.qualites
+		document.getElementById('pia-qualities').innerHTML = doc.data().application.assessment.qualities
 		document.getElementById('pia-why').innerHTML = doc.data().application.assessment.whyTutor
 		document.getElementById('pia-groups').innerHTML = doc.data().application.assessment.groups
 		
