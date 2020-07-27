@@ -18,17 +18,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 			
 			allTutors.forEach(function(doc) {
 				
-				userDB.collection("users")
-					.doc(applicantID)
-					.update( { "application.interview.challengingScore" : "0",
-						   "application.interview.troubleScore" : "0",
-						   "application.interview.situationScore" : "0",
-						   "application.interview.confidenceScore" : "0",
-						   "application.interview.preparedScore" : "0",
-						   "application.interview.explainScore" : "0",
-						   "application.interview.onlineScore" : "0", 
-						   "application.interview.helpScore" : "0",} )
-				
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
@@ -66,9 +55,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 			}
 			
 			allTutors.forEach(function(doc) {
-				userDB.collection("users")
-					.doc(applicantID)
-					.update( { "interview" : "" } )
 				
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
