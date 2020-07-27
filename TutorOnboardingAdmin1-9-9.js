@@ -4,7 +4,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		var userID = user.uid
 		
 		//Check if user is an admin
-		userDB.collection("users").doc(userID).get().then(async function(doc) {
+		userDB.collection("users").doc(userID).get().then(function(doc) {
 			console.log(doc.data().admin)
 		})
 		
@@ -16,7 +16,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				applicantArea.removeChild(applicantArea.firstChild)
 			}
 			
-			allTutors.forEach(function(doc) {
+			allTutors.forEach(async function(doc) {
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
