@@ -26,7 +26,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    didRequest = doc.data().application.didRequestInterview,
 				    didTranscript = doc.data().application.uploadedTranscript,
 				    didFaculty = doc.data().application.uploadedFaculty,
-				    assessmentScore = doc.data().application.assessment.assessmentPoints,
+				    assessmentScore = doc.data().application.assessmentScore,
 				    interviewScore = doc.data().application.interviewScore,
 				    completed = false
 				buildApplicantBlock(applicantID, 
@@ -369,7 +369,7 @@ function getAssessmentPoints(applicantsID) {
 		var assessmentPoints = parseInt(yearPoints) + parseInt(experiencePoints) + parseInt(qualitiesPoints) + parseInt(whyTutorPoints) + parseInt(activitiesPoints)
 		userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.assessment.assessmentPoints" : assessmentPoints } )
+				.update( { "application.assessmentScore" : assessmentPoints } )
 	})
 }
 
