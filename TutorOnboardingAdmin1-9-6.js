@@ -353,9 +353,9 @@ function showAssessment(applicantsID) {
 	})
 }
 
-async function getAssessmentPoints(applicantsID) {
+function getAssessmentPoints(applicantsID) {
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+	userDB.collection("users").doc(applicantsID).get().then(async function(doc) {
 		var yearPoints = await doc.data().application.assessment.yearPoints
 		var experiencePoints = doc.data().application.assessment.experiencePoints
 		var qualitiesPoints = doc.data().application.assessment.qualitiesPoints
