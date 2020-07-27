@@ -26,7 +26,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    didRequest = doc.data().application.didRequestInterview,
 				    didTranscript = doc.data().application.uploadedTranscript,
 				    didFaculty = doc.data().application.uploadedFaculty,
-				    assessmentScore = doc.data().application.assessmentScore,
+				    assessmentScore = doc.data().application.assessment.assessmentPoints,
 				    interviewScore = doc.data().application.interviewScore,
 				    completed = false
 				buildApplicantBlock(applicantID, 
