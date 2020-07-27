@@ -54,6 +54,10 @@ firebase.auth().onAuthStateChanged(function(user) {
 			}
 			
 			allTutors.forEach(function(doc) {
+				userDB.collection("users")
+					.doc(applicantID)
+					.update( { "interview" : "" } )
+				
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
