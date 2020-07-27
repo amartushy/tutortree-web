@@ -17,13 +17,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 			}
 			
 			allTutors.forEach(function(doc) {
-				userDB.collection("users")
-					.doc(applicantID)
-					.update( { "application" : 
-							  {"interview" : 
-								{"challengingScore" : "0" } 
-							  } 
-						})
+				if (doc.id == "fmX4YJIdsjhrTaVv9qNWaPl07TH2") {
+					console.log("hello")
+				}
 				
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
