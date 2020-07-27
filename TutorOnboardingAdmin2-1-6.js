@@ -162,6 +162,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		requestCompleted.setAttribute('class', 'admin-complete')
 		requestCompleted.innerHTML = 'check-circle'
 		requestedBlock.appendChild(requestCompleted)
+		requestedBlock.setAttribute('onClick', 'showInterview("'+applicantID+'")')
 	} else {
 		var requestIncomplete = document.createElement('div')
 		requestIncomplete.setAttribute('class', 'admin-incomplete')
@@ -357,6 +358,138 @@ function showAssessment(applicantsID) {
 	})
 }
 
+function showInterview(applicantsID) {
+	document.getElementById("interview-wrapper").style.display = 'flex'
+
+	var userDB = firebase.firestore()
+	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		//Notes fields
+		var challengingNotes = document.getElementById('challenging-notes')
+		challengingNotes.value = doc.data().application.interview.challengingNotes
+		challengingNotes.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.interview.challengingNotes" : challengingNotes.value } )
+		}
+		var troubleNotes = document.getElementById('trouble-notes')
+		troubleNotes.value = doc.data().application.interview.troubleNotes
+		troubleNotes.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.interview.troubleNotes" : troubleNotes.value } )
+		}
+		var situationNotes = document.getElementById('situation-notes')
+		situationNotes.value = doc.data().application.interview.situationNotes
+		situationNotes.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.interview.situationNotes" : situationNotes.value } )
+		}
+		var confidenceNotes = document.getElementById('confidence-notes')
+		confidenceNotes.value = doc.data().application.interview.confidenceNotes
+		confidenceNotes.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.interview.confidenceNotes" : confidenceNotes.value } )
+		}
+		var preparedNotes = document.getElementById('prepared-notes')
+		preparedNotes.value = doc.data().application.interview.preparedNotes
+		preparedNotes.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.interview.preparedNotes" : preparedNotes.value } )
+		}
+		var explainNotes = document.getElementById('explain-notes')
+		explainNotes.value = doc.data().application.interview.explainNotes
+		explainNotes.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.interview.explainNotes" : explainNotes.value } )
+		}
+		var onlineNotes = document.getElementById('online-notes')
+		onlineNotes.value = doc.data().application.interview.onlineNotes
+		onlineNotes.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.interview.onlineNotes" : onlineNotes.value } )
+		}
+		var helpNotes = document.getElementById('help-notes')
+		helpNotes.value = doc.data().application.interview.helpNotes
+		helpNotes.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.interview.helpNotes" : helpNotes.value } )
+		}
+		
+		//Score Fields
+		var challengingScore = document.getElementById('challenging-score')
+		challengingScore.value = doc.data().application.interview.challengingScore
+		challengingScore.onblur = async function() {
+			await userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.assessment.experiencePoints" : challengingScore.value } )
+			getInterviewPoints(applicantsID)
+		}
+		var troubleScore = document.getElementById('trouble-score')
+		troubleScore.value = doc.data().application.interview.troubleScore
+		troubleScore.onblur = async function() {
+			await userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.assessment.experiencePoints" : troubleScore.value } )
+			getInterviewPoints(applicantsID)
+		}
+		var situationScore = document.getElementById('situation-score')
+		situationScore.value = doc.data().application.interview.situationScore
+		situationScore.onblur = async function() {
+			await userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.assessment.experiencePoints" : situationScore.value } )
+			getInterviewPoints(applicantsID)
+		}
+		var confidenceScore = document.getElementById('confidence-score')
+		confidenceScore.value = doc.data().application.interview.confidenceScore
+		confidenceScore.onblur = async function() {
+			await userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.assessment.experiencePoints" : confidenceScore.value } )
+			getInterviewPoints(applicantsID)
+		}
+		var preparedScore = document.getElementById('prepared-score')
+		preparedScore.value = doc.data().application.interview.preparedScore
+		preparedScore.onblur = async function() {
+			await userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.assessment.experiencePoints" : preparedScore.value } )
+			getInterviewPoints(applicantsID)
+		}	
+		var explainScore = document.getElementById('explain-score')
+		explainScore.value = doc.data().application.interview.explainScore
+		explainScore.onblur = async function() {
+			await userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.assessment.experiencePoints" : explainScore.value } )
+			getInterviewPoints(applicantsID)
+		}
+		var onlineScore = document.getElementById('online-score')
+		onlineScore.value = doc.data().application.interview.onlineScore
+		onlineScore.onblur = async function() {
+			await userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.assessment.experiencePoints" : onlineScore.value } )
+			getInterviewPoints(applicantsID)
+		}
+		var helpScore = document.getElementById('help-score')
+		helpScore.value = doc.data().application.interview.helpScore
+		helpScore.onblur = async function() {
+			await userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.assessment.experiencePoints" : onlineScore.value } )
+			getInterviewPoints(applicantsID)
+		}
+
+	})
+}
+
 function getAssessmentPoints(applicantsID) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
@@ -371,6 +504,34 @@ function getAssessmentPoints(applicantsID) {
 				.doc(applicantsID)
 				.update( { "application.assessmentScore" : assessmentPoints } )
 	})
+}
+
+function getInterviewPoints(applicantsID) {
+	var userDB = firebase.firestore()
+	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		var challengingScore = doc.data().application.interview.challengingScore
+		var troubleScore = doc.data().application.interview.troubleScore
+		var situationScore = doc.data().application.interview.situationScore
+		var confidenceScore = doc.data().application.interview.confidenceScore
+		var preparedScore = doc.data().application.interview.preparedScore
+		var explainScore = doc.data().application.interview.explainScore
+		var onlineScore = doc.data().application.interview.onlineScore
+		var helpScore = doc.data().application.interview.helpScore
+
+		var interviewScore = parseInt(challengingScore) + 
+		    		parseInt(troubleScore) + 
+				parseInt(situationScore) + 
+				parseInt(confidenceScore) + 
+				parseInt(preparedScore) + 
+				parseInt(explainScore) + 
+				parseInt(onlineScore) + 
+				parseInt(helpScore)
+		
+		userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.interviewScore" : interviewScore } )
+	})
+
 }
 
 function showTranscript(applicantsID) {
