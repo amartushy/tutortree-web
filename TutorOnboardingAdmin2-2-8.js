@@ -18,7 +18,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 			
 			allTutors.forEach(function(doc) {
 				userDB.collection("users")
-					.doc(applicantID)
+					.doc(doc.id)
 					.update( { "application.interview" : {"challengingScore" : "0" } } )
 				
         			var applicantID = doc.id,
