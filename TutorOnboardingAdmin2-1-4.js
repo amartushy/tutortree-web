@@ -313,7 +313,7 @@ function showAssessment(applicantsID) {
 		
 		//Assign points fields
 		var yearPoints = document.getElementById('year-points')
-		yearPoints.placeholder = doc.data().application.assessment.yearPoints
+		yearPoints.value = doc.data().application.assessment.yearPoints
 		yearPoints.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
