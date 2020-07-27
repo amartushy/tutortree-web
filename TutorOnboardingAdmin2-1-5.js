@@ -322,7 +322,7 @@ function showAssessment(applicantsID) {
 		}
 		
 		var experiencePoints = document.getElementById('experience-points')
-		experiencePoints.placeholder = doc.data().application.assessment.experiencePoints
+		experiencePoints.value = doc.data().application.assessment.experiencePoints
 		experiencePoints.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
@@ -330,7 +330,7 @@ function showAssessment(applicantsID) {
 			getAssessmentPoints(applicantsID)
 		}
 		var qualitiesPoints = document.getElementById('qualities-points')
-		qualitiesPoints.placeholder = doc.data().application.assessment.qualitiesPoints
+		qualitiesPoints.value = doc.data().application.assessment.qualitiesPoints
 		qualitiesPoints.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
@@ -338,7 +338,7 @@ function showAssessment(applicantsID) {
 			getAssessmentPoints(applicantsID)
 		}
 		var whyTutorPoints = document.getElementById('why-tutor-points')
-		whyTutorPoints.placeholder = doc.data().application.assessment.whyTutorPoints
+		whyTutorPoints.value = doc.data().application.assessment.whyTutorPoints
 		whyTutorPoints.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
@@ -346,7 +346,7 @@ function showAssessment(applicantsID) {
 			getAssessmentPoints(applicantsID)
 		}
 		var activitiesPoints = document.getElementById('activities-points')
-		activitiesPoints.placeholder = doc.data().application.assessment.activitiesPoints
+		activitiesPoints.value = doc.data().application.assessment.activitiesPoints
 		activitiesPoints.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
