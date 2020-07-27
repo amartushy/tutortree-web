@@ -366,7 +366,7 @@ function getAssessmentPoints(applicantsID) {
 		userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.assessment.assessmentPoints" : assessmentPoints } )
-	}
+	})
 }
 
 function showTranscript(applicantsID) {
