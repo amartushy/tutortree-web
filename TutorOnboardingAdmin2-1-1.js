@@ -16,7 +16,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				applicantArea.removeChild(applicantArea.firstChild)
 			}
 			
-			allTutors.forEach(async function(doc) {
+			allTutors.forEach(function(doc) {
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
@@ -26,8 +26,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    didRequest = doc.data().application.didRequestInterview,
 				    didTranscript = doc.data().application.uploadedTranscript,
 				    didFaculty = doc.data().application.uploadedFaculty,
-				    //assessmentScore = doc.data().application.assessmentScore,
-				    assessmentScore = await getAssessmentPoints(doc.id),
+				    assessmentScore = doc.data().application.assessmentScore,
 				    interviewScore = doc.data().application.interviewScore,
 				    completed = false
 				buildApplicantBlock(applicantID, 
@@ -315,39 +314,44 @@ function showAssessment(applicantsID) {
 		//Assign points fields
 		var yearPoints = document.getElementById('year-points')
 		yearPoints.placeholder = doc.data().application.assessment.yearPoints
-		yearPoints.onblur = function() {
-			userDB.collection("users")
+		yearPoints.onblur = async function() {
+			await userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.assessment.yearPoints" : yearPoints.value } )
+			getAssessmentPoints(applicantsID)
 		}
 		
 		var experiencePoints = document.getElementById('experience-points')
 		experiencePoints.placeholder = doc.data().application.assessment.experiencePoints
-		experiencePoints.onblur = function() {
-			userDB.collection("users")
+		experiencePoints.onblur = async function() {
+			await userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.assessment.experiencePoints" : experiencePoints.value } )
+			getAssessmentPoints(applicantsID)
 		}
 		var qualitiesPoints = document.getElementById('qualities-points')
 		qualitiesPoints.placeholder = doc.data().application.assessment.qualitiesPoints
-		qualitiesPoints.onblur = function() {
-			userDB.collection("users")
+		qualitiesPoints.onblur = async function() {
+			await userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.assessment.qualitiesPoints" : qualitiesPoints.value } )
+			getAssessmentPoints(applicantsID)
 		}
 		var whyTutorPoints = document.getElementById('why-tutor-points')
 		whyTutorPoints.placeholder = doc.data().application.assessment.whyTutorPoints
-		whyTutorPoints.onblur = function() {
-			userDB.collection("users")
+		whyTutorPoints.onblur = async function() {
+			await userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.assessment.whyTutorPoints" : whyTutorPoints.value } )
+			getAssessmentPoints(applicantsID)
 		}
 		var activitiesPoints = document.getElementById('activities-points')
 		activitiesPoints.placeholder = doc.data().application.assessment.activitiesPoints
-		activitiesPoints.onblur = function() {
-			userDB.collection("users")
+		activitiesPoints.onblur = async function() {
+			await userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.assessment.activitiesPoints" : activitiesPoints.value } )
+			getAssessmentPoints(applicantsID)
 		}
 		
 	})
