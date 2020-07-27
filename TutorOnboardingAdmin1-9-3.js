@@ -26,7 +26,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    didRequest = doc.data().application.didRequestInterview,
 				    didTranscript = doc.data().application.uploadedTranscript,
 				    didFaculty = doc.data().application.uploadedFaculty,
-				    assessmentScore = doc.data().application.assessmentScore,
+				    //assessmentScore = doc.data().application.assessmentScore,
+				    assessmentScore = getAssessmentPoints(doc.id),
 				    interviewScore = doc.data().application.interviewScore,
 				    completed = false
 				buildApplicantBlock(applicantID, 
@@ -297,6 +298,7 @@ function showAssessment(applicantsID) {
 	
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		//Fields
 		document.getElementById('pia-first').innerHTML = doc.data().firstName
 		document.getElementById('pia-last').innerHTML = doc.data().lastName
 		document.getElementById('pia-email').innerHTML = doc.data().email
@@ -310,27 +312,61 @@ function showAssessment(applicantsID) {
 		document.getElementById('pia-why').innerHTML = doc.data().application.assessment.whyTutor
 		document.getElementById('pia-groups').innerHTML = doc.data().application.assessment.groups
 		
-		var piaScoreBlock = document.getElementById('pia-score-block')
-		var scoreField = document.getElementById('pia-score-field')
-		scoreField.placeholder = doc.data().application.score
-		console.log(doc.data().application.score)
-		
-		var updateScoreButton = document.createElement('div')
-		updateScoreButton.setAttribute('class', 'update-pia-score')
-		updateScoreButton.innerHTML = 'Update'
-		
-		updateScoreButton.addEventListener('click', function() {
+		//Assign points fields
+		var yearPoints = document.getElementById('year-points')
+		yearPoints.innerHTML = doc.data().application.assessment.yearPoints
+		yearPoints.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.assessmentScore" : scoreField.value } )
-			updateScoreButton.style.display = 'none'
-		})
-		
-		scoreField.onfocus = function() {
-			updateScoreButton.style.display = 'block'
-			piaScoreBlock.appendChild(updateScoreButton)
+				.update( { "application.assessment.yearPoints" : yearPoints.value } )
 		}
+		
+		var experiencePoints = document.getElementById('experience-points')
+		experiencePoints.innerHTML = doc.data().application.assessment.experiencePoints
+		experiencePoints.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.assessment.experiencePoints" : experiencePoints.value } )
+		}
+		var qualitiesPoints = document.getElementById('qualities-points')
+		qualitiesPoints.innerHTML = doc.data().application.assessment.qualitiesPoints
+		qualitiesPoints.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.assessment.qualitiesPoints" : qualitiesPoints.value } )
+		}
+		var whyTutorPoints = document.getElementById('why-tutor-points')
+		whyTutorPoints.innerHTML = doc.data().application.assessment.whyTutorPoints
+		whyTutorPoints.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.assessment.whyTutorPoints" : whyTutorPoints.value } )
+		}
+		var activitiesPoints = document.getElementById('activities-points')
+		activitiesPoints.innerHTML = doc.data().application.assessment.activitiesPoints
+		activitiesPoints.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.assessment.activitiesPoints" : activitiesPoints.value } )
+		}
+		
 	})
+}
+
+function getAssessmentPoints(applicantsID) {
+	var userDB = firebase.firestore()
+	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		var yearPoints = doc.data().application.assessment.yearPoints
+		var experiencePoints = doc.data().application.assessment.experiencePoints
+		var qualitiesPoints = doc.data().application.assessment.qualitiesPoints
+		var whyTutorPoints = doc.data().application.assessment.whyTutorPoints
+		var activitiesPoints = doc.data().application.assessment.activitiesPoints
+		
+		var assessmentPoints = parseInt(yearPoints) + parseInt(experiencePoints) + parseInt(qualitiesPoints) + parseInt(whyTutorPoints) + parseInt(activitiesPoints)
+		userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.assessment.assessmentPoints" : assessmentPoints } )
+	}
 }
 
 function showTranscript(applicantsID) {
