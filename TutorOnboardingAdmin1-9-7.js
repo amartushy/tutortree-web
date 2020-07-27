@@ -314,7 +314,7 @@ function showAssessment(applicantsID) {
 		
 		//Assign points fields
 		var yearPoints = document.getElementById('year-points')
-		yearPoints.innerHTML = doc.data().application.assessment.yearPoints
+		yearPoints.placeholder = doc.data().application.assessment.yearPoints
 		yearPoints.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
@@ -322,28 +322,28 @@ function showAssessment(applicantsID) {
 		}
 		
 		var experiencePoints = document.getElementById('experience-points')
-		experiencePoints.innerHTML = doc.data().application.assessment.experiencePoints
+		experiencePoints.placeholder = doc.data().application.assessment.experiencePoints
 		experiencePoints.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.assessment.experiencePoints" : experiencePoints.value } )
 		}
 		var qualitiesPoints = document.getElementById('qualities-points')
-		qualitiesPoints.innerHTML = doc.data().application.assessment.qualitiesPoints
+		qualitiesPoints.placeholder = doc.data().application.assessment.qualitiesPoints
 		qualitiesPoints.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.assessment.qualitiesPoints" : qualitiesPoints.value } )
 		}
 		var whyTutorPoints = document.getElementById('why-tutor-points')
-		whyTutorPoints.innerHTML = doc.data().application.assessment.whyTutorPoints
+		whyTutorPoints.placeholder = doc.data().application.assessment.whyTutorPoints
 		whyTutorPoints.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.assessment.whyTutorPoints" : whyTutorPoints.value } )
 		}
 		var activitiesPoints = document.getElementById('activities-points')
-		activitiesPoints.innerHTML = doc.data().application.assessment.activitiesPoints
+		activitiesPoints.placeholder = doc.data().application.assessment.activitiesPoints
 		activitiesPoints.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
@@ -355,8 +355,8 @@ function showAssessment(applicantsID) {
 
 function getAssessmentPoints(applicantsID) {
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(applicantsID).get().then(async function(doc) {
-		var yearPoints = await doc.data().application.assessment.yearPoints
+	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		var yearPoints = doc.data().application.assessment.yearPoints
 		var experiencePoints = doc.data().application.assessment.experiencePoints
 		var qualitiesPoints = doc.data().application.assessment.qualitiesPoints
 		var whyTutorPoints = doc.data().application.assessment.whyTutorPoints
