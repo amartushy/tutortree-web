@@ -20,8 +20,14 @@ firebase.auth().onAuthStateChanged(function(user) {
 				
 				userDB.collection("users")
 					.doc(applicantID)
-					.update( { "interview" : "" } )
-				
+					.update( { "application.interview.challengingScore" : 0,
+						   "application.interview.troubleScore" : 0,
+						   "application.interview.situationScore" : 0,
+						   "application.interview.confidenceScore" : 0,
+						   "application.interview.preparedScore" : 0,
+						   "application.interview.explainScore" : 0,
+						   "application.interview.onlineScore" : 0, 
+						   "application.interview.helpScore" : 0,} )
 				
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
@@ -437,7 +443,7 @@ function showInterview(applicantsID) {
 		challengingScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.assessment.experiencePoints" : challengingScore.value } )
+				.update( { "application.interview.challengingScore" : challengingScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var troubleScore = document.getElementById('trouble-score')
@@ -445,7 +451,7 @@ function showInterview(applicantsID) {
 		troubleScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.assessment.experiencePoints" : troubleScore.value } )
+				.update( { "application.interview.troubleScore" : troubleScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var situationScore = document.getElementById('situation-score')
@@ -453,7 +459,7 @@ function showInterview(applicantsID) {
 		situationScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.assessment.experiencePoints" : situationScore.value } )
+				.update( { "application.interview.situationScore" : situationScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var confidenceScore = document.getElementById('confidence-score')
@@ -461,7 +467,7 @@ function showInterview(applicantsID) {
 		confidenceScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.assessment.experiencePoints" : confidenceScore.value } )
+				.update( { "application.interview.confidenceScore" : confidenceScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var preparedScore = document.getElementById('prepared-score')
@@ -469,7 +475,7 @@ function showInterview(applicantsID) {
 		preparedScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.assessment.experiencePoints" : preparedScore.value } )
+				.update( { "application.interview.preparedScore" : preparedScore.value } )
 			getInterviewPoints(applicantsID)
 		}	
 		var explainScore = document.getElementById('explain-score')
@@ -477,7 +483,7 @@ function showInterview(applicantsID) {
 		explainScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.assessment.experiencePoints" : explainScore.value } )
+				.update( { "application.interview.explainScore" : explainScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var onlineScore = document.getElementById('online-score')
@@ -485,7 +491,7 @@ function showInterview(applicantsID) {
 		onlineScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.assessment.experiencePoints" : onlineScore.value } )
+				.update( { "application.interview.onlineScore" : onlineScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var helpScore = document.getElementById('help-score')
@@ -493,7 +499,7 @@ function showInterview(applicantsID) {
 		helpScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.assessment.experiencePoints" : onlineScore.value } )
+				.update( { "application.interview.helpScore" : onlineScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 
