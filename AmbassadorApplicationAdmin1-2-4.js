@@ -130,7 +130,7 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
       var ambassadorInfoBlock = document.createElement('div')
       ambassadorInfoBlock.setAttribute('class', 'ambassador-info-block')
       ambassadorInfoBlock.setAttribute('id', timeApplied)
-	console.log("building block)
+	console.log("building block")
       	if (pending) {
 		console.log('pending')
 		updatePendingAmbassadorArray(timeApplied)
