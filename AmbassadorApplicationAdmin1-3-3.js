@@ -32,8 +32,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		
             //loop through all ambassadors
             allAmbassadors.forEach(function(doc) {
-    		console.log("ambassador")
-		console.log(doc.data().status)
+    		console.log("ambassador found")
                 var ambassadorID = doc.id,
                     firstName = doc.data().firstName,
                     lastName = doc.data().lastName,
@@ -46,7 +45,8 @@ firebase.auth().onAuthStateChanged(function(user) {
                 buildAmbassadorBlock(ambassadorID, 
                                       firstName, 
                                       lastName, 
-                                      email, 
+                                      email,
+				      school,
                                       timeApplied, 
                                       memeURL,
 				      status)
