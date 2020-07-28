@@ -27,31 +27,43 @@ var basicNextButton = document.getElementById('ambassador-next-basic')
 basicNextButton.addEventListener('click', function() {
 		basicInfoForm.style.display = "none"
 		aboutYouForm.style.display = "flex"
+		socialMediaForm.style.display = "none"
+		almostDoneForm.style.display = "none"
 })
 var aboutBackbutton = document.getElementById('ambassador-back-about')
 basicNextButton.addEventListener('click', function() {
-		aboutYouForm.style.display = "none"
 		basicInfoForm.style.display = "flex"
+		aboutYouForm.style.display = "none"
+		socialMediaForm.style.display = "none"
+		almostDoneForm.style.display = "none"
 })
 var aboutNextButton = document.getElementById('ambassador-next-about')
 basicNextButton.addEventListener('click', function() {
+		basicInfoForm.style.display = "none"
 		aboutYouForm.style.display = "none"
 		socialMediaForm.style.display = "flex"
+		almostDoneForm.style.display = "none"
 })
 var socialBackButton = document.getElementById('ambassador-back-social')
 basicNextButton.addEventListener('click', function() {
-		socialMediaForm.style.display = "none"
+		basicInfoForm.style.display = "none"
 		aboutYouForm.style.display = "flex"
+		socialMediaForm.style.display = "none"
+		almostDoneForm.style.display = "none"
 })
 var socialNextButton = document.getElementById('ambassador-next-social')
 basicNextButton.addEventListener('click', function() {
+		basicInfoForm.style.display = "none"
+		aboutYouForm.style.display = "none"
 		socialMediaForm.style.display = "none"
 		almostDoneForm.style.display = "flex"
 })
 var almostBackButton = document.getElementById('ambassador-back-almost')
 basicNextButton.addEventListener('click', function() {
-		almostDoneForm.style.display = "none"
+		basicInfoForm.style.display = "none"
+		aboutYouForm.style.display = "none"
 		socialMediaForm.style.display = "flex"
+		almostDoneForm.style.display = "none"
 })
 
 
