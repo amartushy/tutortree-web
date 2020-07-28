@@ -171,6 +171,28 @@ function showMeme(ID) {
 	})
 }
 
+function showAmbassadorInterview(ambassadorID) {
+	document.getElementById("ambassador-application-modal").style.display = "flex"
+	
+	var ambassadorDB = firebase.firestore()
+	ambassadorDB.collection("ambassadors").doc(ambassadorID).get().then(function(doc) {
+		document.getElementById("firstName").innerHTML = doc.data().firstName
+		document.getElementById("lastName").innerHTML = doc.data().lastName
+		document.getElementById("email").innerHTML = doc.data().email
+		document.getElementById("phoneNumber").innerHTML = doc.data().phoneNumber
+		document.getElementById("school").innerHTML = doc.data().school
+		document.getElementById("year").innerHTML = doc.data().year
+		document.getElementById("major").innerHTML = doc.data().major
+		document.getElementById("live").innerHTML = doc.data().livesNearCampus
+		document.getElementById("favorite").innerHTML = doc.data().favoriteOffCampus
+		document.getElementById("platform").innerHTML = doc.data().socialMediaField
+		document.getElementById("followers").innerHTML = doc.data().numberOfFollowers
+		document.getElementById("link").innerHTML = doc.data().socialHandle
+		document.getElementById("knowAnyone").innerHTML = doc.data().knowsEmployees
+		document.getElementById("howHeard").innerHTML = doc.data().howHeardField
+	})
+}
+
 //Sort applicants by date applied
 function sortNumberApplicant(a,b) {
 	return(a-b)
