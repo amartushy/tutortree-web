@@ -10,10 +10,10 @@ firebase.auth().onAuthStateChanged(function(user) {
 
         //Get all applicant information and build blocks
         var pendingAmbassadorArea = document.getElementById('pending-ambassador-section')
-        userDB.collection("ambassadors").where("isAmbassador", "==", false).onSnapshot(function(allAmbassadors) {
-          
+        userDB.collection("ambassadors").where("isPending", "==", true).onSnapshot(function(allAmbassadors) {
+    
             //remove all children when updated
-            ambassadorArray = []
+            pendingAmbassadorArray = []
             while(pendingAmbassadorArea.firstChild) {
                 pendingAmbassadorArea.removeChild(pendingAmbassadorArea.firstChild)
             }
@@ -25,7 +25,10 @@ firebase.auth().onAuthStateChanged(function(user) {
                     email = doc.data().email,
                     school = doc.data().school,
                     timeApplied = doc.data().dateApplied,
-                    memeURL = doc.data().memeURL
+                    memeURL = doc.data().memeURL,
+		    pending = doc.data().isPending,
+		    approved = doc.data().isApproved,
+		    rejected = doc.data().isRejected
                 
                 buildAmbassadorBlock(ambassadorID, 
                                       firstName, 
@@ -43,10 +46,15 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
 })
 
-function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, timeApplied, memeURL) {
+function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, timeApplied, memeURL, pending, approved, rejected ) {
       var ambassadorInfoBlock = document.createElement('div')
       ambassadorInfoBlock.setAttribute('class', 'ambassador-info-block')
-      
+      ambassadorInfoBlock.setAttribute('id', timeApplied)
+      	if (completed) {
+		updateCompletedApplicantArray(timeApplied)
+	} else {
+		updateApplicantArray(timeApplied)
+	}
       //Name block
       var ambassadorNameBlock = document.createElement('div')
       ambassadorNameBlock.setAttribute('class', 'ambassador-name-block')
@@ -118,6 +126,64 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
       ambassadorApproveButton.innerHTML = 'Reject'
       ambassadorApproveButton.appendChild(ambassadorRejectButton)
 
+}
+
+//Sort applicants by date applied
+function sortNumberApplicant(a,b) {
+	return(a-b)
+}
+//Pending ambassadors
+var pendingAmbassadorArray = []
+function updatePendingAmbassadorArray(timestamp) {
+	pendingAmbassadorArray.push(timestamp)
+    	pendingAmbassadorArray.sort(sortNumberApplicant)
+}
+
+function appendToPendingAmbassadorArea() {
+    var items = pendingAmbassadorArray.length
+    var pendingAmbassadorSection = document.getElementById('pending-ambassador-section')
+    
+    for( i=0 ; i < items ; i++ ) {
+    	var timestampID = pendingAmbassadorArray[i]
+    	var pendingAmbassadorBlock = document.getElementById(timestampID)
+        pendingAmbassadorSection.appendChild(pendingAmbassadorBlock)
+    }
+}
+
+//Approved ambassadors
+var approvedAmbassadorArray = []
+function updateApprovedAmbassadorArray(timestamp) {
+	approvedAmbassadorArray.push(timestamp)
+    	approvedAmbassadorArray.sort(sortNumberApplicant)
+}
+
+function appendToApprovedAmbassadorArea() {
+    var items = approvedAmbassadorArray.length
+    var approvedAmbassadorSection = document.getElementById('approved-ambassador-section')
+    
+    for( i=0 ; i < items ; i++ ) {
+    	var timestampID = approvedAmbassadorArray[i]
+    	var approvedAmbassadorBlock = document.getElementById(timestampID)
+        approvedAmbassadorSection.appendChild(approvedAmbassadorBlock)
+    }
+}
+
+//Rejected Ambassadors
+var rejectedAmbassadorArray = []
+function updateRejectedAmbassadorArray(timestamp) {
+	rejectedAmbassadorArray.push(timestamp)
+    	rejectedAmbassadorArray.sort(sortNumberApplicant)
+}
+
+function appendToRejectedAmbassadorArea() {
+    var items = rejectedAmbassadorArray.length
+    var rejectedAmbassadorSection = document.getElementById('rejected-ambassador-section')
+    
+    for( i=0 ; i < items ; i++ ) {
+    	var timestampID = rejectedAmbassadorArray[i]
+    	var rejectedAmbassadorBlock = document.getElementById(timestampID)
+        rejectedAmbassadorSection.appendChild(rejectedAmbassadorBlock)
+    }
 }
 
           
