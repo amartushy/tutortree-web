@@ -8,7 +8,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             console.log(doc.data().admin)
         })
 
-        //Get all applicant information and build blocks
+        //Get all pending ambassadors and build blocks
         var pendingAmbassadorArea = document.getElementById('pending-ambassador-section')
         userDB.collection("ambassadors").where("isPending", "==", true).onSnapshot(function(allAmbassadors) {
     
@@ -40,9 +40,75 @@ firebase.auth().onAuthStateChanged(function(user) {
           	appendToPendingAmbassadorArea()
           
         })
+	    
+	//Get all approved ambassador information and build blocks
+	var approvedAmbassadorArea = document.getElementById('approved-ambassador-section')
+	userDB.collection("ambassadors").where("isApproved", "==", true).onSnapshot(function(allAmbassadors) {
+
+		//remove all children when updated
+		approvedAmbassadorArray = []
+		while(approvedAmbassadorArea.firstChild) {
+			approvedAmbassadorArea.removeChild(approvedAmbassadorArea.firstChild)
+		}
+		//loop through all ambassadors
+		allAmbassadors.forEach(function(doc) {
+			var ambassadorID = doc.id,
+				firstName = doc.data().firstName,
+				lastName = doc.data().lastName,
+				email = doc.data().email,
+				school = doc.data().school,
+				timeApplied = doc.data().dateApplied,
+				memeURL = doc.data().memeURL,
+				pending = doc.data().isPending,
+				approved = doc.data().isApproved,
+				rejected = doc.data().isRejected
+
+			buildAmbassadorBlock(ambassadorID, 
+						firstName, 
+						lastName, 
+						email, 
+						timeApplied, 
+						memeURL)
+			})
+			appendToApprovedAmbassadorArea()
+
+	})
+	    
+	//Get all rejected ambassador information and build blocks
+	var rejectedAmbassadorArea = document.getElementById('rejected-ambassador-section')
+	userDB.collection("ambassadors").where("isRejected", "==", true).onSnapshot(function(allAmbassadors) {
+
+		//remove all children when updated
+		rejectedAmbassadorArray = []
+		while(rejectedAmbassadorArea.firstChild) {
+			rejectedAmbassadorArea.removeChild(rejectedAmbassadorArea.firstChild)
+		}
+		//loop through all ambassadors
+		allAmbassadors.forEach(function(doc) {
+			var ambassadorID = doc.id,
+				firstName = doc.data().firstName,
+				lastName = doc.data().lastName,
+				email = doc.data().email,
+				school = doc.data().school,
+				timeApplied = doc.data().dateApplied,
+				memeURL = doc.data().memeURL,
+				pending = doc.data().isPending,
+				approved = doc.data().isApproved,
+				rejected = doc.data().isRejected
+
+			buildAmbassadorBlock(ambassadorID, 
+						firstName, 
+						lastName, 
+						email, 
+						timeApplied, 
+						memeURL)
+			})
+			appendToRejectedAmbassadorArea()
+
+	})
       
     } else {
-		    location.href = "https://www.jointutortree.com"
+	location.href = "https://www.jointutortree.com"
     }
 })
 
@@ -50,10 +116,12 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
       var ambassadorInfoBlock = document.createElement('div')
       ambassadorInfoBlock.setAttribute('class', 'ambassador-info-block')
       ambassadorInfoBlock.setAttribute('id', timeApplied)
-      	if (completed) {
-		updateCompletedApplicantArray(timeApplied)
-	} else {
-		updateApplicantArray(timeApplied)
+      	if (pending) {
+		updatePendingAmbassadorArray(timeApplied)
+	} else if(approved){
+		updateApprovedAmbassadorArray(timeApplied)
+	} else if (rejected) {
+		updateRejectedAmbassadorArray(timeApplied)
 	}
       //Name block
       var ambassadorNameBlock = document.createElement('div')
