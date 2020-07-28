@@ -11,7 +11,6 @@ firebase.auth().onAuthStateChanged(function(user) {
         //Get all pending ambassadors and build blocks
         var pendingAmbassadorArea = document.getElementById('pending-ambassador-section')
         ambassadorDB.collection("ambassadors").where("isPending", "==", true).onSnapshot(function(allAmbassadors) {
-    		console.log("found a pending")
             //remove all children when updated
             pendingAmbassadorArray = []
             while(pendingAmbassadorArea.firstChild) {
@@ -19,6 +18,8 @@ firebase.auth().onAuthStateChanged(function(user) {
             }
             //loop through all ambassadors
             allAmbassadors.forEach(function(doc) {
+    		console.log("found pending")
+		  
                 var ambassadorID = doc.id,
                     firstName = doc.data().firstName,
                     lastName = doc.data().lastName,
@@ -44,7 +45,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 	//Get all approved ambassador information and build blocks
 	var approvedAmbassadorArea = document.getElementById('approved-ambassador-section')
 	ambassadorDB.collection("ambassadors").where("isApproved", "==", true).onSnapshot(function(allAmbassadors) {
-    		console.log("found approved")
 
 		//remove all children when updated
 		approvedAmbassadorArray = []
@@ -53,6 +53,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 		}
 		//loop through all ambassadors
 		allAmbassadors.forEach(function(doc) {
+			console.log("found approved")
+
 			var ambassadorID = doc.id,
 				firstName = doc.data().firstName,
 				lastName = doc.data().lastName,
@@ -78,7 +80,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 	//Get all rejected ambassador information and build blocks
 	var rejectedAmbassadorArea = document.getElementById('rejected-ambassador-section')
 	ambassadorDB.collection("ambassadors").where("isRejected", "==", true).onSnapshot(function(allAmbassadors) {
-		console.log("found rejected")
 
 		//remove all children when updated
 		rejectedAmbassadorArray = []
@@ -87,6 +88,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 		}
 		//loop through all ambassadors
 		allAmbassadors.forEach(function(doc) {
+			console.log("found rejected")
+
 			var ambassadorID = doc.id,
 				firstName = doc.data().firstName,
 				lastName = doc.data().lastName,
