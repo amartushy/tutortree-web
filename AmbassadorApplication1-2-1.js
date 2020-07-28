@@ -77,7 +77,7 @@ function createAmbassadorApplicant() {
 			"socialMediaField" : socialMediaField.value,
 			"numberOfFollowers" : followersField.value,
 			"socialHandle" : socialHandleField.value,
-			"memeURL" = ambassadorsMeme,
+			"memeURL" : ambassadorsMeme,
 			"knowsEmployees" : knowEmployeesField.value,
 			"howHeardField" : howHeardField.value,
                   
