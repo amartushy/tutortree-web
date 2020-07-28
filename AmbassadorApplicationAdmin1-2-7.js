@@ -27,9 +27,9 @@ firebase.auth().onAuthStateChanged(function(user) {
                     school = doc.data().school,
                     timeApplied = doc.data().dateApplied,
                     memeURL = doc.data().memeURL,
-		    pending = doc.data().isPending,
-		    approved = doc.data().isApproved,
-		    rejected = doc.data().isRejected
+		    pending = true,
+		    approved = false,
+		    rejected = false
                 
                 buildAmbassadorBlock(ambassadorID, 
                                       firstName, 
@@ -65,9 +65,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 				school = doc.data().school,
 				timeApplied = doc.data().dateApplied,
 				memeURL = doc.data().memeURL,
-				pending = doc.data().isPending,
-				approved = doc.data().isApproved,
-				rejected = doc.data().isRejected
+				pending = false,
+				approved = true,
+				rejected = false
 
 			buildAmbassadorBlock(ambassadorID, 
 						firstName, 
@@ -103,9 +103,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 				school = doc.data().school,
 				timeApplied = doc.data().dateApplied,
 				memeURL = doc.data().memeURL,
-				pending = doc.data().isPending,
-				approved = doc.data().isApproved,
-				rejected = doc.data().isRejected
+				pending = false,
+				approved = false,
+				rejected = true
 
 			buildAmbassadorBlock(ambassadorID, 
 						firstName, 
