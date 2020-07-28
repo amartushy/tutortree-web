@@ -48,7 +48,7 @@ function showForm(formInt) {
 		if (i == formInt) {
 			formsArray[i].style.display = "flex"
 		} else {
-			formsArray[i].style.dispay = "none"
+			formsArray[i].style.display = "none"
 		}
 	}
 }
