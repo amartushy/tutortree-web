@@ -130,7 +130,7 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
   
       var ambassadorNameHeader = document.createElement('h3')
       ambassadorNameHeader.setAttribute('class', 'ambapp-header')
-      ambassadorNameHeader.innerHTML = firstName + " " lastName
+      ambassadorNameHeader.innerHTML = firstName + " " + lastName
       ambassadorNameBlock.appendChild(ambassadorNameHeader)
   
       var ambassadorDateApplied = document.createElement('div')
