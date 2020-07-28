@@ -59,7 +59,7 @@ var submitApplicationButton = document.getElementById('ambassador-submit')
 submitApplicationButton.setAttribute("onClick", "createAmbassadorApplicant()")
 
 function createAmbassadorApplicant() {
-	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(data) {
+	firebase.auth().createUserWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
               	var ambassadorID = data.user.uid
 		var ambassadorToUpdate = {}
               	var newAmbassadorDict = {
