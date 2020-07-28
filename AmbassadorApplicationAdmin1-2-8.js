@@ -27,9 +27,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                     school = doc.data().school,
                     timeApplied = doc.data().dateApplied,
                     memeURL = doc.data().memeURL,
-		    pending = true,
-		    approved = false,
-		    rejected = false
+		    status = doc.data().status,
                 
                 buildAmbassadorBlock(ambassadorID, 
                                       firstName, 
@@ -44,82 +42,6 @@ firebase.auth().onAuthStateChanged(function(user) {
           	appendToPendingAmbassadorArea()
           
         })
-	    
-	//Get all approved ambassador information and build blocks
-	var approvedAmbassadorArea = document.getElementById('approved-ambassador-section')
-	ambassadorDB.collection("ambassadors").where("isApproved", "==", true).onSnapshot(function(allAmbassadors) {
-
-		//remove all children when updated
-		approvedAmbassadorArray = []
-		while(approvedAmbassadorArea.firstChild) {
-			approvedAmbassadorArea.removeChild(approvedAmbassadorArea.firstChild)
-		}
-		//loop through all ambassadors
-		allAmbassadors.forEach(function(doc) {
-			console.log("found approved")
-
-			var ambassadorID = doc.id,
-				firstName = doc.data().firstName,
-				lastName = doc.data().lastName,
-				email = doc.data().email,
-				school = doc.data().school,
-				timeApplied = doc.data().dateApplied,
-				memeURL = doc.data().memeURL,
-				pending = false,
-				approved = true,
-				rejected = false
-
-			buildAmbassadorBlock(ambassadorID, 
-						firstName, 
-						lastName, 
-						email, 
-						timeApplied, 
-						memeURL,
-					        pending,
-				     		approved,
-						rejected)
-			})
-			appendToApprovedAmbassadorArea()
-
-	})
-	    
-	//Get all rejected ambassador information and build blocks
-	var rejectedAmbassadorArea = document.getElementById('rejected-ambassador-section')
-	ambassadorDB.collection("ambassadors").where("isRejected", "==", true).onSnapshot(function(allAmbassadors) {
-
-		//remove all children when updated
-		rejectedAmbassadorArray = []
-		while(rejectedAmbassadorArea.firstChild) {
-			rejectedAmbassadorArea.removeChild(rejectedAmbassadorArea.firstChild)
-		}
-		//loop through all ambassadors
-		allAmbassadors.forEach(function(doc) {
-			console.log("found rejected")
-
-			var ambassadorID = doc.id,
-				firstName = doc.data().firstName,
-				lastName = doc.data().lastName,
-				email = doc.data().email,
-				school = doc.data().school,
-				timeApplied = doc.data().dateApplied,
-				memeURL = doc.data().memeURL,
-				pending = false,
-				approved = false,
-				rejected = true
-
-			buildAmbassadorBlock(ambassadorID, 
-						firstName, 
-						lastName, 
-						email, 
-						timeApplied, 
-						memeURL,
-					    	pending,
-				      		approved,
-				      		rejected)
-			})
-			appendToRejectedAmbassadorArea()
-
-	})
       
     } else {
 	location.href = "https://www.jointutortree.com"
