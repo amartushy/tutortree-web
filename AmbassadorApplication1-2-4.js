@@ -90,9 +90,12 @@ function createAmbassadorApplicant() {
               
               ambassadorRef.collection("ambassadors").doc(ambassadorID).set(newAmbassadorDict)
               .then(function() {
-                  	console.log("Ambassador application successfully submitted");
-		  	document.getElementById('ambassador-thanks').style.display = "flex"
-		      	document.getElementById('ambassador-submit-form').style.display = "none"
+			console.log("Ambassador application successfully submitted");
+			document.getElementById('ambassador-thanks').style.display = "flex"
+			document.getElementById('ambassador-submit-form').style.display = "none"
+		      
+			var newAmbassadorMessage = "New Ambassador Application : " + firstNameField.value + " has submitted an application to be a TutorTree ambassador. Their email is " + emailField.value
+			sendSMSTo("4582108156", newAmbassadorMessage)
               })
           })
           .catch(function(error) {
@@ -136,6 +139,13 @@ async function uploadAndUpdateFirebaseMeme() {
 		.then(function(url) { memeFileURL = url.toString() })
 	ambassadorsMeme = memeFileURL
 	console.log(ambassadorsMeme)
+}
+
+function sendSMSTo(number, message) {
+	var xhttp = new XMLHttpRequest();
+	var herokuURL = "https://tutortree-development.herokuapp.com/sendSMSTo/+1"+number+"/"+message
+	xhttp.open("GET", herokuURL, true);
+	xhttp.send();
 }
 
 
