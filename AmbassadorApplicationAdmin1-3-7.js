@@ -111,15 +111,17 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
       ambassadorInfoBlock.appendChild(ambassadorApplicationBlock)
   
       var ambassadorApplicationHeader = document.createElement('h3')
+      ambassadorApplicationHeader.setAttribute('class', 'ambapp-header')
       ambassadorApplicationHeader.innerHTML = "Application"
       ambassadorApplicationBlock.appendChild(ambassadorApplicationHeader)
   
       //Meme Block
       var ambassadorMemeBlock = document.createElement('div')
       ambassadorMemeBlock.setAttribute('class', 'ambassador-meme')
+      ambassadorMemeBlock.setAttribute('onClick', 'showMeme("' + ammasadorID + '")')
       ambassadorInfoBlock.appendChild(ambassadorMemeBlock)
   
-      var ambassadorMemeHeader = document.createElement('div')
+      var ambassadorMemeHeader = document.createElement('h3')
       ambassadorMemeHeader.setAttribute('class', 'ambapp-header')
       ambassadorMemeHeader.innerHTML = 'Meme'
       ambassadorMemeBlock.appendChild(ambassadorMemeHeader)
@@ -159,6 +161,14 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
 function setAmbassadorPrivileges(ID, privileges) {
 	var ambassadorDB = firebase.firestore()
 	ambassadorDB.collection("ambassadors").doc(ID).update( { "status" : privileges } )
+}
+
+function showMeme(ID) {
+	var ambassadorDB = firebase.firestore()
+	ambassadorDB.collection("ambassadors").doc(ID).get().then(function(doc) {
+		var memeLink = doc.data().memeURL
+		window.open(memeLink)
+	})
 }
 
 //Sort applicants by date applied
