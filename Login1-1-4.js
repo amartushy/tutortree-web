@@ -50,7 +50,7 @@ function signUp(){
 						
 						//ambassador navigation
 						document.getElementById('ambassador-nav').addEventListener('click', function() {
-							location.href = 'https://www.jointutortree.com/tutor/ambassador-admin'
+							location.href = 'https://www.jointutortree.com/ambassador-admin'
 						})
 						
 					} else if (doc.data().tutorApplicant) {
