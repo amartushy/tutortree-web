@@ -77,7 +77,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 						memeURL,
 					        pending,
 				     		approved,
-						rejected))
+						rejected)
 			})
 			appendToApprovedAmbassadorArea()
 
@@ -115,7 +115,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 						memeURL,
 					    	pending,
 				      		approved,
-				      		rejected))
+				      		rejected)
 			})
 			appendToRejectedAmbassadorArea()
 
