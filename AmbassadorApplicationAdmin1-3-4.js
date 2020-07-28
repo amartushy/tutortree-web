@@ -38,7 +38,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                     lastName = doc.data().lastName,
                     email = doc.data().email,
                     school = doc.data().school,
-                    timeApplied = doc.data().dateApplied,
+                    timeApplied = doc.data().metadata.dateApplied,
                     memeURL = doc.data().memeURL,
 		    status = doc.data().status
                 
@@ -66,13 +66,7 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
       ambassadorInfoBlock.setAttribute('class', 'ambassador-info-block')
       ambassadorInfoBlock.setAttribute('id', timeApplied)
 	console.log("Ambassadors status: " + status)
-      	if (status == "pending") {
-		updatePendingAmbassadorArray(timeApplied)
-	} else if (status == "approved"){
-		updateApprovedAmbassadorArray(timeApplied)
-	} else if (status == "rejected") {
-		updateRejectedAmbassadorArray(timeApplied)
-	}
+      	
       //Name block
       var ambassadorNameBlock = document.createElement('div')
       ambassadorNameBlock.setAttribute('class', 'ambassador-name-block')
@@ -136,17 +130,38 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
   
       var ambassadorApproveButton = document.createElement('div')
       ambassadorApproveButton.setAttribute('class', 'ambapp-approve')
+      ambassadorApproveButton.setAttribute('onClick', 'setAmbassadorPrivileges("' + ambassadorID + '", "approved")')
       ambassadorApproveButton.innerHTML = 'Approve'
-      ambassadorPrivilegesBlock.appendChild(ambassadorApproveButton)
-  
+	  
       var ambassadorRejectButton = document.createElement('div')
       ambassadorRejectButton.setAttribute('class', 'ambapp-reject')
-      ambassadorApproveButton.innerHTML = 'Reject'
-      ambassadorApproveButton.appendChild(ambassadorRejectButton)
+      ambassadorRejectButton.setAttribute('onClick', 'setAmbassadorPrivileges("' + ambassadorID + '", "rejected")')
+      ambassadorRejectButton.innerHTML = 'Reject'
 	
+	if (status == "pending") {
+		updatePendingAmbassadorArray(timeApplied)
+		ambassadorPrivilegesBlock.appendChild(ambassadorApproveButton)
+		ambassadorPrivilegesBlock.appendChild(ambassadorRejectButton)
+
+	} else if (status == "approved"){
+		updateApprovedAmbassadorArray(timeApplied)
+		ambassadorPrivilegesBlock.appendChild(ambassadorRejectButton)
+
+	} else if (status == "rejected") {
+		updateRejectedAmbassadorArray(timeApplied)
+		ambassadorPrivilegesBlock.appendChild(ambassadorApproveButton)
+	}
       document.getElementById('hidden-ambassador-section').appendChild(ambassadorInfoBlock)
 
 
+}
+
+function setAmbassadorPrivileges(ID, privileges) {
+	var ambassadorDB = firebase.firestore()
+	ambassadorDB.collection("ambassadors").doc(ID).get().then(function(doc) {
+		console.log(ID)
+		console.log(privileges)
+	})
 }
 
 //Sort applicants by date applied
