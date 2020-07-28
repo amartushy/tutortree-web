@@ -36,7 +36,10 @@ firebase.auth().onAuthStateChanged(function(user) {
                                       lastName, 
                                       email, 
                                       timeApplied, 
-                                      memeURL)
+                                      memeURL,
+				      pending,
+				      approved,
+				      rejected)
             })
           	appendToPendingAmbassadorArea()
           
@@ -71,7 +74,10 @@ firebase.auth().onAuthStateChanged(function(user) {
 						lastName, 
 						email, 
 						timeApplied, 
-						memeURL)
+						memeURL,
+					        pending,
+				     		approved,
+						rejected))
 			})
 			appendToApprovedAmbassadorArea()
 
@@ -106,7 +112,10 @@ firebase.auth().onAuthStateChanged(function(user) {
 						lastName, 
 						email, 
 						timeApplied, 
-						memeURL)
+						memeURL,
+					    	pending,
+				      		approved,
+				      		rejected))
 			})
 			appendToRejectedAmbassadorArea()
 
