@@ -122,6 +122,7 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
       ambassadorInfoBlock.setAttribute('class', 'ambassador-info-block')
       ambassadorInfoBlock.setAttribute('id', timeApplied)
       	if (pending) {
+		console.log('pending')
 		updatePendingAmbassadorArray(timeApplied)
 	} else if(approved){
 		updateApprovedAmbassadorArray(timeApplied)
