@@ -75,7 +75,7 @@ function createAmbassadorApplicant() {
 			"favoriteOffCampus" : offCampusField.value,
 			"socialMediaField" : socialMediaField.value,
 			"numberOfFollowers" : followersField.value,
-			"socialHandle" : socialHandleField,
+			"socialHandle" : socialHandleField.value,
 			"knowsEmployees" : knowEmployeesField.value,
 			"howHeardField" : howHeardField.value,
                   
