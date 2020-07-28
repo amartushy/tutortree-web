@@ -118,7 +118,7 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
       //Meme Block
       var ambassadorMemeBlock = document.createElement('div')
       ambassadorMemeBlock.setAttribute('class', 'ambassador-meme')
-      ambassadorMemeBlock.setAttribute('onClick', 'showMeme("' + ammasadorID + '")')
+      ambassadorMemeBlock.setAttribute('onClick', 'showMeme("' + ambassadorID + '")')
       ambassadorInfoBlock.appendChild(ambassadorMemeBlock)
   
       var ambassadorMemeHeader = document.createElement('h3')
