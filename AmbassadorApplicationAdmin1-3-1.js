@@ -143,7 +143,7 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
       ambassadorApproveButton.innerHTML = 'Reject'
       ambassadorApproveButton.appendChild(ambassadorRejectButton)
 	
-      document.getElementById('pending-ambassador-section').appendChild(ambassadorInfoBlock)
+      document.getElementById('hidden-ambassador-section').appendChild(ambassadorInfoBlock)
 
 
 }
