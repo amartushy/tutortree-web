@@ -11,14 +11,15 @@ firebase.auth().onAuthStateChanged(function(user) {
         //Get all ambassadors and build blocks
         var pendingAmbassadorArea = document.getElementById('pending-ambassador-section')
 	var approvedAmbassadorSection = document.getElementById('approved-ambassador-section')
-    	var rejectedAmbassadorSection = document.getElementById('approved-ambassador-section')
+    	var rejectedAmbassadorSection = document.getElementById('rejected-ambassador-section')
 
         ambassadorDB.collection("ambassadors").onSnapshot(function(allAmbassadors) {
-            //remove all children when updated
+            //reinitialize arrays on update
             pendingAmbassadorArray = []
 	    approvedAmbassadorArray = []
 	    rejectedAmbassadorArray = []
 		
+	    //remove all children when updated
             while(pendingAmbassadorArea.firstChild) {
                 pendingAmbassadorArea.removeChild(pendingAmbassadorArea.firstChild)
             }
@@ -32,7 +33,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             //loop through all ambassadors
             allAmbassadors.forEach(function(doc) {
     		console.log("ambassador")
-		  
+		console.log(doc.data().status)
                 var ambassadorID = doc.id,
                     firstName = doc.data().firstName,
                     lastName = doc.data().lastName,
