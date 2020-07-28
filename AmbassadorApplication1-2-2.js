@@ -106,6 +106,7 @@ function createAmbassadorApplicant() {
 
 //Associated Upload functions
 var storageRef = storageService.ref()
+document.getElementById("ambassador-meme").addEventListener('click', openMemeDialog)
 var hiddenMemeButton = document.getElementById('meme-select')
 hiddenMemeButton.addEventListener('change', handleMemeUploadChange);
 
