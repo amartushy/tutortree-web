@@ -47,6 +47,12 @@ function signUp(){
 						document.getElementById('metrics-nav').addEventListener('click', function() {
 							alert('Not available yet, sorry Jack :(')
 						})
+						
+						//ambassador navigation
+						document.getElementById('ambassador-nav').addEventListener('click', function() {
+							location.href = 'https://www.jointutortree.com/tutor/ambassador-admin'
+						})
+						
 					} else if (doc.data().tutorApplicant) {
 						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'	
 					} else if (doc.data().tutorApplicationApproved) {
