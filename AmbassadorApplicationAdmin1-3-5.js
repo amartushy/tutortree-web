@@ -158,10 +158,7 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
 
 function setAmbassadorPrivileges(ID, privileges) {
 	var ambassadorDB = firebase.firestore()
-	ambassadorDB.collection("ambassadors").doc(ID).get().then(function(doc) {
-		console.log(ID)
-		console.log(privileges)
-	})
+	ambassadorDB.collection("ambassadors").doc(ID).update( { "status" : privileges } )
 }
 
 //Sort applicants by date applied
