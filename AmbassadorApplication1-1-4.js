@@ -24,48 +24,34 @@ var almostDoneForm = document.getElementById('ambassador-almost')
 
 //Navigation Buttons
 var basicNextButton = document.getElementById('ambassador-next-basic')
-basicNextButton.addEventListener('click', function() {
-		basicInfoForm.style.display = "none"
-		aboutYouForm.style.display = "flex"
-		socialMediaForm.style.display = "none"
-		almostDoneForm.style.display = "none"
-})
-var aboutBackbutton = document.getElementById('ambassador-back-about')
-basicNextButton.addEventListener('click', function() {
-		basicInfoForm.style.display = "flex"
-		aboutYouForm.style.display = "none"
-		socialMediaForm.style.display = "none"
-		almostDoneForm.style.display = "none"
-})
-var aboutNextButton = document.getElementById('ambassador-next-about')
-basicNextButton.addEventListener('click', function() {
-		basicInfoForm.style.display = "none"
-		aboutYouForm.style.display = "none"
-		socialMediaForm.style.display = "flex"
-		almostDoneForm.style.display = "none"
-})
-var socialBackButton = document.getElementById('ambassador-back-social')
-basicNextButton.addEventListener('click', function() {
-		basicInfoForm.style.display = "none"
-		aboutYouForm.style.display = "flex"
-		socialMediaForm.style.display = "none"
-		almostDoneForm.style.display = "none"
-})
-var socialNextButton = document.getElementById('ambassador-next-social')
-basicNextButton.addEventListener('click', function() {
-		basicInfoForm.style.display = "none"
-		aboutYouForm.style.display = "none"
-		socialMediaForm.style.display = "none"
-		almostDoneForm.style.display = "flex"
-})
-var almostBackButton = document.getElementById('ambassador-back-almost')
-basicNextButton.addEventListener('click', function() {
-		basicInfoForm.style.display = "none"
-		aboutYouForm.style.display = "none"
-		socialMediaForm.style.display = "flex"
-		almostDoneForm.style.display = "none"
-})
+basicNextButton.setAttribute('onClick', 'showForm(1)')
 
+var aboutBackbutton = document.getElementById('ambassador-back-about')
+aboutBackbutton.setAttribute('onClick', 'showForm(0)')
+
+var aboutNextButton = document.getElementById('ambassador-next-about')
+aboutNextButton.setAttribute('onClick', 'showForm(2)')
+
+var socialBackButton = document.getElementById('ambassador-back-social')
+socialBackButton.setAttribute('onClick', 'showForm(1)')
+
+var socialNextButton = document.getElementById('ambassador-next-social')
+socialNextButton.setAttribute('onClick', 'showForm(3)')
+
+var almostBackButton = document.getElementById('ambassador-back-almost')
+almostBackButton.setAttribute('onClick', 'showForm(2)')
+
+function showForm(formInt) {
+	var formsArray = [basicInfoForm, aboutYouForm, socialMediaForm, almostDoneForm]
+	
+	for (i=0; i < formsArray.length; i++) {
+		if (i == formInt) {
+			formsArray[i].style.display = "flex"
+		} else {
+			formsArray[i].style.dispay = "none"
+		}
+	}
+}
 
 
 
