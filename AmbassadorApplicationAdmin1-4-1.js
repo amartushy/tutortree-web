@@ -108,6 +108,7 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
       //Application Block
       var ambassadorApplicationBlock = document.createElement('div')
       ambassadorApplicationBlock.setAttribute('class', 'ambassador-application')
+      ambassadorApplicationBlock.setAttribute('onClick', 'showAmbassadorInterview("'+ambassadorID+'")')
       ambassadorInfoBlock.appendChild(ambassadorApplicationBlock)
   
       var ambassadorApplicationHeader = document.createElement('h3')
