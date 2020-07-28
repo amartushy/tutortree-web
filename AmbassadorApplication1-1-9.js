@@ -1,20 +1,21 @@
 //Ambassadors information
 var emailField = document.getElementById('ambassador-email')
-var firstNameField = document.getElementById('ambassador-email')
-var lastNameField = document.getElementById('ambassador-email')
-var phoneNumberField = document.getElementById('ambassador-email')
-var passwordField = document.getElementById('ambassador-email')
-var schoolField = document.getElementById('ambassador-email')
-var yearField = document.getElementById('ambassador-email')
-var majorField = document.getElementById('ambassador-email')
-var nearCampusField = document.getElementById('ambassador-email')
-var organizationsField = document.getElementById('ambassador-email')
-var offCampusField = document.getElementById('ambassador-email')
-var socialMediaField = document.getElementById('ambassador-email')
-var followersField = document.getElementById('ambassador-email')
-var socialHandleField = document.getElementById('ambassador-email')
-var knowEmployeesField = document.getElementById('ambassador-email')
-var howHeardField = document.getElementById('ambassador-email')
+var firstNameField = document.getElementById('ambassador-firstName')
+var lastNameField = document.getElementById('ambassador-lastName')
+var phoneNumberField = document.getElementById('ambassador-phone')
+var passwordField = document.getElementById('ambassador-password')
+var schoolField = document.getElementById('ambassador-school')
+var yearField = document.getElementById('ambassador-year')
+var majorField = document.getElementById('ambassador-major')
+var nearCampusField = document.getElementById('ambassador-live')
+var organizationsField = document.getElementById('ambassador-organizations')
+var offCampusField = document.getElementById('ambassador-favorite')
+var socialMediaField = document.getElementById('ambassador-social-media')
+var followersField = document.getElementById('ambassador-followers')
+var socialHandleField = document.getElementById('ambassador-link')
+var ambassadorsMeme = ""
+var knowEmployeesField = document.getElementById('ambassador-tutortree')
+var howHeardField = document.getElementById('ambassador-how-heard')
 
 //Navigation Forms
 var basicInfoForm = document.getElementById('ambassador-basic')
@@ -76,6 +77,7 @@ function createAmbassadorApplicant() {
 			"socialMediaField" : socialMediaField.value,
 			"numberOfFollowers" : followersField.value,
 			"socialHandle" : socialHandleField.value,
+			"memeURL" = ambassadorsMeme,
 			"knowsEmployees" : knowEmployeesField.value,
 			"howHeardField" : howHeardField.value,
                   
@@ -100,6 +102,41 @@ function createAmbassadorApplicant() {
             alert(errorMessage)
           });
 }
+
+
+//Associated Upload functions
+var storageRef = storageService.ref()
+var hiddenMemeButton = document.getElementById('meme-select')
+hiddenMemeButton.addEventListener('change', handleMemeUploadChange);
+
+function openMemeDialog() {
+	hiddenMemeButton.click();
+}
+
+var selectedMemeFile;
+function handleMemeUploadChange(e) {
+	selectedMemeFile = e.target.files[0];
+	document.getElementById("ambassador-meme-preview").style.display = "block"
+	document.getElementById("ambassador-meme-preview").innerHTML = selectedMemeFile.name
+	//document.getElementById("submit-transcript-button").addEventListener('click', handleTranscriptUpload )
+	handleMemeUpload()
+}
+
+async function handleMemeUpload() {
+	console.log("Uploading Meme..")
+	const uploadTask = await storageRef.child(`ambassadorMemes/${selectedMemeFile.name}`).put(selectedMemeFile);
+	uploadAndUpdateFirebaseMeme()
+}
+
+async function uploadAndUpdateFirebaseTranscript() {
+	var memeFileURL = ""
+	await storageRef.child('/ambassadorMemes/'+selectedMemeFile.name)
+		.getDownloadURL()
+		.then(function(url) { memeFileURL = url.toString() })
+	ambassadorsMeme = memeFileURL
+	console.log(ambassadorsMeme)
+}
+
 
 
 
