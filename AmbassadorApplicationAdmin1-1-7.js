@@ -11,7 +11,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         //Get all pending ambassadors and build blocks
         var pendingAmbassadorArea = document.getElementById('pending-ambassador-section')
         ambassadorDB.collection("ambassadors").where("isPending", "==", true).onSnapshot(function(allAmbassadors) {
-    		console.log("found a pending)
+    		console.log("found a pending")
             //remove all children when updated
             pendingAmbassadorArray = []
             while(pendingAmbassadorArea.firstChild) {
@@ -44,7 +44,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	//Get all approved ambassador information and build blocks
 	var approvedAmbassadorArea = document.getElementById('approved-ambassador-section')
 	ambassadorDB.collection("ambassadors").where("isApproved", "==", true).onSnapshot(function(allAmbassadors) {
-    		console.log("found approved)
+    		console.log("found approved")
 
 		//remove all children when updated
 		approvedAmbassadorArray = []
