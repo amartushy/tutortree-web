@@ -4,13 +4,13 @@ firebase.auth().onAuthStateChanged(function(user) {
         var adminID = user.uid
 
         //Check if user is an admin, TODO
-        userDB.collection("users").doc(adminID).get().then(function(doc) {
+        ambassadorDB.collection("users").doc(adminID).get().then(function(doc) {
             console.log(doc.data().admin)
         })
 
         //Get all pending ambassadors and build blocks
         var pendingAmbassadorArea = document.getElementById('pending-ambassador-section')
-        userDB.collection("ambassadors").where("isPending", "==", true).onSnapshot(function(allAmbassadors) {
+        ambassadorDB.collection("ambassadors").where("isPending", "==", true).onSnapshot(function(allAmbassadors) {
     
             //remove all children when updated
             pendingAmbassadorArray = []
@@ -43,7 +43,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	    
 	//Get all approved ambassador information and build blocks
 	var approvedAmbassadorArea = document.getElementById('approved-ambassador-section')
-	userDB.collection("ambassadors").where("isApproved", "==", true).onSnapshot(function(allAmbassadors) {
+	ambassadorDB.collection("ambassadors").where("isApproved", "==", true).onSnapshot(function(allAmbassadors) {
 
 		//remove all children when updated
 		approvedAmbassadorArray = []
@@ -76,7 +76,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	    
 	//Get all rejected ambassador information and build blocks
 	var rejectedAmbassadorArea = document.getElementById('rejected-ambassador-section')
-	userDB.collection("ambassadors").where("isRejected", "==", true).onSnapshot(function(allAmbassadors) {
+	ambassadorDB.collection("ambassadors").where("isRejected", "==", true).onSnapshot(function(allAmbassadors) {
 
 		//remove all children when updated
 		rejectedAmbassadorArray = []
