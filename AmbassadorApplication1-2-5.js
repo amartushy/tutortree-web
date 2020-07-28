@@ -81,7 +81,7 @@ function createAmbassadorApplicant() {
 			"knowsEmployees" : knowEmployeesField.value,
 			"howHeardField" : howHeardField.value,
                   
-			"isAmbassador" : false,
+			"isPending" : true,
 			"metadata" : {
 				"dateApplied" : new Date / 1000
 			}
