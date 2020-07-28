@@ -129,7 +129,7 @@ async function handleMemeUpload() {
 	uploadAndUpdateFirebaseMeme()
 }
 
-async function uploadAndUpdateFirebaseTranscript() {
+async function uploadAndUpdateFirebaseMeme() {
 	var memeFileURL = ""
 	await storageRef.child('/ambassadorMemes/'+selectedMemeFile.name)
 		.getDownloadURL()
