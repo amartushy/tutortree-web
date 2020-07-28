@@ -8,17 +8,30 @@ firebase.auth().onAuthStateChanged(function(user) {
             console.log(doc.data().admin)
         })
 
-        //Get all pending ambassadors and build blocks
+        //Get all ambassadors and build blocks
         var pendingAmbassadorArea = document.getElementById('pending-ambassador-section')
-        ambassadorDB.collection("ambassadors").where("isPending", "==", true).onSnapshot(function(allAmbassadors) {
+	var approvedAmbassadorSection = document.getElementById('approved-ambassador-section')
+    	var rejectedAmbassadorSection = document.getElementById('approved-ambassador-section')
+
+        ambassadorDB.collection("ambassadors").onSnapshot(function(allAmbassadors) {
             //remove all children when updated
             pendingAmbassadorArray = []
+	    approvedAmbassadorArray = []
+	    rejectedAmbassadorArray = []
+		
             while(pendingAmbassadorArea.firstChild) {
                 pendingAmbassadorArea.removeChild(pendingAmbassadorArea.firstChild)
             }
+	    while(approvedAmbassadorSection.firstChild) {
+                approvedAmbassadorSection.removeChild(approvedAmbassadorSection.firstChild)
+            }
+	    while(rejectedAmbassadorSection.firstChild) {
+                rejectedAmbassadorSection.removeChild(rejectedAmbassadorSection.firstChild)
+            }
+		
             //loop through all ambassadors
             allAmbassadors.forEach(function(doc) {
-    		console.log("found pending")
+    		console.log("ambassador")
 		  
                 var ambassadorID = doc.id,
                     firstName = doc.data().firstName,
@@ -27,7 +40,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                     school = doc.data().school,
                     timeApplied = doc.data().dateApplied,
                     memeURL = doc.data().memeURL,
-		    status = doc.data().status,
+		    status = doc.data().status
                 
                 buildAmbassadorBlock(ambassadorID, 
                                       firstName, 
@@ -35,12 +48,11 @@ firebase.auth().onAuthStateChanged(function(user) {
                                       email, 
                                       timeApplied, 
                                       memeURL,
-				      pending,
-				      approved,
-				      rejected)
+				      status)
             })
           	appendToPendingAmbassadorArea()
-          
+		appendToApprovedAmbassadorArea()
+		appendToRejectedAmbassadorArea()
         })
       
     } else {
@@ -48,22 +60,16 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
 })
 
-function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, timeApplied, memeURL, pending, approved, rejected ) {
+function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, timeApplied, memeURL, status) {
       var ambassadorInfoBlock = document.createElement('div')
       ambassadorInfoBlock.setAttribute('class', 'ambassador-info-block')
       ambassadorInfoBlock.setAttribute('id', timeApplied)
-	console.log("building block")
-	console.log(pending)
-	console.log(approved)
-	console.log(rejected)
-      	if (pending) {
-		console.log('pending')
+	console.log("Ambassadors status: " + status)
+      	if (status == "pending") {
 		updatePendingAmbassadorArray(timeApplied)
-	} else if(approved){
-		console.log('approved')
+	} else if (status == "approved"){
 		updateApprovedAmbassadorArray(timeApplied)
-	} else if (rejected) {
-		console.log('rejected')
+	} else if (status == "rejected") {
 		updateRejectedAmbassadorArray(timeApplied)
 	}
       //Name block
