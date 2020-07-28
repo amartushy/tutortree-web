@@ -130,12 +130,15 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
       var ambassadorInfoBlock = document.createElement('div')
       ambassadorInfoBlock.setAttribute('class', 'ambassador-info-block')
       ambassadorInfoBlock.setAttribute('id', timeApplied)
+	console.log("building block)
       	if (pending) {
 		console.log('pending')
 		updatePendingAmbassadorArray(timeApplied)
 	} else if(approved){
+		console.log('approved')
 		updateApprovedAmbassadorArray(timeApplied)
 	} else if (rejected) {
+		console.log('rejected')
 		updateRejectedAmbassadorArray(timeApplied)
 	}
       //Name block
