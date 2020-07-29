@@ -96,6 +96,7 @@ function createAmbassadorApplicant() {
 		      
 			var newAmbassadorMessage = "New Ambassador Application : " + firstNameField.value + " has submitted an application to be a TutorTree ambassador. Their email is " + emailField.value
 			sendSMSTo("4582108156", newAmbassadorMessage)
+		        sendSMSTo("5417311987", newAmbassadorMessage)
               })
           })
           .catch(function(error) {
