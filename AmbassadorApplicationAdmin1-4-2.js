@@ -186,6 +186,7 @@ function showAmbassadorInterview(ambassadorID) {
 		document.getElementById("major").innerHTML = doc.data().major
 		document.getElementById("live").innerHTML = doc.data().livesNearCampus
 		document.getElementById("favorite").innerHTML = doc.data().favoriteOffCampus
+		document.getElementById("organizations").innerHTML = doc.data().organizations
 		document.getElementById("platform").innerHTML = doc.data().socialMediaField
 		document.getElementById("followers").innerHTML = doc.data().numberOfFollowers
 		document.getElementById("link").innerHTML = doc.data().socialHandle
