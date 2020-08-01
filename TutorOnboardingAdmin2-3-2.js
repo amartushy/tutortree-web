@@ -3,12 +3,15 @@ firebase.auth().onAuthStateChanged(function(user) {
 		var userDB = firebase.firestore()
 		var userID = user.uid
 		
-		var ADMIN_ID = userID;
-		mixpanel.identify(ADMIN_ID);
-		
 		//Check if user is an admin
 		userDB.collection("users").doc(userID).get().then(function(doc) {
 			console.log(doc.data().admin)
+			var ADMIN_ID = userID;
+			mixpanel.identify(ADMIN_ID);
+			mixpanel.people.set({
+		  		"$email": doc.data().email,    // only reserved properties need the $
+		  		"USER_ID": doc.data().firstName    // use human-readable names
+			});
 		})
 		
 		//Get all applicant information and build blocks
