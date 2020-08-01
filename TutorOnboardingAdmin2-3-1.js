@@ -3,6 +3,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 		var userDB = firebase.firestore()
 		var userID = user.uid
 		
+		var ADMIN_ID = userID;
+		mixpanel.identify(ADMIN_ID);
+		
 		//Check if user is an admin
 		userDB.collection("users").doc(userID).get().then(function(doc) {
 			console.log(doc.data().admin)
