@@ -162,6 +162,10 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
 function setAmbassadorPrivileges(ID, privileges) {
 	var ambassadorDB = firebase.firestore()
 	ambassadorDB.collection("ambassadors").doc(ID).update( { "status" : privileges } )
+	mixpanel.track("Ambassador Privileges Updated",
+		       {"Ambassador": ID, 
+			"Status": privileges});
+
 }
 
 function showMeme(ID) {
