@@ -236,16 +236,6 @@ function ambassadorReview(booleanValue){
 }
 
 
-//This funciton executes when a user loads the sign up page
-
-function updateAmbassadorPrivileges(){
-	mixpanel.track("Ambassador Privileges Updated",{
-		"Ambassador": ID, //unique user id from database TODO add this to mixpanel "key" : data.user.uid
-		"Status": privileges //
-	});
-
-}
-
 /////////////////////////////////// STUDENT PROCESS ////////////////////////////////////
 
 
