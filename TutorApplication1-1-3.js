@@ -53,7 +53,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
               "phoneNumber" : phoneNumberField.value,
               "school" : schoolField.value,
               "howHeard" : howHeardField.value,
-              "timeCreated" : new Date() / 1000
+              "timeCreated" : new Date() / 1000,
               "tutorApplicant" : true,
               "application" : {
                   "didSubmitPreInterview" : false,
