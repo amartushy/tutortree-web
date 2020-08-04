@@ -1,3 +1,7 @@
+<script src="https://cdn.jsdelivr.net/gh/amartushy/tutortree-web/mixpanel1-1-1.js"></script>
+
+ambassadorSignupPageViewed()
+
 //Ambassadors information
 var emailField = document.getElementById('ambassador-email')
 var firstNameField = document.getElementById('ambassador-firstName')
@@ -93,6 +97,8 @@ function createAmbassadorApplicant() {
 			console.log("Ambassador application successfully submitted");
 			document.getElementById('ambassador-thanks').style.display = "flex"
 			document.getElementById('ambassador-submit-form').style.display = "none"
+		        
+		        ambassadorAccountCreated(newAmbassadorDict)
 		      
 			var newAmbassadorMessage = "New Ambassador Application : " + firstNameField.value + " has submitted an application to be a TutorTree ambassador. Their email is " + emailField.value
 			sendSMSTo("4582108156", newAmbassadorMessage)
