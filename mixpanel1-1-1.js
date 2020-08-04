@@ -143,6 +143,7 @@ function offeredTutoringPosition(){
 
 	mixpanel.people.set({
 		"Offered Tutoring Position": true,
+		"Rejected Tutoring Position": false,
 		"Offered Tutoring Position Date": new Date().toISOString()
 	});
 
@@ -153,6 +154,7 @@ function rejectedTutoringPosition(){
 
 	mixpanel.people.set({
 		"Rejected Tutoring Position": true,
+		"Offered Tutoring Position": false,
 		"Rejected Tutoring Position Date": new Date().toISOString()
 	});
 
