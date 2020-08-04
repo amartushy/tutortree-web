@@ -227,11 +227,11 @@ function ambassadorAccountCreated(user){
 
 //This funciton executes when a user loads the sign up page
 
-function ambassadorReview(review){
+function ambassadorReview(booleanValue){
 	mixpanel.track("Ambassador Review");
 
 	mixpanel.people.set({
-		"Ambassador Approved": review.value
+		"Ambassador Approved": booleanValue
 	});
 }
 
