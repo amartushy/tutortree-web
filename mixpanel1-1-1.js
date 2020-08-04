@@ -54,7 +54,7 @@ function tutorAccountCreated(user){
         "Submitted Faculty Rec": false,
         "Offered Tutoring Position": false,
 	"Rejected Tutoring Position": false,
-        "Accepted Tutoring Position": false
+        "Tutor Accepted Position": false
 	});
 }
 
@@ -161,12 +161,12 @@ function rejectedTutoringPosition(){
 //This funciton executes when a tutor user accepts their tutoring position
 //function in the app when you add tutor code, updates a boolean value, add this there
 
-function acceptedTutoringPosition(){
-	mixpanel.track("Accepted Tutoring Position");
+function tutorAcceptedPosition(){
+	mixpanel.track("Tutor Accepted Position");
 
 	mixpanel.people.set({
-		"Accepted Tutoring Position": true,
-		"Accepted Tutoring Position Date": new Date().toISOString()
+		"Tutor Accepted Position": true,
+		"Tutor Accepted Position Date": new Date().toISOString()
 	});
 
 }
