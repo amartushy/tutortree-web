@@ -1,5 +1,3 @@
-<script src="https://cdn.jsdelivr.net/gh/amartushy/tutortree-web/mixpanel1-1-1.js"></script>
-
 ambassadorSignupPageViewed()
 
 //Ambassadors information
