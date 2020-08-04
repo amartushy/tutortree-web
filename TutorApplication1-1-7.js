@@ -72,7 +72,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
           tutorToUpdate[tutorApplicantID] = newTutorDict
   
         // Update user collection with tutor info
-          userDB.collection("tutors").doc(tutorApplicantID).set(newTutorDict)
+          userDB.collection("users").doc(tutorApplicantID).set(newTutorDict)
           .then(function() {
               console.log("Document successfully written!");
               location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
