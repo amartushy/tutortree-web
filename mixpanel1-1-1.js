@@ -72,6 +72,12 @@ function preInterviewSubmission(fieldValue){
 
 	mixpanel.people.set({
 		"Major": fieldValue.major,
+		"Groups Involved": fieldValue.groups,
+		"Tutoring Experience": fieldValue.experience,
+		"Courses Seeking to Tutor": fieldValue.courses,
+		"Amount of Hours Interested Tutoring Weekly": fieldValue.hours,
+		"Tutoring Qualities": fieldValue.qualities,
+		"Interest in Tutoring": fieldValue.whyTutor,	
 		"Academic Year": fieldValue.year,
 		"Pre Invertview Assessment Completed": true,
 		"Pre Invertview Assessment Completed Date": new Date().toISOString()
