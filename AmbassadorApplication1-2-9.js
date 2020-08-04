@@ -62,9 +62,36 @@ var submitApplicationButton = document.getElementById('ambassador-submit')
 submitApplicationButton.setAttribute("onClick", "createAmbassadorApplicant()")
 
 function createAmbassadorApplicant() {
+	
+	//Check if they're a current user
+	
+	try {
+		firebase.auth().signInWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
+			firebase.auth().onAuthStateChanged(function(user) {
+				if (user) {
+					//create new user
+					createFirestoreAmbassadorApplicant(user.uid)
+				}
+			})
+		})
+	//else create an account	
+	} catch {
 	firebase.auth().createUserWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
               	var ambassadorID = data.user.uid
-		var ambassadorToUpdate = {}
+		createFirestoreAmbassadorApplicant(ambassadorID)
+
+          })
+          .catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert(errorMessage)
+          });
+	}
+}
+
+function createFirestoreAmbassadorApplicant(ambassadorID) {
+	var ambassadorToUpdate = {}
               	var newAmbassadorDict = {
                   	"email" : emailField.value,
                   	"firstName" : firstNameField.value,
@@ -86,8 +113,8 @@ function createAmbassadorApplicant() {
 			"status" : "pending",
 			"metadata" : {
 				"dateApplied" : new Date / 1000
-			}
-              }
+				}
+              	}
               ambassadorToUpdate[ambassadorID] = newAmbassadorDict
               
               ambassadorRef.collection("ambassadors").doc(ambassadorID).set(newAmbassadorDict)
@@ -102,13 +129,6 @@ function createAmbassadorApplicant() {
 			sendSMSTo("4582108156", newAmbassadorMessage)
 		        sendSMSTo("5417311987", newAmbassadorMessage)
               })
-          })
-          .catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            alert(errorMessage)
-          });
 }
 
 
