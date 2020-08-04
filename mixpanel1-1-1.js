@@ -53,6 +53,7 @@ function tutorAccountCreated(user){
         "Submitted Transcript": false,
         "Submitted Faculty Rec": false,
         "Offered Tutoring Position": false,
+	"Rejected Tutoring Position": false,
         "Accepted Tutoring Position": false
 	});
 }
@@ -143,6 +144,16 @@ function offeredTutoringPosition(){
 	mixpanel.people.set({
 		"Offered Tutoring Position": true,
 		"Offered Tutoring Position Date": new Date().toISOString()
+	});
+
+}
+
+function rejectedTutoringPosition(){
+	mixpanel.track("Rejected Tutoring Position");
+
+	mixpanel.people.set({
+		"Rejected Tutoring Position": true,
+		"Rejected Tutoring Position Date": new Date().toISOString()
 	});
 
 }
