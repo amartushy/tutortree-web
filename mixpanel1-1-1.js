@@ -70,6 +70,8 @@ function preInterviewSubmission(fieldValue){
 		"Major": fieldValue.major,
 		"Academic Year": fieldValue.year
 	});
+	
+	mixpanel.identify();
 
 	mixpanel.people.set({
 		"Major": fieldValue.major,
@@ -90,6 +92,8 @@ function preInterviewSubmission(fieldValue){
 
 function requestVirtualInterview(){
 	mixpanel.track("Tutor Interview Requested");
+	
+	mixpanel.identify();
 
 	mixpanel.people.set({
 		"Tutor Interview Requested": true,
@@ -102,6 +106,8 @@ function requestVirtualInterview(){
 
 function transcriptUpload(){
 	mixpanel.track("Submitted Transcript");
+	
+	mixpanel.identify();
 
 	mixpanel.people.set({
 		"Submitted Transcript": true,
@@ -114,6 +120,8 @@ function transcriptUpload(){
 
 function facultyRecUpload(){
 	mixpanel.track("Submitted Faculty");
+	
+	mixpanel.identify();
 
 	mixpanel.people.set({
 		"Submitted Faculty Rec": true,
@@ -127,6 +135,8 @@ function facultyRecUpload(){
 
 function interviewCompleted(){
 	mixpanel.track("Tutor Interview Completed");
+	
+	mixpanel.identify();
 
 	mixpanel.people.set({
 		"Tutor Interview Completed": true,
@@ -140,6 +150,8 @@ function interviewCompleted(){
 
 function offeredTutoringPosition(){
 	mixpanel.track("Offered Tutoring Position");
+	
+	mixpanel.identify();
 
 	mixpanel.people.set({
 		"Offered Tutoring Position": true,
@@ -151,6 +163,8 @@ function offeredTutoringPosition(){
 
 function rejectedTutoringPosition(){
 	mixpanel.track("Rejected Tutoring Position");
+	
+	mixpanel.identify();
 
 	mixpanel.people.set({
 		"Rejected Tutoring Position": true,
@@ -165,6 +179,8 @@ function rejectedTutoringPosition(){
 
 function tutorAcceptedPosition(){
 	mixpanel.track("Tutor Accepted Position");
+	
+	mixpanel.identify();
 
 	mixpanel.people.set({
 		"Tutor Accepted Position": true,
@@ -205,21 +221,21 @@ function ambassadorAccountCreated(user){
 	//
 	mixpanel.people.set({
 		"School Name": user.school,
-        "$first_name": user.firstName,
-        "$last_name": user.lastName,
-        "$email": user.email,
-        "$phone": user.phoneNumber,
-        "How Heard": user.howHeardField,
-        "Lives Near Campus": user.livesNearCampus,
-        "Organization Involvement": user.organizations,
-        "Favorite Off Campus Location": user.favoriteOffCampus,
-        "Largest Social Media Following Service": user.socialMediaField,
-        "Number of Followers at Largerst Social Media Service": user.numberOfFollowers,
-        "Knows Anyone at TutorTree": user.knowsEmployees,
-        "Social Handle": user.socialHandle,
-        "User Type": "Student Ambassador",
-        //"Ambassador Interview Completed": false,
-        "Ambassador Approved": false
+        	"$first_name": user.firstName,
+        	"$last_name": user.lastName,
+        	"$email": user.email,
+        	"$phone": user.phoneNumber,
+        	"How Heard": user.howHeardField,
+        	"Lives Near Campus": user.livesNearCampus,
+        	"Organization Involvement": user.organizations,
+        	"Favorite Off Campus Location": user.favoriteOffCampus,
+        	"Largest Social Media Following Service": user.socialMediaField,
+        	"Number of Followers at Largerst Social Media Service": user.numberOfFollowers,
+        	"Knows Anyone at TutorTree": user.knowsEmployees,
+        	"Social Handle": user.socialHandle,
+        	"User Type": "Student Ambassador",
+        	//"Ambassador Interview Completed": false,
+        	"Ambassador Approved": false
 	});
 
 }
@@ -229,6 +245,8 @@ function ambassadorAccountCreated(user){
 
 function ambassadorReview(booleanValue){
 	mixpanel.track("Ambassador Review");
+	
+	mixpanel.identify();
 
 	mixpanel.people.set({
 		"Ambassador Approved": booleanValue
@@ -244,12 +262,14 @@ function ambassadorReview(booleanValue){
 function studentSignUp(user){
 	mixpanel.track("Student User Sign Up");
 	
+	mixpanel.identify();
+	
 	mixpanel.people.set({
 		"School Name": user.school,
-        "$first_name": user.firstName,
-        "$last_name": user.lastName,
-        "$email": user.email,
-        "User Type": "Student"
+        	"$first_name": user.firstName,
+        	"$last_name": user.lastName,
+        	"$email": user.email,
+        	"User Type": "Student"
 	});
 }
 
