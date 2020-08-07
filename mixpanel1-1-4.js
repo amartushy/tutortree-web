@@ -134,6 +134,8 @@ function facultyRecUpload(){
 //funciton called after entering values into the interview # field
 
 function interviewCompleted(applicantsID){
+	console.log("applicants id: " + applicantsID)
+	
 	var userDB = firebase.firestore()
 	
 	userDB.collection("users")
