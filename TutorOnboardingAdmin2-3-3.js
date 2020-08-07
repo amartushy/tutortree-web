@@ -283,7 +283,16 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 
 	applicantBlock.appendChild(formContainer)
 
+	//completed interview block 
+	var completedInterviewButton = document.createElement('div')
+	completedInterviewButton.setAttribute('class', 'completed-interview-button')
 
+	completedInterviewButton.innerHTML = "Completed Interview"
+
+	completedInterviewButton.setAttribute('onclick', 'interviewCompleted("'+applicantID+'")')
+	
+	applicantBlock.appendChild(completedInterviewButton)
+	
 	//Grant Access Code Block
 	var accessButton = document.createElement('div')
 	accessButton.setAttribute('class', 'applicant-access-button')
