@@ -144,6 +144,8 @@ function interviewCompleted(applicantsID, email){
 	mixpanel.track("Tutor Interview Completed");
 	
 	mixpanel.identify(email);
+	
+	console.log("This is the complete email: " + email)
 
 	mixpanel.people.set({
 		"Tutor Interview Completed": true,
@@ -163,6 +165,8 @@ function reverseInterviewCompleted(applicantsID, email){
 	mixpanel.track("Tutor Reverse Interview Completed");
 	
 	mixpanel.identify(email);
+
+	console.log("This is the reverse email: " + email)	
 
 	mixpanel.people.set({
 		"Tutor Interview Completed": false,
