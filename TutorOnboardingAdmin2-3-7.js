@@ -3,9 +3,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 		var userDB = firebase.firestore()
 		var userID = user.uid
 		
-		userDB.collection("users").doc().get().then(function(allUsers){
+		userDB.collection("users").get().then(function(allUsers){
 			allUsers.forEach(function(doc) {
-			console.log("FOUND USER")
+				console.log("FOUND USER")
 			})
 		})
 		
