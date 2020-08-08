@@ -152,7 +152,7 @@ function interviewCompleted(applicantsID, email){
 
 }
 
-function reverseInterviewCompleted(applicantsID){
+function reverseInterviewCompleted(applicantsID, email){
 	
 	var userDB = firebase.firestore()
 	
@@ -162,7 +162,7 @@ function reverseInterviewCompleted(applicantsID){
 	
 	mixpanel.track("Tutor Reverse Interview Completed");
 	
-	mixpanel.identify();
+	mixpanel.identify(email);
 
 	mixpanel.people.set({
 		"Tutor Interview Completed": false,
