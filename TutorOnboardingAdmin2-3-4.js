@@ -23,7 +23,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 			}
 			
 			allTutors.forEach(function(doc) {
-				
+				    try{
+				    	completedInterview = doc.data().application.completedInterview
+				    } catch {
+				    	userDB.collection("users")
+								.doc(doc.id)
+								.update( { "application.completedInterview" : false } )	
+				    }				
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
@@ -31,11 +37,12 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    timeApplied = doc.data().timeCreated,
 				    didSubmitPreInterview = doc.data().application.didSubmitPreInterview,
 				    didRequest = doc.data().application.didRequestInterview,
+				    //completedInterview = doc.data().application.completedInterview,
 				    didTranscript = doc.data().application.uploadedTranscript,
 				    didFaculty = doc.data().application.uploadedFaculty,
 				    assessmentScore = doc.data().application.assessmentScore,
 				    interviewScore = doc.data().application.interviewScore,
-				    completed = false
+				    completed = false				    
 				buildApplicantBlock(applicantID, 
 						    firstName, 
 						    lastName, 
@@ -43,6 +50,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 						    timeApplied, 
 						    didSubmitPreInterview, 
 						    didRequest, 
+						    false,
 						    didTranscript, 
 						    didFaculty,
 						    completed,
@@ -61,7 +69,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 			}
 			
 			allTutors.forEach(function(doc) {
-				
+				    try{
+				    	completedInterview = doc.data().application.completedInterview
+				    } catch {
+				    	userDB.collection("users")
+								.doc(doc.id)
+								.update( { "application.completedInterview" : false } )	
+				    }				
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
@@ -69,6 +83,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    timeApplied = doc.data().timeCreated,
 				    didSubmitPreInterview = doc.data().application.didSubmitPreInterview,
 				    didRequest = doc.data().application.didRequestInterview,
+				    //completedInterview = doc.data().application.completedInterview,
 				    didTranscript = doc.data().application.uploadedTranscript,
 				    didFaculty = doc.data().application.uploadedFaculty,
 				    assessmentScore = doc.data().application.assessmentScore,
@@ -82,6 +97,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 						    timeApplied, 
 						    didSubmitPreInterview, 
 						    didRequest, 
+						    false,
 						    didTranscript, 
 						    didFaculty,
 						    completed,
@@ -95,7 +111,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	}
 })
 
-function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplied, didSubmitPreInterview, didRequest, didTranscript, didFaculty, completed, assessmentScore, interviewScore) {
+function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, completed, assessmentScore, interviewScore) {
 	//Main Container
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
@@ -179,6 +195,32 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	}
 
 	applicantBlock.appendChild(requestedBlock)
+
+	//Completed interview Block
+	var completedInterviewBlock = document.createElement('div')
+	completedInterviewBlock.setAttribute('class', 'requested-block')
+
+	var completedInterviewHeader = document.createElement('h4')
+	completedInterviewHeader.setAttribute('class', 'applicant-header')
+	completedInterviewHeader.innerHTML = "Completed Interview"
+	completedInterviewBlock.appendChild(completedInterviewHeader)
+
+	if (completedInterview) {
+		var interviewCompleted = document.createElement('div')
+		interviewCompleted.setAttribute('class', 'admin-complete')
+		interviewCompleted.innerHTML = 'check-circle'
+		completedInterviewBlock.appendChild(interviewCompleted)
+		completedInterviewBlock.setAttribute('onClick', 'reverseInterviewCompleted("'+applicantID+'")')		
+	} else {
+		var interviewIncomplete = document.createElement('div')
+		interviewIncomplete.setAttribute('class', 'admin-incomplete')
+		interviewIncomplete.innerHTML = 'circle'
+		completedInterviewBlock.appendChild(interviewIncomplete)
+		completedInterviewBlock.setAttribute('onClick', 'interviewCompleted("'+applicantID+'")')		
+	}
+	
+
+	applicantBlock.appendChild(completedInterviewBlock)	
 
 	//Transcript Block
 	var transcriptBlock = document.createElement('div')
@@ -637,6 +679,3 @@ function sendEmailTo(email, title, message) {
 	xhttp.open("GET", herokuURL, true);
 	xhttp.send();
 }
-
-
-
