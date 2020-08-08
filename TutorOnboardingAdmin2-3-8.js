@@ -5,7 +5,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		
 		userDB.collection("users").get().then(function(allUsers){
 			allUsers.forEach(function(doc) {
-				console.log("FOUND USER")
+				console.log(doc.id)
 			})
 		})
 		
