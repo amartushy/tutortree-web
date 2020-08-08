@@ -3,6 +3,12 @@ firebase.auth().onAuthStateChanged(function(user) {
 		var userDB = firebase.firestore()
 		var userID = user.uid
 		
+		userDB.collection("users").doc().get().then(function(allUsers){
+			allUsers.forEach(function(doc) {
+			console.log("FOUND USER")
+			})
+		})
+		
 		//Check if user is an admin
 		userDB.collection("users").doc(userID).get().then(function(doc) {
 			console.log(doc.data().admin)
@@ -22,10 +28,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				applicantArea.removeChild(applicantArea.firstChild)
 			}
 			
-			allTutors.forEach(function(doc) {
-				    userDB.collection("users")
-						.doc(doc.id)
-						.update( { "application.completedInterview" : false } )		
+			allTutors.forEach(function(doc) {	
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
@@ -64,10 +67,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				completedApplicantArea.removeChild(completedApplicantArea.firstChild)
 			}
 			
-			allTutors.forEach(function(doc) {
-				    userDB.collection("users")
-						.doc(doc.id)
-						.update( { "application.completedInterview" : false } )					
+			allTutors.forEach(function(doc) {				
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
