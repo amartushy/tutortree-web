@@ -134,15 +134,7 @@ function facultyRecUpload(){
 //function called after entering values into the interview # field
 
 function interviewCompleted(applicantsID, email){
-	
-	var userDB = firebase.firestore()
-	
-	userDB.collection("users")
-		.doc(applicantsID)
-		.update( { "application.completedInterview" : true } )	
-	
-	mixpanel.track("Tutor Interview Completed");
-	
+
 	mixpanel.identify(email);
 	
 	console.log("This is the complete email: " + email)
@@ -150,19 +142,19 @@ function interviewCompleted(applicantsID, email){
 	mixpanel.people.set({
 		"Tutor Interview Completed": true,
 		"Tutor Interview Completed Date": new Date().toISOString()
-	});
+	});	
 
-}
-
-function reverseInterviewCompleted(applicantsID, email){
-	
 	var userDB = firebase.firestore()
 	
 	userDB.collection("users")
 		.doc(applicantsID)
-		.update( { "application.completedInterview" : false } )	
+		.update( { "application.completedInterview" : true } )	
 	
-	mixpanel.track("Tutor Reverse Interview Completed");
+	mixpanel.track("Tutor Interview Completed");
+
+}
+
+function reverseInterviewCompleted(applicantsID, email){
 	
 	mixpanel.identify(email);
 
@@ -172,6 +164,14 @@ function reverseInterviewCompleted(applicantsID, email){
 		"Tutor Interview Completed": false,
 		"Tutor Interview Completed Date": null
 	});
+	
+	var userDB = firebase.firestore()
+	
+	userDB.collection("users")
+		.doc(applicantsID)
+		.update( { "application.completedInterview" : false } )	
+	
+	mixpanel.track("Tutor Reverse Interview Completed");
 
 }
 
