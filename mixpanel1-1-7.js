@@ -133,7 +133,7 @@ function facultyRecUpload(){
 //This funciton executes when Meghan updates the values in the tutor dashboard
 //function called after entering values into the interview # field
 
-function interviewCompleted(applicantsID){
+function interviewCompleted(applicantsID, email){
 	
 	var userDB = firebase.firestore()
 	
@@ -143,7 +143,7 @@ function interviewCompleted(applicantsID){
 	
 	mixpanel.track("Tutor Interview Completed");
 	
-	mixpanel.identify();
+	mixpanel.identify(email);
 
 	mixpanel.people.set({
 		"Tutor Interview Completed": true,
