@@ -388,7 +388,7 @@ function studentViewsSubjectPage(studentUser, subject){
 	
 }
 
-/This funciton executes when a user loads the sign up page
+//This funciton executes when a user loads the sign up page
 
 function studentSelectsSubject(studentUser, subject){
 	
