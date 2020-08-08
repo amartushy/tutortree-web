@@ -5,7 +5,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 		
 		userDB.collection("users").get().then(function(allUsers){
 			allUsers.forEach(function(doc) {
-				console.log(doc.id)
+					userDB.collection("users")
+								.doc(doc.id)
+								.update( { "application.completedInterview" : false } )	
 			})
 		})
 		
