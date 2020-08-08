@@ -58,6 +58,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
               "application" : {
                   "didSubmitPreInterview" : false,
                   "didRequestInterview" : false,
+                  "completedInterview" : false,
                   "uploadedTranscript" : false,
                   "uploadedFaculty" : false,
                   "isApproved" : false,
