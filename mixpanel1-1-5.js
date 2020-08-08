@@ -131,10 +131,9 @@ function facultyRecUpload(){
 }
 
 //This funciton executes when Meghan updates the values in the tutor dashboard
-//funciton called after entering values into the interview # field
+//function called after entering values into the interview # field
 
 function interviewCompleted(applicantsID){
-	console.log("applicants id: " + applicantsID)
 	
 	var userDB = firebase.firestore()
 	
@@ -149,6 +148,25 @@ function interviewCompleted(applicantsID){
 	mixpanel.people.set({
 		"Tutor Interview Completed": true,
 		"Tutor Interview Completed Date": new Date().toISOString()
+	});
+
+}
+
+function reverseInterviewCompleted(applicantsID){
+	
+	var userDB = firebase.firestore()
+	
+	userDB.collection("users")
+		.doc(applicantsID)
+		.update( { "application.completedInterview" : false } )	
+	
+	mixpanel.track("Tutor Reverse Interview Completed");
+	
+	mixpanel.identify();
+
+	mixpanel.people.set({
+		"Tutor Interview Completed": false,
+		"Tutor Interview Completed Date": null
 	});
 
 }
@@ -182,8 +200,9 @@ function rejectedTutoringPosition(){
 
 }
 
-//This funciton executes when a tutor user accepts their tutoring position
+//This funciton executes when a tutor user accepts their tutoring position 
 //function in the app when you add tutor code, updates a boolean value, add this there
+//Nick
 
 function tutorAcceptedPosition(){
 	mixpanel.track("Tutor Accepted Position");
@@ -196,6 +215,78 @@ function tutorAcceptedPosition(){
 	});
 
 }
+
+//This funciton executes when a tutor user sets up their available hours
+//Goal - know if a tutor has set up hours or not
+//Nick
+
+function tutorSetUpHours(hours){
+	mixpanel.track("Tutor Set up Hours", {
+		"Number of hours available": hours
+	});
+	
+	mixpanel.identify();
+
+	mixpanel.people.set({
+		"Number of hours available": hours,
+		"Tutor Active": true,
+		"Most Recent Tutor Setup Hours Date": new Date().toISOString()
+	});
+	
+	mixpanel.people.set_once({
+		"First Tutor Setup Hours Date": new Date().toISOString()
+	});
+
+}
+
+//This funciton executes when a tutor user selects which courses they will tutor
+//Goal - Know if we need to hire more tutors and coverage of subjects per campus by understanding distribution of courses and subjects a tutor signs up for
+//Nick
+
+function tutorCourseSelect(courses){
+	mixpanel.track("Tutor Selected Courses");
+	
+	mixpanel.identify();
+
+	mixpanel.people.set({
+		"Courses Tutoring": courses.list,
+		"Tutor Selected Courses": true,
+		"Most Recent Tutor Selected Courses Date": new Date().toISOString()
+	});
+	
+	mixpanel.people.set_once({
+		"First Tutor Selected Courses Date": new Date().toISOString()
+	});
+
+}
+
+//This funciton executes when a student books a session
+//function in the app when you add tutor code, updates a boolean value, add this there
+//Nick
+
+function sessionBooked(student, tutor){
+	
+	mixpanel.track("Session Booked", {
+		"Student Name": student.name,
+		"Tutor Name": tutor.name,
+		
+	});
+	
+	mixpanel.people.track_charge(paymentAmount, {
+    		'$time': new Date().toISOString()
+	});
+	
+	mixpanel.identify();
+	
+	mixpanel.people.increment("Total Sessions Booked");
+	
+	mixpanel.people.set_once({
+		"First Booked Session Date": new Date().toISOString()
+	})
+
+}
+
+
 
 /*
 input tutor code -- considered fully onboarded 
@@ -267,10 +358,15 @@ function ambassadorReview(booleanValue){
 
 //This funciton executes when a user loads the sign up page
 
-function studentSignUp(user){
+function studentSignUp(studentUser){
+	mixpanel.alias(user.email);
+	
 	mixpanel.track("Student User Sign Up");
 	
-	mixpanel.identify();
+	mixpanel.register({
+		"Student Major": user.major,
+		
+	});
 	
 	mixpanel.people.set({
 		"School Name": user.school,
@@ -279,6 +375,31 @@ function studentSignUp(user){
         	"$email": user.email,
         	"User Type": "Student"
 	});
+}
+
+//This funciton executes when a user loads the sign up page
+
+function studentViewsSubjectPage(studentUser, subject){
+	
+	mixpanel.track("Student Views Subject Page", {
+		"Student major": studentUser.major,
+		
+	});
+	
+}
+
+/This funciton executes when a user loads the sign up page
+
+function studentSelectsSubject(studentUser, subject){
+	
+	mixpanel.identify();
+	
+	mixpanel.track("Student Selects Courses Page", {
+		"Subject Viewed": subject.name,
+		"Student major": studentUser.major,
+		
+	});
+	
 }
 
 //This funciton executes when a user loads the sign up page
@@ -295,6 +416,15 @@ function signupPageViewed(){
 
 function userLogin(user){
 	mixpanel.identify(user.email);
+	
+	
+	if(user.tutorApplicant){
+		mixpanel.people.set_once({
+			"Tutor Downloaded and Signed into App": true,
+			"First Tutor Sign in Date": new Date().toISOString()
+		})
+	}
+	elseif()
 
 }
 
