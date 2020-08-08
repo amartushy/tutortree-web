@@ -3,14 +3,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 		var userDB = firebase.firestore()
 		var userID = user.uid
 		
-		userDB.collection("users").get().then(function(allUsers){
-			allUsers.forEach(function(doc) {
-					userDB.collection("users")
-								.doc(doc.id)
-								.update( { "application.completedInterview" : false } )	
-			})
-		})
-		
 		//Check if user is an admin
 		userDB.collection("users").doc(userID).get().then(function(doc) {
 			console.log(doc.data().admin)
@@ -38,7 +30,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    timeApplied = doc.data().timeCreated,
 				    didSubmitPreInterview = doc.data().application.didSubmitPreInterview,
 				    didRequest = doc.data().application.didRequestInterview,
-				    //completedInterview = doc.data().application.completedInterview,
+				    completedInterview = doc.data().application.completedInterview,
 				    didTranscript = doc.data().application.uploadedTranscript,
 				    didFaculty = doc.data().application.uploadedFaculty,
 				    assessmentScore = doc.data().application.assessmentScore,
@@ -51,7 +43,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 						    timeApplied, 
 						    didSubmitPreInterview, 
 						    didRequest, 
-						    false,
+						    completedInterview,
 						    didTranscript, 
 						    didFaculty,
 						    completed,
@@ -77,7 +69,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    timeApplied = doc.data().timeCreated,
 				    didSubmitPreInterview = doc.data().application.didSubmitPreInterview,
 				    didRequest = doc.data().application.didRequestInterview,
-				    //completedInterview = doc.data().application.completedInterview,
+				    completedInterview = doc.data().application.completedInterview,
 				    didTranscript = doc.data().application.uploadedTranscript,
 				    didFaculty = doc.data().application.uploadedFaculty,
 				    assessmentScore = doc.data().application.assessmentScore,
@@ -91,7 +83,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 						    timeApplied, 
 						    didSubmitPreInterview, 
 						    didRequest, 
-						    false,
+						    completedInterview,
 						    didTranscript, 
 						    didFaculty,
 						    completed,
@@ -204,13 +196,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		interviewCompleted.setAttribute('class', 'admin-complete')
 		interviewCompleted.innerHTML = 'check-circle'
 		completedInterviewBlock.appendChild(interviewCompleted)
-		completedInterviewBlock.setAttribute('onClick', 'reverseInterviewCompleted("'+applicantID+'")')		
+		completedInterviewBlock.setAttribute('onClick', 'reverseInterviewCompleted("'+applicantID+'", "'+email+'")')		
 	} else {
 		var interviewIncomplete = document.createElement('div')
 		interviewIncomplete.setAttribute('class', 'admin-incomplete')
 		interviewIncomplete.innerHTML = 'circle'
 		completedInterviewBlock.appendChild(interviewIncomplete)
-		completedInterviewBlock.setAttribute('onClick', 'interviewCompleted("'+applicantID+'")')		
+		completedInterviewBlock.setAttribute('onClick', 'interviewCompleted("'+applicantID+'", "'+email+'")')		
 	}
 	
 
