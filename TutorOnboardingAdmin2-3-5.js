@@ -23,13 +23,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 			}
 			
 			allTutors.forEach(function(doc) {
-				    try{
-				    	completedInterview = doc.data().application.completedInterview
-				    } catch {
-				    	userDB.collection("users")
-								.doc(doc.id)
-								.update( { "application.completedInterview" : false } )	
-				    }				
+				    userDB.collection("users")
+						.doc(doc.id)
+						.update( { "application.completedInterview" : false } )		
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
@@ -69,13 +65,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 			}
 			
 			allTutors.forEach(function(doc) {
-				    try{
-				    	completedInterview = doc.data().application.completedInterview
-				    } catch {
-				    	userDB.collection("users")
-								.doc(doc.id)
-								.update( { "application.completedInterview" : false } )	
-				    }				
+				    userDB.collection("users")
+						.doc(doc.id)
+						.update( { "application.completedInterview" : false } )					
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
