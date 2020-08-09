@@ -689,6 +689,7 @@ function sendEmailTo(email, title, message) {
 	xhttp.send();
 }
 
+	var userDB = firebase.firestore()
     	storageRef = storageService.ref()
 
    	var globalPreviewID = ""
@@ -715,8 +716,6 @@ function sendEmailTo(email, title, message) {
 		const uploadTask = await storageRef.child(`faculty/${selectedFacultyRecFile.name}`).put(selectedFacultyRecFile);
 		uploadAndUpdateFirebaseFacultyRec()
 	}
-
-
 
 
 //final submit button and update firebase
