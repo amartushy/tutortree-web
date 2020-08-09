@@ -255,11 +255,14 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	}
 
 	applicantBlock.appendChild(facultyBlock)
-
+	
+	var facultyAdminParent = document.createElement('div')
+	facultyAdminParent.setAttribute('class', 'faculty-admin-parent')
 
 	var facultyAdminBlock = document.createElement('div')
 	facultyAdminBlock.setAttribute('class', 'faculty-admin-block')
 	facultyAdminBlock.setAttribute('onClick', 'openFacultyRecDialog("'+applicantID+'")')
+	facultyAdminParent.appendChild(facultyAdminBlock)
 
 	var facultyAdminHeader = document.createElement('h4')
 	facultyAdminHeader.setAttribute('class', 'applicant-header')
@@ -269,7 +272,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	var facultyAdminPreviewBlock = document.createElement('div')
 	facultyAdminPreviewBlock.setAttribute('class', 'faculty-admin-preview-block')
 	facultyAdminPreviewBlock.setAttribute('id',  applicantID )
-	facultyAdminBlock.appendChild(facultyAdminPreviewBlock)
+	facultyAdminParent.appendChild(facultyAdminPreviewBlock)
 
 	var facultyAdminFilePreview = document.createElement('div')
 	facultyAdminFilePreview.setAttribute('class', 'faculty-admin-file-preview')
