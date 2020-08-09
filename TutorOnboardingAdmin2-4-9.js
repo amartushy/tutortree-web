@@ -689,6 +689,8 @@ function sendEmailTo(email, title, message) {
 	xhttp.send();
 }
 
+    	storageRef = storageService.ref()
+
    	var globalPreviewID = ""
 	function openFacultyRecDialog(ID) {
 		console.log("this is the id: " + ID)
