@@ -686,9 +686,11 @@ function sendEmailTo(email, title, message) {
 	xhttp.send();
 }
 
-   	var globalPreviewID;
+   	var globalPreviewID = ""
 	function openFacultyRecDialog(ID) {
-			globalPreviewID = ID
+		console.log("this is the id: " + ID)
+		console.log("this is the global: " +globalPreviewID)
+		globalPreviewID = ID
      	 	hiddenFacultyRecButton.click();
     	}
 
