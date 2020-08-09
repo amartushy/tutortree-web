@@ -4,7 +4,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		var userID = user.uid
 		
 
-		userDB.collection("users").where("tutorApplicant", "==", "").onSnapshot(function(allTutors){
+		userDB.collection("users").get().then(function(allTutors){
 			allTutors.forEach(function(doc){
 				console.log(doc.id)
 			})
