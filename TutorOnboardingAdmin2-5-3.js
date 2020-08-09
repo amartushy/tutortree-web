@@ -736,7 +736,7 @@ function sendEmailTo(email, title, message) {
 			  	"application.uploadedFaculty" : true })
 		.then(function() {
 			document.getElementById(globalPreviewID).style.display = "none"
-			document.getElementById(applicantID + '-upload-completed').style.display = "block"
+			document.getElementById(ID + '-upload-completed').style.display = "block"
 			//facultyRecUploadByTutorCoordinator(email)
 		})
 	}
