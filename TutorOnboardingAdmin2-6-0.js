@@ -329,6 +329,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		interviewScoreContainer.appendChild(interviewScoreHeader)
 
 	var interviewScoreField = document.createElement('input')
+	interviewScoreField.readOnly = true
 	interviewScoreField.setAttribute('class', 'interview-score-field')
 	interviewScoreField.placeholder = interviewScore
 	interviewScoreField.onblur = function() {
