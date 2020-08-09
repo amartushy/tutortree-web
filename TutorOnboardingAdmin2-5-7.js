@@ -6,7 +6,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 		userDB.collection("users").where("tutorApplicant", "==", "").onSnapshot(function(allTutors){
 			allTutors.forEach(function(doc){
-				print(doc.id)
+				console.log(doc.id)
 			})
 		})
 
