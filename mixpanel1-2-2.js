@@ -119,7 +119,7 @@ function transcriptUpload(){
 //This funciton executes when a tutor user uploads their faculty rec and clicks "Submit Faculty Rec" button
 
 function facultyRecUpload(){
-	mixpanel.track("Submitted Faculty", {
+	mixpanel.track("Submitted Faculty Rec", {
 		"Faculty Rec Submitted by Tutor Prospect": true
 	});
 	
@@ -133,7 +133,7 @@ function facultyRecUpload(){
 }
 
 function facultyRecUploadByTutorCoordinator(email){
-	mixpanel.track("Submitted Faculty", {
+	mixpanel.track("Submitted Faculty Rec", {
 		"Faculty Rec Submitted by Tutor Prospect": false
 	});
 	
