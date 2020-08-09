@@ -256,6 +256,36 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 
 	applicantBlock.appendChild(facultyBlock)
 
+
+	var facultyAdminBlock = document.createElement('div')
+	facultyAdminBlock.setAttribute('class', 'faculty-admin-block')
+	facultyAdminBlock.setAttribute('onClick', 'openFacultyRecDialog("'+applicantsID+'")')
+
+	var facultyAdminHeader = document.createElement('h4')
+	facultyAdminHeader.setAttribute('class', 'applicant-header')
+	facultyAdminHeader.innerHTML = "Upload Rec"
+	facultyAdminBlock.appendChild(facultyAdminHeader)
+
+	var facultyAdminPreviewBlock = document.createElement('div')
+	facultyAdminPreviewBlock.setAttribute('class', 'faculty-admin-preview-block')
+	facultyAdminPreviewBlock.setAttribute('id', '"' + applicantsID + '"')
+	facultyAdminBlock.appendChild(facultyAdminPreviewBlock)
+
+	var facultyAdminFilePreview = document.createElement('div')
+	facultyAdminFilePreview.setAttribute('class', 'faculty-admin-file-preview')
+	facultyAdminFilePreview.setAttribute('id', '"' + applicantsID + '"')
+	facultyAdminFilePreview.innerHTML = "file preview.png"
+	facultyAdminPreviewBlock.appendChild(facultyAdminFilePreview)
+
+	var submitFacultyAdminButton = document.createElement('div')
+	submitFacultyAdminButton.setAttribute('class', 'submit-faculty-admin-button')
+	submitFacultyAdminButton.innerHTML = 'Submit'
+	submitFacultyAdminButton.setAttribute('onClick','handleFacultyRecUpload("'+applicantsID+'","'+email+'")')
+	facultyAdminPreviewBlock.appendChild(submitFacultyAdminButton)
+
+	applicantBlock.appendChild(facultyAdminBlock)
+
+
 	//Score Blocks
 	var userDB = firebase.firestore()
 	console.log(assessmentScore)
@@ -310,16 +340,6 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 		interviewScoreContainer.appendChild(interviewScoreField)
 
 	applicantBlock.appendChild(formContainer)
-
-	//completed interview block 
-	var completedInterviewButton = document.createElement('div')
-	completedInterviewButton.setAttribute('class', 'completed-interview-button')
-
-	completedInterviewButton.innerHTML = "Completed Interview"
-
-	completedInterviewButton.setAttribute('onclick', 'interviewCompleted("'+applicantID+'")')
-	
-	applicantBlock.appendChild(completedInterviewButton)
 	
 	//Grant Access Code Block
 	var accessButton = document.createElement('div')
@@ -665,3 +685,45 @@ function sendEmailTo(email, title, message) {
 	xhttp.open("GET", herokuURL, true);
 	xhttp.send();
 }
+
+   	var globalPreviewID;
+	function openFacultyRecDialog(ID) {
+			globalPreviewID = ID
+     	 	hiddenFacultyRecButton.click();
+    	}
+
+    var hiddenFacultyRecButton = document.getElementById("faculty-admin-select") 
+   	hiddenFacultyRecButton.addEventListener('change', handleFacultyRecUploadChange);
+
+	var selectedFacultyRecFile;
+	function handleFacultyRecUploadChange(e) {
+		selectedFacultyRecFile = e.target.files[0];
+		document.getElementById(globalPreviewID).style.display = "flex"
+		document.getElementById(globalPreviewID+"-text").innerHTML = selectedFacultyRecFile.name
+	}
+
+
+	async function handleFacultyRecUpload(ID, email) {
+		console.log("I was clicked")
+		const uploadTask = await storageRef.child(`faculty/${selectedFacultyRecFile.name}`).put(selectedFacultyRecFile);
+		uploadAndUpdateFirebaseFacultyRec()
+	}
+
+
+
+
+//final submit button and update firebase
+	async function uploadAndUpdateFirebaseFacultyRec(ID, email) {
+		var facultyRecFileURL = ""
+		await storageRef.child('/faculty/'+selectedFacultyRecFile.name)
+			.getDownloadURL()
+			.then(function(url) { facultyRecFileURL = url.toString() })
+		userDB.collection("users")
+			.doc(ID)
+			.update( {"application.facultyFile" : facultyRecFileURL,
+			  	"application.uploadedFaculty" : true })
+		.then(function() {
+			document.getElementById(globalPreviewID).style.display = "none"
+			//facultyRecUploadByTutorCoordinator(email)
+		})
+	}
