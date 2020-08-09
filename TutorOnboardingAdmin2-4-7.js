@@ -286,7 +286,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	submitFacultyAdminButton.setAttribute('onClick','handleFacultyRecUpload("'+applicantID+'","'+email+'")')
 	facultyAdminPreviewBlock.appendChild(submitFacultyAdminButton)
 
-	applicantBlock.appendChild(facultyAdminBlock)
+	applicantBlock.appendChild(facultyAdminParent)
 
 
 	//Score Blocks
