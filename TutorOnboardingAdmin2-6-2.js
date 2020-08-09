@@ -310,13 +310,16 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	piaScoreHeader.innerHTML = 'PIA:'
 		piaScoreContainer.appendChild(piaScoreHeader)
 	var piaScoreField = document.createElement('input')
+	piaScoreField.readOnly = true
 	piaScoreField.setAttribute('class', 'pia-score')
 	piaScoreField.placeholder = assessmentScore
+	/*
 	piaScoreField.onblur = function() {
 		userDB.collection("users")
 			.doc(applicantID)
 			.update( { "application.assessmentScore" : piaScoreField.value } )
 	}
+	*/
 	
 		piaScoreContainer.appendChild(piaScoreField)
 
@@ -620,7 +623,7 @@ function getInterviewPoints(applicantsID) {
 		var interviewScore = 
 				parseInt(onTimeScore) + 
 				parseInt(challengingScore) + 
-		    	parseInt(troubleScore) + 
+		    		parseInt(troubleScore) + 
 				parseInt(situationScore) + 
 				parseInt(confidenceScore) + 
 				parseInt(preparedScore) + 
