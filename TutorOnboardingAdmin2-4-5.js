@@ -268,12 +268,12 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 
 	var facultyAdminPreviewBlock = document.createElement('div')
 	facultyAdminPreviewBlock.setAttribute('class', 'faculty-admin-preview-block')
-	facultyAdminPreviewBlock.setAttribute('id', '"' + applicantID + '"')
+	facultyAdminPreviewBlock.setAttribute('id',  applicantID )
 	facultyAdminBlock.appendChild(facultyAdminPreviewBlock)
 
 	var facultyAdminFilePreview = document.createElement('div')
 	facultyAdminFilePreview.setAttribute('class', 'faculty-admin-file-preview')
-	facultyAdminFilePreview.setAttribute('id', '"' + applicantID + '"-text')
+	facultyAdminFilePreview.setAttribute('id', applicantID + '-text')
 	facultyAdminFilePreview.innerHTML = "file preview.png"
 	facultyAdminPreviewBlock.appendChild(facultyAdminFilePreview)
 
