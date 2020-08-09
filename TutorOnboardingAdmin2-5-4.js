@@ -737,6 +737,6 @@ function sendEmailTo(email, title, message) {
 		.then(function() {
 			document.getElementById(globalPreviewID).style.display = "none"
 			document.getElementById(ID + '-upload-completed').style.display = "block"
-			//facultyRecUploadByTutorCoordinator(email)
+			facultyRecUploadByTutorCoordinator(email)
 		})
 	}
