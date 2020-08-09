@@ -281,7 +281,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	facultyAdminPreviewBlock.appendChild(facultyAdminFilePreview)
 
 	var submitFacultyAdminButton = document.createElement('div')
-	submitFacultyAdminButton.setAttribute('class', 'submit-faculty-admin-button')
+	submitFacultyAdminButton.setAttribute('class', 'submit-faculty-admin-block')
 	submitFacultyAdminButton.innerHTML = 'Submit'
 	submitFacultyAdminButton.setAttribute('onClick','handleFacultyRecUpload("'+applicantID+'","'+email+'")')
 	facultyAdminPreviewBlock.appendChild(submitFacultyAdminButton)
