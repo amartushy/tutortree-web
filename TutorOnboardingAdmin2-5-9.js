@@ -2,26 +2,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		var userDB = firebase.firestore()
 		var userID = user.uid
-		
 
-		userDB.collection("users").get().then(function(allTutors){
-			allTutors.forEach(function(doc){
-				console.log(doc.id)
-			})
-		})
-
-
-
-		//Check if user is an admin
-		userDB.collection("users").doc(userID).get().then(function(doc) {
-			console.log(doc.data().admin)
-			var ADMIN_ID = userID;
-			mixpanel.identify(ADMIN_ID);
-			mixpanel.people.set({
-		  		"$email": doc.data().email,    // only reserved properties need the $
-		  		"USER_ID": doc.data().firstName    // use human-readable names
-			});
-		})
 		
 		//Get all applicant information and build blocks
 		var applicantArea = document.getElementById('applicant-section')
@@ -447,13 +428,13 @@ function showInterview(applicantsID) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
 		//Notes fields
-		// var onTimeNotes = document.getElementById('on-time-notes')
-		// onTimeNotes.value = doc.data().application.interview.onTimeNotes
-		// onTimeNotes.onblur = function() {
-		// 	userDB.collection("users")
-		// 		.doc(applicantsID)
-		// 		.update( { "application.interview.onTimeNotes" : onTimeNotes.value } )
-		// }
+		var onTimeNotes = document.getElementById('on-time-notes')
+		onTimeNotes.value = doc.data().application.interview.onTimeNotes
+		onTimeNotes.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.interview.onTimeNotes" : onTimeNotes.value } )
+		}
 		var challengingNotes = document.getElementById('challenging-notes')
 		challengingNotes.value = doc.data().application.interview.challengingNotes
 		challengingNotes.onblur = function() {
@@ -510,23 +491,23 @@ function showInterview(applicantsID) {
 				.doc(applicantsID)
 				.update( { "application.interview.helpNotes" : helpNotes.value } )
 		}
-		// var questionNotes = document.getElementById('question-notes')
-		// questionNotes.value = doc.data().application.interview.questionNotes
-		// questionNotes.onblur = function() {
-		// 	userDB.collection("users")
-		// 		.doc(applicantsID)
-		// 		.update( { "application.interview.questionNotes" : questionNotes.value } )
-		// }
+		var questionNotes = document.getElementById('question-notes')
+		questionNotes.value = doc.data().application.interview.questionNotes
+		questionNotes.onblur = function() {
+			userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.interview.questionNotes" : questionNotes.value } )
+		}
 		
 		//Score Fields
-		// var onTimeScore = document.getElementById('on-time-score')
-		// onTimeScore.value = doc.data().application.interview.onTimeScore
-		// onTimeScore.onblur = async function() {
-		// 	await userDB.collection("users")
-		// 		.doc(applicantsID)
-		// 		.update( { "application.interview.onTimeScore" : onTimeScore.value } )
-		// 	getInterviewPoints(applicantsID)
-		// }
+		var onTimeScore = document.getElementById('on-time-score')
+		onTimeScore.value = doc.data().application.interview.onTimeScore
+		onTimeScore.onblur = async function() {
+			await userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.interview.onTimeScore" : onTimeScore.value } )
+			getInterviewPoints(applicantsID)
+		}
 		var challengingScore = document.getElementById('challenging-score')
 		challengingScore.value = doc.data().application.interview.challengingScore
 		challengingScore.onblur = async function() {
@@ -591,14 +572,14 @@ function showInterview(applicantsID) {
 				.update( { "application.interview.helpScore" : helpScore.value } )
 			getInterviewPoints(applicantsID)
 		}
-		// var questionScore = document.getElementById('question-score')
-		// questionScore.value = doc.data().application.interview.helpScore
-		// questionScore.onblur = async function() {
-		// 	await userDB.collection("users")
-		// 		.doc(applicantsID)
-		// 		.update( { "application.interview.questionScore" : questionScore.value } )
-		// 	getInterviewPoints(applicantsID)
-		// }
+		var questionScore = document.getElementById('question-score')
+		questionScore.value = doc.data().application.interview.questionScore
+		questionScore.onblur = async function() {
+			await userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.interview.questionScore" : questionScore.value } )
+			getInterviewPoints(applicantsID)
+		}
 
 	})
 }
@@ -622,7 +603,7 @@ function getAssessmentPoints(applicantsID) {
 function getInterviewPoints(applicantsID) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		//var onTimeScore = doc.data().application.interview.onTimeScore
+		var onTimeScore = doc.data().application.interview.onTimeScore
 		var challengingScore = doc.data().application.interview.challengingScore
 		var troubleScore = doc.data().application.interview.troubleScore
 		var situationScore = doc.data().application.interview.situationScore
@@ -631,16 +612,19 @@ function getInterviewPoints(applicantsID) {
 		var explainScore = doc.data().application.interview.explainScore
 		var onlineScore = doc.data().application.interview.onlineScore
 		var helpScore = doc.data().application.interview.helpScore
-		//var questionScore = doc.data().application.interview.questionScore
+		var questionScore = doc.data().application.interview.questionScore
 
-		var interviewScore = parseInt(challengingScore) + 
-		    		parseInt(troubleScore) + 
+		var interviewScore = 
+				parseInt(onTimeScore) + 
+				parseInt(challengingScore) + 
+		    	parseInt(troubleScore) + 
 				parseInt(situationScore) + 
 				parseInt(confidenceScore) + 
 				parseInt(preparedScore) + 
 				parseInt(explainScore) + 
 				parseInt(onlineScore) + 
-				parseInt(helpScore)
+				parseInt(helpScore) +
+				parseInt(questionScore)
 		
 		userDB.collection("users")
 				.doc(applicantsID)
