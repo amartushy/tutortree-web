@@ -285,6 +285,12 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	submitFacultyAdminButton.innerHTML = 'Submit'
 	submitFacultyAdminButton.setAttribute('onClick','handleFacultyRecUpload("'+applicantID+'","'+email+'")')
 	facultyAdminPreviewBlock.appendChild(submitFacultyAdminButton)
+	
+	var facultyRecSuccessfullyUploadedMessage = document.createElement('div')
+	facultyRecSuccessfullyUploadedMessage.setAttribute('class', 'faculty-rec-successfully-uploaded')
+	facultyRecSuccessfullyUploadedMessage.setAttribute('id', applicantID + '-upload-completed')
+	facultyRecSuccessfullyUploadedMessage.innerHTML = 'Successfully Uploaded!'
+	facultyAdminParent.appendChild(facultyRecSuccessfullyUploadedMessage)
 
 	applicantBlock.appendChild(facultyAdminParent)
 
@@ -730,6 +736,7 @@ function sendEmailTo(email, title, message) {
 			  	"application.uploadedFaculty" : true })
 		.then(function() {
 			document.getElementById(globalPreviewID).style.display = "none"
+			document.getElementById(applicantID + '-upload-completed').style.display = "block"
 			//facultyRecUploadByTutorCoordinator(email)
 		})
 	}
