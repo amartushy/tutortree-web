@@ -273,7 +273,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 
 	var facultyAdminFilePreview = document.createElement('div')
 	facultyAdminFilePreview.setAttribute('class', 'faculty-admin-file-preview')
-	facultyAdminFilePreview.setAttribute('id', '"' + applicantID + '"')
+	facultyAdminFilePreview.setAttribute('id', '"' + applicantID + '"-text')
 	facultyAdminFilePreview.innerHTML = "file preview.png"
 	facultyAdminPreviewBlock.appendChild(facultyAdminFilePreview)
 
@@ -689,8 +689,8 @@ function sendEmailTo(email, title, message) {
    	var globalPreviewID = ""
 	function openFacultyRecDialog(ID) {
 		console.log("this is the id: " + ID)
-		console.log("this is the global: " +globalPreviewID)
 		globalPreviewID = ID
+		console.log("this is the global: " +globalPreviewID)
      	 	hiddenFacultyRecButton.click();
     	}
 
