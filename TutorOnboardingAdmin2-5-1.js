@@ -714,7 +714,7 @@ function sendEmailTo(email, title, message) {
 	async function handleFacultyRecUpload(ID, email) {
 		console.log("I was clicked")
 		const uploadTask = await storageRef.child(`faculty/${selectedFacultyRecFile.name}`).put(selectedFacultyRecFile);
-		uploadAndUpdateFirebaseFacultyRec()
+		uploadAndUpdateFirebaseFacultyRec(ID, email)
 	}
 
 
