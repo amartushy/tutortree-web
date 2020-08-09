@@ -332,11 +332,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	interviewScoreField.readOnly = true
 	interviewScoreField.setAttribute('class', 'interview-score-field')
 	interviewScoreField.placeholder = interviewScore
+	/*
 	interviewScoreField.onblur = function() {
 		userDB.collection("users")
 			.doc(applicantID)
 			.update( { "application.interviewScore" : interviewScoreField.value } )
 	}
+	*/
 		interviewScoreContainer.appendChild(interviewScoreField)
 
 	applicantBlock.appendChild(formContainer)
