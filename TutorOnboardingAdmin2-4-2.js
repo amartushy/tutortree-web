@@ -259,7 +259,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 
 	var facultyAdminBlock = document.createElement('div')
 	facultyAdminBlock.setAttribute('class', 'faculty-admin-block')
-	facultyAdminBlock.setAttribute('onClick', 'openFacultyRecDialog("'+applicantsID+'")')
+	facultyAdminBlock.setAttribute('onClick', 'openFacultyRecDialog("'+applicantID+'")')
 
 	var facultyAdminHeader = document.createElement('h4')
 	facultyAdminHeader.setAttribute('class', 'applicant-header')
@@ -268,19 +268,19 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 
 	var facultyAdminPreviewBlock = document.createElement('div')
 	facultyAdminPreviewBlock.setAttribute('class', 'faculty-admin-preview-block')
-	facultyAdminPreviewBlock.setAttribute('id', '"' + applicantsID + '"')
+	facultyAdminPreviewBlock.setAttribute('id', '"' + applicantID + '"')
 	facultyAdminBlock.appendChild(facultyAdminPreviewBlock)
 
 	var facultyAdminFilePreview = document.createElement('div')
 	facultyAdminFilePreview.setAttribute('class', 'faculty-admin-file-preview')
-	facultyAdminFilePreview.setAttribute('id', '"' + applicantsID + '"')
+	facultyAdminFilePreview.setAttribute('id', '"' + applicantID + '"')
 	facultyAdminFilePreview.innerHTML = "file preview.png"
 	facultyAdminPreviewBlock.appendChild(facultyAdminFilePreview)
 
 	var submitFacultyAdminButton = document.createElement('div')
 	submitFacultyAdminButton.setAttribute('class', 'submit-faculty-admin-button')
 	submitFacultyAdminButton.innerHTML = 'Submit'
-	submitFacultyAdminButton.setAttribute('onClick','handleFacultyRecUpload("'+applicantsID+'","'+email+'")')
+	submitFacultyAdminButton.setAttribute('onClick','handleFacultyRecUpload("'+applicantID+'","'+email+'")')
 	facultyAdminPreviewBlock.appendChild(submitFacultyAdminButton)
 
 	applicantBlock.appendChild(facultyAdminBlock)
