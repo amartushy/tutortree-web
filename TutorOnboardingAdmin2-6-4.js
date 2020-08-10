@@ -1,4 +1,4 @@
-firebase.auth().onAuthStateChanged(function(user) {
+ firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		var userDB = firebase.firestore()
 		var userID = user.uid
@@ -435,70 +435,80 @@ function showInterview(applicantsID) {
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
 		//Notes fields
 		var onTimeNotes = document.getElementById('on-time-notes')
-		onTimeNotes.value = doc.data().application.interview.onTimeNotes
+		if(doc.data().application.interview.onTimeNotes != undefined){
+			onTimeNotes.value = doc.data().application.interview.onTimeNotes}
 		onTimeNotes.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.interview.onTimeNotes" : onTimeNotes.value } )
 		}
 		var challengingNotes = document.getElementById('challenging-notes')
-		challengingNotes.value = doc.data().application.interview.challengingNotes
+		if( doc.data().application.interview.challengingNotes != undefined){
+			challengingNotes.value = doc.data().application.interview.challengingNotes}
 		challengingNotes.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.interview.challengingNotes" : challengingNotes.value } )
 		}
 		var troubleNotes = document.getElementById('trouble-notes')
-		troubleNotes.value = doc.data().application.interview.troubleNotes
+		if( doc.data().application.interview.troubleNotes != undefined){
+			troubleNotes.value = doc.data().application.interview.troubleNotes}
 		troubleNotes.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.interview.troubleNotes" : troubleNotes.value } )
 		}
 		var situationNotes = document.getElementById('situation-notes')
-		situationNotes.value = doc.data().application.interview.situationNotes
+		if( doc.data().application.interview.situationNotes != undefined){
+			situationNotes.value = doc.data().application.interview.situationNotes}
 		situationNotes.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.interview.situationNotes" : situationNotes.value } )
 		}
 		var confidenceNotes = document.getElementById('confidence-notes')
-		confidenceNotes.value = doc.data().application.interview.confidenceNotes
+		if( doc.data().application.interview.confidenceNotes != undefined){
+			confidenceNotes.value = doc.data().application.interview.confidenceNotes}
 		confidenceNotes.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.interview.confidenceNotes" : confidenceNotes.value } )
 		}
 		var preparedNotes = document.getElementById('prepared-notes')
-		preparedNotes.value = doc.data().application.interview.preparedNotes
+		if( doc.data().application.interview.preparedNotes != undefined){
+			preparedNotes.value = doc.data().application.interview.preparedNotes}
 		preparedNotes.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.interview.preparedNotes" : preparedNotes.value } )
 		}
 		var explainNotes = document.getElementById('explain-notes')
-		explainNotes.value = doc.data().application.interview.explainNotes
+		if( doc.data().application.interview.explainNotes != undefined){
+			explainNotes.value = doc.data().application.interview.explainNotes}
 		explainNotes.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.interview.explainNotes" : explainNotes.value } )
 		}
 		var onlineNotes = document.getElementById('online-notes')
-		onlineNotes.value = doc.data().application.interview.onlineNotes
+		if( doc.data().application.interview.onlineNotes != undefined){
+			onlineNotes.value = doc.data().application.interview.onlineNotes}
 		onlineNotes.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.interview.onlineNotes" : onlineNotes.value } )
 		}
 		var helpNotes = document.getElementById('help-notes')
-		helpNotes.value = doc.data().application.interview.helpNotes
+		if( doc.data().application.interview.helpNotes != undefined){
+			helpNotes.value = doc.data().application.interview.helpNotes}
 		helpNotes.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
 				.update( { "application.interview.helpNotes" : helpNotes.value } )
 		}
 		var questionNotes = document.getElementById('question-notes')
-		questionNotes.value = doc.data().application.interview.questionNotes
+		if( doc.data().application.interview.questionNotes != undefined){
+			questionNotes.value = doc.data().application.interview.questionNotes}
 		questionNotes.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
@@ -625,7 +635,7 @@ function getInterviewPoints(applicantsID) {
 		var interviewScore = 
 				parseInt(onTimeScore) + 
 				parseInt(challengingScore) + 
-		    		parseInt(troubleScore) + 
+		    	parseInt(troubleScore) + 
 				parseInt(situationScore) + 
 				parseInt(confidenceScore) + 
 				parseInt(preparedScore) + 
