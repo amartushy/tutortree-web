@@ -547,7 +547,11 @@ function showInterview(applicantsID) {
 		
 		//Score Fields
 		var onTimeScore = document.getElementById('on-time-score')
-		onTimeScore.value = doc.data().application.interview.onTimeScore
+		try{
+			onTimeScore.value = doc.data().application.interview.onTimeScore
+		} catch {
+			onTimeScore.value = 0
+		}
 		onTimeScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
@@ -555,7 +559,11 @@ function showInterview(applicantsID) {
 			getInterviewPoints(applicantsID)
 		}
 		var challengingScore = document.getElementById('challenging-score')
-		challengingScore.value = doc.data().application.interview.challengingScore
+		try{
+			challengingScore.value = doc.data().application.interview.challengingScore
+		} catch {
+			challengingScore.value = 0
+		}
 		challengingScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
@@ -563,7 +571,11 @@ function showInterview(applicantsID) {
 			getInterviewPoints(applicantsID)
 		}
 		var troubleScore = document.getElementById('trouble-score')
-		troubleScore.value = doc.data().application.interview.troubleScore
+		try{
+			troubleScore.value = doc.data().application.interview.troubleScore
+		} catch {
+			troubleScore.value = 0
+		}
 		troubleScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
@@ -571,7 +583,11 @@ function showInterview(applicantsID) {
 			getInterviewPoints(applicantsID)
 		}
 		var situationScore = document.getElementById('situation-score')
-		situationScore.value = doc.data().application.interview.situationScore
+		try{
+			situationScore.value = doc.data().application.interview.situationScore
+		} catch {
+			situationScore.value = 0
+		}
 		situationScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
@@ -579,7 +595,11 @@ function showInterview(applicantsID) {
 			getInterviewPoints(applicantsID)
 		}
 		var confidenceScore = document.getElementById('confidence-score')
-		confidenceScore.value = doc.data().application.interview.confidenceScore
+		try{
+			confidenceScore.value = doc.data().application.interview.confidenceScore
+		} catch {
+			confidenceScore.value = 0
+		}
 		confidenceScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
@@ -587,7 +607,11 @@ function showInterview(applicantsID) {
 			getInterviewPoints(applicantsID)
 		}
 		var preparedScore = document.getElementById('prepared-score')
-		preparedScore.value = doc.data().application.interview.preparedScore
+		try{
+			preparedScore.value = doc.data().application.interview.preparedScore
+		} catch {
+			preparedScore.value = 0
+		}
 		preparedScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
@@ -595,7 +619,11 @@ function showInterview(applicantsID) {
 			getInterviewPoints(applicantsID)
 		}	
 		var explainScore = document.getElementById('explain-score')
-		explainScore.value = doc.data().application.interview.explainScore
+		try{
+			explainScore.value = doc.data().application.interview.explainScore
+		} catch {
+			explainScore.value = 0
+		}
 		explainScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
@@ -603,7 +631,11 @@ function showInterview(applicantsID) {
 			getInterviewPoints(applicantsID)
 		}
 		var onlineScore = document.getElementById('online-score')
-		onlineScore.value = doc.data().application.interview.onlineScore
+		try{
+			onlineScore.value = doc.data().application.interview.onlineScore
+		} catch {
+			onlineScore.value = 0
+		}
 		onlineScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
@@ -611,7 +643,11 @@ function showInterview(applicantsID) {
 			getInterviewPoints(applicantsID)
 		}
 		var helpScore = document.getElementById('help-score')
-		helpScore.value = doc.data().application.interview.helpScore
+		try{
+			helpScore.value = doc.data().application.interview.helpScore
+		} catch {
+			helpScore.value = 0
+		}
 		helpScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
@@ -619,7 +655,11 @@ function showInterview(applicantsID) {
 			getInterviewPoints(applicantsID)
 		}
 		var questionScore = document.getElementById('question-score')
-		questionScore.value = doc.data().application.interview.questionScore
+		try{
+			questionScore.value = doc.data().application.interview.questionScore
+		} catch {
+			questionScore.value = 0
+		}
 		console.log("questionScore.value before function " + questionScore.value)
 		questionScore.onblur = async function() {
 			await console.log("questionScore.value during function " + questionScore.value)
