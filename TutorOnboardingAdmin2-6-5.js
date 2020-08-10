@@ -430,6 +430,8 @@ function showAssessment(applicantsID) {
 
 function showInterview(applicantsID) {
 	document.getElementById("interview-wrapper").style.display = 'flex'
+	
+	console.log("this is the applicantsID " + applicantsID)
 
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
