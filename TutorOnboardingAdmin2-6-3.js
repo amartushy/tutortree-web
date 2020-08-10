@@ -580,10 +580,12 @@ function showInterview(applicantsID) {
 		}
 		var questionScore = document.getElementById('question-score')
 		questionScore.value = doc.data().application.interview.questionScore
+		console.log("questionScore.value before function " + questionScore.value)
 		questionScore.onblur = async function() {
-			await userDB.collection("users")
+			await console.log("questionScore.value during function " + questionScore.value)
+			/*userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.interview.questionScore" : questionScore.value } )
+				.update( { "application.interview.questionScore" : questionScore.value } )*/
 			getInterviewPoints(applicantsID)
 		}
 
