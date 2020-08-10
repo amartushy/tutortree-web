@@ -691,16 +691,56 @@ function getAssessmentPoints(applicantsID) {
 function getInterviewPoints(applicantsID) {
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		var onTimeScore = doc.data().application.interview.onTimeScore
-		var challengingScore = doc.data().application.interview.challengingScore
-		var troubleScore = doc.data().application.interview.troubleScore
-		var situationScore = doc.data().application.interview.situationScore
-		var confidenceScore = doc.data().application.interview.confidenceScore
-		var preparedScore = doc.data().application.interview.preparedScore
-		var explainScore = doc.data().application.interview.explainScore
-		var onlineScore = doc.data().application.interview.onlineScore
-		var helpScore = doc.data().application.interview.helpScore
-		var questionScore = doc.data().application.interview.questionScore
+		try{
+			var onTimeScore = doc.data().application.interview.onTimeScore
+		} catch {
+			onTimeScore = 0
+		}
+		try{
+			var challengingScore = doc.data().application.interview.challengingScore
+		} catch {
+			challengingScore = 0
+		}
+		try{
+			var troubleScore = doc.data().application.interview.troubleScore
+		} catch {
+			troubleScore = 0
+		}
+		try{
+			var situationScore = doc.data().application.interview.situationScore
+		} catch {
+			situationScore = 0
+		}
+		try{
+			var confidenceScore = doc.data().application.interview.confidenceScore
+		} catch {
+			confidenceScore = 0
+		}
+		try{
+			var preparedScore = doc.data().application.interview.preparedScore
+		} catch {
+			preparedScore = 0
+		}
+		try{
+			var explainScore = doc.data().application.interview.explainScore
+		} catch {
+			explainScore = 0
+		}
+		try{
+			var onlineScore = doc.data().application.interview.onlineScore
+		} catch {
+			onlineScore = 0
+		}
+		try{
+			var helpScore = doc.data().application.interview.helpScore
+		} catch {
+			helpScore = 0
+		}
+		try{
+			var questionScore = doc.data().application.interview.questionScore
+		} catch {
+			questionScore = 0
+		}
 
 		var interviewScore = 
 				parseInt(onTimeScore) + 
