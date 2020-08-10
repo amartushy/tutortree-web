@@ -46,7 +46,7 @@ function tutorAccountCreated(user){
         "$email": user.email,
         "$phone": user.phoneNumber,
         "How Heard": user.howHeard,
-        "User Type": "Tutor",
+        "Tutor User": true,
         "Pre Invertview Assessment Completed": false,
         "Tutor Interview Requested": false,
         "Tutor Interview Completed": false,
@@ -352,9 +352,9 @@ function ambassadorAccountCreated(user){
         	"Number of Followers at Largerst Social Media Service": user.numberOfFollowers,
         	"Knows Anyone at TutorTree": user.knowsEmployees,
         	"Social Handle": user.socialHandle,
-        	"User Type": "Student Ambassador",
+        	"Ambassador User": true,
         	//"Ambassador Interview Completed": false,
-        	"Ambassador Approved": false
+        	"Ambassador Hiring Status": "Not yet Interviewed"
 	});
 
 }
@@ -362,13 +362,13 @@ function ambassadorAccountCreated(user){
 
 //This funciton executes when a user loads the sign up page
 
-function ambassadorReview(booleanValue){
-	mixpanel.track("Ambassador Review");
+function ambassadorReviewed(acceptedOrRejected){
+	mixpanel.track("Ambassador Reviewed");
 	
 	mixpanel.identify();
 
 	mixpanel.people.set({
-		"Ambassador Approved": booleanValue
+		"Ambassador Hiring Status": acceptedOrRejected
 	});
 }
 
@@ -393,7 +393,7 @@ function studentSignUp(studentUser){
         	"$first_name": user.firstName,
         	"$last_name": user.lastName,
         	"$email": user.email,
-        	"User Type": "Student"
+        	"Student User": true
 	});
 }
 
