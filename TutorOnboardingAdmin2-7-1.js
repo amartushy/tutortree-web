@@ -789,11 +789,11 @@ function grantTutorPrivileges(applicantsID, applicantsEmail) {
 		if(!doc.data().tutorApplicationApproved) {
 			var acceptanceMessage = "Your application to tutor has been approved. Your tutor coordinator will reach out soon with more information."
 			sendEmailTo(applicantsEmail, 'Welcome to TutorTree!', acceptanceMessage)
-			offeredTutoringPosition()
+			acceptedOrRejectedTutor(true, applicantsEmail)
 		} else {
 			var declinedMessage = "Unfortunately at this time your application to tutor has been declined. Your tutor coordinator will reach out soon with more information."
 			sendEmailTo(applicantsEmail, 'Tutor Application Status', declinedMessage)
-			rejectedTutoringPosition()
+			acceptedOrRejectedTutor(false, applicantsEmail)
 		}
 	})
 	
