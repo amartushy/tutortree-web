@@ -133,12 +133,12 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
   
       var ambassadorApproveButton = document.createElement('div')
       ambassadorApproveButton.setAttribute('class', 'ambapp-approve')
-      ambassadorApproveButton.setAttribute('onClick', 'setAmbassadorPrivileges("' + ambassadorID + '", "approved")')
+      ambassadorApproveButton.setAttribute('onClick', 'setAmbassadorPrivileges("' + ambassadorID + '","'+ email +'", "approved")')
       ambassadorApproveButton.innerHTML = 'Approve'
 	  
       var ambassadorRejectButton = document.createElement('div')
       ambassadorRejectButton.setAttribute('class', 'ambapp-reject')
-      ambassadorRejectButton.setAttribute('onClick', 'setAmbassadorPrivileges("' + ambassadorID + '", "rejected")')
+      ambassadorRejectButton.setAttribute('onClick', 'setAmbassadorPrivileges("' + ambassadorID + '","'+ email +'", "rejected")')
       ambassadorRejectButton.innerHTML = 'Reject'
 	
 	if (status == "pending") {
@@ -159,10 +159,10 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
 
 }
 
-function setAmbassadorPrivileges(ID, privileges) {
+function setAmbassadorPrivileges(ID, email, privileges) {
 	var ambassadorDB = firebase.firestore()
 	ambassadorDB.collection("ambassadors").doc(ID).update( { "status" : privileges } ).then(function(){
-		ambassadorReviewed(privileges)
+		ambassadorReviewed(email, privileges)
 	})
 
 }
