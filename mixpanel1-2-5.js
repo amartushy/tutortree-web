@@ -194,28 +194,16 @@ function reverseInterviewCompleted(applicantsID, email){
 //This funciton executes when a tutor user is approvaed and offered a tutoring position
 //Grant access button
 
-function offeredTutoringPosition(){
-	mixpanel.track("Offered Tutoring Position");
-	
-	mixpanel.identify();
-
-	mixpanel.people.set({
-		"Offered Tutoring Position": true,
-		"Rejected Tutoring Position": false,
-		"Offered Tutoring Position Date": new Date().toISOString()
+function acceptedOrRejectedTutor(booleanValue, email){
+	mixpanel.track("Offered or Rejected Tutor Application", {
+		"Offered Tutoring Position" : booleanValue
 	});
-
-}
-
-function rejectedTutoringPosition(){
-	mixpanel.track("Rejected Tutoring Position");
 	
-	mixpanel.identify();
+	mixpanel.identify(email);
 
 	mixpanel.people.set({
-		"Rejected Tutoring Position": true,
-		"Offered Tutoring Position": false,
-		"Rejected Tutoring Position Date": new Date().toISOString()
+		"Offered Tutoring Position": booleanValue,
+		"Offered or Rejected Tutoring Position Date": new Date().toISOString()
 	});
 
 }
@@ -224,10 +212,10 @@ function rejectedTutoringPosition(){
 //function in the app when you add tutor code, updates a boolean value, add this there
 //Nick
 
-function tutorAcceptedPosition(){
+function tutorAcceptedPosition(email){
 	mixpanel.track("Tutor Accepted Position");
 	
-	mixpanel.identify();
+	mixpanel.identify(email);
 
 	mixpanel.people.set({
 		"Tutor Accepted Position": true,
