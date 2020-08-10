@@ -162,16 +162,8 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
 function setAmbassadorPrivileges(ID, privileges) {
 	var ambassadorDB = firebase.firestore()
 	ambassadorDB.collection("ambassadors").doc(ID).update( { "status" : privileges } ).then(function(){
-	
-	
-		if(privileges=="approved"){
-			ambassadorReview(true)
-		}
-		else if(privileges=="rejected"){
-			ambassadorReview(false)
-		}})
-	
-	
+		ambassadorReviewed(privileges)
+	})
 
 }
 
