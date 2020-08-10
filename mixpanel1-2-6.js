@@ -174,8 +174,6 @@ function reverseInterviewCompleted(applicantsID, email){
 	
 	mixpanel.identify(email);
 
-	console.log("This is the reverse email: " + email)	
-
 	mixpanel.people.set({
 		"Tutor Interview Completed": false,
 		"Tutor Interview Completed Date": null
@@ -195,12 +193,12 @@ function reverseInterviewCompleted(applicantsID, email){
 //Grant access button
 
 function acceptedOrRejectedTutor(booleanValue, email){
+	mixpanel.identify(email);	
+	
 	mixpanel.track("Offered or Rejected Tutor Application", {
 		"Offered Tutoring Position" : booleanValue
 	});
 	
-	mixpanel.identify(email);
-
 	mixpanel.people.set({
 		"Offered Tutoring Position": booleanValue,
 		"Offered or Rejected Tutoring Position Date": new Date().toISOString()
