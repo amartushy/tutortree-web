@@ -662,10 +662,9 @@ function showInterview(applicantsID) {
 		}
 		console.log("questionScore.value before function " + questionScore.value)
 		questionScore.onblur = async function() {
-			await console.log("questionScore.value during function " + questionScore.value)
-			/*userDB.collection("users")
+			await userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.interview.questionScore" : questionScore.value } )*/
+				.update( { "application.interview.questionScore" : questionScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 
