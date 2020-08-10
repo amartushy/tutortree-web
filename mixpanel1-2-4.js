@@ -362,10 +362,10 @@ function ambassadorAccountCreated(user){
 
 //This funciton executes when a user loads the sign up page
 
-function ambassadorReviewed(acceptedOrRejected){
+function ambassadorReviewed(email, acceptedOrRejected){
 	mixpanel.track("Ambassador Reviewed");
 	
-	mixpanel.identify();
+	mixpanel.identify(email);
 
 	mixpanel.people.set({
 		"Ambassador Hiring Status": acceptedOrRejected
