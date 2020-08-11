@@ -273,10 +273,16 @@ function tutorCourseSelect(courses){
 
 }
 
-function userWebsiteLogin(user){
+function userWebsiteLogin(user, tutorApplicant){
 	mixpanel.identify(user.email);
 	
-	mixpanel.track("Tutor Signed into Site")
+	mixpanel.track("User Signed into Site", {
+		"Is Tutor" : tutorApplicant
+	})
+	
+	mixpanel.people.set({
+		"User Logged into Website" : true
+	});
 
 }
 
