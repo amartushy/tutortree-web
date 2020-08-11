@@ -41,26 +41,28 @@ function tutorAccountCreated(user){
 	//
 	mixpanel.people.set({
 		"School Name": user.school,
-        "$first_name": user.firstName,
-        "$last_name": user.lastName,
-        "$email": user.email,
-        "$phone": user.phoneNumber,
-        "How Heard": user.howHeard,
-        "Tutor User": true,
-        "Pre Invertview Assessment Completed": false,
-        "Tutor Interview Requested": false,
-        "Tutor Interview Completed": false,
-        "Submitted Transcript": false,
-        "Submitted Faculty Rec": false,
-        "Offered Tutoring Position": false,
-	"Rejected Tutoring Position": false,
-        "Tutor Accepted Position": false
+        	"$first_name": user.firstName,
+        	"$last_name": user.lastName,
+        	"$email": user.email,
+        	"$phone": user.phoneNumber,
+        	"How Heard": user.howHeard,
+        	"Tutor User": true,
+        	"Pre Invertview Assessment Completed": false,
+        	"Tutor Interview Requested": false,
+        	"Tutor Interview Completed": false,
+        	"Submitted Transcript": false,
+        	"Submitted Faculty Rec": false,
+		"Tutor Reached Offer Stage": false,		
+        	"Offered Tutoring Position": false,
+        	"Tutor Accepted Position": false
 	});
 }
 
 //This funciton executes when a tutor user submits their PIA
 
 function preInterviewSubmission(fieldValue){
+	mixpanel.identify();
+	
 	mixpanel.register({
 		"Major": fieldValue.major,
 		"Academic Year": fieldValue.year
@@ -71,8 +73,6 @@ function preInterviewSubmission(fieldValue){
 		"Academic Year": fieldValue.year
 	});
 	
-	mixpanel.identify();
-
 	mixpanel.people.set({
 		"Major": fieldValue.major,
 		"Groups Involved": fieldValue.groups,
@@ -91,9 +91,9 @@ function preInterviewSubmission(fieldValue){
 //This funciton executes when a tutor user clicks the request virtual interview button
 
 function requestVirtualInterview(){
-	mixpanel.track("Tutor Interview Requested");
-	
 	mixpanel.identify();
+	
+	mixpanel.track("Tutor Interview Requested");
 
 	mixpanel.people.set({
 		"Tutor Interview Requested": true,
@@ -105,9 +105,9 @@ function requestVirtualInterview(){
 //This funciton executes when a tutor user uploads a file and clicks "submit transcript" button
 
 function transcriptUpload(){
-	mixpanel.track("Submitted Transcript");
+	mixpanel.identify();	
 	
-	mixpanel.identify();
+	mixpanel.track("Submitted Transcript");
 
 	mixpanel.people.set({
 		"Submitted Transcript": true,
@@ -119,11 +119,11 @@ function transcriptUpload(){
 //This funciton executes when a tutor user uploads their faculty rec and clicks "Submit Faculty Rec" button
 
 function facultyRecUpload(){
+	mixpanel.identify();
+	
 	mixpanel.track("Submitted Faculty Rec", {
 		"Faculty Rec Submitted by Tutor Prospect": true
 	});
-	
-	mixpanel.identify();
 
 	mixpanel.people.set({
 		"Submitted Faculty Rec": true,
@@ -133,11 +133,11 @@ function facultyRecUpload(){
 }
 
 function facultyRecUploadByTutorCoordinator(email){
+	mixpanel.identify(email)
+	;	
 	mixpanel.track("Submitted Faculty Rec", {
 		"Faculty Rec Submitted by Tutor Prospect": false
 	});
-	
-	mixpanel.identify(email);
 
 	mixpanel.people.set({
 		"Submitted Faculty Rec": true,
@@ -200,6 +200,7 @@ function acceptedOrRejectedTutor(booleanValue, email){
 	});
 	
 	mixpanel.people.set({
+		"Tutor Reached Offer Stage": true,
 		"Offered Tutoring Position": booleanValue,
 		"Offered or Rejected Tutoring Position Date": new Date().toISOString()
 	});
@@ -211,9 +212,9 @@ function acceptedOrRejectedTutor(booleanValue, email){
 //Nick
 
 function tutorAcceptedPosition(email){
-	mixpanel.track("Tutor Accepted Position");
-	
 	mixpanel.identify(email);
+	
+	mixpanel.track("Tutor Accepted Position");
 
 	mixpanel.people.set({
 		"Tutor Accepted Position": true,
@@ -227,11 +228,11 @@ function tutorAcceptedPosition(email){
 //Nick
 
 function tutorSetUpHours(hours){
+	mixpanel.identify();
+	
 	mixpanel.track("Tutor Set up Hours", {
 		"Number of hours available": hours
 	});
-	
-	mixpanel.identify();
 
 	mixpanel.people.set({
 		"Number of hours available": hours,
@@ -250,9 +251,9 @@ function tutorSetUpHours(hours){
 //Nick
 
 function tutorCourseSelect(courses){
-	mixpanel.track("Tutor Selected Courses");
+	mixpanel.identify();	
 	
-	mixpanel.identify();
+	mixpanel.track("Tutor Selected Courses");
 
 	mixpanel.people.set({
 		"Courses Tutoring": courses.list,
@@ -271,18 +272,16 @@ function tutorCourseSelect(courses){
 //Nick
 
 function sessionBooked(student, tutor){
+	mixpanel.identify();	
 	
 	mixpanel.track("Session Booked", {
 		"Student Name": student.name,
-		"Tutor Name": tutor.name,
-		
+		"Tutor Name": tutor.name
 	});
 	
 	mixpanel.people.track_charge(paymentAmount, {
     		'$time': new Date().toISOString()
 	});
-	
-	mixpanel.identify();
 	
 	mixpanel.people.increment("Total Sessions Booked");
 	
@@ -349,9 +348,9 @@ function ambassadorAccountCreated(user){
 //This funciton executes when a user loads the sign up page
 
 function ambassadorReviewed(email, acceptedOrRejected){
-	mixpanel.track("Ambassador Reviewed");
-	
 	mixpanel.identify(email);
+	
+	mixpanel.track("Ambassador Reviewed");
 
 	mixpanel.people.set({
 		"Ambassador Hiring Status": acceptedOrRejected
