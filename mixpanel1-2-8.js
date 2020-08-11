@@ -54,7 +54,8 @@ function tutorAccountCreated(user){
         	"Submitted Faculty Rec": false,
 		"Tutor Reached Offer Stage": false,		
         	"Offered Tutoring Position": false,
-        	"Tutor Accepted Position": false
+        	"Tutor Accepted Position": false,
+		"Tutor Application Date": new Date().toISOString()
 	});
 }
 
@@ -230,13 +231,13 @@ function tutorAcceptedPosition(email){
 function tutorSetUpHours(hours){
 	mixpanel.identify();
 	
-	mixpanel.track("Tutor Set up Hours", {
-		"Number of hours available": hours
+	mixpanel.track("Tutor Set up Hours Available", {
+		"Number of Hours Available Per Week": hours
 	});
 
 	mixpanel.people.set({
-		"Number of hours available": hours,
-		"Tutor Active": true,
+		"Number of Hours Available Per Week": hours,
+		"Tutor Set Up Hours Available Per Week": true,
 		"Most Recent Tutor Setup Hours Date": new Date().toISOString()
 	});
 	
@@ -253,17 +254,29 @@ function tutorSetUpHours(hours){
 function tutorCourseSelect(courses){
 	mixpanel.identify();	
 	
-	mixpanel.track("Tutor Selected Courses");
+	mixpanel.track("Tutor Selected Courses", {
+		"Courses Tutoring": courses.list,
+		"Subjects Tutoring": subjects.list
+	});
 
 	mixpanel.people.set({
 		"Courses Tutoring": courses.list,
 		"Tutor Selected Courses": true,
+		"Num of Courses Tutoring": len(courses.list),
+		"Num of Subjects Tutoring": len(subjects.list),		
 		"Most Recent Tutor Selected Courses Date": new Date().toISOString()
 	});
 	
 	mixpanel.people.set_once({
 		"First Tutor Selected Courses Date": new Date().toISOString()
 	});
+
+}
+
+function userWebsiteLogin(user){
+	mixpanel.identify(user.email);
+	
+	mixpanel.track("Tutor Signed into Site")
 
 }
 
@@ -293,16 +306,6 @@ function sessionBooked(student, tutor){
 
 
 
-/*
-input tutor code -- considered fully onboarded 
-price per hour
-max hours per week
-update schedule 
-choose courses to tutor
-bio
-
-first session booked -- set this up
-*/
 
 /////////////////////////////////// AMBASSADOR PROCESS ////////////////////////////////////
 
