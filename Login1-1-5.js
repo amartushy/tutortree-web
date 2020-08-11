@@ -54,7 +54,8 @@ function signUp(){
 						})
 						
 					} else if (doc.data().tutorApplicant) {
-						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'	
+						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
+						userWebsiteLogin(userEmail, doc.data().tutorApplicant)
 					} else if (doc.data().tutorApplicationApproved) {
 						location.href = 'https://www.jointutortree.com/tutor/tutor-portal'
 					}
