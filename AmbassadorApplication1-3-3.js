@@ -78,7 +78,7 @@ function createAmbassadorApplicant() {
 			var errorCode = error.code;
 			var errorMessage = error.message;
 			alert(errorMessage)
-		}
+		})
 	//else create an account	
 	} catch {
 	firebase.auth().createUserWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
