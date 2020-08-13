@@ -64,24 +64,19 @@ submitApplicationButton.setAttribute("onClick", "createAmbassadorApplicant()")
 function createAmbassadorApplicant() {
 	
 	//Check if they're a current user
-	try {
-		firebase.auth().signInWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
-			firebase.auth().onAuthStateChanged(function(user) {
-				if (user) {
-					//create new user
-					console.log(user.uid)
-					createFirestoreAmbassadorApplicant(user.uid)
-				}
-			})
+	firebase.auth().signInWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				//create new user
+				console.log(user.uid)
+				createFirestoreAmbassadorApplicant(user.uid)
+			}
 		})
-		.catch(function(error) {
-			var errorCode = error.code;
-			var errorMessage = error.message;
-			alert(errorMessage)
-		})
-	//else create an account	
-	} catch {
-	firebase.auth().createUserWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
+	})
+	.catch(function(error) {
+		console.log(error.code, error.message)
+		
+		firebase.auth().createUserWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
               	var ambassadorID = data.user.uid
 		createFirestoreAmbassadorApplicant(ambassadorID)
 
@@ -92,7 +87,7 @@ function createAmbassadorApplicant() {
             var errorMessage = error.message;
             alert(errorMessage)
           });
-	}
+	})	
 }
 
 function createFirestoreAmbassadorApplicant(ambassadorID) {
