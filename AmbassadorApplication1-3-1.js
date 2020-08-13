@@ -123,7 +123,7 @@ function createFirestoreAmbassadorApplicant(ambassadorID) {
 			document.getElementById('ambassador-thanks').style.display = "flex"
 			document.getElementById('ambassador-submit-form').style.display = "none"
 		        
-		        ambassadorAccountCreated(newAmbassadorDict)
+		        //ambassadorAccountCreated(newAmbassadorDict)
 		      
 			var newAmbassadorMessage = "New Ambassador Application : " + firstNameField.value + " has submitted an application to be a TutorTree ambassador. Their email is " + emailField.value
 			sendSMSTo("4582108156", newAmbassadorMessage)
