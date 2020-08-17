@@ -84,7 +84,8 @@ function preInterviewSubmission(fieldValue){
 		"Interest in Tutoring": fieldValue.whyTutor,	
 		"Academic Year": fieldValue.year,
 		"Pre Invertview Assessment Completed": true,
-		"Pre Invertview Assessment Completed Date": new Date().toISOString()
+		"Pre Invertview Assessment Completed Date": new Date().toISOString(),
+		"Mobile OS": fieldValue.mobileOS
 	});
 
 }
