@@ -211,7 +211,7 @@ function submitAssessment(userID) {
             "qualities" : qualities.value,
             "whyTutor" : whyTutor.value,
             "groups" : groups.value,
-	    "mobileOS" : mobileOS.value
+	    "mobileOS" : mobileOS.value,
         }
         userDB.collection("users")
 		.doc(userID)
