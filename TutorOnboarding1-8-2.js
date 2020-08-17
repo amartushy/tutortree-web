@@ -190,6 +190,7 @@ function submitAssessment(userID) {
         var qualities = document.getElementById("qualities")
         var whyTutor = document.getElementById("whyTutor")
         var groups = document.getElementById("groups")
+	var mobileOS = document.getElementById("mobile-os")
 
         var timeSubmitted = new Date()
 
@@ -209,7 +210,8 @@ function submitAssessment(userID) {
             "experience" : experience.value,
             "qualities" : qualities.value,
             "whyTutor" : whyTutor.value,
-            "groups" : groups.value,            
+            "groups" : groups.value,
+	    "mobileOS" : mobileOS.value
         }
         userDB.collection("users")
 		.doc(userID)
