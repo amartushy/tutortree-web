@@ -17,6 +17,7 @@
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
 				    email = doc.data().email,
+				    school = doc.data().school,
 				    timeApplied = doc.data().timeCreated,
 				    didSubmitPreInterview = doc.data().application.didSubmitPreInterview,
 				    didRequest = doc.data().application.didRequestInterview,
@@ -30,6 +31,7 @@
 						    firstName, 
 						    lastName, 
 						    email, 
+						    school,
 						    timeApplied, 
 						    didSubmitPreInterview, 
 						    didRequest, 
@@ -56,6 +58,7 @@
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
 				    email = doc.data().email,
+				    school = doc.data().school,				    
 				    timeApplied = doc.data().timeCreated,
 				    didSubmitPreInterview = doc.data().application.didSubmitPreInterview,
 				    didRequest = doc.data().application.didRequestInterview,
@@ -70,6 +73,7 @@
 						    firstName, 
 						    lastName, 
 						    email, 
+						    school,
 						    timeApplied, 
 						    didSubmitPreInterview, 
 						    didRequest, 
@@ -87,7 +91,7 @@
 	}
 })
 
-function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, completed, assessmentScore, interviewScore) {
+function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, completed, assessmentScore, interviewScore) {
 	//Main Container
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
@@ -111,6 +115,11 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, timeApplie
 	emailHeader.setAttribute('class', 'applicants-email')
 	emailHeader.innerHTML = email
 	nameBlock.appendChild(emailHeader)
+	
+	var schoolNameHeader = document.createElement('div')
+	schoolNameHeader.setAttribute('class', 'applicants-school')
+	schoolNameHeader.innerHTML = school
+	nameBlock.appendChild(schoolNameHeader)	
 
 	var dateHeader = document.createElement('div')
 	dateHeader.setAttribute('class', 'applicant-date')
