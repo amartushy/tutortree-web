@@ -400,13 +400,9 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 function showAssessment(applicantsID, firstName, lastName) {
 	document.getElementById("assessment-wrapper").style.display = 'flex'
 	
-	var piaHeaderBlock = document.createElement("div")
-	piaHeaderBlock.setAttribute('class', 'piaHeader-block')
-	
 	var tutorNameHeader = document.createElement('h3')
-	tutorNameHeader.setAttribute('class', 'tutor-name')
+	tutorNameHeader.setAttribute('class', 'pia-tutor-name')
 	tutorNameHeader.innerHTML = firstName + ' ' + lastName
-	piaHeaderBlock.appendChild(tutorNameHeader)
 	
 ///////////finish adding the names to each pop up	
 	
