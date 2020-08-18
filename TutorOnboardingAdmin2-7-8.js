@@ -56,8 +56,6 @@
 			}
 			
 			allTutors.forEach(function(doc) {
-				var meghanNotes = ""
-				
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
@@ -371,7 +369,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	
 	var notesField = document.createElement('input')
 	notesField.setAttribute('class', 'notes')
-	notesField.placeholder = meghanNotes
+	notesField.value = meghanNotes
 	noteContainer.appendChild(notesField)
 	
 	notesField.onblur = function() {
