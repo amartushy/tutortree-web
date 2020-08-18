@@ -400,8 +400,8 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 function showAssessment(applicantsID, firstName, lastName) {
 	document.getElementById("assessment-wrapper").style.display = 'flex'
 	
-	var tutorNameHeader = document.getElementById('tutor-prospect-name')
-	tutorNameHeader.innerHTML = firstName + ' ' + lastName
+	var tutorPIANameHeader = document.getElementById('pia-tutor-prospect-name')
+	tutorPIANameHeader.innerHTML = firstName + ' ' + lastName
 	
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
@@ -468,8 +468,8 @@ function showAssessment(applicantsID, firstName, lastName) {
 function showInterview(applicantsID, firstName, lastName) {
 	document.getElementById("interview-wrapper").style.display = 'flex'
 	
-	var tutorNameHeader = document.getElementById('tutor-prospect-name')
-	tutorNameHeader.innerHTML = firstName + ' ' + lastName	
+	var tutorInterviewNameHeader = document.getElementById('interview-tutor-prospect-name')
+	tutorInterviewNameHeader.innerHTML = firstName + ' ' + lastName	
 
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
