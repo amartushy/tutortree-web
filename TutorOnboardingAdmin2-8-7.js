@@ -428,26 +428,26 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	
 	//rejected block
 	var rejectedBlock = document.createElement('div')
-	approvedBlock.setAttribute('class', 'rejected-block')
-	approveWaitListRejectedBlock.appendChild(approvedBlock)
+	rejectedBlock.setAttribute('class', 'rejected-block')
+	approveWaitListRejectedBlock.appendChild(rejectedBlock)
 
-	var approvedHeader = document.createElement('h5')
-	approvedHeader.setAttribute('class', 'rejected-header')
-	approvedHeader.innerHTML = "Approved"
-	approvedBlock.appendChild(facultyHeader)
+	var rejectedHeader = document.createElement('h5')
+	rejectedHeader.setAttribute('class', 'rejected-header')
+	rejectedHeader.innerHTML = "Approved"
+	rejectedBlock.appendChild(rejectedHeader)
 
 	if (isRejected) {
-		var approvedTrue = document.createElement('div')
-		approvedTrue.setAttribute('class', 'admin-complete')
-		approvedTrue.innerHTML = 'check-circle'
-		approvedBlock.appendChild(approvedTrue)
-		waitListBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", "false")')
+		var rejectedTrue = document.createElement('div')
+		rejectedTrue.setAttribute('class', 'admin-complete')
+		rejectedTrue.innerHTML = 'check-circle'
+		rejectedTrue.appendChild(rejectedTrue)
+		rejectedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", "false")')
 	} else {
-		var approvedFalse = document.createElement('div')
-		approvedFalse.setAttribute('class', 'admin-incomplete')
-		approvedFalse.innerHTML = 'circle'
-		approvedBlock.appendChild(approvedFalse)
-		waitListBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", "true")')		
+		var rejectedFalse = document.createElement('div')
+		rejectedFalse.setAttribute('class', 'admin-incomplete')
+		rejectedFalse.innerHTML = 'circle'
+		rejectedFalse.appendChild(rejectedFalse)
+		rejectedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", "true")')		
 	}
 	//approveWaitListRejectedBlock.appendChild(rejectedBlock)	
 	
