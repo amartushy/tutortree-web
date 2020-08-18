@@ -359,16 +359,14 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	var noteContainer = document.createElement('form')
 	noteContainer.setAttribute('class', 'notes-form')
 	
-	var notesField = document.createElement('div')
-	notesField.setAttribute('class', 'notes')
-	
-	noteContainer.appendChild(notesField)
-	
 	var notesHeader = document.createElement('div')
 	notesHeader.setAttribute('class', 'notes-header')
 	notesHeader.innerHTML = 'Notes:'
-	
 	noteContainer.appendChild(notesHeader)
+	
+	var notesField = document.createElement('input')
+	notesField.setAttribute('class', 'notes')
+	noteContainer.appendChild(notesField)
 	
 	applicantBlock.appendChild(noteContainer)
 	
