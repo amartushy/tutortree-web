@@ -402,8 +402,7 @@ function showAssessment(applicantsID, firstName, lastName) {
 	
 	console.log("first name last name " + firstName + ' ' + lastName)
 	
-	var tutorNameHeader = document.createElement('h3')
-	tutorNameHeader.setAttribute('class', 'pia-tutor-name')
+	var tutorNameHeader = document.getElementById('pia-tutor-name')
 	tutorNameHeader.innerHTML = firstName + ' ' + lastName
 	
 ///////////finish adding the names to each pop up	
