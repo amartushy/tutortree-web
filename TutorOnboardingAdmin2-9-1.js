@@ -389,13 +389,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		approvedTrue.setAttribute('class', 'admin-complete')
 		approvedTrue.innerHTML = 'check-circle'
 		approvedBlock.appendChild(approvedTrue)
-		approvedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isFirstApproved", "false")')
+		approvedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isFirstApproved", false)')
 	} else {
 		var approvedFalse = document.createElement('div')
 		approvedFalse.setAttribute('class', 'admin-incomplete')
 		approvedFalse.innerHTML = 'circle'
 		approvedBlock.appendChild(approvedFalse)
-		approvedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isFirstApproved", "true")')
+		approvedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isFirstApproved", true)')
 	}
 
 	//approveWaitListRejectedBlock.appendChild(approvedBlock)	
@@ -415,13 +415,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		waitListTrue.setAttribute('class', 'admin-complete')
 		waitListTrue.innerHTML = 'check-circle'
 		waitListBlock.appendChild(waitListTrue)
-		waitListBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isWaitListed", "false")')
+		waitListBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isWaitListed", false)')
 	} else {
 		var waitListFalse = document.createElement('div')
 		waitListFalse.setAttribute('class', 'admin-incomplete')
 		waitListFalse.innerHTML = 'circle'
 		waitListBlock.appendChild(waitListFalse)
-		waitListBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isWaitListed", "true")')		
+		waitListBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isWaitListed", true)')		
 	}
 	
 	//approveWaitListRejectedBlock.appendChild(waitListBlock)
@@ -433,7 +433,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 
 	var rejectedHeader = document.createElement('h5')
 	rejectedHeader.setAttribute('class', 'rejected-header')
-	rejectedHeader.innerHTML = "Approved"
+	rejectedHeader.innerHTML = "Rejected"
 	rejectedBlock.appendChild(rejectedHeader)
 
 	if (isRejected) {
@@ -441,13 +441,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		rejectedTrue.setAttribute('class', 'admin-complete')
 		rejectedTrue.innerHTML = 'check-circle'
 		rejectedBlock.appendChild(rejectedTrue)
-		rejectedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", "false")')
+		rejectedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", false)')
 	} else {
 		var rejectedFalse = document.createElement('div')
 		rejectedFalse.setAttribute('class', 'admin-incomplete')
 		rejectedFalse.innerHTML = 'circle'
 		rejectedBlock.appendChild(rejectedFalse)
-		rejectedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", "true")')		
+		rejectedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", true)')		
 	}
 	//approveWaitListRejectedBlock.appendChild(rejectedBlock)	
 	
@@ -937,7 +937,7 @@ function grantTutorPrivileges(applicantsID, applicantsEmail) {
 function updateStatus(applicantsID, fieldToUpdate, booleanValue) {
 	var userDB = firebase.firestore()
 	var stringToUpdate = "application." + fieldToUpdate
-	console.log("I ran here, this is stringToUpdate"+stringToUpdate)
+	console.log("I ran here, this is stringToUpdate "+ stringToUpdate)
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
 		
 		userDB.collection("users")
