@@ -13,7 +13,9 @@
 			}
 			
 			allTutors.forEach(function(doc) {	
-        			var applicantID = doc.id,
+        			var meghanNotes = ""
+				
+				var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
 				    email = doc.data().email,
@@ -26,7 +28,12 @@
 				    didFaculty = doc.data().application.uploadedFaculty,
 				    assessmentScore = doc.data().application.assessmentScore,
 				    interviewScore = doc.data().application.interviewScore,
-				    completed = false				    
+				    completed = false,
+				    try{
+					    meghanNotes = doc.data().application.meghanNotes
+				    } catch {
+					    meghanNotes = ""
+				    }				    
 				buildApplicantBlock(applicantID, 
 						    firstName, 
 						    lastName, 
@@ -40,7 +47,8 @@
 						    didFaculty,
 						    completed,
 						    assessmentScore,
-						    interviewScore)
+						    interviewScore,
+						    meghanNotes)
 			})
 			appendToApplicantArea()
 		})
@@ -53,7 +61,9 @@
 				completedApplicantArea.removeChild(completedApplicantArea.firstChild)
 			}
 			
-			allTutors.forEach(function(doc) {				
+			allTutors.forEach(function(doc) {
+				var meghanNotes = ""
+				
         			var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
@@ -67,7 +77,13 @@
 				    didFaculty = doc.data().application.uploadedFaculty,
 				    assessmentScore = doc.data().application.assessmentScore,
 				    interviewScore = doc.data().application.interviewScore,
-				    completed = true
+				    completed = true,
+				    try{
+					    meghanNotes = doc.data().application.meghanNotes
+				    } catch {
+					    meghanNotes = ""
+				    }
+				    
 				    
 				buildApplicantBlock(applicantID, 
 						    firstName, 
@@ -82,7 +98,8 @@
 						    didFaculty,
 						    completed,
 						    assessmentScore,
-						    interviewScore)
+						    interviewScore,
+						    meghanNotes)
 			})
 			appendToCompletedApplicantArea()
 		})
@@ -91,7 +108,7 @@
 	}
 })
 
-function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, completed, assessmentScore, interviewScore) {
+function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, completed, assessmentScore, interviewScore, meghanNotes) {
 	//Main Container
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
@@ -361,12 +378,19 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	
 	var notesHeader = document.createElement('div')
 	notesHeader.setAttribute('class', 'notes-header')
-	notesHeader.innerHTML = 'Notes:'
+	notesHeader.innerHTML = "Megan's notes:"
 	noteContainer.appendChild(notesHeader)
 	
 	var notesField = document.createElement('input')
 	notesField.setAttribute('class', 'notes')
+	notesField.placeholder = meghanNotes
 	noteContainer.appendChild(notesField)
+	
+	notesField.onblur = function() {
+		userDB.collection("users")
+			.doc(applicantID)
+			.update( { "application.meghanNotes" : notesField.value } )
+	}
 	
 	applicantBlock.appendChild(noteContainer)
 	
