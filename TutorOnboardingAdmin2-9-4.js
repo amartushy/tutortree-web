@@ -942,7 +942,7 @@ function updateStatus(applicantsID, fieldToUpdate, booleanValue) {
 		
 		userDB.collection("users")
 				.doc(applicantsID)
-				.update( { stringToUpdate : booleanValue } )
+				.update( { 'stringToUpdate' : booleanValue } )
 	})
 }
 
