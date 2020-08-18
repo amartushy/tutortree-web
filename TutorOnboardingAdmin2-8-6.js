@@ -27,7 +27,10 @@
 				    assessmentScore = doc.data().application.assessmentScore,
 				    interviewScore = doc.data().application.interviewScore,
 				    completed = false,
-				    meghanNotes = doc.data().application.meghanNotes
+				    meghanNotes = doc.data().application.meghanNotes,
+				    isFirstApproved = doc.data().application.isFirstApproved,
+				    isWaitListed = doc.data().application.isWaitListed,
+				    isRejected = doc.data().application.isRejected
 				buildApplicantBlock(applicantID, 
 						    firstName, 
 						    lastName, 
@@ -42,7 +45,10 @@
 						    completed,
 						    assessmentScore,
 						    interviewScore,
-						    meghanNotes)
+						    meghanNotes,
+						    isFirstApproved,
+						    isWaitListed,
+						    isRejected)
 			})
 			appendToApplicantArea()
 		})
@@ -70,7 +76,10 @@
 				    assessmentScore = doc.data().application.assessmentScore,
 				    interviewScore = doc.data().application.interviewScore,
 				    completed = true,
-				    meghanNotes = doc.data().application.meghanNotes
+				    meghanNotes = doc.data().application.meghanNotes,
+				    isFirstApproved = doc.data().application.isFirstApproved,
+				    isWaitListed = doc.data().application.isWaitListed,
+				    isRejected = doc.data().application.isRejected
 				buildApplicantBlock(applicantID, 
 						    firstName, 
 						    lastName, 
@@ -85,7 +94,10 @@
 						    completed,
 						    assessmentScore,
 						    interviewScore,
-						    meghanNotes)
+						    meghanNotes,
+						    isFirstApproved,
+						    isWaitListed,
+						    isRejected)
 			})
 			appendToCompletedApplicantArea()
 		})
@@ -94,7 +106,7 @@
 	}
 })
 
-function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, completed, assessmentScore, interviewScore, meghanNotes) {
+function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, completed, assessmentScore, interviewScore, meghanNotes, isFirstApproved, isWaitListed, isRejected) {
 	//Main Container
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
@@ -357,6 +369,89 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		interviewScoreContainer.appendChild(interviewScoreField)
 
 	applicantBlock.appendChild(formContainer)
+	
+	//Approved, wait-listed or rejected block
+	var approveWaitListRejectedBlock = document.createElement('div')
+	approveWaitListRejectedBlock.setAttribute('class', 'approve-wait-list-rejected-block')
+	
+	//approved block
+	var approvedBlock = document.createElement('div')
+	approvedBlock.setAttribute('class', 'approved-block')
+	approveWaitListRejectedBlock.appendChild(approvedBlock)
+
+	var approvedHeader = document.createElement('h5')
+	approvedHeader.setAttribute('class', 'approved-tutor-header')
+	approvedHeader.innerHTML = "Approved"
+	approvedBlock.appendChild(approvedHeader)
+
+	if (isFirstApproved) {
+		var approvedTrue = document.createElement('div')
+		approvedTrue.setAttribute('class', 'admin-complete')
+		approvedTrue.innerHTML = 'check-circle'
+		approvedBlock.appendChild(approvedTrue)
+		approvedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isFirstApproved", "false")')
+	} else {
+		var approvedFalse = document.createElement('div')
+		approvedFalse.setAttribute('class', 'admin-incomplete')
+		approvedFalse.innerHTML = 'circle'
+		approvedBlock.appendChild(approvedFalse)
+		approvedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isFirstApproved", "true")')
+	}
+
+	//approveWaitListRejectedBlock.appendChild(approvedBlock)	
+	
+	//wait-list block
+	var waitListBlock = document.createElement('div')
+	waitListBlock.setAttribute('class', 'wait-list-block')
+	approveWaitListRejectedBlock.appendChild(waitListBlock)
+
+	var waitListHeader = document.createElement('h5')
+	waitListHeader.setAttribute('class', 'wait-list-header')
+	waitListHeader.innerHTML = "Wait List"
+	waitListBlock.appendChild(waitListHeader)
+
+	if (isWaitListed) {
+		var waitListTrue = document.createElement('div')
+		waitListTrue.setAttribute('class', 'admin-complete')
+		waitListTrue.innerHTML = 'check-circle'
+		waitListBlock.appendChild(waitListTrue)
+		waitListBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isWaitListed", "false")')
+	} else {
+		var waitListFalse = document.createElement('div')
+		waitListFalse.setAttribute('class', 'admin-incomplete')
+		waitListFalse.innerHTML = 'circle'
+		waitListBlock.appendChild(waitListFalse)
+		waitListBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isWaitListed", "true")')		
+	}
+	
+	//approveWaitListRejectedBlock.appendChild(waitListBlock)
+	
+	//rejected block
+	var rejectedBlock = document.createElement('div')
+	approvedBlock.setAttribute('class', 'rejected-block')
+	approveWaitListRejectedBlock.appendChild(approvedBlock)
+
+	var approvedHeader = document.createElement('h5')
+	approvedHeader.setAttribute('class', 'rejected-header')
+	approvedHeader.innerHTML = "Approved"
+	approvedBlock.appendChild(facultyHeader)
+
+	if (isRejected) {
+		var approvedTrue = document.createElement('div')
+		approvedTrue.setAttribute('class', 'admin-complete')
+		approvedTrue.innerHTML = 'check-circle'
+		approvedBlock.appendChild(approvedTrue)
+		waitListBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", "false")')
+	} else {
+		var approvedFalse = document.createElement('div')
+		approvedFalse.setAttribute('class', 'admin-incomplete')
+		approvedFalse.innerHTML = 'circle'
+		approvedBlock.appendChild(approvedFalse)
+		waitListBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", "true")')		
+	}
+	//approveWaitListRejectedBlock.appendChild(rejectedBlock)	
+	
+	applicantBlock.appendChild(approveWaitListRejectedBlock)	
 
 	
 	var noteContainer = document.createElement('form')
@@ -839,6 +934,15 @@ function grantTutorPrivileges(applicantsID, applicantsEmail) {
 	
 }
 
+function updateStatus(applicantsID, fieldToUpdate, booleanValue) {
+	var userDB = firebase.firestore()
+	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		
+		userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.'+fieldToUpdate+'" : booleanValue } )
+	})
+}
 
 //Sort applicants by date applied
 function sortNumberApplicant(a,b) {
