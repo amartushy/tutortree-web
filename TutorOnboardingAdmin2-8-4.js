@@ -174,7 +174,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		requestCompleted.setAttribute('class', 'admin-complete')
 		requestCompleted.innerHTML = 'check-circle'
 		requestedBlock.appendChild(requestCompleted)
-		requestedBlock.setAttribute('onClick', 'showInterview("'+applicantID+'")')
+		requestedBlock.setAttribute('onClick', 'showInterview("'+applicantID+'", "'+firstName+'", "'+lastName+'")')
 	} else {
 		var requestIncomplete = document.createElement('div')
 		requestIncomplete.setAttribute('class', 'admin-incomplete')
@@ -400,12 +400,8 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 function showAssessment(applicantsID, firstName, lastName) {
 	document.getElementById("assessment-wrapper").style.display = 'flex'
 	
-	console.log("first name last name " + firstName + ' ' + lastName)
-	
-	var tutorNameHeader = document.getElementById('pia-tutor-name')
+	var tutorNameHeader = document.getElementById('tutor-prospect-name')
 	tutorNameHeader.innerHTML = firstName + ' ' + lastName
-	
-///////////finish adding the names to each pop up	
 	
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
@@ -469,8 +465,11 @@ function showAssessment(applicantsID, firstName, lastName) {
 	})
 }
 
-function showInterview(applicantsID) {
+function showInterview(applicantsID, firstName, lastName) {
 	document.getElementById("interview-wrapper").style.display = 'flex'
+	
+	var tutorNameHeader = document.getElementById('tutor-prospect-name')
+	tutorNameHeader.innerHTML = firstName + ' ' + lastName	
 
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
