@@ -354,6 +354,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		interviewScoreContainer.appendChild(interviewScoreField)
 
 	applicantBlock.appendChild(formContainer)
+
+	var noteContainer = document.createElement('form')
+	noteContainer.setAttribute('class', 'notes-form')
+	var notesField = document.createElement('div')
+	notesField.setAttribute('class', 'notes')
+	
+	applicantBlock.appendChild(noteContainer)
 	
 	//Grant Access Code Block
 	var accessButton = document.createElement('div')
