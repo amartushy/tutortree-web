@@ -937,12 +937,12 @@ function grantTutorPrivileges(applicantsID, applicantsEmail) {
 function updateStatus(applicantsID, fieldToUpdate, booleanValue) {
 	var userDB = firebase.firestore()
 	var stringToUpdate = "application." + fieldToUpdate
-	console.log("I ran here, this is stringToUpdate "+ stringToUpdate+ " plus booleanValue " +booleanValue)
+	console.log("I ran here, this is stringToUpdate "+ stringToUpdate+ " plus booleanValue " +booleanValue +" applicants id " + applicantsID)
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
 		
 		userDB.collection("users")
 				.doc(applicantsID)
-				.update( { 'stringToUpdate' : booleanValue } )
+				.update( { "stringToUpdate" : booleanValue } )
 	})
 }
 
