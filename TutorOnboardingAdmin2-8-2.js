@@ -150,7 +150,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		assessmentCompleted.setAttribute('class', 'admin-complete')
 		assessmentCompleted.innerHTML = 'check-circle'
 		preInterviewBlock.appendChild(assessmentCompleted)
-		preInterviewBlock.setAttribute('onClick', 'showAssessment("'+applicantID+'", "'+email+'", "'+firstName+'", "'+lastName+'")')
+		preInterviewBlock.setAttribute('onClick', 'showAssessment("'+applicantID+'", "'+firstName+'", "'+lastName+'")')
 	} else {
 		var assessmentIncomplete = document.createElement('div')
 		assessmentIncomplete.setAttribute('class', 'admin-incomplete')
@@ -399,7 +399,9 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 
 function showAssessment(applicantsID, firstName, lastName) {
 	document.getElementById("assessment-wrapper").style.display = 'flex'
+	
 	console.log("first name last name " + firstName + ' ' + lastName)
+	
 	var tutorNameHeader = document.createElement('h3')
 	tutorNameHeader.setAttribute('class', 'pia-tutor-name')
 	tutorNameHeader.innerHTML = firstName + ' ' + lastName
