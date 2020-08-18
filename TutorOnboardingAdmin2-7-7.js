@@ -13,8 +13,6 @@
 			}
 			
 			allTutors.forEach(function(doc) {	
-        			var meghanNotes = ""
-				
 				var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
@@ -29,11 +27,7 @@
 				    assessmentScore = doc.data().application.assessmentScore,
 				    interviewScore = doc.data().application.interviewScore,
 				    completed = false,
-				    try{
-					    meghanNotes = doc.data().application.meghanNotes
-				    } catch {
-					    meghanNotes = ""
-				    }				    
+				    meghanNotes = doc.data().application.meghanNotes
 				buildApplicantBlock(applicantID, 
 						    firstName, 
 						    lastName, 
@@ -78,13 +72,7 @@
 				    assessmentScore = doc.data().application.assessmentScore,
 				    interviewScore = doc.data().application.interviewScore,
 				    completed = true,
-				    try{
-					    meghanNotes = doc.data().application.meghanNotes
-				    } catch {
-					    meghanNotes = ""
-				    }
-				    
-				    
+				    meghanNotes = doc.data().application.meghanNotes
 				buildApplicantBlock(applicantID, 
 						    firstName, 
 						    lastName, 
