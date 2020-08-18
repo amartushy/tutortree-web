@@ -440,13 +440,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		var rejectedTrue = document.createElement('div')
 		rejectedTrue.setAttribute('class', 'admin-complete')
 		rejectedTrue.innerHTML = 'check-circle'
-		rejectedTrue.appendChild(rejectedTrue)
+		rejectedBlock.appendChild(rejectedTrue)
 		rejectedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", "false")')
 	} else {
 		var rejectedFalse = document.createElement('div')
 		rejectedFalse.setAttribute('class', 'admin-incomplete')
 		rejectedFalse.innerHTML = 'circle'
-		rejectedFalse.appendChild(rejectedFalse)
+		rejectedBlock.appendChild(rejectedFalse)
 		rejectedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", "true")')		
 	}
 	//approveWaitListRejectedBlock.appendChild(rejectedBlock)	
