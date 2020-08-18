@@ -389,13 +389,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		approvedTrue.setAttribute('class', 'admin-complete')
 		approvedTrue.innerHTML = 'check-circle'
 		approvedBlock.appendChild(approvedTrue)
-		approvedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isFirstApproved", false)')
+		approvedBlock.setAttribute('onClick', 'updateisFirstApprovedStatus("'+applicantID+'", false)')
 	} else {
 		var approvedFalse = document.createElement('div')
 		approvedFalse.setAttribute('class', 'admin-incomplete')
 		approvedFalse.innerHTML = 'circle'
 		approvedBlock.appendChild(approvedFalse)
-		approvedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isFirstApproved", true)')
+		approvedBlock.setAttribute('onClick', 'updateisFirstApprovedStatus("'+applicantID+'", true)')
 	}
 
 	//approveWaitListRejectedBlock.appendChild(approvedBlock)	
@@ -415,13 +415,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		waitListTrue.setAttribute('class', 'admin-complete')
 		waitListTrue.innerHTML = 'check-circle'
 		waitListBlock.appendChild(waitListTrue)
-		waitListBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isWaitListed", false)')
+		waitListBlock.setAttribute('onClick', 'updateisWaitListStatus("'+applicantID+'", false)')
 	} else {
 		var waitListFalse = document.createElement('div')
 		waitListFalse.setAttribute('class', 'admin-incomplete')
 		waitListFalse.innerHTML = 'circle'
 		waitListBlock.appendChild(waitListFalse)
-		waitListBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isWaitListed", true)')		
+		waitListBlock.setAttribute('onClick', 'updateisWaitListStatus("'+applicantID+'", true)')		
 	}
 	
 	//approveWaitListRejectedBlock.appendChild(waitListBlock)
@@ -441,16 +441,17 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		rejectedTrue.setAttribute('class', 'admin-complete')
 		rejectedTrue.innerHTML = 'check-circle'
 		rejectedBlock.appendChild(rejectedTrue)
-		rejectedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", false)')
+		rejectedBlock.setAttribute('onClick', 'updateisRejectedStatus("'+applicantID+'", false)')
 	} else {
 		var rejectedFalse = document.createElement('div')
 		rejectedFalse.setAttribute('class', 'admin-incomplete')
 		rejectedFalse.innerHTML = 'circle'
 		rejectedBlock.appendChild(rejectedFalse)
-		rejectedBlock.setAttribute('onClick', 'updateStatus("'+applicantID+'", "isRejected", true)')		
+		rejectedBlock.setAttribute('onClick', 'updateisRejectedStatus("'+applicantID+'", true)')		
 	}
 	//approveWaitListRejectedBlock.appendChild(rejectedBlock)	
 	
+
 	applicantBlock.appendChild(approveWaitListRejectedBlock)	
 
 	
@@ -934,17 +935,36 @@ function grantTutorPrivileges(applicantsID, applicantsEmail) {
 	
 }
 
-function updateStatus(applicantsID, fieldToUpdate, booleanValue) {
+function updateisFirstApprovedStatus(applicantsID, booleanValue) {
 	var userDB = firebase.firestore()
-	var stringToUpdate = "application." + fieldToUpdate
-	var stringToUpdateWithQuotes = '"'+stringToUpdate+'"'
-	console.log("I ran here, this is stringToUpdate "+ stringToUpdate+ " plus booleanValue " +booleanValue +" applicants id " + applicantsID)
-	console.log("stringToUpdateWithQuotes " + stringToUpdateWithQuotes)
+
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
 		
 		userDB.collection("users")
 				.doc(applicantsID)
-				.update( { stringToUpdateWithQuotes : booleanValue } )
+				.update( { "application.isFirstApproved" : booleanValue } )
+	})
+}
+
+function updateisWaitListStatus(applicantsID, booleanValue) {
+	var userDB = firebase.firestore()
+
+	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		
+		userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.isWaitListed" : booleanValue } )
+	})
+}
+
+function updateisRejectedStatus(applicantsID, booleanValue) {
+	var userDB = firebase.firestore()
+
+	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		
+		userDB.collection("users")
+				.doc(applicantsID)
+				.update( { "application.isRejected" : booleanValue } )
 	})
 }
 
