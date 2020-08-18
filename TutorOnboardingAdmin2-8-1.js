@@ -399,7 +399,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 
 function showAssessment(applicantsID, firstName, lastName) {
 	document.getElementById("assessment-wrapper").style.display = 'flex'
-	
+	console.log("first name last name " + firstName + ' ' + lastName)
 	var tutorNameHeader = document.createElement('h3')
 	tutorNameHeader.setAttribute('class', 'pia-tutor-name')
 	tutorNameHeader.innerHTML = firstName + ' ' + lastName
