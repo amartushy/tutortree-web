@@ -389,13 +389,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		approvedTrue.setAttribute('class', 'admin-complete')
 		approvedTrue.innerHTML = 'check-circle'
 		approvedBlock.appendChild(approvedTrue)
-		approvedBlock.setAttribute('onClick', 'updateisFirstApprovedStatus("'+applicantID+'", false)')
+		approvedBlock.setAttribute('onClick', 'updateisFirstApprovedStatus("'+applicantID+'", "'+email+'", false)')
 	} else {
 		var approvedFalse = document.createElement('div')
 		approvedFalse.setAttribute('class', 'admin-incomplete')
 		approvedFalse.innerHTML = 'circle'
 		approvedBlock.appendChild(approvedFalse)
-		approvedBlock.setAttribute('onClick', 'updateisFirstApprovedStatus("'+applicantID+'", true)')
+		approvedBlock.setAttribute('onClick', 'updateisFirstApprovedStatus("'+applicantID+'", "'+email+'", true)')
 	}
 
 	//approveWaitListRejectedBlock.appendChild(approvedBlock)	
@@ -415,13 +415,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		waitListTrue.setAttribute('class', 'admin-complete')
 		waitListTrue.innerHTML = 'check-circle'
 		waitListBlock.appendChild(waitListTrue)
-		waitListBlock.setAttribute('onClick', 'updateisWaitListStatus("'+applicantID+'", false)')
+		waitListBlock.setAttribute('onClick', 'updateisWaitListStatus("'+applicantID+'", "'+email+'", false)')
 	} else {
 		var waitListFalse = document.createElement('div')
 		waitListFalse.setAttribute('class', 'admin-incomplete')
 		waitListFalse.innerHTML = 'circle'
 		waitListBlock.appendChild(waitListFalse)
-		waitListBlock.setAttribute('onClick', 'updateisWaitListStatus("'+applicantID+'", true)')		
+		waitListBlock.setAttribute('onClick', 'updateisWaitListStatus("'+applicantID+'", "'+email+'", true)')		
 	}
 	
 	//approveWaitListRejectedBlock.appendChild(waitListBlock)
@@ -441,13 +441,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		rejectedTrue.setAttribute('class', 'admin-complete')
 		rejectedTrue.innerHTML = 'check-circle'
 		rejectedBlock.appendChild(rejectedTrue)
-		rejectedBlock.setAttribute('onClick', 'updateisRejectedStatus("'+applicantID+'", false)')
+		rejectedBlock.setAttribute('onClick', 'updateisRejectedStatus("'+applicantID+'", "'+email+'", false)')
 	} else {
 		var rejectedFalse = document.createElement('div')
 		rejectedFalse.setAttribute('class', 'admin-incomplete')
 		rejectedFalse.innerHTML = 'circle'
 		rejectedBlock.appendChild(rejectedFalse)
-		rejectedBlock.setAttribute('onClick', 'updateisRejectedStatus("'+applicantID+'", true)')		
+		rejectedBlock.setAttribute('onClick', 'updateisRejectedStatus("'+applicantID+'", "'+email+'", true)')		
 	}
 	//approveWaitListRejectedBlock.appendChild(rejectedBlock)	
 	
@@ -925,17 +925,17 @@ function grantTutorPrivileges(applicantsID, applicantsEmail) {
 		if(!doc.data().tutorApplicationApproved) {
 			var acceptanceMessage = "Your application to tutor has been approved. Your tutor coordinator will reach out soon with more information."
 			sendEmailTo(applicantsEmail, 'Welcome to TutorTree!', acceptanceMessage)
-			acceptedOrRejectedTutor(true, applicantsEmail)
+			grantedTutorAccess(true, applicantsEmail)
 		} else {
 			var declinedMessage = "Unfortunately at this time your application to tutor has been declined. Your tutor coordinator will reach out soon with more information."
 			sendEmailTo(applicantsEmail, 'Tutor Application Status', declinedMessage)
-			acceptedOrRejectedTutor(false, applicantsEmail)
+			grantedTutorAccess(false, applicantsEmail)
 		}
 	})
 	
 }
 
-function updateisFirstApprovedStatus(applicantsID, booleanValue) {
+function updateisFirstApprovedStatus(applicantsID, email, booleanValue) {
 	var userDB = firebase.firestore()
 
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
@@ -944,9 +944,10 @@ function updateisFirstApprovedStatus(applicantsID, booleanValue) {
 				.doc(applicantsID)
 				.update( { "application.isFirstApproved" : booleanValue } )
 	})
+	tutorApplicationResolution("isFirstApproved", booleanValue, email)
 }
 
-function updateisWaitListStatus(applicantsID, booleanValue) {
+function updateisWaitListStatus(applicantsID, email, booleanValue) {
 	var userDB = firebase.firestore()
 
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
@@ -955,9 +956,10 @@ function updateisWaitListStatus(applicantsID, booleanValue) {
 				.doc(applicantsID)
 				.update( { "application.isWaitListed" : booleanValue } )
 	})
+	tutorApplicationResolution("isWaitListed", booleanValue, email)
 }
 
-function updateisRejectedStatus(applicantsID, booleanValue) {
+function updateisRejectedStatus(applicantsID, email, booleanValue) {
 	var userDB = firebase.firestore()
 
 	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
@@ -966,6 +968,7 @@ function updateisRejectedStatus(applicantsID, booleanValue) {
 				.doc(applicantsID)
 				.update( { "application.isRejected" : booleanValue } )
 	})
+	tutorApplicationResolution("isRejected", booleanValue, email)
 }
 
 //Sort applicants by date applied
