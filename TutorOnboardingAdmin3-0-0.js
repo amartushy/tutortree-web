@@ -944,7 +944,7 @@ function updateisFirstApprovedStatus(applicantsID, email, booleanValue) {
 				.doc(applicantsID)
 				.update( { "application.isFirstApproved" : booleanValue } )
 	})
-	tutorApplicationResolution("isFirstApproved", booleanValue, email)
+	isFirstApprovedTutorAppResolution(booleanValue, email)
 }
 
 function updateisWaitListStatus(applicantsID, email, booleanValue) {
@@ -956,7 +956,7 @@ function updateisWaitListStatus(applicantsID, email, booleanValue) {
 				.doc(applicantsID)
 				.update( { "application.isWaitListed" : booleanValue } )
 	})
-	tutorApplicationResolution("isWaitListed", booleanValue, email)
+	isWaitListedTutorAppResolution(booleanValue, email)
 }
 
 function updateisRejectedStatus(applicantsID, email, booleanValue) {
@@ -968,7 +968,7 @@ function updateisRejectedStatus(applicantsID, email, booleanValue) {
 				.doc(applicantsID)
 				.update( { "application.isRejected" : booleanValue } )
 	})
-	tutorApplicationResolution("isRejected", booleanValue, email)
+	isRejectedTutorAppResolution(booleanValue, email)
 }
 
 //Sort applicants by date applied
