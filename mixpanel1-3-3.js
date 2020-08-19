@@ -191,20 +191,60 @@ function reverseInterviewCompleted(applicantsID, email){
 
 }
 
-//This funciton executes when a tutor user is approvaed and offered a tutoring position
-//Grant access button
+//This funciton executes when a tutor user is approvaed but still might need to complete some steps to be granted access
+//Approved button
 
-function tutorApplicationResolution(resolutionFieldName, booleanValue, email){
+function isFirstApprovedTutorAppResolution(booleanValue, email){
 	mixpanel.identify(email);
 	
 	mixpanel.track("Tutor Application Resolution", {
-		"Tutor Application Resolution" : resolutionFieldName,
-		resolutionFieldName : booleanValue
+		"Tutor Application Resolution" : "isFirstApproved",
+		"Tutor Prospect is Approved" : booleanValue
 	});
 	
 	mixpanel.people.set({
-		"Tutor Application Resolution" : resolutionFieldName,
-		resolutionFieldName : booleanValue,
+		"Tutor Application Resolution" : "isFirstApproved",
+		"Tutor Prospect is Approved" : booleanValue,
+		"Reached Resolution Stage": true,
+		"Resolution Stage Date": new Date().toISOString()
+	});
+
+}
+
+//This funciton executes when a tutor user is waitlisted
+//Wait listed button
+
+function isWaitListedTutorAppResolution(booleanValue, email){
+	mixpanel.identify(email);
+	
+	mixpanel.track("Tutor Application Resolution", {
+		"Tutor Application Resolution" : "isWaitListed",
+		"Tutor Prospect is Waitlisted" : booleanValue
+	});
+	
+	mixpanel.people.set({
+		"Tutor Application Resolution" : "isWaitListed",
+		"Tutor Prospect is Waitlisted" : booleanValue,
+		"Reached Resolution Stage": true,
+		"Resolution Stage Date": new Date().toISOString()
+	});
+
+}
+
+//This funciton executes when a tutor user is rejected
+//Rejcted button
+
+function isRejectedTutorAppResolution(booleanValue, email){
+	mixpanel.identify(email);
+	
+	mixpanel.track("Tutor Application Resolution", {
+		"Tutor Application Resolution" : "isRejected",
+		"Tutor Prospect is Rejected" : booleanValue
+	});
+	
+	mixpanel.people.set({
+		"Tutor Application Resolution" : "isRejected",
+		"Tutor Prospect is Rejected" : booleanValue,
 		"Reached Resolution Stage": true,
 		"Resolution Stage Date": new Date().toISOString()
 	});
