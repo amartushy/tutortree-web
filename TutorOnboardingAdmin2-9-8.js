@@ -460,7 +460,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	
 	var notesHeader = document.createElement('div')
 	notesHeader.setAttribute('class', 'notes-header')
-	notesHeader.innerHTML = "Megan's notes:"
+	notesHeader.innerHTML = "Notes:"
 	noteContainer.appendChild(notesHeader)
 	
 	var notesField = document.createElement('input')
