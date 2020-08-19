@@ -247,10 +247,12 @@ var isScheduleShowing = false
 function scheduleInterview(userID) {
 	var applicantsName = ''
 	var applicantsEmail = ''
+	var applicantsSchool = ''
 	var userDB = firebase.firestore()
 	userDB.collection("users").doc(userID).get().then(function(doc) {
 		applicantsName = doc.data().firstName + ' ' + doc.data().lastName
 		applicantsEmail = doc.data().email
+		applicantsSchool = doc.data().school
 		if ( doc.get("application.didRequestInterview") ) {
 			alert("Your tutor coordinator has been notified. Please check your email for a time to meet.")
 		} else {
@@ -276,7 +278,7 @@ function scheduleInterview(userID) {
 		.update( { "application.didRequestInterview" : true } )
 		document.getElementById("interview-complete").style.display = "flex"
 		document.getElementById("request-interview-form").style.display = "none"
-		var messageString = applicantsName + ' has completed their PIA and is requesting to schedule an interview. Their email is ' + applicantsEmail
+		var messageString = applicantsName + ' has completed their PIA and is requesting to schedule an interview. Their email is ' + applicantsEmail + ', their school is ' + applicantsSchool
 		sendEmailTo('mcloftus@jointutortree.com', 'New Interview Schedule Request', messageString)
 		requestVirtualInterview()
 	})
