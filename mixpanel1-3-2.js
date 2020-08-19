@@ -194,17 +194,37 @@ function reverseInterviewCompleted(applicantsID, email){
 //This funciton executes when a tutor user is approvaed and offered a tutoring position
 //Grant access button
 
-function acceptedOrRejectedTutor(booleanValue, email){
-	mixpanel.identify(email);	
+function tutorApplicationResolution(resolutionFieldName, booleanValue, email){
+	mixpanel.identify(email);
 	
-	mixpanel.track("Offered or Rejected Tutor Application", {
-		"Offered Tutoring Position" : booleanValue
+	mixpanel.track("Tutor Application Resolution", {
+		"Tutor Application Resolution" : resolutionFieldName,
+		resolutionFieldName : booleanValue
 	});
 	
 	mixpanel.people.set({
-		"Tutor Reached Offer Stage": true,
-		"Offered Tutoring Position": booleanValue,
-		"Offered or Rejected Tutoring Position Date": new Date().toISOString()
+		"Tutor Application Resolution" : resolutionFieldName,
+		resolutionFieldName : booleanValue,
+		"Reached Resolution Stage": true,
+		"Resolution Stage Date": new Date().toISOString()
+	});
+
+}
+
+//This funciton executes when a tutor user is approvaed and offered a tutoring position
+//Grant access button
+
+function grantedTutorAccess(booleanValue, email){
+	mixpanel.identify(email);	
+	
+	mixpanel.track("Granted in-App Tutor Access", {
+		"Granted in-App Tutor Access" : booleanValue
+	});
+	
+	mixpanel.people.set({
+		"Tutor Reached Grant Access Stage": true,
+		"Granted in-App Tutor Access": booleanValue,
+		"Granted in-App Tutor Access Date": new Date().toISOString()
 	});
 
 }
