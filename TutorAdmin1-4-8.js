@@ -40,7 +40,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    school = doc.data().school,
 				    timeApplied = doc.data().timeApplied,
 				    status = doc.data.tutorApplicantStatus
-
+				console.log(status)
 				userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(async function(applicant) {
 					var 	didSubmitPreInterview = applicant.data().didSubmitPreInterview,
 						didRequest = applicant.data().didRequestInterview,
@@ -366,17 +366,22 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	
 	applicantBlock.appendChild(tutorPermissionsBlock)
 	if (status == "rejected") {
+		console.log("status is rejected")
 		updateRejectedArray(timeApplied)
 		tutorPermissionsBlock.appendChild(approveTutorButton)
 		tutorPermissionsBlock.appendChild(deleteTutorButton)
 
 	} else if (status == "pending"){
+				console.log("status is pending")
+
 		updatePendingArray(timeApplied)
 		tutorPermissionsBlock.appendChild(rejectTutorButton)
 		tutorPermissionsBlock.appendChild(approveTutorButton)
 		tutorPermissionsBlock.appendChild(deleteTutorButton)
 
 	} else if (status == "accepted") {
+				console.log("status is accepted")
+
 		updateRejectedArray(timeApplied)
 		tutorPermissionsBlock.appendChild(ambassadorApproveButton)
 	}
