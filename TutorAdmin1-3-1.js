@@ -34,7 +34,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 			var numTutors = Object.keys(allTutors)
 			console.log(numTutors)
 			console.log(numTutors.length)
-			console.log("This is the last tutor: " + numTutors[numTutors.length -1]
+			console.log("This is the last tutor: " + numTutors[numTutors.length -1])
 			var doneLooping = new Promise((resolve, reject) => {
 				allTutors.forEach(function(doc) {
 				
