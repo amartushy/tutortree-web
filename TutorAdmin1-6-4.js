@@ -813,7 +813,7 @@ function showTranscript(applicantsID) {
 
 function showFaculty(applicantsID) {
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
+	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
 		var facultyLink = doc.data().facultyFile
 		window.open(facultyLink)
 	})
