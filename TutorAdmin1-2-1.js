@@ -44,13 +44,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 				
 				userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(function(applicant) {
 					var 	didSubmitPreInterview = applicant.data().didSubmitPreInterview,
-						didRequest = applicant.data().application.didRequestInterview,
-						completedInterview = applicant.data().application.completedInterview,
-						didTranscript = applicant.data().application.uploadedTranscript,
-						didFaculty = applicant.data().application.uploadedFaculty,
-						assessmentScore = applicant.data().application.assessmentScore,
-						interviewScore = applicant.data().application.interviewScore,
-						meghanNotes = applicant.data().application.meghanNotes
+						didRequest = applicant.data().didRequestInterview,
+						completedInterview = applicant.data().completedInterview,
+						didTranscript = applicant.data().uploadedTranscript,
+						didFaculty = applicant.data().uploadedFaculty,
+						assessmentScore = applicant.data().assessmentScore,
+						interviewScore = applicant.data().interviewScore,
+						meghanNotes = applicant.data().meghanNotes
 					
 					buildApplicantBlock(applicantID, 
 					firstName, 
