@@ -885,7 +885,8 @@ function appendToRejectedSection() {
 	for( i=0 ; i < items ; i++ ) {
 		var timestampID = rejectedApplicantArray[i]
 		var rejectedApplicantBlock = document.getElementById(timestampID)
-		rejectedTutorSection.appendChild(rejectedApplicantBlock)
+		var blockClone = rejectedApplicantBlock.cloneNode(true)
+		rejectedTutorSection.appendChild(blockClone)
 	}
 }
 
@@ -905,7 +906,8 @@ function appendToPendingSection() {
 	for( i=0 ; i < items ; i++ ) {
 		var timestampID = pendingApplicantArray[i]
 		var pendingApplicantBlock = document.getElementById(timestampID)
-		pendingTutorSection.appendChild(pendingApplicantBlock)
+		var blockClone = pendingApplicantBlock.cloneNode(true)
+		pendingTutorSection.appendChild(blockClone)
 	}
 }
 
@@ -924,7 +926,8 @@ function appendToAcceptedSection() {
 	for( i=0 ; i < items ; i++ ) {
 		var timestampID = acceptedApplicantArray[i]
 		var acceptedApplicantBlock = document.getElementById(timestampID)
-		acceptedApplicantArray.appendChild(applicantBlock)
+		var blockClone = acceptedApplicantBlock.cloneNode(true)
+		acceptedApplicantArray.appendChild(blockClone)
 	}
 }
 
