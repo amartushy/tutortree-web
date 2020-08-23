@@ -75,6 +75,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 					})
 				   	if (applicantID === numTutors[numTutors.length -1]){
 						console.log(applicantID)
+						appendToRejectedSection()
+						appendToPendingSection()
+						appendToAcceptedSection()
 					}
 				})
 				
