@@ -33,7 +33,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 			
 			var numTutors = []
 			allTutors.forEach(function(doc) {
-				numtutors.push(doc.id)
+				numTutors.push(doc.id)
 			})
 			console.log(numTutors[numTutors.length -1 ])
 			var doneLooping = new Promise((resolve, reject) => {
