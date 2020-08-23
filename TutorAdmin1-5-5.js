@@ -424,7 +424,7 @@ function approveTutor(applicantsID, applicantsEmail) {
 		userDB.collection("userTest")
 			.doc(applicantsID)
 			.update( {'tutorApplicantStatus' : "accepted",
-				  'istutor' : true)
+				  'istutor' : true})
 		//Send Email
 		var acceptanceMessage = "Your application to tutor has been approved! Your tutor coordinator will reach out soon with more information."
 		sendEmailTo(applicantsEmail, 'Welcome to TutorTree!', acceptanceMessage)
@@ -443,7 +443,7 @@ function rejectTutor(applicantsID, applicantsEmail) {
 		userDB.collection("userTest")
 			.doc(applicantsID)
 			.update( {'tutorApplicantStatus' : "rejected",
-				  'istutor' : false)
+				  'istutor' : false})
 		//Send Email
 		var acceptanceMessage = "Unfortunately at this time we were unable to offer you a position as a tutor. Your tutor coordinator will reach out soon with more information."
 		sendEmailTo(applicantsEmail, 'Tutor Application Status', acceptanceMessage)	  
@@ -458,7 +458,7 @@ function deleteTutor(applicantsID, applicantsEmail) {
 		userDB.collection("userTest")
 			.doc(applicantsID)
 			.update( {'tutorApplicantStatus' : "deleted",
-				  'istutor' : false)			  	
+				  'istutor' : false})			  	
 	})	
 }								
 								
