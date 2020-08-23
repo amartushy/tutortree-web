@@ -15,7 +15,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 		var applicantArea = document.getElementById('applicant-section')
 
 		userDB.collection("userTest").where("tutorApplicantStatus", "in", ["rejected", "pending", "accepted"]).onSnapshot(function(allTutors) {
-			console.log(allTutors.length)
 			//Reinitialize arrays on status update
 			rejectedApplicantArray = []
 			pendingApplicantArray = []
@@ -33,7 +32,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 			}
 			
 			var doneLooping = new Promise((resolve, reject) => {
-				allTutors.forEach(function(doc) {
+				allTutors.forEach( async function(doc) {
 				
 					var applicantID = doc.id,
 					    firstName = doc.data().firstName,
@@ -53,7 +52,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 							interviewScore = applicant.data().interviewScore,
 							meghanNotes = applicant.data().meghanNotes
 
-						buildApplicantBlock(applicantID, 
+						await buildApplicantBlock(applicantID, 
 						firstName, 
 						lastName, 
 						email, 
