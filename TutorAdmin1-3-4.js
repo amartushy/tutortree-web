@@ -31,11 +31,11 @@ firebase.auth().onAuthStateChanged(function(user) {
 				acceptedTutorSection.removeChild(acceptedTutorSection.firstChild)
 			}
 			
-			var numTutors = Object.keys(allTutors)
-			console.log(allTutors)
-			console.log(numTutors)
-			console.log(numTutors.length)
-			console.log("This is the last tutor: " + numTutors[numTutors.length -1])
+			var numTutors = []
+			allTutors.forEach(function(doc) {
+				numtutors.push(doc.id)
+			})
+			console.log(numTutors[numTutors.length -1 ])
 			var doneLooping = new Promise((resolve, reject) => {
 				allTutors.forEach(function(doc) {
 				
