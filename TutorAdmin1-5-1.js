@@ -866,7 +866,7 @@ function updatePendingArray(timestamp) {
 }
 
 function appendToPendingSection() {
-	console.log("appending to pending")
+	console.log("pending applicants: " + pendingApplicantArray)
 
 	var items = pendingApplicantArray.length
 	var pendingTutorSection = document.getElementById('pending-applicant-section')
@@ -886,7 +886,7 @@ function updateAcceptedArray(timestamp) {
 }
 
 function appendToAcceptedSection() {
-	console.log("appending to accepted")
+	console.log("accepted applicants: " + acceptedApplicantArray)
 	var items = acceptedApplicantArray.length
 	var acceptedTutorSection = document.getElementById('accepted-applicant-section')
 
