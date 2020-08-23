@@ -37,7 +37,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 			})
 			console.log(numTutors[numTutors.length -1 ])
 			var doneLooping = new Promise((resolve, reject) => {
-				allTutors.forEach(function(doc) {
+				allTutors.forEach(function(doc) => {
 				
 					var applicantID = doc.id,
 					    firstName = doc.data().firstName,
