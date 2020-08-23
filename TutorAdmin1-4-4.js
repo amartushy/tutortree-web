@@ -31,67 +31,47 @@ firebase.auth().onAuthStateChanged(function(user) {
 				acceptedTutorSection.removeChild(acceptedTutorSection.firstChild)
 			}
 			
-			var numTutors = []
-			allTutors.forEach(function(doc) {
-				numTutors.push(doc.id)
-			})
-			console.log(numTutors[numTutors.length -1 ])
-			var doneLooping = new Promise((resolve, reject) => {
-				allTutors.forEach(function(doc)  {
-				
-					var applicantID = doc.id,
-					    firstName = doc.data().firstName,
-					    lastName = doc.data().lastName,
-					    email = doc.data().email,
-					    school = doc.data().school,
-					    timeApplied = doc.data().timeApplied,
-					    status = doc.data.tutorApplicantStatus
+			allTutors.forEach(function(doc)  {
 
-					userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(function(applicant) {
-						var 	didSubmitPreInterview = applicant.data().didSubmitPreInterview,
-							didRequest = applicant.data().didRequestInterview,
-							completedInterview = applicant.data().completedInterview,
-							didTranscript = applicant.data().uploadedTranscript,
-							didFaculty = applicant.data().uploadedFaculty,
-							assessmentScore = applicant.data().assessmentScore,
-							interviewScore = applicant.data().interviewScore,
-							meghanNotes = applicant.data().meghanNotes
+				var applicantID = doc.id,
+				    firstName = doc.data().firstName,
+				    lastName = doc.data().lastName,
+				    email = doc.data().email,
+				    school = doc.data().school,
+				    timeApplied = doc.data().timeApplied,
+				    status = doc.data.tutorApplicantStatus
 
-						buildApplicantBlock(applicantID, 
-						firstName, 
-						lastName, 
-						email, 
-						school,
-						timeApplied, 
-						didSubmitPreInterview, 
-						didRequest, 
-						completedInterview,
-						didTranscript, 
-						didFaculty,
-						assessmentScore,
-						interviewScore,
-						meghanNotes,
-						status)
-					})
-				   	if (applicantID === numTutors[numTutors.length -1]){
-						console.log(applicantID)
-						appendToRejectedSection()
-						appendToPendingSection()
-						appendToAcceptedSection()
-					}
+				userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(async function(applicant) {
+					var 	didSubmitPreInterview = applicant.data().didSubmitPreInterview,
+						didRequest = applicant.data().didRequestInterview,
+						completedInterview = applicant.data().completedInterview,
+						didTranscript = applicant.data().uploadedTranscript,
+						didFaculty = applicant.data().uploadedFaculty,
+						assessmentScore = applicant.data().assessmentScore,
+						interviewScore = applicant.data().interviewScore,
+						meghanNotes = applicant.data().meghanNotes
+
+					await buildApplicantBlock(applicantID, 
+					firstName, 
+					lastName, 
+					email, 
+					school,
+					timeApplied, 
+					didSubmitPreInterview, 
+					didRequest, 
+					completedInterview,
+					didTranscript, 
+					didFaculty,
+					assessmentScore,
+					interviewScore,
+					meghanNotes,
+					status)
 				})
-				
-			});
-
-			doneLooping.then(() => {
-				appendToRejectedSection()
-				appendToPendingSection()
-				appendToAcceptedSection()
-			});
-			
-			
-			
-
+			})
+			appendToRejectedSection()
+			appendToPendingSection()
+			appendToAcceptedSection()
+		
 		})
 	} else {
 		location.href = "https://www.jointutortree.com"
