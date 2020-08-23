@@ -42,7 +42,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    timeApplied = doc.data().timeCreated,
 				    status = doc.data.tutorApplicantStatus
 				
-				userDB.collection("userTest").doc(applicantID).collection("tutorApplication").document("application").onSnapshot(function(applicant) {
+				userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(function(applicant) {
 					var 	didSubmitPreInterview = applicant.data().didSubmitPreInterview,
 						didRequest = applicant.data().application.didRequestInterview,
 						completedInterview = applicant.data().application.completedInterview,
