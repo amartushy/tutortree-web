@@ -39,7 +39,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    email = doc.data().email,
 				    school = doc.data().school,
 				    timeApplied = doc.data().timeApplied,
-				    status = doc.data.tutorApplicantStatus
+				    status = doc.data().tutorApplicantStatus
 				console.log(status)
 				userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(async function(applicant) {
 					var 	didSubmitPreInterview = applicant.data().didSubmitPreInterview,
@@ -67,11 +67,11 @@ firebase.auth().onAuthStateChanged(function(user) {
 					meghanNotes,
 					status)
 				})
-				appendToRejectedSection()
-			appendToPendingSection()
-			appendToAcceptedSection()
+
 			})
-		
+		appendToRejectedSection()
+		appendToPendingSection()
+		appendToAcceptedSection()
 		})
 	} else {
 		location.href = "https://www.jointutortree.com"
