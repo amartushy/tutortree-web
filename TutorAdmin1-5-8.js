@@ -159,7 +159,7 @@ function buildApplicantBlock(applicantID, name, email, school, timeApplied, didS
 		assessmentCompleted.setAttribute('class', 'admin-complete')
 		assessmentCompleted.innerHTML = 'check-circle'
 		preInterviewBlock.appendChild(assessmentCompleted)
-		preInterviewBlock.setAttribute('onClick', 'showAssessment("'+applicantID+'", "'+firstName+'", "'+lastName+'")')
+		preInterviewBlock.setAttribute('onClick', 'showAssessment("' + applicantID + '", "' + name +'")')
 	} else {
 		var assessmentIncomplete = document.createElement('div')
 		assessmentIncomplete.setAttribute('class', 'admin-incomplete')
@@ -183,7 +183,7 @@ function buildApplicantBlock(applicantID, name, email, school, timeApplied, didS
 		requestCompleted.setAttribute('class', 'admin-complete')
 		requestCompleted.innerHTML = 'check-circle'
 		requestedBlock.appendChild(requestCompleted)
-		requestedBlock.setAttribute('onClick', 'showInterview("'+applicantID+'", "'+firstName+'", "'+lastName+'")')
+		requestedBlock.setAttribute('onClick', 'showInterview("' + applicantID + '", "' + name +'")')
 	} else {
 		var requestIncomplete = document.createElement('div')
 		requestIncomplete.setAttribute('class', 'admin-incomplete')
