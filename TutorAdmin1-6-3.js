@@ -419,361 +419,328 @@ function buildApplicantBlock(applicantID, name, email, school, timeApplied, didS
 
 function approveTutor(applicantsID, applicantsEmail) {
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		//Update sorting field
-		//Update iOS value isTutor
-		userDB.collection("userTest")
-			.doc(applicantsID)
-			.update( {'tutorApplicantStatus' : "accepted",
-				  'isTutor' : true})
-		//Send Email
-		var acceptanceMessage = "Your application to tutor has been approved! Your tutor coordinator will reach out soon with more information."
-		sendEmailTo(applicantsEmail, 'Welcome to TutorTree!', acceptanceMessage)
-				  
-		//Mixpanel?
-		grantedTutorAccess(true, applicantsEmail)
+	//Update sorting field
+	//Update iOS value isTutor
+	userDB.collection("userTest")
+		.doc(applicantsID)
+		.update( {'tutorApplicantStatus' : "accepted",
+			  'isTutor' : true})
+	//Send Email
+	var acceptanceMessage = "Your application to tutor has been approved! Your tutor coordinator will reach out soon with more information."
+	sendEmailTo(applicantsEmail, 'Welcome to TutorTree!', acceptanceMessage)
+
+	//Mixpanel?
+	grantedTutorAccess(true, applicantsEmail)
 	
-	})	
 }
 								
 function rejectTutor(applicantsID, applicantsEmail) {
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		//Update sorting field
-		//Update iOS value isTutor
-		userDB.collection("userTest")
-			.doc(applicantsID)
-			.update( {'tutorApplicantStatus' : "rejected",
-				  'isTutor' : false})
-		//Send Email
-		var acceptanceMessage = "Unfortunately at this time we were unable to offer you a position as a tutor. Your tutor coordinator will reach out soon with more information."
-		sendEmailTo(applicantsEmail, 'Tutor Application Status', acceptanceMessage)	  
-	})	
+	//Update sorting field
+	//Update iOS value isTutor
+	userDB.collection("userTest")
+		.doc(applicantsID)
+		.update( {'tutorApplicantStatus' : "rejected",
+			  'isTutor' : false})
+	//Send Email
+	var acceptanceMessage = "Unfortunately at this time we were unable to offer you a position as a tutor. Your tutor coordinator will reach out soon with more information."
+	sendEmailTo(applicantsEmail, 'Tutor Application Status', acceptanceMessage)	  
 }
 								
 function deleteTutor(applicantsID, applicantsEmail) {
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		//Update sorting field
-		//Update iOS value isTutor
-		userDB.collection("userTest")
-			.doc(applicantsID)
-			.update( {'tutorApplicantStatus' : "deleted",
-				  'isTutor' : false})			  	
-	})	
+	//Update sorting field
+	//Update iOS value isTutor
+	userDB.collection("userTest")
+		.doc(applicantsID)
+		.update( {'tutorApplicantStatus' : "deleted",
+			  'isTutor' : false})			  	
 }								
 								
 
 
 
-function showAssessment(applicantsID, firstName, lastName) {
+function showAssessment(applicantsID, name) {
 	document.getElementById("assessment-wrapper").style.display = 'flex'
 	
 	var tutorPIANameHeader = document.getElementById('pia-tutor-prospect-name')
-	tutorPIANameHeader.innerHTML = firstName + ' ' + lastName
+	tutorPIANameHeader.innerHTML = name
 	
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
 		//Fields
-		document.getElementById('pia-first').innerHTML = doc.data().firstName
-		document.getElementById('pia-last').innerHTML = doc.data().lastName
-		document.getElementById('pia-email').innerHTML = doc.data().email
-		document.getElementById('pia-year').innerHTML = doc.data().application.assessment.year
-		document.getElementById('pia-major').innerHTML = doc.data().application.assessment.major
-		document.getElementById('pia-hours').innerHTML = doc.data().application.assessment.hours
-		document.getElementById('pia-school').innerHTML = doc.data().school
-		document.getElementById('pia-courses').innerHTML = doc.data().application.assessment.courses
-		document.getElementById('pia-experience').innerHTML = doc.data().application.assessment.experience
-		document.getElementById('pia-qualities').innerHTML = doc.data().application.assessment.qualities
-		document.getElementById('pia-why').innerHTML = doc.data().application.assessment.whyTutor
-		document.getElementById('pia-groups').innerHTML = doc.data().application.assessment.groups
+		document.getElementById('pia-first').innerHTML = doc.data().assessment.firstName
+		document.getElementById('pia-last').innerHTML = doc.data().assessment.lastName
+		document.getElementById('pia-email').innerHTML = doc.data().assessment.email
+		document.getElementById('pia-year').innerHTML = doc.data().assessment.year
+		document.getElementById('pia-major').innerHTML = doc.data().assessment.major
+		document.getElementById('pia-hours').innerHTML = doc.data().assessment.hours
+		document.getElementById('pia-school').innerHTML = doc.data().assessment.school
+		document.getElementById('pia-courses').innerHTML = doc.data().assessment.courses
+		document.getElementById('pia-experience').innerHTML = doc.data().assessment.experience
+		document.getElementById('pia-qualities').innerHTML = doc.data().assessment.qualities
+		document.getElementById('pia-why').innerHTML = doc.data().assessment.whyTutor
+		document.getElementById('pia-groups').innerHTML = doc.data().assessment.groups
 		
 		//Assign points fields
 		var yearPoints = document.getElementById('year-points')
-		yearPoints.value = doc.data().application.assessment.yearPoints
+		yearPoints.value = doc.data().assessment.yearPoints
 		yearPoints.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.assessment.yearPoints" : yearPoints.value } )
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "assessment.yearPoints" : yearPoints.value } )
 			getAssessmentPoints(applicantsID)
 		}
 		
 		var experiencePoints = document.getElementById('experience-points')
-		experiencePoints.value = doc.data().application.assessment.experiencePoints
+		experiencePoints.value = doc.data().assessment.experiencePoints
 		experiencePoints.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.assessment.experiencePoints" : experiencePoints.value } )
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "assessment.experiencePoints" : experiencePoints.value } )
 			getAssessmentPoints(applicantsID)
 		}
 		var qualitiesPoints = document.getElementById('qualities-points')
-		qualitiesPoints.value = doc.data().application.assessment.qualitiesPoints
+		qualitiesPoints.value = doc.data().assessment.qualitiesPoints
 		qualitiesPoints.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.assessment.qualitiesPoints" : qualitiesPoints.value } )
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "assessment.qualitiesPoints" : qualitiesPoints.value } )
 			getAssessmentPoints(applicantsID)
 		}
 		var whyTutorPoints = document.getElementById('why-tutor-points')
-		whyTutorPoints.value = doc.data().application.assessment.whyTutorPoints
+		whyTutorPoints.value = doc.data().assessment.whyTutorPoints
 		whyTutorPoints.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.assessment.whyTutorPoints" : whyTutorPoints.value } )
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "assessment.whyTutorPoints" : whyTutorPoints.value } )
 			getAssessmentPoints(applicantsID)
 		}
 		var activitiesPoints = document.getElementById('activities-points')
-		activitiesPoints.value = doc.data().application.assessment.activitiesPoints
+		activitiesPoints.value = doc.data().assessment.activitiesPoints
 		activitiesPoints.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.assessment.activitiesPoints" : activitiesPoints.value } )
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "assessment.activitiesPoints" : activitiesPoints.value } )
 			getAssessmentPoints(applicantsID)
 		}
-		
 	})
 }
 
-function showInterview(applicantsID, firstName, lastName) {
+function showInterview(applicantsID, name) {
 	document.getElementById("interview-wrapper").style.display = 'flex'
 	
 	var tutorInterviewNameHeader = document.getElementById('interview-tutor-prospect-name')
-	tutorInterviewNameHeader.innerHTML = firstName + ' ' + lastName	
+	tutorInterviewNameHeader.innerHTML = name 	
 
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("interview").get().then(function(doc) {
 		//Notes fields
 		var onTimeNotes = document.getElementById('on-time-notes')
-		try{
-			onTimeNotes.value = doc.data().application.interview.onTimeNotes
-		} catch {
-			onTimeNotes.value = ""
-		}
+		onTimeNotes.value = doc.data().onTimeNotes
 		onTimeNotes.onblur = function() {
-			userDB.collection("users")
+			userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.onTimeNotes" : onTimeNotes.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "onTimeNotes" : onTimeNotes.value } )
 		}
+		
 		var challengingNotes = document.getElementById('challenging-notes')
-		try{
-			challengingNotes.value = doc.data().application.interview.challengingNotes
-		} catch {
-			challengingNotes.value = ""
-		}
+		challengingNotes.value = doc.data().challengingNotes
 		challengingNotes.onblur = function() {
-			userDB.collection("users")
+			userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.challengingNotes" : challengingNotes.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "challengingNotes" : challengingNotes.value } )
 		}
+		
 		var troubleNotes = document.getElementById('trouble-notes')
-		try{
-			troubleNotes.value = doc.data().application.interview.troubleNotes
-		} catch {
-			troubleNotes.value = ""
-		}
+		troubleNotes.value = doc.data().troubleNotes
 		troubleNotes.onblur = function() {
-			userDB.collection("users")
+			userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.troubleNotes" : troubleNotes.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "troubleNotes" : troubleNotes.value } )
 		}
+		
 		var situationNotes = document.getElementById('situation-notes')
-		try{
-			situationNotes.value = doc.data().application.interview.situationNotes
-		} catch {
-			situationNotes.value = ""
-		}
+		situationNotes.value = doc.data().situationNotes
 		situationNotes.onblur = function() {
-			userDB.collection("users")
+			userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.situationNotes" : situationNotes.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "situationNotes" : situationNotes.value } )
 		}
 		var confidenceNotes = document.getElementById('confidence-notes')
-		try{
-			confidenceNotes.value = doc.data().application.interview.confidenceNotes
-		} catch {
-			confidenceNotes.value = ""
-		}
+		confidenceNotes.value = doc.data().confidenceNotes
 		confidenceNotes.onblur = function() {
-			userDB.collection("users")
+			userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.confidenceNotes" : confidenceNotes.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "confidenceNotes" : confidenceNotes.value } )
 		}
 		var preparedNotes = document.getElementById('prepared-notes')
-		try{
-			preparedNotes.value = doc.data().application.interview.preparedNotes
-		} catch {
-			preparedNotes.value = ""
-		}
+		preparedNotes.value = doc.data().preparedNotes
 		preparedNotes.onblur = function() {
-			userDB.collection("users")
+			userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.preparedNotes" : preparedNotes.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "preparedNotes" : preparedNotes.value } )
 		}
 		var explainNotes = document.getElementById('explain-notes')
-		try{
-			explainNotes.value = doc.data().application.interview.explainNotes
-		} catch {
-			explainNotes.value = ""
-		}
+		explainNotes.value = doc.data().explainNotes
 		explainNotes.onblur = function() {
-			userDB.collection("users")
+			userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.explainNotes" : explainNotes.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "explainNotes" : explainNotes.value } )
 		}
 		var onlineNotes = document.getElementById('online-notes')
-		try{
-			onlineNotes.value = doc.data().application.interview.onlineNotes
-		} catch {
-			onlineNotes.value = ""
-		}
+		onlineNotes.value = doc.data().onlineNotes
 		onlineNotes.onblur = function() {
-			userDB.collection("users")
+			userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.onlineNotes" : onlineNotes.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "onlineNotes" : onlineNotes.value } )
 		}
 		var helpNotes = document.getElementById('help-notes')
-		try{
-			helpNotes.value = doc.data().application.interview.helpNotes
-		} catch {
-			helpNotes.value = ""
-		}
+		helpNotes.value = doc.data().helpNotes
 		helpNotes.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
+				.collection("tutorApplication")
+				.doc("interview")
 				.update( { "application.interview.helpNotes" : helpNotes.value } )
 		}
 		var questionNotes = document.getElementById('question-notes')
-		try{
-			questionNotes.value = doc.data().application.interview.questionNotes
-		} catch {
-			questionNotes.value = ""
-		}
+		questionNotes.value = doc.data().questionNotes
 		questionNotes.onblur = function() {
-			userDB.collection("users")
+			userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.questionNotes" : questionNotes.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "questionNotes" : questionNotes.value } )
 		}
 		
 		//Score Fields
 		var onTimeScore = document.getElementById('on-time-score')
-		try{
-			onTimeScore.value = doc.data().application.interview.onTimeScore
-		} catch {
-			onTimeScore.value = 0
-		}
+		onTimeScore.value = doc.data().onTimeScore
+		onTimeScore.value = 0
 		onTimeScore.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.onTimeScore" : onTimeScore.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "onTimeScore" : onTimeScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var challengingScore = document.getElementById('challenging-score')
-		try{
-			challengingScore.value = doc.data().application.interview.challengingScore
-		} catch {
-			challengingScore.value = 0
-		}
+		challengingScore.value = doc.data().challengingScore
 		challengingScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.interview.challengingScore" : challengingScore.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "challengingScore" : challengingScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var troubleScore = document.getElementById('trouble-score')
-		try{
-			troubleScore.value = doc.data().application.interview.troubleScore
-		} catch {
-			troubleScore.value = 0
-		}
+		troubleScore.value = doc.data().troubleScore
 		troubleScore.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.troubleScore" : troubleScore.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "troubleScore" : troubleScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var situationScore = document.getElementById('situation-score')
-		try{
-			situationScore.value = doc.data().application.interview.situationScore
-		} catch {
-			situationScore.value = 0
-		}
+		situationScore.value = doc.data().situationScore
 		situationScore.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.situationScore" : situationScore.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "situationScore" : situationScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var confidenceScore = document.getElementById('confidence-score')
-		try{
-			confidenceScore.value = doc.data().application.interview.confidenceScore
-		} catch {
-			confidenceScore.value = 0
-		}
+		confidenceScore.value = doc.data().confidenceScore
 		confidenceScore.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.confidenceScore" : confidenceScore.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "confidenceScore" : confidenceScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var preparedScore = document.getElementById('prepared-score')
-		try{
-			preparedScore.value = doc.data().application.interview.preparedScore
-		} catch {
-			preparedScore.value = 0
-		}
+		preparedScore.value = doc.data().preparedScore
 		preparedScore.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.preparedScore" : preparedScore.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "preparedScore" : preparedScore.value } )
 			getInterviewPoints(applicantsID)
 		}	
 		var explainScore = document.getElementById('explain-score')
-		try{
-			explainScore.value = doc.data().application.interview.explainScore
-		} catch {
-			explainScore.value = 0
-		}
+		explainScore.value = doc.data().explainScore
 		explainScore.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.explainScore" : explainScore.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "explainScore" : explainScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var onlineScore = document.getElementById('online-score')
-		try{
-			onlineScore.value = doc.data().application.interview.onlineScore
-		} catch {
-			onlineScore.value = 0
-		}
+		onlineScore.value = doc.data().onlineScore
+		onlineScore.value = 0
 		onlineScore.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.onlineScore" : onlineScore.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "onlineScore" : onlineScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var helpScore = document.getElementById('help-score')
-		try{
-			helpScore.value = doc.data().application.interview.helpScore
-		} catch {
-			helpScore.value = 0
-		}
+		helpScore.value = doc.data().helpScore
 		helpScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
-				.update( { "application.interview.helpScore" : helpScore.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "helpScore" : helpScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var questionScore = document.getElementById('question-score')
-		try{
-			questionScore.value = doc.data().application.interview.questionScore
-		} catch {
-			questionScore.value = 0
-		}
-		console.log("questionScore.value before function " + questionScore.value)
+		questionScore.value = doc.data().questionScore
 		questionScore.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interview.questionScore" : questionScore.value } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "questionScore" : questionScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 
@@ -782,110 +749,77 @@ function showInterview(applicantsID, firstName, lastName) {
 
 function getAssessmentPoints(applicantsID) {
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		var yearPoints = doc.data().application.assessment.yearPoints
-		var experiencePoints = doc.data().application.assessment.experiencePoints
-		var qualitiesPoints = doc.data().application.assessment.qualitiesPoints
-		var whyTutorPoints = doc.data().application.assessment.whyTutorPoints
-		var activitiesPoints = doc.data().application.assessment.activitiesPoints
+	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
+		var yearPoints = doc.data().assessment.yearPoints
+		var experiencePoints = doc.data().assessment.experiencePoints
+		var qualitiesPoints = doc.data().assessment.qualitiesPoints
+		var whyTutorPoints = doc.data().assessment.whyTutorPoints
+		var activitiesPoints = doc.data().assessment.activitiesPoints
 		
-		var assessmentPoints = parseInt(yearPoints) + parseInt(experiencePoints) + parseInt(qualitiesPoints) + parseInt(whyTutorPoints) + parseInt(activitiesPoints)
-		userDB.collection("users")
+		var assessmentPoints = parseInt(yearPoints) + 
+		    parseInt(experiencePoints) + 
+		    parseInt(qualitiesPoints) + 
+		    parseInt(whyTutorPoints) + 
+		    parseInt(activitiesPoints)
+		userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.assessmentScore" : assessmentPoints } )
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "assessmentScore" : assessmentPoints } )
 	})
 }
 
 function getInterviewPoints(applicantsID) {
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		try{
-			var onTimeScore = doc.data().application.interview.onTimeScore
-		} catch {
-			onTimeScore = 0
-		}
-		try{
-			var challengingScore = doc.data().application.interview.challengingScore
-		} catch {
-			challengingScore = 0
-		}
-		try{
-			var troubleScore = doc.data().application.interview.troubleScore
-		} catch {
-			troubleScore = 0
-		}
-		try{
-			var situationScore = doc.data().application.interview.situationScore
-		} catch {
-			situationScore = 0
-		}
-		try{
-			var confidenceScore = doc.data().application.interview.confidenceScore
-		} catch {
-			confidenceScore = 0
-		}
-		try{
-			var preparedScore = doc.data().application.interview.preparedScore
-		} catch {
-			preparedScore = 0
-		}
-		try{
-			var explainScore = doc.data().application.interview.explainScore
-		} catch {
-			explainScore = 0
-		}
-		try{
-			var onlineScore = doc.data().application.interview.onlineScore
-		} catch {
-			onlineScore = 0
-		}
-		try{
-			var helpScore = doc.data().application.interview.helpScore
-		} catch {
-			helpScore = 0
-		}
-		try{
-			var questionScore = doc.data().application.interview.questionScore
-		} catch {
-			questionScore = 0
-		}
+	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("interview").get().then(function(doc) {
+		var onTimeScore = doc.data().application.interview.onTimeScore
+		var challengingScore = doc.data().application.interview.challengingScore
+		var troubleScore = doc.data().application.interview.troubleScore
+		var situationScore = doc.data().application.interview.situationScore
+		var confidenceScore = doc.data().application.interview.confidenceScore
+		var preparedScore = doc.data().application.interview.preparedScore
+		var explainScore = doc.data().application.interview.explainScore
+		var onlineScore = doc.data().application.interview.onlineScore
+		var helpScore = doc.data().application.interview.helpScore
+		var questionScore = doc.data().application.interview.questionScore
 
 		var interviewScore = 
-				parseInt(onTimeScore) + 
-				parseInt(challengingScore) + 
-		    		parseInt(troubleScore) + 
-				parseInt(situationScore) + 
-				parseInt(confidenceScore) + 
-				parseInt(preparedScore) + 
-				parseInt(explainScore) + 
-				parseInt(onlineScore) + 
-				parseInt(helpScore) +
-				parseInt(questionScore)
+			parseInt(onTimeScore) + 
+			parseInt(challengingScore) + 
+			parseInt(troubleScore) + 
+			parseInt(situationScore) + 
+			parseInt(confidenceScore) + 
+			parseInt(preparedScore) + 
+			parseInt(explainScore) + 
+			parseInt(onlineScore) + 
+			parseInt(helpScore) +
+			parseInt(questionScore)
 		
-		userDB.collection("users")
+		userDB.collection("userTest")
 				.doc(applicantsID)
-				.update( { "application.interviewScore" : interviewScore } )
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScore" : interviewScore } )
 	})
 
 }
 
 function showTranscript(applicantsID) {
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		window.open(doc.data().application.transcriptFile)
+	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
+		window.open(doc.data().transcriptFile)
 	})
 }
 
 function showFaculty(applicantsID) {
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		var facultyLink = doc.data().application.facultyFile
+	userDB.collection("users").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
+		var facultyLink = doc.data().facultyFile
 		window.open(facultyLink)
 	})
 }
 
 //SORT AND APPEND APPLICANTS
-
 function sortNumberApplicant(a,b) {
 	return(a-b)
 }
@@ -899,7 +833,6 @@ function updateRejectedArray(timestamp) {
 
 function appendToRejectedSection() {
 	console.log("rejected applicants: " + rejectedApplicantArray)
-
 	var items = rejectedApplicantArray.length
 	var rejectedTutorSection = document.getElementById('rejected-applicant-section')
     
@@ -920,7 +853,6 @@ function updatePendingArray(timestamp) {
 
 function appendToPendingSection() {
 	console.log("pending applicants: " + pendingApplicantArray)
-
 	var items = pendingApplicantArray.length
 	var pendingTutorSection = document.getElementById('pending-applicant-section')
 
@@ -960,48 +892,50 @@ function sendEmailTo(email, title, message) {
 	xhttp.send();
 }
 
-	var userDB = firebase.firestore()
-    	storageRef = storageService.ref()
+var userDB = firebase.firestore()
+storageRef = storageService.ref()
 
-   	var globalPreviewID = ""
-	function openFacultyRecDialog(ID) {
-		console.log("this is the id: " + ID)
-		globalPreviewID = ID
-		console.log("this is the global: " +globalPreviewID)
-     	 	hiddenFacultyRecButton.click();
-    	}
+var globalPreviewID = ""
+function openFacultyRecDialog(ID) {
+	console.log("this is the id: " + ID)
+	globalPreviewID = ID
+	console.log("this is the global: " +globalPreviewID)
+	hiddenFacultyRecButton.click();
+}
 
-    	var hiddenFacultyRecButton = document.getElementById("faculty-admin-select") 
-   	hiddenFacultyRecButton.addEventListener('change', handleFacultyRecUploadChange);
+var hiddenFacultyRecButton = document.getElementById("faculty-admin-select") 
+hiddenFacultyRecButton.addEventListener('change', handleFacultyRecUploadChange);
 
-	var selectedFacultyRecFile;
-	function handleFacultyRecUploadChange(e) {
-		selectedFacultyRecFile = e.target.files[0];
-		document.getElementById(globalPreviewID).style.display = "flex"
-		document.getElementById(globalPreviewID+"-text").innerHTML = selectedFacultyRecFile.name
-	}
+var selectedFacultyRecFile;
+function handleFacultyRecUploadChange(e) {
+	selectedFacultyRecFile = e.target.files[0];
+	document.getElementById(globalPreviewID).style.display = "flex"
+	document.getElementById(globalPreviewID+"-text").innerHTML = selectedFacultyRecFile.name
+}
 
 
-	async function handleFacultyRecUpload(ID, email) {
-		console.log("I was clicked")
-		const uploadTask = await storageRef.child(`faculty/${selectedFacultyRecFile.name}`).put(selectedFacultyRecFile);
-		uploadAndUpdateFirebaseFacultyRec(ID, email)
-	}
+async function handleFacultyRecUpload(ID, email) {
+	console.log("I was clicked")
+	const uploadTask = await storageRef.child(`faculty/${selectedFacultyRecFile.name}`).put(selectedFacultyRecFile);
+	uploadAndUpdateFirebaseFacultyRec(ID, email)
+}
 
 
 //final submit button and update firebase
-	async function uploadAndUpdateFirebaseFacultyRec(ID, email) {
-		var facultyRecFileURL = ""
-		await storageRef.child('/faculty/'+selectedFacultyRecFile.name)
-			.getDownloadURL()
-			.then(function(url) { facultyRecFileURL = url.toString() })
-		userDB.collection("users")
-			.doc(ID)
-			.update( {"application.facultyFile" : facultyRecFileURL,
-			  	"application.uploadedFaculty" : true })
-		.then(function() {
-			document.getElementById(globalPreviewID).style.display = "none"
-			document.getElementById(ID + '-upload-completed').style.display = "block"
-			facultyRecUploadByTutorCoordinator(email)
-		})
-	}
+async function uploadAndUpdateFirebaseFacultyRec(ID, email) {
+	var facultyRecFileURL = ""
+	await storageRef.child('/faculty/'+selectedFacultyRecFile.name)
+		.getDownloadURL()
+		.then(function(url) { facultyRecFileURL = url.toString() })
+	userDB.collection("userTest")
+		.doc(ID)
+		.collection("tutorApplication")
+		.doc("application")
+		.update( {"facultyFile" : facultyRecFileURL,
+			"uploadedFaculty" : true })
+	.then(function() {
+		document.getElementById(globalPreviewID).style.display = "none"
+		document.getElementById(ID + '-upload-completed').style.display = "block"
+		facultyRecUploadByTutorCoordinator(email)
+	})
+}
