@@ -73,9 +73,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 						meghanNotes,
 						status)
 					})
-				   	if (applicantID === numTutors[numTutors.length -1]) {
-						console.log(numTutors[numTutors.length -1])
-						resolve()
+				   	if (applicantID === numTutors[numTutors.length -1]){
+						console.log(applicantID)
 					}
 				})
 				
