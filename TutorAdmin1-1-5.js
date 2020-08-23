@@ -33,23 +33,26 @@ firebase.auth().onAuthStateChanged(function(user) {
 			}
 			
 			allTutors.forEach(function(doc) {
-				console.log(doc.data())
+				
 				var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
 				    email = doc.data().email,
 				    school = doc.data().school,
 				    timeApplied = doc.data().timeCreated,
-				    didSubmitPreInterview = doc.data().application.didSubmitPreInterview,
-				    didRequest = doc.data().application.didRequestInterview,
-				    completedInterview = doc.data().application.completedInterview,
-				    didTranscript = doc.data().application.uploadedTranscript,
-				    didFaculty = doc.data().application.uploadedFaculty,
-				    assessmentScore = doc.data().application.assessmentScore,
-				    interviewScore = doc.data().application.interviewScore,
-				    completed = false,
-				    meghanNotes = doc.data().application.meghanNotes,
 				    status = doc.data.tutorApplicantStatus
+				
+				userDB.collection("userTest").doc(applicantID).collection("tutorApplication").document("application").onSnapshot(function(applicant) {
+					var 	didSubmitPreInterview = applicant.data().didSubmitPreInterview,
+						didRequest = applicant.data().application.didRequestInterview,
+						completedInterview = applicant.data().application.completedInterview,
+						didTranscript = applicant.data().application.uploadedTranscript,
+						didFaculty = applicant.data().application.uploadedFaculty,
+						assessmentScore = applicant.data().application.assessmentScore,
+						interviewScore = applicant.data().application.interviewScore,
+						meghanNotes = applicant.data().application.meghanNotes	
+				}
+				   
 				buildApplicantBlock(applicantID, 
 					firstName, 
 					lastName, 
@@ -61,7 +64,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 					completedInterview,
 					didTranscript, 
 					didFaculty,
-					completed,
 					assessmentScore,
 					interviewScore,
 					meghanNotes,
@@ -77,7 +79,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	}
 })
 
-function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, completed, assessmentScore, interviewScore, meghanNotes, status) {
+function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, assessmentScore, interviewScore, meghanNotes, status) {
 	//Main Container
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
