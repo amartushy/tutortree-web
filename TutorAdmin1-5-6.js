@@ -106,7 +106,7 @@ function showAcceptedApplicants() {
 	appendToAcceptedSection()
 }
 
-function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, assessmentScore, interviewScore, meghanNotes, status) {
+function buildApplicantBlock(applicantID, name, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, assessmentScore, interviewScore, meghanNotes, status) {
 	console.log("Building block for user: " + applicantID)
 
 	//Main Container
@@ -120,7 +120,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 
 	var nameHeader = document.createElement('h4')
 	nameHeader.setAttribute('class', 'applicants-name')
-	nameHeader.innerHTML = firstName + ' ' + lastName
+	nameHeader.innerHTML = name
 	nameBlock.appendChild(nameHeader)
 
 	var emailHeader = document.createElement('div')
