@@ -31,7 +31,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 				acceptedTutorSection.removeChild(acceptedTutorSection.firstChild)
 			}
 			
-			var numTutors = Object.keys(allTutors.data())
+			var numTutors = Object.keys(allTutors)
+			console.log(allTutors)
 			console.log(numTutors)
 			console.log(numTutors.length)
 			console.log("This is the last tutor: " + numTutors[numTutors.length -1])
