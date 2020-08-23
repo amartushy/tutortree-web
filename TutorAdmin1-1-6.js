@@ -51,7 +51,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 						assessmentScore = applicant.data().application.assessmentScore,
 						interviewScore = applicant.data().application.interviewScore,
 						meghanNotes = applicant.data().application.meghanNotes	
-				}
+				})
 				   
 				buildApplicantBlock(applicantID, 
 					firstName, 
