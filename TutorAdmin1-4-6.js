@@ -841,7 +841,7 @@ function updateRejectedArray(timestamp) {
 }
 
 function appendToRejectedSection() {
-	console.log("appending to rejected")
+	console.log("rejected applicants: " rejectedApplicantArray)
 
 	var items = rejectedApplicantArray.length
 	var rejectedTutorSection = document.getElementById('rejected-applicant-section')
@@ -883,7 +883,7 @@ function updateAcceptedArray(timestamp) {
 function appendToAcceptedSection() {
 	console.log("appending to accepted")
 	var items = acceptedApplicantArray.length
-	var acceptedTutorSection = document.getElementById('accepted-tutor-section')
+	var acceptedTutorSection = document.getElementById('accepted-applicant-section')
 
 	for( i=0 ; i < items ; i++ ) {
 		var timestampID = acceptedApplicantArray[i]
