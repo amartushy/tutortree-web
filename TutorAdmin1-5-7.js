@@ -106,7 +106,7 @@ function showAcceptedApplicants() {
 	appendToAcceptedSection()
 }
 
-function buildApplicantBlock(applicantID, name, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, assessmentScore, interviewScore, meghanNotes, status) {
+function buildApplicantBlock(applicantID, name, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, assessmentScore, interviewScore, meghanNotes, status) {
 	console.log("Building block for user: " + applicantID)
 
 	//Main Container
