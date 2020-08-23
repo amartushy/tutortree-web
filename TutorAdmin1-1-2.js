@@ -32,7 +32,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 				acceptedTutorSection.removeChild(acceptedTutorSection.firstChild)
 			}
 			
-			allTutors.forEach(function(doc) {	
+			allTutors.forEach(function(doc) {
+				console.log(doc.data())
 				var applicantID = doc.id,
 				    firstName = doc.data().firstName,
 				    lastName = doc.data().lastName,
