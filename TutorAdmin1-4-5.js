@@ -67,10 +67,10 @@ firebase.auth().onAuthStateChanged(function(user) {
 					meghanNotes,
 					status)
 				})
-			})
-			appendToRejectedSection()
+				appendToRejectedSection()
 			appendToPendingSection()
 			appendToAcceptedSection()
+			})
 		
 		})
 	} else {
