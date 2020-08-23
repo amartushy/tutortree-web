@@ -32,7 +32,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 			}
 			
 			var doneLooping = new Promise((resolve, reject) => {
-				allTutors.forEach( async function(doc) {
+				allTutors.forEach(async function(doc) {
 				
 					var applicantID = doc.id,
 					    firstName = doc.data().firstName,
@@ -42,7 +42,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 					    timeApplied = doc.data().timeCreated,
 					    status = doc.data.tutorApplicantStatus
 
-					userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(function(applicant) {
+					await userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(async function(applicant) {
 						var 	didSubmitPreInterview = applicant.data().didSubmitPreInterview,
 							didRequest = applicant.data().didRequestInterview,
 							completedInterview = applicant.data().completedInterview,
