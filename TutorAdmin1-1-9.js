@@ -50,10 +50,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 						didFaculty = applicant.data().application.uploadedFaculty,
 						assessmentScore = applicant.data().application.assessmentScore,
 						interviewScore = applicant.data().application.interviewScore,
-						meghanNotes = applicant.data().application.meghanNotes	
-				})
-				   
-				buildApplicantBlock(applicantID, 
+						meghanNotes = applicant.data().application.meghanNotes
+					
+					buildApplicantBlock(applicantID, 
 					firstName, 
 					lastName, 
 					email, 
@@ -68,6 +67,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 					interviewScore,
 					meghanNotes,
 					status)
+				})
+				   
 			})
 			appendToRejectedSection()
 			appendToPendingSection()
