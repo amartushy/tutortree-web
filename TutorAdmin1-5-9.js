@@ -952,7 +952,7 @@ function appendToAcceptedSection() {
 
 function sendEmailTo(email, title, message) {
 	var xhttp = new XMLHttpRequest();
-    	var herokuURL = "https://tutortree-development.herokuapp.com/sendEmailTo/"+email+"/"+title+"/"+message
+    	var herokuURL = "https://tutortree2.herokuapp.com/sendEmailTo/"+email+"/"+title+"/"+message
    	console.log(herokuURL)
 	xhttp.open("GET", herokuURL, true);
 	xhttp.send();
