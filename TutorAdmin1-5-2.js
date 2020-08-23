@@ -6,10 +6,15 @@ firebase.auth().onAuthStateChanged(function(user) {
 		
 		//Check if user is admin, else redirect: TODO
 		
-		//Get sections
-		var rejectedTutorSection = document.getElementById('rejected-applicant-section')
-		var pendingTutorSection = document.getElementById('pending-applicant-section')
-		var acceptedTutorSection = document.getElementById('accepted-applicant-section')
+		//Get tab buttons
+		var rejectedButton = document.getElementById('rejected-button')
+		var pendingButton = document.getElementById('pending-button')
+		var acceptedButton = document.getElementById('accepted-button')
+
+		//Set eventlisteners
+		rejectedButton.setAttribute('onClick', 'showRejectedApplicants()')
+		pendingButton.setAttribute('onClick', 'showPendingApplicants()')
+		acceptedButton.setAttribute('onClick', 'showAcceptedApplicants()')
 		
 		//Get all applicant information and build blocks
 		var applicantArea = document.getElementById('applicant-section')
@@ -69,14 +74,40 @@ firebase.auth().onAuthStateChanged(function(user) {
 				})
 
 			})
-		appendToRejectedSection()
-		appendToPendingSection()
-		appendToAcceptedSection()
 		})
 	} else {
 		location.href = "https://www.jointutortree.com"
 	}
 })
+var rejectedTutorSection = document.getElementById('rejected-applicant-section')
+function showRejectedApplicants() {
+	while(rejectedTutorSection.firstChild) {
+		rejectedTutorSection.removeChild(rejectedTutorSection.firstChild)
+	}
+	
+	appendToRejectedSection()
+
+}
+
+var pendingTutorSection = document.getElementById('pending-applicant-section')
+function showPendingApplicants() {
+	while(pendingTutorSection.firstChild) {
+		pendingTutorSection.removeChild(pendingTutorSection.firstChild)
+	}
+	
+	appendToPendingSection()
+
+}
+
+var acceptedTutorSection = document.getElementById('accepted-applicant-section')
+function showRejectedApplicants() {
+	while(rejectedTutorSection.firstChild) {
+		rejectedTutorSection.removeChild(rejectedTutorSection.firstChild)
+	}
+	
+	appendToAcceptedSection()
+
+}
 
 function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, assessmentScore, interviewScore, meghanNotes, status) {
 	console.log("Building block for user: " + applicantID)
