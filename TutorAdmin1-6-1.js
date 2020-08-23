@@ -408,8 +408,10 @@ function buildApplicantBlock(applicantID, name, email, school, timeApplied, didS
 
 	} else if (status == "accepted") {
 		console.log("status is accepted")
-		updateRejectedArray(timeApplied)
-		tutorPermissionsBlock.appendChild(ambassadorApproveButton)
+		updateAcceptedArray(timeApplied)
+		tutorPermissionsBlock.appendChild(rejectTutorButton)
+		tutorPermissionsBlock.appendChild(deleteTutorButton)
+
 	}
 	//Append to hidden section for sorting and appending in top level forEach
 	document.getElementById('hidden-applicant-section').appendChild(applicantBlock)
