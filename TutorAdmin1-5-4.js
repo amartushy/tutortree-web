@@ -39,8 +39,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 			allTutors.forEach(function(doc)  {
 
 				var applicantID = doc.id,
-				    firstName = doc.data().firstName,
-				    lastName = doc.data().lastName,
+				    name = doc.data().name,
 				    email = doc.data().email,
 				    school = doc.data().school,
 				    timeApplied = doc.data().timeApplied,
@@ -57,8 +56,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 						meghanNotes = applicant.data().meghanNotes
 
 					await buildApplicantBlock(applicantID, 
-					firstName, 
-					lastName, 
+					name, 
 					email, 
 					school,
 					timeApplied, 
@@ -376,7 +374,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	
 	applicantBlock.appendChild(noteContainer)
 	
-	//Approve/Reject/Remove tutor buttons
+	//Approve/Reject/Delete tutor buttons
 	var tutorPermissionsBlock = document.createElement('div')
 	tutorPermissionsBlock.setAttribute('class', 'tutor-permissions-block')
 	
@@ -386,14 +384,14 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	approveTutorButton.setAttribute('onclick', 'approveTutor("'+applicantID+'","'+email+'")')
 	
 	var rejectTutorButton = document.createElement('div')
-	rejectTutorButton.setAttribute('class', 'approve-tutor-button')
+	rejectTutorButton.setAttribute('class', 'reject-tutor-button')
 	rejectTutorButton.innerHTML = 'Reject'
 	rejectTutorButton.setAttribute('onclick', 'rejectTutor("'+applicantID+'","'+email+'")')
 	
 	var deleteTutorButton = document.createElement('div')
-	deleteTutorButton.setAttribute('class', 'remove-tutor-button')
+	deleteTutorButton.setAttribute('class', 'delete-tutor-button')
 	deleteTutorButton.innerHTML = 'DELETE'
-	deleteTutorButton.setAttribute('onclick', 'rejectTutor("'+applicantID+'")')
+	deleteTutorButton.setAttribute('onclick', 'deleteTutor("'+applicantID+'")')
 	
 	applicantBlock.appendChild(tutorPermissionsBlock)
 	if (status == "rejected") {
@@ -403,22 +401,68 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		tutorPermissionsBlock.appendChild(deleteTutorButton)
 
 	} else if (status == "pending"){
-				console.log("status is pending")
-
+		console.log("status is pending")
 		updatePendingArray(timeApplied)
 		tutorPermissionsBlock.appendChild(rejectTutorButton)
 		tutorPermissionsBlock.appendChild(approveTutorButton)
 		tutorPermissionsBlock.appendChild(deleteTutorButton)
 
 	} else if (status == "accepted") {
-				console.log("status is accepted")
-
+		console.log("status is accepted")
 		updateRejectedArray(timeApplied)
 		tutorPermissionsBlock.appendChild(ambassadorApproveButton)
 	}
 	//Append to hidden section for sorting and appending in top level forEach
 	document.getElementById('hidden-applicant-section').appendChild(applicantBlock)
 }
+
+function approveTutor(applicantsID, applicantsEmail) {
+	var userDB = firebase.firestore()
+	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		//Update sorting field
+		//Update iOS value isTutor
+		userDB.collection("userTest")
+			.doc(applicantsID)
+			.update( {'tutorApplicantStatus' : "accepted",
+				  'istutor' : true)
+		//Send Email
+		var acceptanceMessage = "Your application to tutor has been approved! Your tutor coordinator will reach out soon with more information."
+		sendEmailTo(applicantsEmail, 'Welcome to TutorTree!', acceptanceMessage)
+				  
+		//Mixpanel?
+		grantedTutorAccess(true, applicantsEmail)
+	
+	})	
+}
+								
+function rejectTutor(applicantsID, applicantsEmail) {
+	var userDB = firebase.firestore()
+	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		//Update sorting field
+		//Update iOS value isTutor
+		userDB.collection("userTest")
+			.doc(applicantsID)
+			.update( {'tutorApplicantStatus' : "rejected",
+				  'istutor' : false)
+		//Send Email
+		var acceptanceMessage = "Unfortunately at this time we were unable to offer you a position as a tutor. Your tutor coordinator will reach out soon with more information."
+		sendEmailTo(applicantsEmail, 'Tutor Application Status', acceptanceMessage)	  
+	})	
+}
+								
+function deleteTutor(applicantsID, applicantsEmail) {
+	var userDB = firebase.firestore()
+	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
+		//Update sorting field
+		//Update iOS value isTutor
+		userDB.collection("userTest")
+			.doc(applicantsID)
+			.update( {'tutorApplicantStatus' : "deleted",
+				  'istutor' : false)			  	
+	})	
+}								
+								
+
 
 
 function showAssessment(applicantsID, firstName, lastName) {
@@ -837,30 +881,6 @@ function showFaculty(applicantsID) {
 		var facultyLink = doc.data().application.facultyFile
 		window.open(facultyLink)
 	})
-}
-
-function grantTutorPrivileges(applicantsID, applicantsEmail) {
-	var userDB = firebase.firestore()
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		console.log(doc.data().tutorApplicant)
-		console.log(doc.data().tutorApplicationApproved)
-		
-		userDB.collection("users")
-		.doc(applicantsID)
-		.update( {'tutorApplicant' : !doc.data().tutorApplicant,
-		  	  'tutorApplicationApproved' : !doc.data().tutorApplicationApproved } )
-		
-		if(!doc.data().tutorApplicationApproved) {
-			var acceptanceMessage = "Your application to tutor has been approved. Your tutor coordinator will reach out soon with more information."
-			sendEmailTo(applicantsEmail, 'Welcome to TutorTree!', acceptanceMessage)
-			grantedTutorAccess(true, applicantsEmail)
-		} else {
-			var declinedMessage = "Unfortunately at this time your application to tutor has been declined. Your tutor coordinator will reach out soon with more information."
-			sendEmailTo(applicantsEmail, 'Tutor Application Status', declinedMessage)
-			grantedTutorAccess(false, applicantsEmail)
-		}
-	})
-	
 }
 
 //SORT AND APPEND APPLICANTS
