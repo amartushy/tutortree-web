@@ -948,7 +948,7 @@ function appendToAcceptedSection() {
 		var timestampID = acceptedApplicantArray[i]
 		var acceptedApplicantBlock = document.getElementById(timestampID)
 		var blockClone = acceptedApplicantBlock.cloneNode(true)
-		acceptedApplicantArray.appendChild(blockClone)
+		acceptedTutorSection.appendChild(blockClone)
 	}
 }
 
