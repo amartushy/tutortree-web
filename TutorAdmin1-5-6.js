@@ -98,13 +98,12 @@ function showPendingApplicants() {
 }
 
 var acceptedTutorSection = document.getElementById('accepted-applicant-section')
-function showRejectedApplicants() {
-	while(rejectedTutorSection.firstChild) {
-		rejectedTutorSection.removeChild(rejectedTutorSection.firstChild)
+function showAcceptedApplicants() {
+	while(acceptedTutorSection.firstChild) {
+		acceptedTutorSection.removeChild(acceptedTutorSection.firstChild)
 	}
 	
 	appendToAcceptedSection()
-
 }
 
 function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, assessmentScore, interviewScore, meghanNotes, status) {
