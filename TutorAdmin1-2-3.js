@@ -843,6 +843,8 @@ function updateRejectedArray(timestamp) {
 }
 
 function appendToRejectedSection() {
+	console.log("appending to rejected")
+
 	var items = rejectedApplicantArray.length
 	var rejectedTutorSection = document.getElementById('rejected-applicant-section')
     
@@ -861,6 +863,8 @@ function updatePendingArray(timestamp) {
 }
 
 function appendToPendingSection() {
+	console.log("appending to pending")
+
 	var items = pendingApplicantArray.length
 	var pendingTutorSection = document.getElementById('pending-applicant-section')
 
@@ -879,6 +883,7 @@ function updateAcceptedArray(timestamp) {
 }
 
 function appendToAcceptedSection() {
+	console.log("appending to accepted")
 	var items = acceptedApplicantArray.length
 	var acceptedTutorSection = document.getElementById('accepted-tutor-section')
 
