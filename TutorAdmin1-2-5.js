@@ -15,7 +15,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		var applicantArea = document.getElementById('applicant-section')
 
 		userDB.collection("userTest").where("tutorApplicantStatus", "in", ["rejected", "pending", "accepted"]).onSnapshot(function(allTutors) {
-			
+			console.log(allTutors.length)
 			//Reinitialize arrays on status update
 			rejectedApplicantArray = []
 			pendingApplicantArray = []
