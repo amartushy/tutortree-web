@@ -1,15 +1,35 @@
+
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		var userDB = firebase.firestore()
 		var userID = user.uid
-
+		
+		//Check if user is admin, else redirect: TODO
+		
+		//Get sections
+		var rejectedTutorSection = document.getElementById('rejected-applicant-section')
+		var pendingTutorSection = document.getElementById('pending-applicant-section')
+		var acceptedTutorSection = document.getElementById('accepted-tutor-section')
 		
 		//Get all applicant information and build blocks
 		var applicantArea = document.getElementById('applicant-section')
-		userDB.collection("users").where("tutorApplicant", "==", true).onSnapshot(function(allTutors) {
-			applicantArray = []
-			while(applicantArea.firstChild) {
-				applicantArea.removeChild(applicantArea.firstChild)
+
+		userDB.collection("userTest").where("tutorApplicantStatus", "in", ["rejected", "pending", "accepted"]).onSnapshot(function(allTutors) {
+			
+			//Reinitialize arrays on status update
+			rejectedApplicantArray = []
+			pendingApplicantArray = []
+			acceptedApplicantArray = []
+			
+			//remove all children when updated
+			while(rejectedTutorSection.firstChild) {
+				rejectedTutorSection.removeChild(rejectedTutorSection.firstChild)
+			}
+			while(pendingTutorSection.firstChild) {
+				pendingTutorSection.removeChild(pendingTutorSection.firstChild)
+			}
+			while(acceptedTutorSection.firstChild) {
+				acceptedTutorSection.removeChild(acceptedTutorSection.firstChild)
 			}
 			
 			allTutors.forEach(function(doc) {	
@@ -28,85 +48,35 @@ firebase.auth().onAuthStateChanged(function(user) {
 				    interviewScore = doc.data().application.interviewScore,
 				    completed = false,
 				    meghanNotes = doc.data().application.meghanNotes,
-				    isFirstApproved = doc.data().application.isFirstApproved,
-				    isWaitListed = doc.data().application.isWaitListed,
-				    isRejected = doc.data().application.isRejected
+				    status = doc.data.tutorApplicantStatus
 				buildApplicantBlock(applicantID, 
-						    firstName, 
-						    lastName, 
-						    email, 
-						    school,
-						    timeApplied, 
-						    didSubmitPreInterview, 
-						    didRequest, 
-						    completedInterview,
-						    didTranscript, 
-						    didFaculty,
-						    completed,
-						    assessmentScore,
-						    interviewScore,
-						    meghanNotes,
-						    isFirstApproved,
-						    isWaitListed,
-						    isRejected)
+					firstName, 
+					lastName, 
+					email, 
+					school,
+					timeApplied, 
+					didSubmitPreInterview, 
+					didRequest, 
+					completedInterview,
+					didTranscript, 
+					didFaculty,
+					completed,
+					assessmentScore,
+					interviewScore,
+					meghanNotes,
+					status)
 			})
-			appendToApplicantArea()
-		})
-		
-		//Get all COMPLETED applicant information and build blocks
-		var completedApplicantArea = document.getElementById('completed-applicant-section')
-		userDB.collection("users").where("tutorApplicationApproved", "==", true).onSnapshot(function(allTutors) {
-			completedApplicantArray = []
-			while(completedApplicantArea.firstChild) {
-				completedApplicantArea.removeChild(completedApplicantArea.firstChild)
-			}
-			
-			allTutors.forEach(function(doc) {
-        			var applicantID = doc.id,
-				    firstName = doc.data().firstName,
-				    lastName = doc.data().lastName,
-				    email = doc.data().email,
-				    school = doc.data().school,				    
-				    timeApplied = doc.data().timeCreated,
-				    didSubmitPreInterview = doc.data().application.didSubmitPreInterview,
-				    didRequest = doc.data().application.didRequestInterview,
-				    completedInterview = doc.data().application.completedInterview,
-				    didTranscript = doc.data().application.uploadedTranscript,
-				    didFaculty = doc.data().application.uploadedFaculty,
-				    assessmentScore = doc.data().application.assessmentScore,
-				    interviewScore = doc.data().application.interviewScore,
-				    completed = true,
-				    meghanNotes = doc.data().application.meghanNotes,
-				    isFirstApproved = doc.data().application.isFirstApproved,
-				    isWaitListed = doc.data().application.isWaitListed,
-				    isRejected = doc.data().application.isRejected
-				buildApplicantBlock(applicantID, 
-						    firstName, 
-						    lastName, 
-						    email, 
-						    school,
-						    timeApplied, 
-						    didSubmitPreInterview, 
-						    didRequest, 
-						    completedInterview,
-						    didTranscript, 
-						    didFaculty,
-						    completed,
-						    assessmentScore,
-						    interviewScore,
-						    meghanNotes,
-						    isFirstApproved,
-						    isWaitListed,
-						    isRejected)
-			})
-			appendToCompletedApplicantArea()
+			appendToRejectedSection()
+			appendToPendingSection()
+			appendToAcceptedSection()
+
 		})
 	} else {
 		location.href = "https://www.jointutortree.com"
 	}
 })
 
-function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, completed, assessmentScore, interviewScore, meghanNotes, isFirstApproved, isWaitListed, isRejected) {
+function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, completed, assessmentScore, interviewScore, meghanNotes, status) {
 	//Main Container
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
@@ -311,149 +281,49 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 
 	//Score Blocks
 	var userDB = firebase.firestore()
-	console.log(assessmentScore)
-	console.log(interviewScore)
 
 	var formContainer = document.createElement('form')
 	formContainer.setAttribute('class', 'score-form')
 	var mainScore = document.createElement('div')
 	mainScore.setAttribute('class', 'main-score')
 	mainScore.innerHTML = parseInt(assessmentScore) + parseInt(interviewScore)
-		formContainer.appendChild(mainScore)
+	formContainer.appendChild(mainScore)
 
 	var individualScores = document.createElement('div')
 	individualScores.setAttribute('class', 'individual-scores')
-		formContainer.appendChild(individualScores)
+	formContainer.appendChild(individualScores)
 
 	var piaScoreContainer = document.createElement('div')
 	piaScoreContainer.setAttribute('class', 'pia-score-container')
-		individualScores.appendChild(piaScoreContainer)
+	individualScores.appendChild(piaScoreContainer)
 
 	var piaScoreHeader = document.createElement('div')
 	piaScoreHeader.setAttribute('class', 'pia-score-header')
 	piaScoreHeader.innerHTML = 'PIA:'
-		piaScoreContainer.appendChild(piaScoreHeader)
+	piaScoreContainer.appendChild(piaScoreHeader)
+	
 	var piaScoreField = document.createElement('input')
 	piaScoreField.readOnly = true
 	piaScoreField.setAttribute('class', 'pia-score')
 	piaScoreField.placeholder = assessmentScore
-	/*
-	piaScoreField.onblur = function() {
-		userDB.collection("users")
-			.doc(applicantID)
-			.update( { "application.assessmentScore" : piaScoreField.value } )
-	}
-	*/
-	
-		piaScoreContainer.appendChild(piaScoreField)
+	piaScoreContainer.appendChild(piaScoreField)
 
 	var interviewScoreContainer = document.createElement('div')
 	interviewScoreContainer.setAttribute('class', 'interview-score-container')
-		individualScores.appendChild(interviewScoreContainer)
+	individualScores.appendChild(interviewScoreContainer)
 	var interviewScoreHeader = document.createElement('div')
 	interviewScoreHeader.setAttribute('class', 'pia-score-header')
 	interviewScoreHeader.innerHTML = 'Interview:'
-		interviewScoreContainer.appendChild(interviewScoreHeader)
+	interviewScoreContainer.appendChild(interviewScoreHeader)
 
 	var interviewScoreField = document.createElement('input')
 	interviewScoreField.readOnly = true
 	interviewScoreField.setAttribute('class', 'interview-score-field')
 	interviewScoreField.placeholder = interviewScore
-	/*
-	interviewScoreField.onblur = function() {
-		userDB.collection("users")
-			.doc(applicantID)
-			.update( { "application.interviewScore" : interviewScoreField.value } )
-	}
-	*/
-		interviewScoreContainer.appendChild(interviewScoreField)
+	interviewScoreContainer.appendChild(interviewScoreField)
 
 	applicantBlock.appendChild(formContainer)
 	
-	//Approved, wait-listed or rejected block
-	var approveWaitListRejectedBlock = document.createElement('div')
-	approveWaitListRejectedBlock.setAttribute('class', 'approve-wait-list-rejected-block')
-	
-	//approved block
-	var approvedBlock = document.createElement('div')
-	approvedBlock.setAttribute('class', 'approved-block')
-	approveWaitListRejectedBlock.appendChild(approvedBlock)
-
-	var approvedHeader = document.createElement('h5')
-	approvedHeader.setAttribute('class', 'approved-tutor-header')
-	approvedHeader.innerHTML = "Approved"
-	approvedBlock.appendChild(approvedHeader)
-
-	if (isFirstApproved) {
-		var approvedTrue = document.createElement('div')
-		approvedTrue.setAttribute('class', 'admin-complete')
-		approvedTrue.innerHTML = 'check-circle'
-		approvedBlock.appendChild(approvedTrue)
-		approvedBlock.setAttribute('onClick', 'updateisFirstApprovedStatus("'+applicantID+'", "'+email+'", false)')
-	} else {
-		var approvedFalse = document.createElement('div')
-		approvedFalse.setAttribute('class', 'admin-incomplete')
-		approvedFalse.innerHTML = 'circle'
-		approvedBlock.appendChild(approvedFalse)
-		approvedBlock.setAttribute('onClick', 'updateisFirstApprovedStatus("'+applicantID+'", "'+email+'", true)')
-	}
-
-	//approveWaitListRejectedBlock.appendChild(approvedBlock)	
-	
-	//wait-list block
-	var waitListBlock = document.createElement('div')
-	waitListBlock.setAttribute('class', 'wait-list-block')
-	approveWaitListRejectedBlock.appendChild(waitListBlock)
-
-	var waitListHeader = document.createElement('h5')
-	waitListHeader.setAttribute('class', 'wait-list-header')
-	waitListHeader.innerHTML = "Wait List"
-	waitListBlock.appendChild(waitListHeader)
-
-	if (isWaitListed) {
-		var waitListTrue = document.createElement('div')
-		waitListTrue.setAttribute('class', 'admin-complete')
-		waitListTrue.innerHTML = 'check-circle'
-		waitListBlock.appendChild(waitListTrue)
-		waitListBlock.setAttribute('onClick', 'updateisWaitListStatus("'+applicantID+'", "'+email+'", false)')
-	} else {
-		var waitListFalse = document.createElement('div')
-		waitListFalse.setAttribute('class', 'admin-incomplete')
-		waitListFalse.innerHTML = 'circle'
-		waitListBlock.appendChild(waitListFalse)
-		waitListBlock.setAttribute('onClick', 'updateisWaitListStatus("'+applicantID+'", "'+email+'", true)')		
-	}
-	
-	//approveWaitListRejectedBlock.appendChild(waitListBlock)
-	
-	//rejected block
-	var rejectedBlock = document.createElement('div')
-	rejectedBlock.setAttribute('class', 'rejected-block')
-	approveWaitListRejectedBlock.appendChild(rejectedBlock)
-
-	var rejectedHeader = document.createElement('h5')
-	rejectedHeader.setAttribute('class', 'rejected-header')
-	rejectedHeader.innerHTML = "Rejected"
-	rejectedBlock.appendChild(rejectedHeader)
-
-	if (isRejected) {
-		var rejectedTrue = document.createElement('div')
-		rejectedTrue.setAttribute('class', 'admin-complete')
-		rejectedTrue.innerHTML = 'check-circle'
-		rejectedBlock.appendChild(rejectedTrue)
-		rejectedBlock.setAttribute('onClick', 'updateisRejectedStatus("'+applicantID+'", "'+email+'", false)')
-	} else {
-		var rejectedFalse = document.createElement('div')
-		rejectedFalse.setAttribute('class', 'admin-incomplete')
-		rejectedFalse.innerHTML = 'circle'
-		rejectedBlock.appendChild(rejectedFalse)
-		rejectedBlock.setAttribute('onClick', 'updateisRejectedStatus("'+applicantID+'", "'+email+'", true)')		
-	}
-	//approveWaitListRejectedBlock.appendChild(rejectedBlock)	
-	
-
-	applicantBlock.appendChild(approveWaitListRejectedBlock)	
-
 	
 	var noteContainer = document.createElement('form')
 	noteContainer.setAttribute('class', 'notes-form')
@@ -476,20 +346,43 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	
 	applicantBlock.appendChild(noteContainer)
 	
-	//Grant Access Code Block
-	var accessButton = document.createElement('div')
-	accessButton.setAttribute('class', 'applicant-access-button')
+	//Approve/Reject/Remove tutor buttons
+	var tutorPermissionsBlock = document.createElement('div')
+	tutorPermissionsBlock.setAttribute('class', 'tutor-permissions-block')
+	
+	var approveTutorButton = document.createElement('div')
+	approveTutorButton.setAttribute('class', 'approve-tutor-button')
+	approveTutorButton.innerHTML = 'Approve'
+	approveTutorButton.setAttribute('onclick', 'approveTutor("'+applicantID+'","'+email+'")')
+	
+	var rejectTutorButton = document.createElement('div')
+	rejectTutorButton.setAttribute('class', 'approve-tutor-button')
+	rejectTutorButton.innerHTML = 'Reject'
+	rejectTutorButton.setAttribute('onclick', 'rejectTutor("'+applicantID+'","'+email+'")')
+	
+	var deleteTutorButton = document.createElement('div')
+	deleteTutorButton.setAttribute('class', 'remove-tutor-button')
+	deleteTutorButton.innerHTML = 'DELETE'
+	deleteTutorButton.setAttribute('onclick', 'rejectTutor("'+applicantID+'")')
+	
+	applicantBlock.appendChild(tutorPermissionsBlock)
+	if (status == "rejected") {
+		updateRejectedArray(timeApplied)
+		tutorPermissionsBlock.appendChild(approveTutorButton)
+		tutorPermissionsBlock.appendChild(deleteTutorButton)
 
-	if (completed) {
-		accessButton.innerHTML = 'Remove Access'
-	} else {
-		accessButton.innerHTML = 'Grant Access'
+	} else if (status == "pending"){
+		updatePendingArray(timeApplied)
+		tutorPermissionsBlock.appendChild(rejectTutorButton)
+		tutorPermissionsBlock.appendChild(approveTutorButton)
+		tutorPermissionsBlock.appendChild(deleteTutorButton)
+
+	} else if (status == "accepted") {
+		updateRejectedArray(timeApplied)
+		tutorPermissionsBlock.appendChild(ambassadorApproveButton)
 	}
-	accessButton.setAttribute('onclick', 'grantTutorPrivileges("'+applicantID+'","'+email+'")')
-	applicantBlock.appendChild(accessButton)
-
-	//Append to Body
-	document.getElementById('applicant-section').appendChild(applicantBlock)
+	//Append to hidden section for sorting and appending in top level forEach
+	document.getElementById('hidden-applicant-section').appendChild(applicantBlock)
 }
 
 
@@ -880,7 +773,7 @@ function getInterviewPoints(applicantsID) {
 		var interviewScore = 
 				parseInt(onTimeScore) + 
 				parseInt(challengingScore) + 
-		    	parseInt(troubleScore) + 
+		    		parseInt(troubleScore) + 
 				parseInt(situationScore) + 
 				parseInt(confidenceScore) + 
 				parseInt(preparedScore) + 
@@ -935,78 +828,63 @@ function grantTutorPrivileges(applicantsID, applicantsEmail) {
 	
 }
 
-function updateisFirstApprovedStatus(applicantsID, email, booleanValue) {
-	var userDB = firebase.firestore()
+//SORT AND APPEND APPLICANTS
 
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		
-		userDB.collection("users")
-				.doc(applicantsID)
-				.update( { "application.isFirstApproved" : booleanValue } )
-	})
-	isFirstApprovedTutorAppResolution(booleanValue, email)
-}
-
-function updateisWaitListStatus(applicantsID, email, booleanValue) {
-	var userDB = firebase.firestore()
-
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		
-		userDB.collection("users")
-				.doc(applicantsID)
-				.update( { "application.isWaitListed" : booleanValue } )
-	})
-	isWaitListedTutorAppResolution(booleanValue, email)
-}
-
-function updateisRejectedStatus(applicantsID, email, booleanValue) {
-	var userDB = firebase.firestore()
-
-	userDB.collection("users").doc(applicantsID).get().then(function(doc) {
-		
-		userDB.collection("users")
-				.doc(applicantsID)
-				.update( { "application.isRejected" : booleanValue } )
-	})
-	isRejectedTutorAppResolution(booleanValue, email)
-}
-
-//Sort applicants by date applied
 function sortNumberApplicant(a,b) {
 	return(a-b)
 }
 
-var applicantArray = []
-function updateApplicantArray(timestamp) {
-		applicantArray.push(timestamp)
-    applicantArray.sort(sortNumberApplicant)
+//Rjected Applicants
+var rejectedApplicantArray = []
+function updateRejectedArray(timestamp) {
+	rejectedApplicantArray.push(timestamp)
+	rejectedApplicantArray.sort(sortNumberApplicant)
 }
 
-function appendToApplicantArea() {
-    var items = applicantArray.length
-    var applicantSection = document.getElementById('applicant-section')
+function appendToRejectedSection() {
+	var items = rejectedApplicantArray.length
+	var rejectedTutorSection = document.getElementById('rejected-applicant-section')
     
-    for( i=0 ; i < items ; i++ ) {
-    	var timestampID = applicantArray[i]
-    	var applicantBlock = document.getElementById(timestampID)
-        applicantSection.appendChild(applicantBlock)
-    }
+	for( i=0 ; i < items ; i++ ) {
+		var timestampID = rejectedApplicantArray[i]
+		var rejectedApplicantBlock = document.getElementById(timestampID)
+		rejectedTutorSection.appendChild(rejectedApplicantBlock)
+	}
 }
 
-var completedApplicantArray = []
-function updateCompletedApplicantArray(timestamp) {
-		completedApplicantArray.push(timestamp)
-    completedApplicantArray.sort(sortNumberApplicant)
+//Pending Applicants
+var pendingApplicantArray = []
+function updatePendingArray(timestamp) {
+	pendingApplicantArray.push(timestamp)
+    	pendingApplicantArray.sort(sortNumberApplicant)
 }
 
-function appendToCompletedApplicantArea() {
-	var items = completedApplicantArray.length
-	var completedApplicantSection = document.getElementById('completed-applicant-section')
+function appendToPendingSection() {
+	var items = pendingApplicantArray.length
+	var pendingTutorSection = document.getElementById('pending-applicant-section')
 
 	for( i=0 ; i < items ; i++ ) {
-		var timestampID = completedApplicantArray[i]
-		var applicantBlock = document.getElementById(timestampID)
-		completedApplicantSection.appendChild(applicantBlock)
+		var timestampID = pendingApplicantArray[i]
+		var pendingApplicantBlock = document.getElementById(timestampID)
+		pendingTutorSection.appendChild(pendingApplicantBlock)
+	}
+}
+
+//Accepted Applicants
+var acceptedApplicantArray = []
+function updateAcceptedArray(timestamp) {
+	acceptedApplicantArray.push(timestamp)
+	acceptedApplicantArray.sort(sortNumberApplicant)
+}
+
+function appendToAcceptedSection() {
+	var items = acceptedApplicantArray.length
+	var acceptedTutorSection = document.getElementById('accepted-tutor-section')
+
+	for( i=0 ; i < items ; i++ ) {
+		var timestampID = acceptedApplicantArray[i]
+		var acceptedApplicantBlock = document.getElementById(timestampID)
+		acceptedApplicantArray.appendChild(applicantBlock)
 	}
 }
 
@@ -1029,7 +907,7 @@ function sendEmailTo(email, title, message) {
      	 	hiddenFacultyRecButton.click();
     	}
 
-    var hiddenFacultyRecButton = document.getElementById("faculty-admin-select") 
+    	var hiddenFacultyRecButton = document.getElementById("faculty-admin-select") 
    	hiddenFacultyRecButton.addEventListener('change', handleFacultyRecUploadChange);
 
 	var selectedFacultyRecFile;
