@@ -44,7 +44,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 					    lastName = doc.data().lastName,
 					    email = doc.data().email,
 					    school = doc.data().school,
-					    timeApplied = doc.data().timeCreated,
+					    timeApplied = doc.data().timeApplied,
 					    status = doc.data.tutorApplicantStatus
 
 					userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(function(applicant) {
