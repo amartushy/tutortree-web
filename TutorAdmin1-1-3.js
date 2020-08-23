@@ -9,7 +9,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		//Get sections
 		var rejectedTutorSection = document.getElementById('rejected-applicant-section')
 		var pendingTutorSection = document.getElementById('pending-applicant-section')
-		var acceptedTutorSection = document.getElementById('accepted-tutor-section')
+		var acceptedTutorSection = document.getElementById('accepted-applicant-section')
 		
 		//Get all applicant information and build blocks
 		var applicantArea = document.getElementById('applicant-section')
