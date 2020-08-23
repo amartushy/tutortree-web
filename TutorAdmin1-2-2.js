@@ -81,15 +81,12 @@ firebase.auth().onAuthStateChanged(function(user) {
 })
 
 function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, assessmentScore, interviewScore, meghanNotes, status) {
+	console.log("Building block for user: " + applicantID)
+
 	//Main Container
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
 	applicantBlock.setAttribute('id', timeApplied)
-	if (completed) {
-		updateCompletedApplicantArray(timeApplied)
-	} else {
-		updateApplicantArray(timeApplied)
-	}
 
 	//Name Block
 	var nameBlock = document.createElement('div')
