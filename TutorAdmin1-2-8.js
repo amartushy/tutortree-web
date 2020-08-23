@@ -31,8 +31,10 @@ firebase.auth().onAuthStateChanged(function(user) {
 				acceptedTutorSection.removeChild(acceptedTutorSection.firstChild)
 			}
 			
+			var numTutors = Object.keys(allTutors)
+			
 			var doneLooping = new Promise((resolve, reject) => {
-				allTutors.forEach(async function(doc) {
+				allTutors.forEach(function(doc) {
 				
 					var applicantID = doc.id,
 					    firstName = doc.data().firstName,
@@ -42,7 +44,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 					    timeApplied = doc.data().timeCreated,
 					    status = doc.data.tutorApplicantStatus
 
-					await userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(async function(applicant) {
+					userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(function(applicant) {
 						var 	didSubmitPreInterview = applicant.data().didSubmitPreInterview,
 							didRequest = applicant.data().didRequestInterview,
 							completedInterview = applicant.data().completedInterview,
@@ -52,7 +54,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 							interviewScore = applicant.data().interviewScore,
 							meghanNotes = applicant.data().meghanNotes
 
-						await buildApplicantBlock(applicantID, 
+						buildApplicantBlock(applicantID, 
 						firstName, 
 						lastName, 
 						email, 
@@ -68,9 +70,11 @@ firebase.auth().onAuthStateChanged(function(user) {
 						meghanNotes,
 						status)
 					})
-				   
+				   	if (applicantID == numTutors[numTutors.length -1]) {
+						resolve()
+					}
 				})
-				resolve()
+				
 			});
 
 			doneLooping.then(() => {
