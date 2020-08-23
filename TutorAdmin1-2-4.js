@@ -32,47 +32,56 @@ firebase.auth().onAuthStateChanged(function(user) {
 				acceptedTutorSection.removeChild(acceptedTutorSection.firstChild)
 			}
 			
-			allTutors.forEach(function(doc) {
+			var doneLooping = new Promise((resolve, reject) => {
+				allTutors.forEach(function(doc) {
 				
-				var applicantID = doc.id,
-				    firstName = doc.data().firstName,
-				    lastName = doc.data().lastName,
-				    email = doc.data().email,
-				    school = doc.data().school,
-				    timeApplied = doc.data().timeCreated,
-				    status = doc.data.tutorApplicantStatus
-				
-				userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(function(applicant) {
-					var 	didSubmitPreInterview = applicant.data().didSubmitPreInterview,
-						didRequest = applicant.data().didRequestInterview,
-						completedInterview = applicant.data().completedInterview,
-						didTranscript = applicant.data().uploadedTranscript,
-						didFaculty = applicant.data().uploadedFaculty,
-						assessmentScore = applicant.data().assessmentScore,
-						interviewScore = applicant.data().interviewScore,
-						meghanNotes = applicant.data().meghanNotes
-					
-					buildApplicantBlock(applicantID, 
-					firstName, 
-					lastName, 
-					email, 
-					school,
-					timeApplied, 
-					didSubmitPreInterview, 
-					didRequest, 
-					completedInterview,
-					didTranscript, 
-					didFaculty,
-					assessmentScore,
-					interviewScore,
-					meghanNotes,
-					status)
-				})
+					var applicantID = doc.id,
+					    firstName = doc.data().firstName,
+					    lastName = doc.data().lastName,
+					    email = doc.data().email,
+					    school = doc.data().school,
+					    timeApplied = doc.data().timeCreated,
+					    status = doc.data.tutorApplicantStatus
+
+					userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(function(applicant) {
+						var 	didSubmitPreInterview = applicant.data().didSubmitPreInterview,
+							didRequest = applicant.data().didRequestInterview,
+							completedInterview = applicant.data().completedInterview,
+							didTranscript = applicant.data().uploadedTranscript,
+							didFaculty = applicant.data().uploadedFaculty,
+							assessmentScore = applicant.data().assessmentScore,
+							interviewScore = applicant.data().interviewScore,
+							meghanNotes = applicant.data().meghanNotes
+
+						buildApplicantBlock(applicantID, 
+						firstName, 
+						lastName, 
+						email, 
+						school,
+						timeApplied, 
+						didSubmitPreInterview, 
+						didRequest, 
+						completedInterview,
+						didTranscript, 
+						didFaculty,
+						assessmentScore,
+						interviewScore,
+						meghanNotes,
+						status)
+					})
 				   
-			})
-			appendToRejectedSection()
-			appendToPendingSection()
-			appendToAcceptedSection()
+				})
+				resolve()
+			});
+
+			doneLooping.then(() => {
+				appendToRejectedSection()
+				appendToPendingSection()
+				appendToAcceptedSection()
+			});
+			
+			
+			
 
 		})
 	} else {
