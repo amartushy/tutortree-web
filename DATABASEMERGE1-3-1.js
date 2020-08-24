@@ -138,6 +138,17 @@
 		} catch {
                     	console.log("no data")
 		}
+		    
+		var activitiesPoints = 0
+		try {
+			if (doc.data().application.assessment.activitiesPoints != null) {
+                    		activitiesPoints = doc.data().application.assessment.activitiesPoints
+                	} else {
+                    		console.log("no data")
+                	}
+		} catch {
+                    	console.log("no data")
+		}
                 
 
                 var yearPoints = 0
@@ -167,7 +178,8 @@
                         "experiencePoints" : experiencePoints,
                         "qualitiesPoints" : qualitiesPoints,
                         "whyTutorPoints" : whyTutorPoints,
-                        "yearPoints" : yearPoints
+                        "yearPoints" : yearPoints,
+			"activitiesPoints" : activitiesPoints
                     }
                 }
 
