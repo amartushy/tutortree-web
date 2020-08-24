@@ -111,6 +111,25 @@ function createNewUserTutorApplicant(tutorApplicantID) {
 			                  "activitiesPoints" : 0
                     }
                 }
+	
+	var applicationData = {
+                    "email" : emailField.value,
+                    "firstName" : firstNameField.value,
+                    "lastName" : lastNameField.value,
+                    "school" : schoolField.value,
+                    "timeCreated" : new Date() / 1000,
+                    "interviewScore" : 0,
+                    "assessmentScore" : 0,
+                    "completedInterview" : false,
+                    "didRequestInterview" : false,
+                    "didSubmitPreInterview" : false,
+                    "uploadedFaculty" : false,
+                    "facultyFile" : "No file",
+                    "uploadedTranscript" : false,
+                    "transcriptFile" : "No file",
+                    "howHeard" : howHeardField.value,,
+		                "meghanNotes" : "No notes yet"
+        }
      tutorAccountCreated( newTutorDict )
         
       // Update user collection with tutor info
@@ -203,9 +222,9 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                     "didRequestInterview" : false,
                     "didSubmitPreInterview" : false,
                     "uploadedFaculty" : false,
-                    "facultyFile" : false,
+                    "facultyFile" : "No file",
                     "uploadedTranscript" : false,
-                    "transcriptFile" : "No file,
+                    "transcriptFile" : "No file",
                     "howHeard" : howHeardField.value,,
 		                "meghanNotes" : "No notes yet"
         }
