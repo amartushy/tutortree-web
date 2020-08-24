@@ -327,7 +327,7 @@
                 }
 
                 var facultyFile = "No file uploaded"
-                try (doc.data().application.facultyFile != null) {
+                if (doc.data().application.facultyFile != null) {
                     facultyFile = doc.data().application.facultyFile
                 } else {
                     console.log("no assessment score data")
