@@ -374,7 +374,6 @@
                     }
                 }
 
-
                 //Application Info
                 var interviewScore = 0
                 if (doc.data().application.interviewScore != null) {
@@ -404,31 +403,31 @@
                     console.log("no assessment score data")
                 }
 		var completedInterview = false
-		if (doc.data().completedInterview != null) {
+		if (doc.data().application.completedInterview != null) {
 			completedInterview = doc.data().completedInterview	
 		} else {
 			console.log("no data")
 		}
 		var didRequestInterview = false
-		if (doc.data().didRequestInterview != null) {
+		if (doc.data().application.didRequestInterview != null) {
 			didRequestInterview = doc.data().didRequestInterview	
 		} else {
 			console.log("no data")
 		}
 		var didSubmitPreInterview = false
-		if (doc.data().didSubmitPreInterview != null) {
+		if (doc.data().application.didSubmitPreInterview != null) {
 			didSubmitPreInterview = doc.data().didSubmitPreInterview	
 		} else {
 			console.log("no data")
 		}
 		var uploadedFaculty = false
-		if (doc.data().uploadedFaculty != null) {
+		if (doc.data().application.uploadedFaculty != null) {
 			uploadedFaculty = doc.data().uploadedFaculty	
 		} else {
 			console.log("no data")
 		}
 		var uploadedTranscript = false
-		if (doc.data().uploadedTranscript != null) {
+		if (doc.data().application.uploadedTranscript != null) {
 			uploadedTranscript = doc.data().uploadedTranscript	
 		} else {
 			console.log("no data")
