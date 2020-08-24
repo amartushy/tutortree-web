@@ -169,70 +169,90 @@
                 //interview notes
                 var challengingNotes = "No notes yet"
                 try {
-                    challengingNotes = doc.data().application.interview.challengingNotes
+			if (doc.data().application.interview.challengingNotes != null) {
+				challengingNotes = doc.data().application.interview.challengingNotes
+			}
                 } catch {
                     console.log("no notes")
                 }
 
                 var confidenceNotes = "No notes yet"
                 try {
-                    confidenceNotes = doc.data().application.interview.confidenceNotes
+			if (doc.data().application.interview.confidenceNotes != null) {
+				confidenceNotes = doc.data().application.interview.confidenceNotes
+			}
                 } catch {
                     console.log("no notes")
                 }
 
                 var explainNotes = "No notes yet"
                 try {
-                    explainNotes = doc.data().application.interview.explainNotes
+			if (doc.data().application.interview.explainNotes != null) {
+				explainNotes = doc.data().application.interview.explainNotes
+			}
                 } catch {
                     console.log("no notes")
                 }
 
                 var helpNotes = "No notes yet"
                 try {
-                    helpNotes = doc.data().application.interview.helpNotes
+			if (doc.data().application.interview.helpNotes != null) {
+				helpNotes = doc.data().application.interview.helpNotes
+			}
                 } catch {
                     console.log("no notes")
                 }
 
                 var onTimeNotes = "No notes yet"
                 try {
-                    onTimeNotes = doc.data().application.interview.onTimeNotes
+			if (doc.data().application.interview.onTimeNotes != null) {
+				onTimeNotes = doc.data().application.interview.onTimeNotes
+			}
                 } catch {
                     console.log("no notes")
                 }
 
                 var onlineNotes = "No notes yet"
                 try {
-                    onlineNotes = doc.data().application.interview.onlineNotes
+			if (doc.data().application.interview.onlineNotes != null) {
+				onlineNotes = doc.data().application.interview.onlineNotes
+			}
                 } catch {
                     console.log("no notes")
                 }
 
                 var preparedNotes = "No notes yet"
                 try {
-                    preparedNotes = doc.data().application.interview.preparedNotes
+			if (doc.data().application.interview.preparedNotes != null) {
+				preparedNotes = doc.data().application.interview.preparedNotes
+			}
                 } catch {
                     console.log("no notes")
                 }
 
                 var questionNotes = "No notes yet"
                 try {
-                    questionNotes = doc.data().application.interview.questionNotes
+			if (doc.data().application.interview.questionNotes != null) {
+				questionNotes = doc.data().application.interview.questionNotes
+			}
                 } catch {
                     console.log("no notes")
                 }
 
                 var situationNotes = "No notes yet"
                 try {
-                    situationNotes = doc.data().application.interview.situationNotes
+			if (doc.data().application.interview.situationNotes != null) {
+				situationNotes = doc.data().application.interview.situationNotes
+			}
                 } catch {
                     console.log("no notes")
                 }
 
                 var troubleNotes = "No notes yet"
                 try {
-                    troubleNotes = doc.data().application.interview.troubleNotes
+			if (doc.data().application.interview.troubleNotes != null) {
+				troubleNotes = doc.data().application.interview.troubleNotes
+			}
                 } catch {
                     console.log("no notes")
                 }
@@ -240,61 +260,81 @@
                 //interview scores
                 var challengingScore = 0
                 try {
-                    challengingScore = doc.data().application.interview.challengingScore
+			if (doc.data().application.interview.challengingScore != null) {
+				challengingScore = doc.data().application.interview.challengingScore
+			}
                 } catch {
                     console.log("no score available")
                 }
                 var confidenceScore = 0
                 try {
-                    confidenceScore = doc.data().application.interview.confidenceScore
+			if (doc.data().application.interview.confidenceScore != null) {
+				confidenceScore = doc.data().application.interview.confidenceScore
+			}
                 } catch {
                     console.log("no score available")
                 }
                 var explainScore = 0
                 try {
-                    explainScore = doc.data().application.interview.explainScore
+			if (doc.data().application.interview.explainScore != null) {
+				explainScore = doc.data().application.interview.explainScore
+			}
                 } catch {
                     console.log("no score available")
                 }
                 var helpScore = 0
                 try {
-                    helpScore = doc.data().application.interview.helpScore
+			if (doc.data().application.interview.helpScore != null) {
+				helpScore = doc.data().application.interview.helpScore
+			}
                 } catch {
                     console.log("no score available")
                 }
                 var onTimeScore = 0
                 try {
-                    onTimeScore = doc.data().application.interview.onTimeScore
+			if (doc.data().application.interview.onTimeScore != null) {
+				onTimeScore = doc.data().application.interview.onTimeScore
+			}
                 } catch {
                     console.log("no score available")
                 }
                 var onlineScore = 0
                 try {
-                    onlineScore = doc.data().application.interview.onlineScore
+			if (doc.data().application.interview.onlineScore != null) {
+				onlineScore = doc.data().application.interview.onlineScore
+			}
                 } catch {
                     console.log("no score available")
                 }
                 var preparedScore = 0
                 try {
-                    preparedScore = doc.data().application.interview.preparedScore
+			if (doc.data().application.interview.preparedScore != null) {
+				preparedScore = doc.data().application.interview.preparedScore
+			}
                 } catch {
                     console.log("no score available")
                 }
                 var questionScore = 0
                 try {
-                    questionScore = doc.data().application.interview.questionScore
+			if (doc.data().application.interview.questionScore != null) {
+				questionScore = doc.data().application.interview.questionScore
+			}
                 } catch {
                     console.log("no score available")
                 }
                 var situationScore = 0
                 try {
-                    situationScore = doc.data().application.interview.situationScore
+			if (doc.data().application.interview.situationScore != null) {
+				situationScore = doc.data().application.interview.situationScore
+			}
                 } catch {
                     console.log("no score available")
                 }
                 var troubleScore = 0
                 try {
-                    troubleScore = doc.data().application.interview.troubleScore
+			if (doc.data().application.interview.troubleScore != null) {
+				troubleScore = doc.data().application.interview.troubleScore
+			}
                 } catch {
                     console.log("no score available")
                 }
