@@ -82,7 +82,6 @@ function showRejectedApplicants() {
 	while(rejectedTutorSection.firstChild) {
 		rejectedTutorSection.removeChild(rejectedTutorSection.firstChild)
 	}
-	
 	appendToRejectedSection()
 
 }
@@ -92,7 +91,6 @@ function showPendingApplicants() {
 	while(pendingTutorSection.firstChild) {
 		pendingTutorSection.removeChild(pendingTutorSection.firstChild)
 	}
-	
 	appendToPendingSection()
 
 }
@@ -102,7 +100,6 @@ function showAcceptedApplicants() {
 	while(acceptedTutorSection.firstChild) {
 		acceptedTutorSection.removeChild(acceptedTutorSection.firstChild)
 	}
-	
 	appendToAcceptedSection()
 }
 
@@ -151,8 +148,6 @@ function buildApplicantBlock(applicantID, name, email, school, timeApplied, didS
 	preInterviewHeader.setAttribute('class', 'applicant-header')
 	preInterviewHeader.innerHTML = "Assessment"
 	preInterviewBlock.appendChild(preInterviewHeader)
-
-	console.log(didSubmitPreInterview)
 
 	if (didSubmitPreInterview) {
 		var assessmentCompleted = document.createElement('div')
@@ -366,9 +361,11 @@ function buildApplicantBlock(applicantID, name, email, school, timeApplied, didS
 	noteContainer.appendChild(notesField)
 	
 	notesField.onblur = function() {
-		userDB.collection("users")
+		userDB.collection("userTest")
 			.doc(applicantID)
-			.update( { "application.meghanNotes" : notesField.value } )
+			.collection("tutorApplication")
+			.doc("application")
+			.update( { "meghanNotes" : notesField.value } )
 	}
 	
 	applicantBlock.appendChild(noteContainer)
@@ -455,10 +452,7 @@ function deleteTutor(applicantsID, applicantsEmail) {
 		.doc(applicantsID)
 		.update( {'tutorApplicantStatus' : "deleted",
 			  'isTutor' : false})			  	
-}								
-								
-
-
+}																
 
 function showAssessment(applicantsID, name) {
 	document.getElementById("assessment-wrapper").style.display = 'flex'
@@ -467,71 +461,67 @@ function showAssessment(applicantsID, name) {
 	tutorPIANameHeader.innerHTML = name
 	
 	var userDB = firebase.firestore()
-	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
+	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("assessment").get().then(function(doc) {
 		//Fields
-		document.getElementById('pia-first').innerHTML = doc.data().assessment.firstName
-		document.getElementById('pia-last').innerHTML = doc.data().assessment.lastName
-		document.getElementById('pia-email').innerHTML = doc.data().assessment.email
-		document.getElementById('pia-year').innerHTML = doc.data().assessment.year
-		document.getElementById('pia-major').innerHTML = doc.data().assessment.major
-		document.getElementById('pia-hours').innerHTML = doc.data().assessment.hours
-		document.getElementById('pia-school').innerHTML = doc.data().assessment.school
-		document.getElementById('pia-courses').innerHTML = doc.data().assessment.courses
-		document.getElementById('pia-experience').innerHTML = doc.data().assessment.experience
-		document.getElementById('pia-qualities').innerHTML = doc.data().assessment.qualities
-		document.getElementById('pia-why').innerHTML = doc.data().assessment.whyTutor
-		document.getElementById('pia-groups').innerHTML = doc.data().assessment.groups
+		document.getElementById('pia-year').innerHTML = doc.data().assessmentFields.year
+		document.getElementById('pia-major').innerHTML = doc.data().assessmentFields.major
+		document.getElementById('pia-hours').innerHTML = doc.data().assessmentFields.hours
+		document.getElementById('pia-courses').innerHTML = doc.data().assessmentFields.courses
+		document.getElementById('pia-experience').innerHTML = doc.data().assessmentFields.experience
+		document.getElementById('pia-qualities').innerHTML = doc.data().assessmentFields.qualities
+		document.getElementById('pia-why').innerHTML = doc.data().assessmentFields.whyTutor
+		document.getElementById('pia-groups').innerHTML = doc.data().assessmentFields.groups
 		
 		//Assign points fields
 		var yearPoints = document.getElementById('year-points')
-		yearPoints.value = doc.data().assessment.yearPoints
+		yearPoints.value = doc.data().assessmentScores.yearPoints
 		yearPoints.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
-				.doc("application")
-				.update( { "assessment.yearPoints" : yearPoints.value } )
+				.doc("assessment")
+				.update( { "assessmentScores.yearPoints" : yearPoints.value } )
 			getAssessmentPoints(applicantsID)
 		}
 		
 		var experiencePoints = document.getElementById('experience-points')
-		experiencePoints.value = doc.data().assessment.experiencePoints
+		experiencePoints.value = doc.data().assessmentScores.experiencePoints
 		experiencePoints.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
-				.doc("application")
-				.update( { "assessment.experiencePoints" : experiencePoints.value } )
+				.doc("assessment")
+				.update( { "assessmentScores.experiencePoints" : experiencePoints.value } )
 			getAssessmentPoints(applicantsID)
 		}
 		var qualitiesPoints = document.getElementById('qualities-points')
-		qualitiesPoints.value = doc.data().assessment.qualitiesPoints
+		qualitiesPoints.value = doc.data().assessmentScores.qualitiesPoints
 		qualitiesPoints.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
-				.doc("application")
-				.update( { "assessment.qualitiesPoints" : qualitiesPoints.value } )
+				.doc("assessment")
+				.update( { "assessmentScores.qualitiesPoints" : qualitiesPoints.value } )
 			getAssessmentPoints(applicantsID)
 		}
 		var whyTutorPoints = document.getElementById('why-tutor-points')
-		whyTutorPoints.value = doc.data().assessment.whyTutorPoints
+		whyTutorPoints.value = doc.data().assessmentScores.whyTutorPoints
 		whyTutorPoints.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
-				.doc("application")
-				.update( { "assessment.whyTutorPoints" : whyTutorPoints.value } )
+				.doc("assessment")
+				.update( { "assessmentScores.whyTutorPoints" : whyTutorPoints.value } )
 			getAssessmentPoints(applicantsID)
 		}
 		var activitiesPoints = document.getElementById('activities-points')
-		activitiesPoints.value = doc.data().assessment.activitiesPoints
+		activitiesPoints.value = doc.data().assessmentScores.activitiesPoints
 		activitiesPoints.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
-				.doc("application")
-				.update( { "assessment.activitiesPoints" : activitiesPoints.value } )
+				.doc("assessment")
+				.update( { "assessmentScores.activitiesPoints" : activitiesPoints.value } )
 			getAssessmentPoints(applicantsID)
 		}
 	})
@@ -547,200 +537,200 @@ function showInterview(applicantsID, name) {
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("interview").get().then(function(doc) {
 		//Notes fields
 		var onTimeNotes = document.getElementById('on-time-notes')
-		onTimeNotes.value = doc.data().onTimeNotes
+		onTimeNotes.value = doc.data().interviewNotes.onTimeNotes
 		onTimeNotes.onblur = function() {
 			userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "onTimeNotes" : onTimeNotes.value } )
+				.update( { "interviewNotes.onTimeNotes" : onTimeNotes.value } )
 		}
 		
 		var challengingNotes = document.getElementById('challenging-notes')
-		challengingNotes.value = doc.data().challengingNotes
+		challengingNotes.value = doc.data().interviewNotes.challengingNotes
 		challengingNotes.onblur = function() {
 			userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "challengingNotes" : challengingNotes.value } )
+				.update( { "interviewNotes.challengingNotes" : challengingNotes.value } )
 		}
 		
 		var troubleNotes = document.getElementById('trouble-notes')
-		troubleNotes.value = doc.data().troubleNotes
+		troubleNotes.value = doc.data().interviewNotes.troubleNotes
 		troubleNotes.onblur = function() {
 			userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "troubleNotes" : troubleNotes.value } )
+				.update( { "interviewNotes.troubleNotes" : troubleNotes.value } )
 		}
 		
 		var situationNotes = document.getElementById('situation-notes')
-		situationNotes.value = doc.data().situationNotes
+		situationNotes.value = doc.data().interviewNotes.situationNotes
 		situationNotes.onblur = function() {
 			userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "situationNotes" : situationNotes.value } )
+				.update( { "interviewNotes.situationNotes" : situationNotes.value } )
 		}
 		var confidenceNotes = document.getElementById('confidence-notes')
-		confidenceNotes.value = doc.data().confidenceNotes
+		confidenceNotes.value = doc.data().interviewNotes.confidenceNotes
 		confidenceNotes.onblur = function() {
 			userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "confidenceNotes" : confidenceNotes.value } )
+				.update( { "interviewNotes.confidenceNotes" : confidenceNotes.value } )
 		}
 		var preparedNotes = document.getElementById('prepared-notes')
-		preparedNotes.value = doc.data().preparedNotes
+		preparedNotes.value = doc.data().interviewNotes.preparedNotes
 		preparedNotes.onblur = function() {
 			userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "preparedNotes" : preparedNotes.value } )
+				.update( { "interviewNotes.preparedNotes" : preparedNotes.value } )
 		}
 		var explainNotes = document.getElementById('explain-notes')
-		explainNotes.value = doc.data().explainNotes
+		explainNotes.value = doc.data().interviewNotes.explainNotes
 		explainNotes.onblur = function() {
 			userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "explainNotes" : explainNotes.value } )
+				.update( { "interviewNotes.explainNotes" : explainNotes.value } )
 		}
 		var onlineNotes = document.getElementById('online-notes')
-		onlineNotes.value = doc.data().onlineNotes
+		onlineNotes.value = doc.data().interviewNotes.onlineNotes
 		onlineNotes.onblur = function() {
 			userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "onlineNotes" : onlineNotes.value } )
+				.update( { "interviewNotes.onlineNotes" : onlineNotes.value } )
 		}
 		var helpNotes = document.getElementById('help-notes')
-		helpNotes.value = doc.data().helpNotes
+		helpNotes.value = doc.data().interviewNotes.helpNotes
 		helpNotes.onblur = function() {
 			userDB.collection("users")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "application.interview.helpNotes" : helpNotes.value } )
+				.update( { "interviewNotes.helpNotes" : helpNotes.value } )
 		}
 		var questionNotes = document.getElementById('question-notes')
-		questionNotes.value = doc.data().questionNotes
+		questionNotes.value = doc.data().interviewNotes.questionNotes
 		questionNotes.onblur = function() {
 			userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "questionNotes" : questionNotes.value } )
+				.update( { "interviewNotes.questionNotes" : questionNotes.value } )
 		}
 		
 		//Score Fields
 		var onTimeScore = document.getElementById('on-time-score')
-		onTimeScore.value = doc.data().onTimeScore
+		onTimeScore.value = doc.data().interviewScores.onTimeScore
 		onTimeScore.value = 0
 		onTimeScore.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "onTimeScore" : onTimeScore.value } )
+				.update( { "interviewScores.onTimeScore" : onTimeScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var challengingScore = document.getElementById('challenging-score')
-		challengingScore.value = doc.data().challengingScore
+		challengingScore.value = doc.data().interviewScores.challengingScore
 		challengingScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "challengingScore" : challengingScore.value } )
+				.update( { "interviewScores.challengingScore" : challengingScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var troubleScore = document.getElementById('trouble-score')
-		troubleScore.value = doc.data().troubleScore
+		troubleScore.value = doc.data().interviewScores.troubleScore
 		troubleScore.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "troubleScore" : troubleScore.value } )
+				.update( { "interviewScores.troubleScore" : troubleScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var situationScore = document.getElementById('situation-score')
-		situationScore.value = doc.data().situationScore
+		situationScore.value = doc.data().interviewScores.situationScore
 		situationScore.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "situationScore" : situationScore.value } )
+				.update( { "interviewScores.situationScore" : situationScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var confidenceScore = document.getElementById('confidence-score')
-		confidenceScore.value = doc.data().confidenceScore
+		confidenceScore.value = doc.data().interviewScores.confidenceScore
 		confidenceScore.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "confidenceScore" : confidenceScore.value } )
+				.update( { "interviewScores.confidenceScore" : confidenceScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var preparedScore = document.getElementById('prepared-score')
-		preparedScore.value = doc.data().preparedScore
+		preparedScore.value = doc.data().interviewScores.preparedScore
 		preparedScore.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "preparedScore" : preparedScore.value } )
+				.update( { "interviewScores.preparedScore" : preparedScore.value } )
 			getInterviewPoints(applicantsID)
 		}	
 		var explainScore = document.getElementById('explain-score')
-		explainScore.value = doc.data().explainScore
+		explainScore.value = doc.data().interviewScores.explainScore
 		explainScore.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "explainScore" : explainScore.value } )
+				.update( { "interviewScores.explainScore" : explainScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var onlineScore = document.getElementById('online-score')
-		onlineScore.value = doc.data().onlineScore
+		onlineScore.value = doc.data().interviewScores.onlineScore
 		onlineScore.value = 0
 		onlineScore.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "onlineScore" : onlineScore.value } )
+				.update( { "interviewScores.onlineScore" : onlineScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var helpScore = document.getElementById('help-score')
-		helpScore.value = doc.data().helpScore
+		helpScore.value = doc.data().interviewScores.helpScore
 		helpScore.onblur = async function() {
 			await userDB.collection("users")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "helpScore" : helpScore.value } )
+				.update( { "interviewScores.helpScore" : helpScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 		var questionScore = document.getElementById('question-score')
-		questionScore.value = doc.data().questionScore
+		questionScore.value = doc.data().interviewScores.questionScore
 		questionScore.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { "questionScore" : questionScore.value } )
+				.update( { "interviewScores.questionScore" : questionScore.value } )
 			getInterviewPoints(applicantsID)
 		}
 
@@ -749,12 +739,12 @@ function showInterview(applicantsID, name) {
 
 function getAssessmentPoints(applicantsID) {
 	var userDB = firebase.firestore()
-	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
-		var yearPoints = doc.data().assessment.yearPoints
-		var experiencePoints = doc.data().assessment.experiencePoints
-		var qualitiesPoints = doc.data().assessment.qualitiesPoints
-		var whyTutorPoints = doc.data().assessment.whyTutorPoints
-		var activitiesPoints = doc.data().assessment.activitiesPoints
+	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("assessment").get().then(function(doc) {
+		var yearPoints = doc.data().assessmentScores.yearPoints
+		var experiencePoints = doc.data().assessmentScores.experiencePoints
+		var qualitiesPoints = doc.data().assessmentScores.qualitiesPoints
+		var whyTutorPoints = doc.data().assessmentScores.whyTutorPoints
+		var activitiesPoints = doc.data().assessmentScores.activitiesPoints
 		
 		var assessmentPoints = parseInt(yearPoints) + 
 		    parseInt(experiencePoints) + 
@@ -772,16 +762,16 @@ function getAssessmentPoints(applicantsID) {
 function getInterviewPoints(applicantsID) {
 	var userDB = firebase.firestore()
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("interview").get().then(function(doc) {
-		var onTimeScore = doc.data().application.interview.onTimeScore
-		var challengingScore = doc.data().application.interview.challengingScore
-		var troubleScore = doc.data().application.interview.troubleScore
-		var situationScore = doc.data().application.interview.situationScore
-		var confidenceScore = doc.data().application.interview.confidenceScore
-		var preparedScore = doc.data().application.interview.preparedScore
-		var explainScore = doc.data().application.interview.explainScore
-		var onlineScore = doc.data().application.interview.onlineScore
-		var helpScore = doc.data().application.interview.helpScore
-		var questionScore = doc.data().application.interview.questionScore
+		var onTimeScore = doc.data().interviewScores.onTimeScore
+		var challengingScore = doc.data().interviewScores.challengingScore
+		var troubleScore = doc.data().interviewScores.troubleScore
+		var situationScore = doc.data().interviewScores.situationScore
+		var confidenceScore = doc.data().interviewScores.confidenceScore
+		var preparedScore = doc.data().interviewScores.preparedScore
+		var explainScore = doc.data().interviewScores.explainScore
+		var onlineScore = doc.data().interviewScores.onlineScore
+		var helpScore = doc.data().interviewScores.helpScore
+		var questionScore = doc.data().interviewScores.questionScore
 
 		var interviewScore = 
 			parseInt(onTimeScore) + 
