@@ -241,7 +241,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                         "Sunday" : 0
                     },
                     "bio" : "Please enter a short description of yourself",
-                    "email" : emailField.value,,
+                    "email" : emailField.value,
                     "isAdmin" : false,
                     "isEmailOn" : false,
                     "isPushOn" : false,
