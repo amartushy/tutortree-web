@@ -28,8 +28,8 @@ function signUp(){
 				userDB = firebase.firestore()
 				var userID = user.uid
 				
-				userDB.collection("users").doc(userID).get().then(function(doc) {		
-					if(doc.data().admin) {
+				userDB.collection("userTest").doc(userID).get().then(function(doc) {		
+					if(doc.data().isAdmin) {
 						document.getElementById('admin-nav-panel').style.display = 'flex'
 						document.getElementById('login-section').style.display = 'none'
 						
