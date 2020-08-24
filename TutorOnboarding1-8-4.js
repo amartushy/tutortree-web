@@ -13,13 +13,12 @@ firebase.auth().onAuthStateChanged(function(user) {
 	var userID = user.uid
 	console.log("user is signed in with uid: " + userID)
 
-	userDB.collection("users").doc(userID)
-    		.onSnapshot(function(doc) {
+	userDB.collection("userTest").doc(userID).collection("tutorApplication").doc("application").onSnapshot(function(doc) {
     	//Change header to include name
 	document.getElementById("onboarding-header").innerHTML = "Welcome back, "+doc.get("firstName")	
 		
 	//Assessment completion view
-	if (doc.get("application.didSubmitPreInterview") == false) {
+	if (doc.get("didSubmitPreInterview") == false) {
 		assessmentIncomplete.style.display = "block"
 		assessmentComplete.style.display = "none"              
         } else {
@@ -30,7 +29,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         	.setAttribute('onClick', 'assessmentForm("'+userID+'")')  
 		
         //Interview completion view
-        if (doc.get("application.didRequestInterview") == false) {
+        if (doc.get("didRequestInterview") == false) {
         	interviewIncomplete.style.display = "block"
             	interviewComplete.style.display = "none"
         } else {
@@ -41,7 +40,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             	.setAttribute('onClick', 'scheduleInterview("'+userID+'")')
 
 	//Upload transcript view
-	if (doc.get("application.uploadedTranscript") == false ) {
+	if (doc.get("uploadedTranscript") == false ) {
 		console.log("uh")
 	    	transcriptIncomplete.style.display = "block"
             	transcriptComplete.style.display = "none"
@@ -53,7 +52,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	document.getElementById("upload-transcript").addEventListener('click', openTranscriptDialog)
 		
 	//Upload faculty view
-	if (doc.get("application.uploadedFaculty") == false ) {
+	if (doc.get("uploadedFaculty") == false ) {
 	    	facultyIncomplete.style.display = "block"
             	facultyComplete.style.display = "none"
 	} else {
@@ -61,10 +60,6 @@ firebase.auth().onAuthStateChanged(function(user) {
             	facultyComplete.style.display = "block"
 	}
 	document.getElementById("upload-faculty-rec").addEventListener('click', openFacultyDialog)
-	
-	if( doc.get("application.isapproved") == true ) {
-		document.getElementById("final-block").style.display = "flex"
-	}
 		
     });
     storageRef = storageService.ref()
@@ -114,10 +109,12 @@ firebase.auth().onAuthStateChanged(function(user) {
 		await storageRef.child('/transcripts/'+selectedTranscriptFile.name)
 			.getDownloadURL()
 			.then(function(url) { transcriptFileURL = url.toString() })
-		userDB.collection("users")
+		userDB.collection("userTest")
 			.doc(userID)
-			.update( {"application.transcriptFile" : transcriptFileURL,
-			  	"application.uploadedTranscript" : true })
+			.collection("tutorApplication")
+			.doc("application")
+			.update( {"transcriptFile" : transcriptFileURL,
+			  	"uploadedTranscript" : true })
 		.then(function() {
 			document.getElementById("transcript-preview-block").style.display = "none"
 			transcriptUpload()
@@ -129,10 +126,12 @@ firebase.auth().onAuthStateChanged(function(user) {
 		await storageRef.child('/faculty/'+selectedFacultyFile.name)
 			.getDownloadURL()
 			.then(function(url) { facultyFileURL = url.toString() })
-		userDB.collection("users")
+		userDB.collection("userTest")
 			.doc(userID)
-			.update( {"application.facultyFile" : facultyFileURL,
-			 	"application.uploadedFaculty" : true })
+			.collection("tutorApplication")
+			.doc("application")
+			.update( {"facultyFile" : facultyFileURL,
+			 	"uploadedFaculty" : true })
 		.then(function() {
 			document.getElementById("faculty-preview-block").style.display = "none"
 			facultyRecUpload()
@@ -150,8 +149,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 var isFormShowing = false
 function assessmentForm(userID) {
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(userID).get().then(function(doc) {
-		if (doc.get("application.didSubmitPreInterview") ) {
+	userDB.collection("userTest").doc(userID).collection("tutorApplication").doc("application").get().then(function(doc) {
+		if (doc.get("didSubmitPreInterview") ) {
 		    	alert("You've already submitted a pre-interview")
 		} else {
 			if (isFormShowing ) {
@@ -173,18 +172,12 @@ function assessmentForm(userID) {
 
 function submitAssessment(userID) {
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(userID).get().then(function(doc) {
+	userDB.collection("userTest").doc(userID).collection("tutorApplication").doc("assessment").get().then(function(doc) {
     
-        var firstName = doc.get("firstName")
-	document.getElementById('firstName').value = firstName
-        var lastName = doc.get("lastName")
-	document.getElementById('lastName').value = lastName
         var major = document.getElementById("major")
         var year = document.getElementById("year")
         var email = document.getElementById("email")
         var hours = document.getElementById("hours")
-        var school = doc.get("school")
-	document.getElementById('school').value = school
         var courses = document.getElementById("courses")
         var experience = document.getElementById("experience")
         var qualities = document.getElementById("qualities")
@@ -193,51 +186,45 @@ function submitAssessment(userID) {
 	var mobileOS = document.getElementById("mobile-os")
 
         var timeSubmitted = new Date()
-
-        var preInterviewData = {
-            "metadata" : {
-                "timeSubmitted" : timeSubmitted,
-                "approved" : false
-            },
-            "firstName" : firstName,
-            "lastName" : lastName,
-            "major" : major.value,
-            "year" : year.value,
-            "email" : email.value,
-            "hours" : hours.value,
-            "school" : school,
-            "courses" : courses.value,
-            "experience" : experience.value,
-            "qualities" : qualities.value,
-            "whyTutor" : whyTutor.value,
-            "groups" : groups.value,
-	    "mobileOS" : mobileOS.value,
-        }
-        userDB.collection("users")
-		.doc(userID)
-		.update( {"application.assessment" : preInterviewData,
-		       	  "application.didSubmitPreInterview" : true } )
 	
+	var assessmentData = {
+                    "assessmentFields" : {
+                        "courses" : courses.value,
+                        "experience" : experience.value,
+                        "groups" : groups.value,
+                        "hours" : hours.value,
+                        "major" : major.value,
+                        "qualities" : qualities.value,
+                        "whyTutor" : whyTutor.value,
+                        "year" : year.value,
+			"mobileOS" : mobileOS.value
+                    },
+
+                    "assessmentScores" : {
+                        "experiencePoints" : 0,
+                        "qualitiesPoints" : 0,
+                        "whyTutorPoints" : 0,
+                        "yearPoints" : 0,
+			                  "activitiesPoints" : 0
+                    }
+                }
+        userDB.collection("userTest")
+		.doc(userID)
+		.collection("tutorApplication")
+		.doc("assessment")
+		.update( assessmentData )
+		
+	userDB.collection("userTest")
+		.doc(userID)
+		.collection("tutorApplication")
+		.doc("application")
+		.update( {"didSubmitPreInterview" : true } )
         .then(function() {
             	console.log("sent")
 		document.getElementById("assessment-completion").style.display = "flex"
 		document.getElementById("assessment-form-block").style.display = "none"
 		
-		preInterviewSubmission(preInterviewData)
-		
-		var url = 'https://script.google.com/macros/s/AKfycbyn1b2w9_CFJ3zOFT-fapH2WMdOQVC1DfRjLy6REiM5jl1MQMY/exec'
-		var $form = $('form#assessment-form')
-
-		var jqxhr = $.ajax ({
-			url: url,
-			method: "GET",
-			dataType: "json",
-			data: $form.serializeArray(),
-
-			success: function (rooms) {
-				console.log("submitted")
-			}
-		})		
+		preInterviewSubmission(preInterviewData)		
         });
 })
 }
@@ -249,7 +236,7 @@ function scheduleInterview(userID) {
 	var applicantsEmail = ''
 	var applicantsSchool = ''
 	var userDB = firebase.firestore()
-	userDB.collection("users").doc(userID).get().then(function(doc) {
+	userDB.collection("userTest").doc(userID).collection("tutorApplication").doc("application").get().then(function(doc) {
 		applicantsName = doc.data().firstName + ' ' + doc.data().lastName
 		applicantsEmail = doc.data().email
 		applicantsSchool = doc.data().school
@@ -273,9 +260,11 @@ function scheduleInterview(userID) {
 		}
 	})
 	document.getElementById("submit-interview-request").addEventListener('click', function() {
-		userDB.collection("users")
+		userDB.collection("userTest")
 		.doc(userID)
-		.update( { "application.didRequestInterview" : true } )
+		.collection("tutorApplication")
+		.doc("application")
+		.update( { "didRequestInterview" : true } )
 		document.getElementById("interview-complete").style.display = "flex"
 		document.getElementById("request-interview-form").style.display = "none"
 		var messageString = applicantsName + ' has completed their PIA and is requesting to schedule an interview. Their email is ' + applicantsEmail + ', their school is ' + applicantsSchool
@@ -286,7 +275,7 @@ function scheduleInterview(userID) {
 
 function sendEmailTo(email, title, message) {
 	var xhttp = new XMLHttpRequest();
-    	var herokuURL = "https://tutortree-development.herokuapp.com/sendEmailTo/"+email+"/"+title+"/"+message
+    	var herokuURL = "https://tutortree2.herokuapp.com/sendEmailTo/"+email+"/"+title+"/"+message
    	console.log(herokuURL)
 	xhttp.open("GET", herokuURL, true);
 	xhttp.send();
