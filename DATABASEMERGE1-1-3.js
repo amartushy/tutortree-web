@@ -263,9 +263,9 @@
                 } catch {
                     console.log("no score available")
                 }
-                var preparedScore = 0
+                var questionScore = 0
                 try {
-                    preparedScore = doc.data().application.interview.preparedScore
+                    questionScore = doc.data().application.interview.questionScore
                 } catch {
                     console.log("no score available")
                 }
