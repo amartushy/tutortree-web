@@ -313,30 +313,30 @@
 
                 //Application Info
                 var interviewScore = 0
-                try {
+                if (doc.data().application.interviewScore != null) {
                     interviewScore = doc.data().application.interviewScore
-                } catch {
+                } else {
                     console.log("no interview score data")
                 }
 
                 var assessmentScore = 0
-                try {
+                if (doc.data().application.assessmentScore != null) {
                     assessmentScore = doc.data().application.assessmentScore
-                } catch {
+                } else {
                     console.log("no assessment score data")
                 }
 
                 var facultyFile = "No file uploaded"
-                try {
+                try (doc.data().application.facultyFile != null) {
                     facultyFile = doc.data().application.facultyFile
-                } catch {
+                } else {
                     console.log("no assessment score data")
                 }
 
                 var transcriptFile = "No file uploaded"
-                try {
+                if (doc.data().application.transcriptFile != null) {
                     transcriptFile = doc.data().application.transcriptFile
-                } catch {
+                } else {
                     console.log("no assessment score data")
                 }
 
