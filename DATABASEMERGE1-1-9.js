@@ -100,18 +100,26 @@
 
                 //Assessment Scores
                 var experiencePoints = 0
-                if (doc.data().application.assessment.experiencePoints != null) {
-                    experiencePoints = doc.data().application.assessment.experiencePoints
-                } else {
-                    console.log("no data")
-                }
+		try {
+			if (doc.data().application.assessment.experiencePoints != null) {
+			    experiencePoints = doc.data().application.assessment.experiencePoints
+			} else {
+			    console.log("no data")
+			}
+		} catch {
+			console.log("no data")
+		}
 
                 var qualitiesPoints = 0
-                if (doc.data().application.assessment.qualitiesPoints != null) {
-                    qualitiesPoints = doc.data().application.assessment.qualitiesPoints
-                } else {
-                    console.log("no data")
-                }
+		try {
+			if (doc.data().application.assessment.qualitiesPoints != null) {
+			    qualitiesPoints = doc.data().application.assessment.qualitiesPoints
+			} else {
+			    console.log("no data")
+			}
+		catch {
+			console.log("no data")
+		}
 
                 var whyTutorPoints = 0
                 if (doc.data().application.assessment.whyTutorPoints != null) {
@@ -121,11 +129,15 @@
                 }
 
                 var yearPoints = 0
-                if (doc.data().application.assessment.yearPoints != null) {
-                    yearPoints = doc.data().application.assessment.yearPoints
-                } else {
-                    console.log("no data")
-                }
+		try {
+			if (doc.data().application.assessment.yearPoints != null) {
+			    yearPoints = doc.data().application.assessment.yearPoints
+			} else {
+			    console.log("no data")
+			}
+		} catch {
+			console.log("no data")
+		}
 
                 var assessmentData = {
                     "assessmentFields" : {
