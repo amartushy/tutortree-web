@@ -42,7 +42,7 @@ function checkApplicantStatus() {
       });
   }
 }
-function createNewUserTutorApplicant(tutorApplicantID) {
+function createFirestoreTutorApplicant(tutorApplicantID) {
       var newTutorDict = {
               "email" : emailField.value,
               "firstName" : firstNameField.value,
