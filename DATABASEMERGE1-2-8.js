@@ -432,6 +432,12 @@
 		} else {
 			console.log("no data")
 		}
+		var meghanNotes = "No notes yet"
+		if (doc.data().application.meghanNotes != null) {
+			meghanNotes = doc.data().application.meghanNotes	
+		} else {
+			console.log("no data")
+		}
 
 
                 var applicationData = {
