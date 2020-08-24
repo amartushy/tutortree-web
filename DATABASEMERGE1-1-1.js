@@ -1,5 +1,4 @@
 
-<script>
     var userDB = firebase.firestore()
     var updateButton = document.getElementById('update-user-test')
     updateButton.setAttribute('onClick', 'updateUserTest()')
@@ -391,4 +390,3 @@
             })
         })
     }
-</script>
