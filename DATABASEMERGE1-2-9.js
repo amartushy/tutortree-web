@@ -452,7 +452,8 @@
                     "uploadedTranscript" : uploadedTranscript,
                     "transcriptFile" : transcriptFile,
                     "howHeard" : doc.data().howHeard,
-                    "school" : doc.data().school
+                    "school" : doc.data().school,
+		    "meghanNotes" : meghanNotes
                 }
                 var appUserInfo = {
                     "agreedTOS" : true,
