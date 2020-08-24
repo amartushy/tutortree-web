@@ -473,7 +473,8 @@
                     "pricePHH" : 10,
                     "profileImage" : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/images%2FTTLogo-Mint.png?alt=media&token=c8d6559e-7fa8-4fed-81cc-1f09d5da56a5",
                     "pushToken" : "",
-                    "school" : "Invalid School"
+                    "school" : "Invalid School",
+		    "tutorApplicantStatus" = "pending"
                 }
                 userDB.collection("userTest").doc(doc.id).set(appUserInfo, {merge : true})
                 userDB.collection("userTest").doc(doc.id).collection("tutorApplication").doc("assessment").set(assessmentData, { merge: true })
