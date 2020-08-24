@@ -100,30 +100,30 @@
 
                 //Assessment Scores
                 var experiencePoints = 0
-                try {
+                if (doc.data().application.assessment.experiencePoints != null) {
                     experiencePoints = doc.data().application.assessment.experiencePoints
-                } catch {
+                } else {
                     console.log("no data")
                 }
 
                 var qualitiesPoints = 0
-                try {
+                if (doc.data().application.assessment.qualitiesPoints != null) {
                     qualitiesPoints = doc.data().application.assessment.qualitiesPoints
-                } catch {
+                } else {
                     console.log("no data")
                 }
 
                 var whyTutorPoints = 0
-                try {
+                if (doc.data().application.assessment.whyTutorPoints != null) {
                     whyTutorPoints = doc.data().application.assessment.whyTutorPoints
-                } catch {
+                } else {
                     console.log("no data")
                 }
 
                 var yearPoints = 0
-                try {
+                if (doc.data().application.assessment.yearPoints != null) {
                     yearPoints = doc.data().application.assessment.yearPoints
-                } catch {
+                } else {
                     console.log("no data")
                 }
 
