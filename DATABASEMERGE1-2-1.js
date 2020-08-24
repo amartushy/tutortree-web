@@ -117,16 +117,21 @@
 			} else {
 			    console.log("no data")
 			}
-		catch {
+		} catch {
 			console.log("no data")
 		}
 
                 var whyTutorPoints = 0
-                if (doc.data().application.assessment.whyTutorPoints != null) {
-                    whyTutorPoints = doc.data().application.assessment.whyTutorPoints
-                } else {
-                    console.log("no data")
-                }
+		try {
+			if (doc.data().application.assessment.whyTutorPoints != null) {
+                    		whyTutorPoints = doc.data().application.assessment.whyTutorPoints
+                	} else {
+                    		console.log("no data")
+                	}
+		} catch {
+                    	console.log("no data")
+		}
+                
 
                 var yearPoints = 0
 		try {
