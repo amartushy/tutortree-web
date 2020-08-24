@@ -53,7 +53,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 						assessmentScore = applicant.data().assessmentScore,
 						interviewScore = applicant.data().interviewScore,
 						meghanNotes = applicant.data().meghanNotes,
-					    	timeApplied = doc.data().timeSubmitted
+					    	timeApplied = applicant.data().timeSubmitted
 
 
 					await buildApplicantBlock(applicantID, 
