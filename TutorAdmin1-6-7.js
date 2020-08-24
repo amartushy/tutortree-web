@@ -106,7 +106,7 @@ function showAcceptedApplicants() {
 
 function buildApplicantBlock(applicantID, name, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, assessmentScore, interviewScore, meghanNotes, status) {
 	console.log("Building block for user: " + applicantID)
-
+	console.log("timestamp is : " + timeApplied)
 	//Main Container
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
