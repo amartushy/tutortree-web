@@ -10,8 +10,7 @@
                 
                 //var PIAData = doc.data().application
                 //var interviewData = doc.data().application.interview
-                 console.log(PIAData)
-                 console.log(interviewData)
+
 
                 //Requisite values for iOS functionality
                 var email = "email@email.com"
