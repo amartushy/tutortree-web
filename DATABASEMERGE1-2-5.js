@@ -404,31 +404,31 @@
                 }
 		var completedInterview = false
 		if (doc.data().application.completedInterview != null) {
-			completedInterview = doc.data().completedInterview	
+			completedInterview = doc.data().application.completedInterview	
 		} else {
 			console.log("no data")
 		}
 		var didRequestInterview = false
 		if (doc.data().application.didRequestInterview != null) {
-			didRequestInterview = doc.data().didRequestInterview	
+			didRequestInterview = doc.data().application.didRequestInterview	
 		} else {
 			console.log("no data")
 		}
 		var didSubmitPreInterview = false
 		if (doc.data().application.didSubmitPreInterview != null) {
-			didSubmitPreInterview = doc.data().didSubmitPreInterview	
+			didSubmitPreInterview = doc.data().application.didSubmitPreInterview	
 		} else {
 			console.log("no data")
 		}
 		var uploadedFaculty = false
 		if (doc.data().application.uploadedFaculty != null) {
-			uploadedFaculty = doc.data().uploadedFaculty	
+			uploadedFaculty = doc.data().application.uploadedFaculty	
 		} else {
 			console.log("no data")
 		}
 		var uploadedTranscript = false
 		if (doc.data().application.uploadedTranscript != null) {
-			uploadedTranscript = doc.data().uploadedTranscript	
+			uploadedTranscript = doc.data().application.uploadedTranscript	
 		} else {
 			console.log("no data")
 		}
