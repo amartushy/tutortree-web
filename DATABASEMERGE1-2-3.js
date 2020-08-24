@@ -43,57 +43,64 @@
                 //Assessment Information
                 //Assessment Text Fields
                 var courses = "No entry"
-                try {
-                    courses = doc.data().application.assessment.courses
+                try { 
+			if (doc.data().application.assessment.courses != null) {
+				courses = doc.data().application.assessment.courses
+			}
                 } catch {
                     console.log("no data")
                 }
 
                 var experience = "No entry"
                 try {
-                    experience = doc.data().application.assessment.experience
+			if (doc.data().application.assessment.experience != null) {
+				experience = doc.data().application.assessment.experience
+			}
                 } catch {
                     console.log("no data")
                 }
 
                 var groups = "No entry"
                 try {
-                    groups = doc.data().application.assessment.groups
+			if (doc.data().application.assessment.groups != null) {
+				groups = doc.data().application.assessment.groups
+			}
                 } catch {
                     console.log("no data")
                 }
 
                 var hours = "No entry"
                 try {
-                    hours = doc.data().application.assessment.hours
-                } catch {
-                    console.log("no data")
-                }
-
-                var major = "No entry"
-                try {
-                    major = doc.data().application.assessment.major
+			if (doc.data().application.assessment.hours != null) {
+				hours = doc.data().application.assessment.hours
+			}
                 } catch {
                     console.log("no data")
                 }
 
                 var qualities = "No entry"
                 try {
-                    qualities = doc.data().application.assessment.qualities
+			if (doc.data().application.assessment.qualities != null) {
+				qualities = doc.data().application.assessment.qualities
+			}
                 } catch {
                     console.log("no data")
                 }
 
                 var whyTutor = "No entry"
                 try {
-                    whyTutor = doc.data().application.assessment.whyTutor
+			if (doc.data().application.assessment.whyTutor != null) {
+				whyTutor = doc.data().application.assessment.whyTutor
+			}
                 } catch {
                     console.log("no data")
                 }
 
                 var year = "No entry"
                 try {
-                    year = doc.data().application.assessment.year
+			if (doc.data().application.assessment.year != null) {
+				year = doc.data().application.assessment.year
+			}
                 } catch {
                     console.log("no data")
                 }
