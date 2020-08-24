@@ -119,7 +119,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("assessment").set(assessmentData)
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() {
            location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
-      }
+      })
 }
 function createNewUserTutorApplicant(tutorApplicantID) {
         var newTutorDict = {
@@ -251,7 +251,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("assessment").set(assessmentData)
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() {
                    location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
-              }
+              })
           })
 }
                                                                                          
