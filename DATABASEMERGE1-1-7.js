@@ -351,6 +351,24 @@
 		} else {
 			console.log("no data")
 		}
+		var didSubmitPreInterview = false
+		if (doc.data().didSubmitPreInterview != null) {
+			didSubmitPreInterview = doc.data().didSubmitPreInterview	
+		} else {
+			console.log("no data")
+		}
+		var uploadedFaculty = false
+		if (doc.data().uploadedFaculty != null) {
+			uploadedFaculty = doc.data().uploadedFaculty	
+		} else {
+			console.log("no data")
+		}
+		var uploadedTranscript = false
+		if (doc.data().uploadedTranscript != null) {
+			uploadedTranscript = doc.data().uploadedTranscript	
+		} else {
+			console.log("no data")
+		}
 
 
                 var applicationData = {
@@ -359,10 +377,10 @@
                     "assessmentScore" : assessmentScore,
                     "completedInterview" : completedInterview,
                     "didRequestInterview" : didRequestInterview,
-                    "didSubmitPreInterview" : doc.data().didSubmitPreInterview,
-                    "uploadedFaculty" : doc.data().uploadedFaculty,
+                    "didSubmitPreInterview" : didSubmitPreInterview,
+                    "uploadedFaculty" : uploadedFaculty,
                     "facultyFile" : facultyFile,
-                    "uploadedTranscript" : doc.data().uploadedTranscript,
+                    "uploadedTranscript" : uploadedTranscript,
                     "transcriptFile" : transcriptFile,
                     "howHeard" : doc.data().howHeard,
                     "school" : doc.data().school
