@@ -53,13 +53,16 @@ function signUp(){
 							location.href = 'https://www.jointutortree.com/ambassador-admin'
 						})
 						
-					} else if (doc.data().tutorApplicant) {
+					} else if (doc.data().tutorApplicantStatus == "pending") {
 						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
 						userWebsiteLogin(userEmail, doc.data().tutorApplicant)
-					} else if (doc.data().tutorApplicationApproved) {
-						location.href = 'https://www.jointutortree.com/tutor/tutor-portal'
+					} else if (doc.data().tutorApplicantStatus == "rejected") {
+						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
+						userWebsiteLogin(userEmail, doc.data().tutorApplicant)
+					} else if (doc.data().tutorApplicantStatus == "accepted") {
+						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
+						userWebsiteLogin(userEmail, doc.data().tutorApplicant)
 					}
-											   
 				})
 			} else {
 				console.log("no user logged in")
