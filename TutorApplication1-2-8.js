@@ -100,7 +100,8 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
                         "major" : "No entry yet",
                         "qualities" : "No entry yet",
                         "whyTutor" : "No entry yet",
-                        "year" : "No entry yet"
+                        "year" : "No entry yet",
+			"mobileOS" : "No entry yet"
                     },
 
                     "assessmentScores" : {
