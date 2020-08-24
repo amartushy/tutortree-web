@@ -127,7 +127,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                     "facultyFile" : "No file",
                     "uploadedTranscript" : false,
                     "transcriptFile" : "No file",
-                    "howHeard" : howHeardField.value,,
+                    "howHeard" : howHeardField.value,
 		                "meghanNotes" : "No notes yet"
         }
      tutorAccountCreated( newTutorDict )
@@ -225,7 +225,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                     "facultyFile" : "No file",
                     "uploadedTranscript" : false,
                     "transcriptFile" : "No file",
-                    "howHeard" : howHeardField.value,,
+                    "howHeard" : howHeardField.value,
 		                "meghanNotes" : "No notes yet"
         }
 
