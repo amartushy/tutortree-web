@@ -252,10 +252,10 @@ function scheduleInterview(userID) {
 		applicantsName = doc.data().firstName + ' ' + doc.data().lastName
 		applicantsEmail = doc.data().email
 		applicantsSchool = doc.data().school
-		if ( doc.get("didRequestInterview") ) {
+		if ( doc.data().didRequestInterview ) {
 			alert("Your tutor coordinator has been notified. Please check your email for a time to meet.")
 		} else {
-			if ( doc.get("didSubmitPreInterview") ) {
+			if ( doc.data().didSubmitPreInterview ) {
 				if (isScheduleShowing) {
 					document.getElementById("request-interview-form")
 						.style.display = "none"
@@ -268,7 +268,6 @@ function scheduleInterview(userID) {
 			} else {
 				alert("Please complete your Pre-Interview Assessment before scheduling an interview")
 			}
-			
 		}
 	})
 	document.getElementById("submit-interview-request").addEventListener('click', function() {
