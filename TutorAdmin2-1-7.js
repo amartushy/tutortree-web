@@ -470,8 +470,8 @@ function showAssessment(applicantsID, name) {
 	})
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
 		document.getElementById('pia-school').innerHTML = doc.data().school
-		document.getElementById('pia-first').innerHTML = doc.data().assessmentFields.firstName
-		document.getElementById('pia-last').innerHTML = doc.data().assessmentFields.lastName
+		document.getElementById('pia-first').innerHTML = doc.data().firstName
+		document.getElementById('pia-last').innerHTML = doc.data().lastName
 	})
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("assessment").get().then(function(doc) {
 		//Fields
