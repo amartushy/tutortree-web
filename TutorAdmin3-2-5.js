@@ -3,7 +3,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		var userDB = firebase.firestore()
 		var userID = user.uid
-		
+		 
 		//Check if user is admin, else redirect: TODO
 		
 		//Get tab buttons
