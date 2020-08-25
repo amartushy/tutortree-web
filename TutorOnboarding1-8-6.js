@@ -187,6 +187,18 @@ function submitAssessment(userID) {
 
         var timeSubmitted = new Date()
 	
+	var mixpanelDict = {
+		"major" : major,
+		"groups" : groups,
+		"experience" : experience,
+		"courses" : courses,
+		"hours" : hours,
+		"qualities" : qualities,
+		"whyTutor" : whyTutor,
+		"year" : year,
+		"mobileOS" : mobileOS
+	}
+	
 	var assessmentData = {
                     "assessmentFields" : {
                         "courses" : courses.value,
@@ -224,7 +236,7 @@ function submitAssessment(userID) {
 		document.getElementById("assessment-completion").style.display = "flex"
 		document.getElementById("assessment-form-block").style.display = "none"
 		
-		preInterviewSubmission(preInterviewData)		
+		preInterviewSubmission(mixpanelDict)		
         });
 })
 }
