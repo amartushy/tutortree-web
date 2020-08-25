@@ -149,7 +149,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	preInterviewBlock.setAttribute('class', 'pre-interview-block')
 
 	var preInterviewHeader = document.createElement('h4')
-	preInterviewHeader.setAttribute('class', 'applicant-header')
+	preInterviewHeader.setAttribute('class', 'approved-header')
 	preInterviewHeader.innerHTML = "Assessment"
 	preInterviewBlock.appendChild(preInterviewHeader)
 
@@ -173,7 +173,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	requestedBlock.setAttribute('class', 'requested-block')
 
 	var requestedHeader = document.createElement('h4')
-	requestedHeader.setAttribute('class', 'applicant-header')
+	requestedHeader.setAttribute('class', 'approved-header')
 	requestedHeader.innerHTML = "Requested Interview"
 	requestedBlock.appendChild(requestedHeader)
 
@@ -197,7 +197,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	completedInterviewBlock.setAttribute('class', 'requested-block')
 
 	var completedInterviewHeader = document.createElement('h4')
-	completedInterviewHeader.setAttribute('class', 'applicant-header')
+	completedInterviewHeader.setAttribute('class', 'approved-header')
 	completedInterviewHeader.innerHTML = "Completed Interview"
 	completedInterviewBlock.appendChild(completedInterviewHeader)
 
@@ -247,7 +247,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	facultyBlock.setAttribute('class', 'faculty-rec-block')
 
 	var facultyHeader = document.createElement('h4')
-	facultyHeader.setAttribute('class', 'applicant-header')
+	facultyHeader.setAttribute('class', 'approved-header')
 	facultyHeader.innerHTML = "Faculty Rec"
 	facultyBlock.appendChild(facultyHeader)
 
@@ -275,7 +275,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	facultyAdminParent.appendChild(facultyAdminBlock)
 
 	var facultyAdminHeader = document.createElement('h4')
-	facultyAdminHeader.setAttribute('class', 'applicant-header')
+	facultyAdminHeader.setAttribute('class', 'approved-header')
 	facultyAdminHeader.innerHTML = "Upload Rec"
 	facultyAdminBlock.appendChild(facultyAdminHeader)
 
