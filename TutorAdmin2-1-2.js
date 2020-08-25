@@ -53,12 +53,14 @@ firebase.auth().onAuthStateChanged(function(user) {
 						interviewScore = applicant.data().interviewScore,
 						meghanNotes = applicant.data().meghanNotes,
 					    	timeApplied = applicant.data().timeSubmitted,
-					    	name = doc.data().firstName + " " + doc.data().lastName
+					    	firstName = doc.data().firstName,
+					    	lastName = doc.data().lastName
 
 
 
 					await buildApplicantBlock(applicantID, 
-					name, 
+					firstName,
+					lastName,
 					email, 
 					school,
 					timeApplied, 
@@ -105,7 +107,7 @@ function showAcceptedApplicants() {
 	appendToAcceptedSection()
 }
 
-function buildApplicantBlock(applicantID, name, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, assessmentScore, interviewScore, meghanNotes, status) {
+function buildApplicantBlock(applicantID, firstName, lastName, email, school, timeApplied, didSubmitPreInterview, didRequest, completedInterview, didTranscript, didFaculty, assessmentScore, interviewScore, meghanNotes, status) {
 	console.log("Building block for user: " + applicantID)
 	console.log("timestamp is : " + timeApplied)
 	//Main Container
@@ -119,7 +121,7 @@ function buildApplicantBlock(applicantID, name, email, school, timeApplied, didS
 
 	var nameHeader = document.createElement('h4')
 	nameHeader.setAttribute('class', 'applicants-name')
-	nameHeader.innerHTML = name
+	nameHeader.innerHTML = firstName + " " + lastName
 	nameBlock.appendChild(nameHeader)
 
 	var emailHeader = document.createElement('div')
