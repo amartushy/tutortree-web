@@ -48,6 +48,7 @@
 					.collection("tutorApplication")
 					.doc("assessment")
 					.update({"mobileOS" : mobileOS})
+			})
 		})
 	}
     
