@@ -662,7 +662,6 @@ function showInterview(applicantsID, name) {
 		//Score Fields
 		var onTimeScore = document.getElementById('on-time-score')
 		onTimeScore.value = doc.data().interviewScores.onTimeScore
-		onTimeScore.value = 0
 		onTimeScore.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
@@ -733,7 +732,6 @@ function showInterview(applicantsID, name) {
 		}
 		var onlineScore = document.getElementById('online-score')
 		onlineScore.value = doc.data().interviewScores.onlineScore
-		onlineScore.value = 0
 		onlineScore.onblur = async function() {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
