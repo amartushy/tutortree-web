@@ -53,6 +53,7 @@ function tutorAccountCreated(user){
         	"Submitted Transcript": false,
         	"Submitted Faculty Rec": false,
 		"Tutor Reached Offer Stage": false,
+		"Tutor Application Stage": "Applied",
 		"Tutor Application Resolution": "Not yet offered",
         	"Tutor Accepted Position": false,
 		"Tutor Application Date": new Date().toISOString()
@@ -85,7 +86,8 @@ function preInterviewSubmission(fieldValue){
 		"Academic Year": fieldValue.year,
 		"Pre Invertview Assessment Completed": true,
 		"Pre Invertview Assessment Completed Date": new Date().toISOString(),
-		"Mobile OS": fieldValue.mobileOS
+		"Mobile OS": fieldValue.mobileOS,
+		"Tutor Application Stage": "Submitted PIA"		
 	});
 
 }
@@ -99,6 +101,7 @@ function requestVirtualInterview(){
 
 	mixpanel.people.set({
 		"Tutor Interview Requested": true,
+		"Tutor Application Stage": "Requested Interview",		
 		"Tutor Interview Requested Date": new Date().toISOString()
 	});
 
@@ -113,6 +116,7 @@ function transcriptUpload(){
 
 	mixpanel.people.set({
 		"Submitted Transcript": true,
+		"Tutor Application Stage": "Submitted Transcript",		
 		"Submitted Transcript Date": new Date().toISOString()
 	});
 
@@ -129,6 +133,7 @@ function facultyRecUpload(){
 
 	mixpanel.people.set({
 		"Submitted Faculty Rec": true,
+		"Tutor Application Stage": "Submitted Faculty Rec",		
 		"Submitted Faculty Rec Date": new Date().toISOString()
 	});
 
@@ -143,6 +148,7 @@ function facultyRecUploadByTutorCoordinator(email){
 
 	mixpanel.people.set({
 		"Submitted Faculty Rec": true,
+		"Tutor Application Stage": "Submitted Faculty Rec",		
 		"Submitted Faculty Rec Date": new Date().toISOString()
 	});
 
@@ -155,10 +161,9 @@ function interviewCompleted(applicantsID, email){
 
 	mixpanel.identify(email);
 	
-	console.log("This is the complete email: " + email)
-
 	mixpanel.people.set({
 		"Tutor Interview Completed": true,
+		"Tutor Application Stage": "Completed Interview",		
 		"Tutor Interview Completed Date": new Date().toISOString()
 	});	
 
@@ -178,6 +183,7 @@ function reverseInterviewCompleted(applicantsID, email){
 
 	mixpanel.people.set({
 		"Tutor Interview Completed": false,
+		"Tutor Application Stage": "Reversed Interview",
 		"Tutor Interview Completed Date": null
 	});
 	
@@ -203,6 +209,7 @@ function isFirstApprovedTutorAppResolution(booleanValue, email){
 	
 	mixpanel.people.set({
 		"Tutor Application Resolution" : "Approved",
+		"Tutor Application Stage": "Offered",		
 		"Reached Resolution Stage": true,
 		"Resolution Stage Date": new Date().toISOString()
 	});
@@ -220,7 +227,8 @@ function isWaitListedTutorAppResolution(booleanValue, email){
 	});
 	
 	mixpanel.people.set({
-		"Tutor Application Resolution" : "Wait Listed"
+		"Tutor Application Resolution" : "Wait Listed",
+		"Tutor Application Stage": "Offered",		
 		"Reached Resolution Stage": true,
 		"Resolution Stage Date": new Date().toISOString()
 	});
@@ -239,6 +247,7 @@ function isRejectedTutorAppResolution(booleanValue, email){
 	
 	mixpanel.people.set({
 		"Tutor Application Resolution" : "Rejected",
+		"Tutor Application Stage": "Offered",		
 		"Reached Resolution Stage": true,
 		"Resolution Stage Date": new Date().toISOString()
 	});
@@ -256,6 +265,7 @@ function tutorAcceptedPosition(email){
 
 	mixpanel.people.set({
 		"Tutor Accepted Position": true,
+		"Tutor Application Stage": "Accepted Position; On App",			
 		"Tutor Accepted Position Date": new Date().toISOString()
 	});
 
