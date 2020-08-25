@@ -206,13 +206,13 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		interviewCompleted.setAttribute('class', 'admin-complete')
 		interviewCompleted.innerHTML = 'check-circle'
 		completedInterviewBlock.appendChild(interviewCompleted)
-		completedInterviewBlock.setAttribute('onClick', 'reverseInterviewCompleted("'+applicantID+'", "'+email+'")')		
+		completedInterviewBlock.setAttribute('onClick', 'interviewCompleted("'+applicantID+'", "'+email+'", false)')		
 	} else {
 		var interviewIncomplete = document.createElement('div')
 		interviewIncomplete.setAttribute('class', 'admin-incomplete')
 		interviewIncomplete.innerHTML = 'circle'
 		completedInterviewBlock.appendChild(interviewIncomplete)
-		completedInterviewBlock.setAttribute('onClick', 'interviewCompleted("'+applicantID+'", "'+email+'")')		
+		completedInterviewBlock.setAttribute('onClick', 'interviewCompleted("'+applicantID+'", "'+email+'", true)')		
 	}
 	
 
@@ -416,6 +416,17 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	}
 	//Append to hidden section for sorting and appending in top level forEach
 	document.getElementById('hidden-applicant-section').appendChild(applicantBlock)
+}
+
+function interviewCompleted(applicantsID, email, status) {
+	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").update({ "completedInterview" : status})
+		.then(function() {
+			if (status) {
+				MPinterviewCompleted(applicantsID, email)
+			} else {
+				MPreverseInterviewCompleted(applicantsID, email)
+			}
+		})
 }
 
 function approveTutor(applicantsID, applicantsEmail) {
