@@ -52,8 +52,7 @@ function tutorAccountCreated(user){
         	"Tutor Interview Completed": false,
         	"Submitted Transcript": false,
         	"Submitted Faculty Rec": false,
-		"Tutor Reached Offer Stage": false,		
-        	"Offered Tutoring Position": false,
+		"Tutor Reached Offer Stage": false,
 		"Tutor Application Resolution": "Not yet offered",
         	"Tutor Accepted Position": false,
 		"Tutor Application Date": new Date().toISOString()
@@ -199,13 +198,11 @@ function isFirstApprovedTutorAppResolution(booleanValue, email){
 	mixpanel.identify(email);
 	
 	mixpanel.track("Tutor Application Resolution", {
-		"Tutor Application Resolution" : "isFirstApproved",
-		"Tutor Prospect is Approved" : booleanValue
+		"Tutor Application Resolution" : "Approved"
 	});
 	
 	mixpanel.people.set({
-		"Tutor Application Resolution" : "isFirstApproved",
-		"Tutor Prospect is Approved" : booleanValue,
+		"Tutor Application Resolution" : "Approved",
 		"Reached Resolution Stage": true,
 		"Resolution Stage Date": new Date().toISOString()
 	});
@@ -219,13 +216,11 @@ function isWaitListedTutorAppResolution(booleanValue, email){
 	mixpanel.identify(email);
 	
 	mixpanel.track("Tutor Application Resolution", {
-		"Tutor Application Resolution" : "isWaitListed",
-		"Tutor Prospect is Waitlisted" : booleanValue
+		"Tutor Application Resolution" : "Wait Listed"
 	});
 	
 	mixpanel.people.set({
-		"Tutor Application Resolution" : "isWaitListed",
-		"Tutor Prospect is Waitlisted" : booleanValue,
+		"Tutor Application Resolution" : "Wait Listed"
 		"Reached Resolution Stage": true,
 		"Resolution Stage Date": new Date().toISOString()
 	});
@@ -239,33 +234,13 @@ function isRejectedTutorAppResolution(booleanValue, email){
 	mixpanel.identify(email);
 	
 	mixpanel.track("Tutor Application Resolution", {
-		"Tutor Application Resolution" : "isRejected",
-		"Tutor Prospect is Rejected" : booleanValue
+		"Tutor Application Resolution" : "Rejected"
 	});
 	
 	mixpanel.people.set({
-		"Tutor Application Resolution" : "isRejected",
-		"Tutor Prospect is Rejected" : booleanValue,
+		"Tutor Application Resolution" : "Rejected",
 		"Reached Resolution Stage": true,
 		"Resolution Stage Date": new Date().toISOString()
-	});
-
-}
-
-//This funciton executes when a tutor user is approvaed and offered a tutoring position
-//Grant access button
-
-function grantedTutorAccess(booleanValue, email){
-	mixpanel.identify(email);	
-	
-	mixpanel.track("Granted in-App Tutor Access", {
-		"Granted in-App Tutor Access" : booleanValue
-	});
-	
-	mixpanel.people.set({
-		"Tutor Reached Grant Access Stage": true,
-		"Granted in-App Tutor Access": booleanValue,
-		"Granted in-App Tutor Access Date": new Date().toISOString()
 	});
 
 }
