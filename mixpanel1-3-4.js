@@ -54,6 +54,7 @@ function tutorAccountCreated(user){
         	"Submitted Faculty Rec": false,
 		"Tutor Reached Offer Stage": false,		
         	"Offered Tutoring Position": false,
+		"Tutor Application Resolution": "Not yet offered",
         	"Tutor Accepted Position": false,
 		"Tutor Application Date": new Date().toISOString()
 	});
