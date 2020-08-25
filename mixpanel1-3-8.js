@@ -208,7 +208,7 @@ function isFirstApprovedTutorAppResolution(email){
 	});
 	
 	mixpanel.people.set({
-		"Tutor Application Resolution" : "Approved",
+		"Tutor Application Resolution" : "Extended Offer",
 		"Tutor Application Stage": "Offered",		
 		"Reached Resolution Stage": true,
 		"Resolution Stage Date": new Date().toISOString()
@@ -265,7 +265,8 @@ function tutorAcceptedPosition(email){
 
 	mixpanel.people.set({
 		"Tutor Accepted Position": true,
-		"Tutor Application Stage": "Accepted Position; On App",			
+		"Tutor Application Resolution" : "Tutor Accepted Position",
+		"Tutor Application Stage": "Tutor Accepted Position",			
 		"Tutor Accepted Position Date": new Date().toISOString()
 	});
 
