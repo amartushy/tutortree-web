@@ -223,7 +223,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	transcriptBlock.setAttribute('class', 'transcript-block')
 
 	var transcriptHeader = document.createElement('h4')
-	transcriptHeader.setAttribute('class', 'applicant-header')
+	transcriptHeader.setAttribute('class', 'approved-header')
 	transcriptHeader.innerHTML = "Uploaded Transcript"
 	transcriptBlock.appendChild(transcriptHeader)
 
