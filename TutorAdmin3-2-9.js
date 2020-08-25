@@ -817,7 +817,7 @@ function getInterviewPoints(applicantsID) {
 		userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
-				.doc("interview")
+				.doc("application")
 				.update( { "interviewScore" : interviewScore } )
 	})
 
