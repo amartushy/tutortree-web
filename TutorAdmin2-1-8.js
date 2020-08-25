@@ -40,7 +40,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 				var applicantID = doc.id,
 				    email = doc.data().email,
-				    school = doc.data().school,
 				    status = doc.data().tutorApplicantStatus
 				console.log(status)
 				userDB.collection("userTest").doc(applicantID).collection("tutorApplication").doc("application").onSnapshot(async function(applicant) {
@@ -54,7 +53,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 						meghanNotes = applicant.data().meghanNotes,
 					    	timeApplied = applicant.data().timeSubmitted,
 					    	firstName = applicant.data().firstName,
-					    	lastName = applicant.data().lastName
+					    	lastName = applicant.data().lastName,
+					    	school = applicant.data().school
 
 
 
