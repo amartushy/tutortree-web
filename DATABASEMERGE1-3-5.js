@@ -47,7 +47,8 @@
 					.doc(doc.id)
 					.collection("tutorApplication")
 					.doc("assessment")
-					.update({"mobileOS" : mobileOS})
+					.update({"assessmentFields.mobileOS" : mobileOS,
+						"mobileOS" : firebase.firestore.FieldValue.delete()})
 			})
 		})
 	}
