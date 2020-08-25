@@ -157,7 +157,7 @@ function facultyRecUploadByTutorCoordinator(email){
 //This funciton executes when Meghan updates the values in the tutor dashboard
 //function called after entering values into the interview # field
 
-function interviewCompleted(applicantsID, email){
+function MPinterviewCompleted(applicantsID, email){
 
 	mixpanel.identify(email);
 	
@@ -167,17 +167,12 @@ function interviewCompleted(applicantsID, email){
 		"Tutor Interview Completed Date": new Date().toISOString()
 	});	
 
-	var userDB = firebase.firestore()
-	
-	userDB.collection("users")
-		.doc(applicantsID)
-		.update( { "application.completedInterview" : true } )	
 	
 	mixpanel.track("Tutor Interview Completed");
 
 }
 
-function reverseInterviewCompleted(applicantsID, email){
+function MPreverseInterviewCompleted(applicantsID, email){
 	
 	mixpanel.identify(email);
 
