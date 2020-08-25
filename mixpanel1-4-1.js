@@ -182,12 +182,6 @@ function MPreverseInterviewCompleted(applicantsID, email){
 		"Tutor Interview Completed Date": null
 	});
 	
-	var userDB = firebase.firestore()
-	
-	userDB.collection("users")
-		.doc(applicantsID)
-		.update( { "application.completedInterview" : false } )	
-	
 	mixpanel.track("Tutor Reverse Interview Completed");
 
 }
