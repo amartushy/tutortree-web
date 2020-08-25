@@ -643,7 +643,7 @@ function showInterview(applicantsID, name) {
 		var helpNotes = document.getElementById('help-notes')
 		helpNotes.value = doc.data().interviewNotes.helpNotes
 		helpNotes.onblur = function() {
-			userDB.collection("users")
+			userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
@@ -674,7 +674,7 @@ function showInterview(applicantsID, name) {
 		var challengingScore = document.getElementById('challenging-score')
 		challengingScore.value = doc.data().interviewScores.challengingScore
 		challengingScore.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
@@ -745,7 +745,7 @@ function showInterview(applicantsID, name) {
 		var helpScore = document.getElementById('help-score')
 		helpScore.value = doc.data().interviewScores.helpScore
 		helpScore.onblur = async function() {
-			await userDB.collection("users")
+			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
 				.doc("interview")
