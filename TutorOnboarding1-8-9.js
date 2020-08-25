@@ -248,9 +248,12 @@ function scheduleInterview(userID) {
 	var applicantsEmail = ''
 	var applicantsSchool = ''
 	var userDB = firebase.firestore()
+	
+	userDB.collection("userTest").doc(userID).get().then(function(doc) {
+		applicantsEmail = doc.data().email
+	}
 	userDB.collection("userTest").doc(userID).collection("tutorApplication").doc("application").get().then(function(doc) {
 		applicantsName = doc.data().firstName + ' ' + doc.data().lastName
-		applicantsEmail = doc.data().email
 		applicantsSchool = doc.data().school
 		if ( doc.data().didRequestInterview ) {
 			alert("Your tutor coordinator has been notified. Please check your email for a time to meet.")
