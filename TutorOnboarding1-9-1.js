@@ -251,7 +251,7 @@ function scheduleInterview(userID) {
 	
 	userDB.collection("userTest").doc(userID).get().then(function(doc) {
 		applicantsEmail = doc.data().email
-	}
+	})
 	userDB.collection("userTest").doc(userID).collection("tutorApplication").doc("application").get().then(function(doc) {
 		applicantsName = doc.data().firstName + ' ' + doc.data().lastName
 		applicantsSchool = doc.data().school
