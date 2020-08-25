@@ -468,7 +468,7 @@ function showAssessment(applicantsID, name) {
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
 		document.getElementById('pia-school').innerHTML = doc.data().school
 		document.getElementById('pia-email').innerHTML = doc.data().email
-	}
+	})
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("assessment").get().then(function(doc) {
 		//Fields
 		document.getElementById('pia-first').innerHTML = doc.data().assessmentFields.firstName
