@@ -200,7 +200,7 @@ function reverseInterviewCompleted(applicantsID, email){
 //This funciton executes when a tutor user is approvaed but still might need to complete some steps to be granted access
 //Approved button
 
-function isFirstApprovedTutorAppResolution(booleanValue, email){
+function isFirstApprovedTutorAppResolution(email){
 	mixpanel.identify(email);
 	
 	mixpanel.track("Tutor Application Resolution", {
@@ -219,7 +219,7 @@ function isFirstApprovedTutorAppResolution(booleanValue, email){
 //This funciton executes when a tutor user is waitlisted
 //Wait listed button
 
-function isWaitListedTutorAppResolution(booleanValue, email){
+function isWaitListedTutorAppResolution(email){
 	mixpanel.identify(email);
 	
 	mixpanel.track("Tutor Application Resolution", {
@@ -238,7 +238,7 @@ function isWaitListedTutorAppResolution(booleanValue, email){
 //This funciton executes when a tutor user is rejected
 //Rejcted button
 
-function isRejectedTutorAppResolution(booleanValue, email){
+function isRejectedTutorAppResolution(email){
 	mixpanel.identify(email);
 	
 	mixpanel.track("Tutor Application Resolution", {
