@@ -252,10 +252,10 @@ function scheduleInterview(userID) {
 		applicantsName = doc.data().firstName + ' ' + doc.data().lastName
 		applicantsEmail = doc.data().email
 		applicantsSchool = doc.data().school
-		if ( doc.get("application.didRequestInterview") ) {
+		if ( doc.get("didRequestInterview") ) {
 			alert("Your tutor coordinator has been notified. Please check your email for a time to meet.")
 		} else {
-			if ( doc.get("application.didSubmitPreInterview") ) {
+			if ( doc.get("didSubmitPreInterview") ) {
 				if (isScheduleShowing) {
 					document.getElementById("request-interview-form")
 						.style.display = "none"
