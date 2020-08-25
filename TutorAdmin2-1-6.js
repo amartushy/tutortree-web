@@ -465,15 +465,16 @@ function showAssessment(applicantsID, name) {
 	tutorPIANameHeader.innerHTML = name
 	
 	var userDB = firebase.firestore()
+	userDB.collection("userTest").doc(applicantsID).get().then(function(doc) {
+		document.getElementById('pia-email').innerHTML = doc.data().email
+	})
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
 		document.getElementById('pia-school').innerHTML = doc.data().school
-		document.getElementById('pia-email').innerHTML = doc.data().email
+		document.getElementById('pia-first').innerHTML = doc.data().assessmentFields.firstName
+		document.getElementById('pia-last').innerHTML = doc.data().assessmentFields.lastName
 	})
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("assessment").get().then(function(doc) {
 		//Fields
-		document.getElementById('pia-first').innerHTML = doc.data().assessmentFields.firstName
-		document.getElementById('pia-last').innerHTML = doc.data().assessmentFields.lastName
-
 		document.getElementById('pia-year').innerHTML = doc.data().assessmentFields.year
 		document.getElementById('pia-major').innerHTML = doc.data().assessmentFields.major
 		document.getElementById('pia-hours').innerHTML = doc.data().assessmentFields.hours
