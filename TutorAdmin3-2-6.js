@@ -426,12 +426,12 @@ function approveTutor(applicantsID, applicantsEmail) {
 		.doc(applicantsID)
 		.update( {'tutorApplicantStatus' : "accepted",
 			  'isTutor' : true})
+	
+	isFirstApprovedTutorAppResolution(applicantsEmail)
+	
 	//Send Email
 	var acceptanceMessage = "Your application to tutor has been approved! Your tutor coordinator will reach out soon with more information."
 	sendEmailTo(applicantsEmail, 'Welcome to TutorTree!', acceptanceMessage)
-
-	//Mixpanel?
-	grantedTutorAccess(true, applicantsEmail)
 	
 }
 								
@@ -443,6 +443,12 @@ function rejectTutor(applicantsID, applicantsEmail) {
 		.doc(applicantsID)
 		.update( {'tutorApplicantStatus' : "rejected",
 			  'isTutor' : false})
+	
+	isRejectedTutorAppResolution(applicantsEmail)
+	
+	//Adrian please add this mp function to the function you create for the waitlist button
+	//isWaitListedTutorAppResolution(applicantsEmail)
+	
 	//Send Email
 	var acceptanceMessage = "Unfortunately at this time we were unable to offer you a position as a tutor. Your tutor coordinator will reach out soon with more information."
 	sendEmailTo(applicantsEmail, 'Tutor Application Status', acceptanceMessage)	  
