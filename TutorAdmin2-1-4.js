@@ -53,8 +53,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 						interviewScore = applicant.data().interviewScore,
 						meghanNotes = applicant.data().meghanNotes,
 					    	timeApplied = applicant.data().timeSubmitted,
-					    	firstName = doc.data().firstName,
-					    	lastName = doc.data().lastName
+					    	firstName = applicant.data().firstName,
+					    	lastName = applicant.data().lastName
 
 
 
