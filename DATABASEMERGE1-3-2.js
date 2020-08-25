@@ -1,5 +1,58 @@
 
     var userDB = firebase.firestore()
+    
+    var applicationButton = document.getElementById('update-application-fields')
+    applicationButton.setAttribute('onClick', 'updateApplication()') 
+
+	function updateApplication() {
+		userDB.collection("users").onSnapshot(function(applicants) {
+			applicants.forEach(function(doc) {
+				var firstName = "No first name"
+				var lastName = "No last name"
+				var mobileOS = "No Entry"
+
+				try {
+					if (doc.data().firstName != null) {
+						firstName = doc.data().firstName
+					}
+				} catch {
+					console.log("no first name")
+				}
+				
+				try {
+					if (doc.data().lastName != null) {
+						lastName = doc.data().lastName
+					}
+				} catch {
+					console.log("no last name")
+				}
+				
+				try {
+					if (doc.data().application.assessment.mobileOS != null) {
+						mobileOS = doc.data().application.assessment.mobileOS
+					}
+				} catch {
+					console.log("no first name")
+				}
+				
+				userDB.collection("userTest")
+					.doc(doc.id)
+					.collection("tutorApplication")
+					.doc("application")
+					.update({"firstName" : firstName,
+						"lastName" : lastName,
+						"assessment" : firebase.firestore.FieldValue.delete()})
+				
+				userDB.collection("userTest")
+					.doc(doc.id)
+					.collection("tutorApplication")
+					.doc("assessment")
+					.update({"mobileOS" : mobileOS})
+			}
+		})
+	}
+    
+    
     var updateButton = document.getElementById('update-user-test')
     updateButton.setAttribute('onClick', 'updateUserTest()')
 
@@ -149,7 +202,6 @@
 		} catch {
                     	console.log("no data")
 		}
-                
 
                 var yearPoints = 0
 		try {
