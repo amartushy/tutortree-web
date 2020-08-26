@@ -14,7 +14,7 @@
 				
 				try {
 					userDB.collection('userTest').doc(tutor.id).collection('tutorApplication').doc('application').get().then(function(doc) {
-						console.log(doc.timeCreated)
+						console.log(doc.data().timeCreated)
 					})
 					
 				} catch {
