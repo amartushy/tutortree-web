@@ -17,7 +17,8 @@
 						console.log(doc.data().timeCreated)
 						if (doc.data().timeCreated != null) {
 							userDB.collection('userTest').doc(tutor.id).collection('tutorApplication').doc('application')
-								.update({'timeSubmitted' : doc.data().timeCreated})
+								.update({'timeSubmitted' : doc.data().timeCreated,
+									'timeCreated' : firebase.firestore.FieldValue.delete() })
 						}
 					})
 					
