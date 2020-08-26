@@ -1,6 +1,34 @@
 
     var userDB = firebase.firestore()
     
+    
+    var timeCreatedButton = document.getElementById('update-time-created')
+    timeCreatedButton.setAttribute('onClick', 'updateTimeCreated()') 
+
+
+	function updateTimeCreated() {
+		
+		userDB.collection('userTest').onSnapshot(function(applicants) {
+			applicants.forEach(function(tutor) {
+				var timeCreated = new Date() /1000
+				
+				try {
+					userDB.collection('userTest').doc(tutor.id).collection('tutorApplication').doc('application').get().then(function(doc) {
+						console.log(doc.timeCreated)
+					}
+					
+				} catch {
+					
+					console.log('no time created')
+				}
+				
+			})
+			
+			
+		})
+	}
+
+
     var applicationButton = document.getElementById('update-application-fields')
     applicationButton.setAttribute('onClick', 'updateApplication()') 
 
@@ -34,20 +62,6 @@
 					}
 				} catch {
 					console.log("no first name")
-				}
-				try {
-					if (doc.data().application.assessment.timeCreated != null) {
-						timeSubmitted = doc.data().application.assessment.timeCreated
-						
-						userDB.collection("userTest")
-							.doc(doc.id)
-							.collection("tutorApplication")
-							.doc("application")
-							.update({"assessmentFields.timeSubmitted" : timeSubmitted,
-								"timeCreated" : firebase.firestore.FieldValue.delete()})
-					}
-				} catch {
-					console.log("no time created")
 				}
 				
 				userDB.collection("userTest")
