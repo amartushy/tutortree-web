@@ -439,6 +439,8 @@ function approveTutor(applicantsID, applicantsEmail) {
 		.doc("application")
 		.get().then(function(doc) {
 			usersName = doc.data().firstName
+			//Send Email
+			sendTutorAcceptanceEmail(applicantsEmail, applicantsName)
 		})
 	//Update sorting field
 	//Update iOS value isTutor
@@ -449,8 +451,6 @@ function approveTutor(applicantsID, applicantsEmail) {
 	
 	isFirstApprovedTutorAppResolution(applicantsEmail)
 	
-	//Send Email
-	sendTutorAcceptanceEmail(applicantsEmail, applicantsName)
 	
 }
 								
@@ -464,6 +464,8 @@ function rejectTutor(applicantsID, applicantsEmail) {
 		.doc("application")
 		.get().then(function(doc) {
 			usersName = doc.data().firstName
+			//Send Email
+			sendTutorRejectionEmail(applicantsEmail, applicantsName)
 		})
 	//Update sorting field
 	//Update iOS value isTutor
@@ -477,8 +479,6 @@ function rejectTutor(applicantsID, applicantsEmail) {
 	//Adrian please add this mp function to the function you create for the waitlist button
 	//isWaitListedTutorAppResolution(applicantsEmail)
 	
-	//Send Email
-	sendTutorRejectionEmail(applicantsEmail, applicantsName)
 }
 								
 function deleteTutor(applicantsID, applicantsEmail) {
