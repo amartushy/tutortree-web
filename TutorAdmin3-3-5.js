@@ -438,7 +438,7 @@ function approveTutor(applicantsID, applicantsEmail) {
 		.collection("tutorApplication")
 		.doc("application")
 		.get().then(function(doc) {
-			usersName = doc.data().firstName
+			applicantsName = doc.data().firstName
 			//Send Email
 			sendTutorAcceptanceEmail(applicantsEmail, applicantsName)
 		})
@@ -463,7 +463,7 @@ function rejectTutor(applicantsID, applicantsEmail) {
 		.collection("tutorApplication")
 		.doc("application")
 		.get().then(function(doc) {
-			usersName = doc.data().firstName
+			applicantsName = doc.data().firstName
 			//Send Email
 			sendTutorRejectionEmail(applicantsEmail, applicantsName)
 		})
