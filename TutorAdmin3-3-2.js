@@ -430,6 +430,14 @@ function interviewCompleted(applicantsID, email, status) {
 }
 
 function approveTutor(applicantsID, applicantsEmail) {
+	var applicantsName = "Applicant"
+	userDB.collection("userTest")
+		.doc(applicantsID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get().then(function(doc) {
+			usersName = doc.data().firstName
+		})
 	var userDB = firebase.firestore()
 	//Update sorting field
 	//Update iOS value isTutor
@@ -441,12 +449,19 @@ function approveTutor(applicantsID, applicantsEmail) {
 	isFirstApprovedTutorAppResolution(applicantsEmail)
 	
 	//Send Email
-	var acceptanceMessage = "Your application to tutor has been approved! Your tutor coordinator will reach out soon with more information."
-	sendEmailTo(applicantsEmail, 'Welcome to TutorTree!', acceptanceMessage)
+	sendTutorAcceptanceEmail(applicantsEmail, applicantsName)
 	
 }
 								
 function rejectTutor(applicantsID, applicantsEmail) {
+	var applicantsName = "Applicant"
+	userDB.collection("userTest")
+		.doc(applicantsID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get().then(function(doc) {
+			usersName = doc.data().firstName
+		})
 	var userDB = firebase.firestore()
 	//Update sorting field
 	//Update iOS value isTutor
@@ -461,8 +476,7 @@ function rejectTutor(applicantsID, applicantsEmail) {
 	//isWaitListedTutorAppResolution(applicantsEmail)
 	
 	//Send Email
-	var acceptanceMessage = "Unfortunately at this time we were unable to offer you a position as a tutor. Your tutor coordinator will reach out soon with more information."
-	sendEmailTo(applicantsEmail, 'Tutor Application Status', acceptanceMessage)	  
+	sendTutorRejectionEmail(applicantsEmail, applicantsName)
 }
 								
 function deleteTutor(applicantsID, applicantsEmail) {
@@ -904,6 +918,22 @@ function appendToAcceptedSection() {
 function sendEmailTo(email, title, message) {
 	var xhttp = new XMLHttpRequest();
     	var herokuURL = "https://tutortree2.herokuapp.com/sendEmailTo/"+email+"/"+title+"/"+message
+   	console.log(herokuURL)
+	xhttp.open("GET", herokuURL, true);
+	xhttp.send();
+}
+
+function sendTutorAcceptanceEmail(email, name) {
+	var xhttp = new XMLHttpRequest();
+    	var herokuURL = "https://tutortree2.herokuapp.com/sendTutorAcceptanceEmail/"+email+"/"+name
+   	console.log(herokuURL)
+	xhttp.open("GET", herokuURL, true);
+	xhttp.send();
+}
+
+function sendTutorRejectionEmail(email, name) {
+	var xhttp = new XMLHttpRequest();
+    	var herokuURL = "https://tutortree2.herokuapp.com/sendTutorRejectionEmail/"+email+"/"+name
    	console.log(herokuURL)
 	xhttp.open("GET", herokuURL, true);
 	xhttp.send();
