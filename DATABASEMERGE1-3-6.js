@@ -10,7 +10,8 @@
 				var firstName = "No first name"
 				var lastName = "No last name"
 				var mobileOS = "No Entry"
-
+				var timeSubmitted = new Date() /1000
+				
 				try {
 					if (doc.data().firstName != null) {
 						firstName = doc.data().firstName
@@ -33,6 +34,20 @@
 					}
 				} catch {
 					console.log("no first name")
+				}
+				try {
+					if (doc.data().application.assessment.timeCreated != null) {
+						timeSubmitted = doc.data().application.assessment.timeCreated
+						
+						userDB.collection("userTest")
+							.doc(doc.id)
+							.collection("tutorApplication")
+							.doc("application")
+							.update({"assessmentFields.timeSubmitted" : timeSubmitted,
+								"timeCreated" : firebase.firestore.FieldValue.delete()})
+					}
+				} catch {
+					console.log("no time created")
 				}
 				
 				userDB.collection("userTest")
