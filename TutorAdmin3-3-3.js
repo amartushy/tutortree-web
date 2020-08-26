@@ -430,6 +430,8 @@ function interviewCompleted(applicantsID, email, status) {
 }
 
 function approveTutor(applicantsID, applicantsEmail) {
+	var userDB = firebase.firestore()
+
 	var applicantsName = "Applicant"
 	userDB.collection("userTest")
 		.doc(applicantsID)
@@ -438,7 +440,6 @@ function approveTutor(applicantsID, applicantsEmail) {
 		.get().then(function(doc) {
 			usersName = doc.data().firstName
 		})
-	var userDB = firebase.firestore()
 	//Update sorting field
 	//Update iOS value isTutor
 	userDB.collection("userTest")
@@ -454,6 +455,8 @@ function approveTutor(applicantsID, applicantsEmail) {
 }
 								
 function rejectTutor(applicantsID, applicantsEmail) {
+	var userDB = firebase.firestore()
+
 	var applicantsName = "Applicant"
 	userDB.collection("userTest")
 		.doc(applicantsID)
@@ -462,7 +465,6 @@ function rejectTutor(applicantsID, applicantsEmail) {
 		.get().then(function(doc) {
 			usersName = doc.data().firstName
 		})
-	var userDB = firebase.firestore()
 	//Update sorting field
 	//Update iOS value isTutor
 	userDB.collection("userTest")
