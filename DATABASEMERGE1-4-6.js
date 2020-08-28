@@ -1,6 +1,6 @@
 
 	var userDB = firebase.firestore()
-	var mergeAmbasadors = document.getElementById('merge-ambassadors')
+	var mergeAmbassadors = document.getElementById('merge-ambassadors')
 	mergeAmbassadors.setAttribute('onClick', 'updateAmbassadors()')
 	
 	function updateAmbasadors() {
