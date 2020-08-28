@@ -90,35 +90,34 @@ function checkBasic() {
 }
 
 function checkAbout() {
-	if (majorField.value = "") {
+	if (majorField.value == "") {
 		alert("Please enter your major")
 		return false
-	} else if (nearCampusField.value = "") {
+	} else if (nearCampusField.value == "") {
 		alert("Please enter whether you're near campus")
 		return false
-	} else if (organizationsField.value = "") {
+	} else if (organizationsField.value == "") {
 		alert("Please detail whether you're in any organizations")
 		return false
-	} else if (offCampusField.value = "") {
+	} else if (offCampusField.value == "") {
 		alert("Please enter your favorite place to go off campus")
 		return false
 	} else {
-		return	
 		return true
 	}
 }
 
 function checkSocial() {
-	if (socialMediaField.value = "") {
+	if (socialMediaField.value == "") {
 		alert("Please enter you social media")
 		return false
-	} else if (followersField.value = "") {
+	} else if (followersField.value == "") {
 		alert("Please enter the number of followers")
 		return false
-	} else if (socialHandleField.value = "") {
+	} else if (socialHandleField.value == "") {
 		alert("Please enter your social media link")
 		return false
-	} else if (ambassadorsMeme = "") {
+	} else if (ambassadorsMeme == "") {
 		alert("Please upload a meme")
 		return false
 	} else {
@@ -127,10 +126,10 @@ function checkSocial() {
 }
 
 function checkDone() {
-	if (knowEmployeesField.value = "") {
+	if (knowEmployeesField.value == "") {
 		alert("Please enter whether you know any TT employees")
 		return false
-	} else if (howHeardField.value = "") {
+	} else if (howHeardField.value == "") {
 		alert("Please select how you heard about us")
 		return false
 	} else {
