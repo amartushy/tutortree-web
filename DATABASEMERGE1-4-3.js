@@ -1,6 +1,76 @@
 
-    var userDB = firebase.firestore()
-    
+	var userDB = firebase.firestore()
+	var mergeAmbasadors = document.getElementById('merge-ambassadors')
+	mergeAmbassadors.setAttribute('onClick', 'updateAmbassadors()')
+	
+	function updateAmbasadors() {
+		
+		userDB.collection('ambassadors').onSnapshot(function(user) {
+			user.forEach(function(doc) {
+				
+				var favoriteOffCampus = "",
+				    howHeardField = "",
+				    knowsEmployees = "",
+				    firstName = "",
+				    lastName = "",
+				    livesNearCampus = "",
+				    memeURL = "",
+				    dateApplied = "",
+				    numberOfFollowers = "",
+				    organizations = "",
+				    socialHandle = "",
+				    year = "",
+				
+				var ambassadorApplication = {
+					"favoriteOffCampus" : doc.data().favoriteOffCampus,
+					"howHeardField" : doc.data().howHeardField,
+					"knowsEmployees" : doc.data().knowsEmployees,
+					"firstName" : doc.data().firstName,
+					"lastName" : doc.data().lastName,
+					"livesNearCampus" : doc.data().livesNearCampus,
+					"memeURL" : doc.data().memeURL,
+					"dateApplied" : doc.data().dateApplied,
+					"numberOfFollowers" : doc.data().numberOfFollowers,
+					"organizations" : doc.data().organizations,
+					"socialHandle" : doc.data().socialHandle,
+					"year" : doc.data().year
+				}
+				
+				var appUserInfo = {
+					"agreedTOS" : true,
+					"availability" : {
+						"Monday" : 0,
+						"Tuesday" : 0,
+						"Wednesday" : 0,
+						"Thursday" : 0,
+						"Friday" : 0,
+						"Saturday" : 0,
+						"Sunday" : 0
+					},
+					"bio" : "Please enter a short description of yourself",
+					"email" : doc.data().email,
+					"isAdmin" : false,
+					"isEmailOn" : false,
+					"isPushOn" : false,
+					"isSMSOn" : false,
+					"isTutor" : false,
+					"major" : major,
+					"maxHPW" : 20,
+					"name" : doc.data().firstName + " " + doc.data().lastName,
+					"phoneNumber" : doc.data().phoneNumber,
+					"pricePHH" : 10,
+					"profileImage" : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/images%2FTTLogo-Mint.png?alt=media&token=c8d6559e-7fa8-4fed-81cc-1f09d5da56a5",
+					"pushToken" : "",
+					"school" : doc.data().school,
+					"ambassadorApplicationStatus" : doc.data().status
+				}
+				
+				userDB.collection("ambassadorTest").doc(doc.id).set(appUserInfo, { merge: true })
+				userDB.collection("ambassadorTest".doc(doc.id).collection("ambassadorApplication").doc("application").set(ambassadorApplication, { merge: true })
+			})
+		})
+	}
+   
     
     var timeCreatedButton = document.getElementById('update-time-created')
     timeCreatedButton.setAttribute('onClick', 'updateTimeCreated()') 
@@ -32,7 +102,7 @@
 			
 		})
 	}
-
+	
 
     var applicationButton = document.getElementById('update-application-fields')
     applicationButton.setAttribute('onClick', 'updateApplication()') 
