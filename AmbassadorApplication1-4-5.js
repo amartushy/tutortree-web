@@ -173,32 +173,33 @@ submitApplicationButton.setAttribute("onClick", "createAmbassadorApplicant()")
 
 
 function createAmbassadorApplicant() {
-	
-	//Check if they're a current user
-	firebase.auth().signInWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
-		firebase.auth().onAuthStateChanged(function(user) {
-			if (user) {
-				//create new user
-				console.log(user.uid)
-				createFirestoreAmbassadorApplicant(user.uid)
-			}
+	if (checkDone()) {
+		//Check if they're a current user
+		firebase.auth().signInWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
+			firebase.auth().onAuthStateChanged(function(user) {
+				if (user) {
+					//create new user
+					console.log(user.uid)
+					createFirestoreAmbassadorApplicant(user.uid)
+				}
+			})
 		})
-	})
-	.catch(function(error) {
-		console.log(error.code, error.message)
-		
-		firebase.auth().createUserWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
-              	var ambassadorID = data.user.uid
-		createNewUserAmbassadorApplicant(ambassadorID)
+		.catch(function(error) {
+			console.log(error.code, error.message)
 
-          })
-          .catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            alert(errorMessage)
-          });
-	})	
+			firebase.auth().createUserWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
+			var ambassadorID = data.user.uid
+			createNewUserAmbassadorApplicant(ambassadorID)
+
+		  })
+		  .catch(function(error) {
+		    // Handle Errors here.
+		    var errorCode = error.code;
+		    var errorMessage = error.message;
+		    alert(errorMessage)
+		  });
+		})	
+	}
 }
 
 function createNewUserAmbassadorApplicant(ambassadorID) {
