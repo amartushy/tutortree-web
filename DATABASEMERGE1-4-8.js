@@ -54,7 +54,7 @@
 					"isPushOn" : false,
 					"isSMSOn" : false,
 					"isTutor" : false,
-					"major" : major,
+					"major" : doc.data().major,
 					"maxHPW" : 20,
 					"name" : doc.data().firstName + " " + doc.data().lastName,
 					"phoneNumber" : doc.data().phoneNumber,
