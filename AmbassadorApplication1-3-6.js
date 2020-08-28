@@ -60,7 +60,7 @@ function showForm(formInt) {
 	}
 }
 
-func checkBasic() {
+function checkBasic() {
 	if (emailField.value = "") {
 		alert("Please enter your email")
 		return false
@@ -87,7 +87,7 @@ func checkBasic() {
 	}
 }
 
-func checkAbout() {
+function checkAbout() {
 	if (majorField.value = "") {
 		alert("Please enter your major")
 		return false
@@ -106,7 +106,7 @@ func checkAbout() {
 	}
 }
 
-func checkSocial() {
+function checkSocial() {
 	if (socialMediaField.value = "") {
 		alert("Please enter you social media")
 		return false
@@ -124,7 +124,7 @@ func checkSocial() {
 	}
 }
 
-func checkDone() {
+function checkDone() {
 	if (knowEmployeesField.value = "") {
 		alert("Please enter whether you know any TT employees")
 		return false
@@ -140,6 +140,8 @@ var ambassadorRef = firebase.firestore()
 
 var submitApplicationButton = document.getElementById('ambassador-submit')
 submitApplicationButton.setAttribute("onClick", "createAmbassadorApplicant()")
+
+
 
 function createAmbassadorApplicant() {
 	
@@ -158,7 +160,7 @@ function createAmbassadorApplicant() {
 		
 		firebase.auth().createUserWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
               	var ambassadorID = data.user.uid
-		createFirestoreAmbassadorApplicant(ambassadorID)
+		createNewUserAmbassadorApplicant(ambassadorID)
 
           })
           .catch(function(error) {
