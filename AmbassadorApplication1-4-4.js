@@ -46,10 +46,8 @@ almostBackButton.setAttribute('onClick', 'showForm(2)')
 
 function showForm(formInt) {
 	var formsArray = [basicInfoForm, aboutYouForm, socialMediaForm, almostDoneForm]
-	var checkFieldsArray = [true, checkBasic(), checkAbout(), checkSocial(), checkDone()]
 	
-	
-	if(checkFieldsArray[formInt]) {
+	if (formInt == 0) {
 		for (i=0; i < formsArray.length; i++) {
 			if (i == formInt) {
 				formsArray[i].style.display = "flex"
@@ -57,7 +55,37 @@ function showForm(formInt) {
 				formsArray[i].style.display = "none"
 			}
 		}
-	}
+	} else if (formInt == 1) {
+		if ( checkBasic() ) {
+			for (i=0; i < formsArray.length; i++) {
+				if (i == formInt) {
+					formsArray[i].style.display = "flex"
+				} else {
+					formsArray[i].style.display = "none"
+				}
+			}
+		}
+	} else if (formInt == 2) {
+		if ( checkAbout() ) {
+			for (i=0; i < formsArray.length; i++) {
+				if (i == formInt) {
+					formsArray[i].style.display = "flex"
+				} else {
+					formsArray[i].style.display = "none"
+				}
+			}
+		}
+	} else if (formInt == 3) {
+		if (checkSocial() ) {
+			for (i=0; i < formsArray.length; i++) {
+				if (i == formInt) {
+					formsArray[i].style.display = "flex"
+				} else {
+					formsArray[i].style.display = "none"
+				}
+			}
+		}
+	} 
 }
 
 function checkBasic() {
