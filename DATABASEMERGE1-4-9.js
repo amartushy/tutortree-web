@@ -15,11 +15,20 @@
 				    lastName = "",
 				    livesNearCampus = "",
 				    memeURL = "",
-				    dateApplied = "",
+	
 				    numberOfFollowers = "",
 				    organizations = "",
 				    socialHandle = "",
 				    year = ""
+				
+				var dateApplied = ""
+				try {
+					if (doc.data().dateApplied != null) {
+						dateApplied = doc.data().dateApplied
+					}
+				} catch {
+					console.log("no date applied")
+				}
 				
 				var ambassadorApplication = {
 					"favoriteOffCampus" : doc.data().favoriteOffCampus,
@@ -29,7 +38,7 @@
 					"lastName" : doc.data().lastName,
 					"livesNearCampus" : doc.data().livesNearCampus,
 					"memeURL" : doc.data().memeURL,
-					"dateApplied" : doc.data().dateApplied,
+					"dateApplied" : dateApplied,
 					"numberOfFollowers" : doc.data().numberOfFollowers,
 					"organizations" : doc.data().organizations,
 					"socialHandle" : doc.data().socialHandle,
