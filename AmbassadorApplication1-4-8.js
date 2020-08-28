@@ -266,9 +266,9 @@ function createNewUserAmbassadorApplicant(ambassadorID) {
 		"ambassadorApplicationStatus" : "pending"
 	}
 	
-	userDB.collection("ambassadorTest").doc(ambassadorID).set(appUserInfo, {merge: true})
+	userDB.collection("userTest").doc(ambassadorID).set(appUserInfo, {merge: true})
 	.then(function() {
-			userDB.collection("ambassadorTest").doc(ambassadorID).collection("ambassadorApplication").doc("application").set(ambassadorApplication, { merge: true })
+			userDB.collection("userTest").doc(ambassadorID).collection("ambassadorApplication").doc("application").set(ambassadorApplication, { merge: true })
 
 			console.log("Ambassador application successfully submitted");
 			document.getElementById('ambassador-thanks').style.display = "flex"
@@ -326,9 +326,9 @@ function createFirestoreAmbassadorApplicant(ambassadorID) {
 		"ambassadorApplicationStatus" : "pending"
 		
 	}
-	userDB.collection("ambassadorTest").doc(ambassadorID).set(existingUserInfo, {merge : true})
+	userDB.collection("userTest").doc(ambassadorID).set(existingUserInfo, {merge : true})
 	
-	userDB.collection("ambassadorTest").doc(ambassadorID).collection("ambassadorApplication").doc("application").set(ambassadorApplication, { merge: true })
+	userDB.collection("userTest").doc(ambassadorID).collection("ambassadorApplication").doc("application").set(ambassadorApplication, { merge: true })
 	.then(function() {
 		console.log("Ambassador application successfully submitted");
 		document.getElementById('ambassador-thanks').style.display = "flex"
