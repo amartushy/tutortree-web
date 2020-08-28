@@ -66,7 +66,7 @@
 				}
 				
 				userDB.collection("ambassadorTest").doc(doc.id).set(appUserInfo, { merge: true })
-				userDB.collection("ambassadorTest".doc(doc.id).collection("ambassadorApplication").doc("application").set(ambassadorApplication, { merge: true })
+				userDB.collection("ambassadorTest").doc(doc.id).collection("ambassadorApplication").doc("application").set(ambassadorApplication, { merge: true })
 			})
 		})
 	}
