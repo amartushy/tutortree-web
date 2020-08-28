@@ -61,6 +61,7 @@ function showForm(formInt) {
 }
 
 function checkBasic() {
+	console.log("im called")
 	if (emailField.value = "") {
 		alert("Please enter your email")
 		return false
@@ -83,6 +84,7 @@ function checkBasic() {
 		alert("Please select what year you are in")
 		return false
 	} else {
+		console.log("this is true")
 		return true
 	}
 }
