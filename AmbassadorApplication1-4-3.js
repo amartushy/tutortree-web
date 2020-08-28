@@ -48,9 +48,9 @@ function showForm(formInt) {
 	var formsArray = [basicInfoForm, aboutYouForm, socialMediaForm, almostDoneForm]
 	var checkFieldsArray = [true, checkBasic(), checkAbout(), checkSocial(), checkDone()]
 	
-	for (i=0; i < formsArray.length; i++) {
-		
-		if(checkFieldsArray[formInt]) {
+	
+	if(checkFieldsArray[formInt]) {
+		for (i=0; i < formsArray.length; i++) {
 			if (i == formInt) {
 				formsArray[i].style.display = "flex"
 			} else {
