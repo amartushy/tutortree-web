@@ -46,7 +46,7 @@ almostBackButton.setAttribute('onClick', 'showForm(2)')
 
 function showForm(formInt) {
 	var formsArray = [basicInfoForm, aboutYouForm, socialMediaForm, almostDoneForm]
-	var checkFieldsArray = [true, checkBasic(), checkAbout(), checkSocial(), checkDone()]
+	var checkFieldsArray = [true, checkBasic, checkAbout, checkSocial, checkDone]
 	
 	for (i=0; i < formsArray.length; i++) {
 		
