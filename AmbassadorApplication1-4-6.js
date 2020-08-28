@@ -165,7 +165,7 @@ function checkDone() {
 	}
 }
 
-var ambassadorRef = firebase.firestore()
+var userDB = firebase.firestore()
 
 var submitApplicationButton = document.getElementById('ambassador-submit')
 submitApplicationButton.setAttribute("onClick", "createAmbassadorApplicant()")
