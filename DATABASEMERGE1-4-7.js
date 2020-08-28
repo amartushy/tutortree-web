@@ -3,7 +3,7 @@
 	var mergeAmbassadors = document.getElementById('merge-ambassadors')
 	mergeAmbassadors.setAttribute('onClick', 'updateAmbassadors()')
 	
-	function updateAmbasadors() {
+	function updateAmbassadors() {
 		
 		userDB.collection('ambassadors').onSnapshot(function(user) {
 			user.forEach(function(doc) {
