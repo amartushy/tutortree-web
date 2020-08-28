@@ -19,7 +19,7 @@
 				    numberOfFollowers = "",
 				    organizations = "",
 				    socialHandle = "",
-				    year = "",
+				    year = ""
 				
 				var ambassadorApplication = {
 					"favoriteOffCampus" : doc.data().favoriteOffCampus,
