@@ -46,11 +46,11 @@ almostBackButton.setAttribute('onClick', 'showForm(2)')
 
 function showForm(formInt) {
 	var formsArray = [basicInfoForm, aboutYouForm, socialMediaForm, almostDoneForm]
-	var checkFieldsArray = [checkBasic(), checkAbout(), checkSocial(), checkDone()]
+	var checkFieldsArray = [true, checkBasic(), checkAbout(), checkSocial(), checkDone()]
 	
 	for (i=0; i < formsArray.length; i++) {
 		
-		if(checkFieldsArray[i]) {
+		if(checkFieldsArray[formInt]) {
 			if (i == formInt) {
 				formsArray[i].style.display = "flex"
 			} else {
