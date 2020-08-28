@@ -203,6 +203,25 @@ function createAmbassadorApplicant() {
 }
 
 function createNewUserAmbassadorApplicant(ambassadorID) {
+	var mixpanelDict = {
+		"favoriteOffCampus" : offCampusField.value,
+		"howHeardField" : howHeardField.value,
+		"knowsEmployees" : knowEmployeesField.value,
+		"firstName" : firstNameField.value,
+		"lastName" : lastNameField.value,
+		"livesNearCampus" : nearCampusField.value,
+		"memeURL" : ambassadorsMeme,
+		"dateApplied" : new Date / 1000,
+		"numberOfFollowers" : followersField.value,
+		"organizations" : organizationsField.value,
+		"socialHandle" : socialMediaField.value,
+		"year" : yearField.value,
+		"major" : majorField.value,
+		"email" : emailField.value,
+		"phoneNumber" : phoneNumberField.value,
+		"school" : schoolField.value
+	}
+	
 	var ambassadorApplication = {
 		"favoriteOffCampus" : offCampusField.value,
 		"howHeardField" : howHeardField.value,
@@ -215,7 +234,7 @@ function createNewUserAmbassadorApplicant(ambassadorID) {
 		"numberOfFollowers" : followersField.value,
 		"organizations" : organizationsField.value,
 		"socialHandle" : socialMediaField.value,
-		"year" : yearField.value
+		"year" : yearField.value,
 	}
 
 	var appUserInfo = {
@@ -255,7 +274,7 @@ function createNewUserAmbassadorApplicant(ambassadorID) {
 			document.getElementById('ambassador-thanks').style.display = "flex"
 			document.getElementById('ambassador-submit-form').style.display = "none"
 		        
-		        ambassadorAccountCreated(newAmbassadorDict)
+		        ambassadorAccountCreated(mixpanelDict)
 		      
 			var newAmbassadorMessage = "New Ambassador Application : " + firstNameField.value + " has submitted an application to be a TutorTree ambassador. Their email is " + emailField.value
 			sendSMSTo("4582108156", newAmbassadorMessage)
@@ -266,6 +285,25 @@ function createNewUserAmbassadorApplicant(ambassadorID) {
 }
 
 function createFirestoreAmbassadorApplicant(ambassadorID) {
+	var mixpanelDict = {
+		"favoriteOffCampus" : offCampusField.value,
+		"howHeardField" : howHeardField.value,
+		"knowsEmployees" : knowEmployeesField.value,
+		"firstName" : firstNameField.value,
+		"lastName" : lastNameField.value,
+		"livesNearCampus" : nearCampusField.value,
+		"memeURL" : ambassadorsMeme,
+		"dateApplied" : new Date / 1000,
+		"numberOfFollowers" : followersField.value,
+		"organizations" : organizationsField.value,
+		"socialHandle" : socialMediaField.value,
+		"year" : yearField.value,
+		"major" : majorField.value,
+		"email" : emailField.value,
+		"phoneNumber" : phoneNumberField.value,
+		"school" : schoolField.value
+	}
+	
 	var ambassadorApplication = {
 		"favoriteOffCampus" : offCampusField.value,
 		"howHeardField" : howHeardField.value,
@@ -296,7 +334,7 @@ function createFirestoreAmbassadorApplicant(ambassadorID) {
 		document.getElementById('ambassador-thanks').style.display = "flex"
 		document.getElementById('ambassador-submit-form').style.display = "none"
 
-		ambassadorAccountCreated(newAmbassadorDict)
+		ambassadorAccountCreated(mixpanelDict)
 
 		var newAmbassadorMessage = "New Ambassador Application : " + firstNameField.value + " has submitted an application to be a TutorTree ambassador. Their email is " + emailField.value
 		sendSMSTo("4582108156", newAmbassadorMessage)
