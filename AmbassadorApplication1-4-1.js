@@ -46,7 +46,7 @@ almostBackButton.setAttribute('onClick', 'showForm(2)')
 
 function showForm(formInt) {
 	var formsArray = [basicInfoForm, aboutYouForm, socialMediaForm, almostDoneForm]
-	var checkFieldsArray = [true, checkBasic, checkAbout, checkSocial, checkDone]
+	var checkFieldsArray = [true, checkBasic(), checkAbout(), checkSocial(), checkDone()]
 	
 	for (i=0; i < formsArray.length; i++) {
 		
@@ -62,25 +62,25 @@ function showForm(formInt) {
 
 function checkBasic() {
 	console.log("im called")
-	if (emailField.value = "") {
+	if (emailField.value == "") {
 		alert("Please enter your email")
 		return false
-	} else if (firstNameField.value = "") {
+	} else if (firstNameField.value == "") {
 		alert("Please enter your first name")
 		return false
-	} else if (lastNameField.value = "") {
+	} else if (lastNameField.value == "") {
 		alert("Please enter your last name")
 		return false
-	} else if (phoneNumberField.value = "") {
+	} else if (phoneNumberField.value == "") {
 		alert("Please enter your phone number")
 		return false
-	} else if (passwordField.value = "") {
+	} else if (passwordField.value == "") {
 		alert("Please enter a good password")
 		return false
-	} else if (schoolField.value = "") {
+	} else if (schoolField.value == "") {
 		alert("Please select which school you go to")
 		return false
-	} else if (yearField.value = "") {
+	} else if (yearField.value == "") {
 		alert("Please select what year you are in")
 		return false
 	} else {
