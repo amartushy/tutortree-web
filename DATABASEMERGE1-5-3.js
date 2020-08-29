@@ -24,7 +24,7 @@
 				var dateApplied = ""
 				try {
 					if (doc.data().dateApplied != null) {
-						dateApplied = doc.data().dateApplied
+						dateApplied = doc.data().metadata.dateApplied
 					}
 				} catch {
 					console.log("no date applied")
