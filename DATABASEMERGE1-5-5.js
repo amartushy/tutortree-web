@@ -23,7 +23,7 @@
 				
 				var dateApplied = ""
 				try {
-					if (doc.data().dateApplied != null) {
+					if (doc.data().metadata.dateApplied != null) {
 						dateApplied = doc.data().metadata.dateApplied
 					}
 				} catch {
