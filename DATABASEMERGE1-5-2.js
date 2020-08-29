@@ -74,8 +74,8 @@
 					"ambassadorApplicationStatus" : doc.data().status
 				}
 				
-				userDB.collection("testImport").doc(doc.id).set(appUserInfo, { merge: true })
-				userDB.collection("testImport").doc(doc.id).collection("ambassadorApplication").doc("application").set(ambassadorApplication, { merge: true })
+				userDB.collection("userTest").doc(doc.id).set(appUserInfo, { merge: true })
+				userDB.collection("userTest").doc(doc.id).collection("ambassadorApplication").doc("application").set(ambassadorApplication, { merge: true })
 			})
 		})
 	}
