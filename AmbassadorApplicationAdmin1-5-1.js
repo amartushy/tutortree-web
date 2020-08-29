@@ -79,7 +79,7 @@ function showRejectedApplicants() {
 }
 
 var pendingAmbassadorArea = document.getElementById('pending-ambassador-section')
-function pendingAmbassadorArea() {
+function showPendingApplicants() {
 	while(pendingAmbassadorArea.firstChild) {
 		pendingAmbassadorArea.removeChild(pendingAmbassadorArea.firstChild)
 	}
