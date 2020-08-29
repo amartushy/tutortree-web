@@ -5,12 +5,20 @@ firebase.auth().onAuthStateChanged(function(user) {
 
         //Check if user is an admin, TODO
         ambassadorDB.collection("userTest").doc(adminID).get().then(function(doc) {
-            console.log(doc.data().admin)
+            console.log(doc.data().isAdmin)
         })
+	    
+    	//Get tab buttons
+	var rejectedButton = document.getElementById('rejected-button')
+	var pendingButton = document.getElementById('pending-button')
+	var acceptedButton = document.getElementById('accepted-button')
 
-        //Get all?ambassadors and build blocks
-        var pendingAmbassadorArea = document.getElementById('pending-ambassador-section')
-	var approvedAmbassadorSection = document.getElementById('approved-ambassador-section')
+	//Set eventlisteners
+	rejectedButton.setAttribute('onClick', 'showRejectedApplicants()')
+	pendingButton.setAttribute('onClick', 'showPendingApplicants()')
+	acceptedButton.setAttribute('onClick', 'showAcceptedApplicants()')
+
+        //Get all ambassadors and build blocks
     	var rejectedAmbassadorSection = document.getElementById('rejected-ambassador-section')
 
         ambassadorDB.collection("userTest").where("ambassadorApplicationStatus", "in", ["rejected", "pending", "approved"]).onSnapshot(function(allAmbassadors) {
@@ -55,15 +63,36 @@ firebase.auth().onAuthStateChanged(function(user) {
 				      status)
 			})
             })
-          	appendToPendingAmbassadorArea()
-		appendToApprovedAmbassadorArea()
-		appendToRejectedAmbassadorArea()
         })
       
     } else {
 	location.href = "https://www.jointutortree.com"
     }
 })
+
+var rejectedAmbassadorSection = document.getElementById('rejected-ambassador-section')
+function showRejectedApplicants() {
+	while(rejectedAmbassadorSection.firstChild) {
+		rejectedAmbassadorSection.removeChild(rejectedAmbassadorSection.firstChild)
+	}
+	appendToRejectedAmbassadorArea()
+}
+
+var pendingAmbassadorArea = document.getElementById('pending-ambassador-section')
+function pendingAmbassadorArea() {
+	while(pendingAmbassadorArea.firstChild) {
+		pendingAmbassadorArea.removeChild(pendingAmbassadorArea.firstChild)
+	}
+	appendToPendingAmbassadorArea()
+}
+
+var approvedAmbassadorSection = document.getElementById('approved-ambassador-section')
+function showAcceptedApplicants() {
+	while(approvedAmbassadorSection.firstChild) {
+		approvedAmbassadorSection.removeChild(approvedAmbassadorSection.firstChild)
+	}
+	appendToApprovedAmbassadorArea()
+}
 
 function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, timeApplied, memeURL, status) {
       var ambassadorInfoBlock = document.createElement('div')
