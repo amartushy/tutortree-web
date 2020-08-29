@@ -4,16 +4,16 @@ firebase.auth().onAuthStateChanged(function(user) {
         var adminID = user.uid
 
         //Check if user is an admin, TODO
-        ambassadorDB.collection("users").doc(adminID).get().then(function(doc) {
+        ambassadorDB.collection("userTest").doc(adminID).get().then(function(doc) {
             console.log(doc.data().admin)
         })
 
-        //Get all ambassadors and build blocks
+        //Get all?ambassadors and build blocks
         var pendingAmbassadorArea = document.getElementById('pending-ambassador-section')
 	var approvedAmbassadorSection = document.getElementById('approved-ambassador-section')
     	var rejectedAmbassadorSection = document.getElementById('rejected-ambassador-section')
 
-        ambassadorDB.collection("ambassadors").onSnapshot(function(allAmbassadors) {
+        ambassadorDB.collection("userTest").where("ambassadorApplicationStatus", "in", ["rejected", "pending", "approved"].onSnapshot(function(allAmbassadors) {
             //reinitialize arrays on update
             pendingAmbassadorArray = []
 	    approvedAmbassadorArray = []
@@ -34,15 +34,18 @@ firebase.auth().onAuthStateChanged(function(user) {
             allAmbassadors.forEach(function(doc) {
     		console.log("ambassador found")
                 var ambassadorID = doc.id,
-                    firstName = doc.data().firstName,
-                    lastName = doc.data().lastName,
                     email = doc.data().email,
                     school = doc.data().school,
-                    timeApplied = doc.data().metadata.dateApplied,
-                    memeURL = doc.data().memeURL,
-		    status = doc.data().status
-                
-                buildAmbassadorBlock(ambassadorID, 
+		    status = doc.data().ambassadorApplicationStatus
+		
+			ambassadorDB.collection("userTest").doc(ambassadorID).collection("ambassadorApplication").doc("application").get().then(function(user) {
+				var firstName =  user.data().firstName,
+				lastName = user.data().lastName,
+				timeApplied = user.data().dateApplied,
+				memeURL = user.data().memeURL
+				
+				
+				buildAmbassadorBlock(ambassadorID, 
                                       firstName, 
                                       lastName, 
                                       email,
@@ -50,6 +53,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                                       timeApplied, 
                                       memeURL,
 				      status)
+			})
             })
           	appendToPendingAmbassadorArea()
 		appendToApprovedAmbassadorArea()
@@ -156,12 +160,11 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
 	}
       document.getElementById('hidden-ambassador-section').appendChild(ambassadorInfoBlock)
 
-
 }
 
 function setAmbassadorPrivileges(ID, email, privileges) {
 	var ambassadorDB = firebase.firestore()
-	ambassadorDB.collection("ambassadors").doc(ID).update( { "status" : privileges } ).then(function(){
+	ambassadorDB.collection("userTest").doc(ID).update( { "ambassadorApplicationStatus" : privileges } ).then(function(){
 		ambassadorReviewed(email, privileges)
 	})
 
@@ -169,7 +172,7 @@ function setAmbassadorPrivileges(ID, email, privileges) {
 
 function showMeme(ID) {
 	var ambassadorDB = firebase.firestore()
-	ambassadorDB.collection("ambassadors").doc(ID).get().then(function(doc) {
+	ambassadorDB.collection("userTest").doc(ID).collection("ambassadorApplication").doc("application").get().then(function(doc) {
 		var memeLink = doc.data().memeURL
 		window.open(memeLink)
 	})
@@ -179,14 +182,17 @@ function showAmbassadorInterview(ambassadorID) {
 	document.getElementById("ambassador-application-modal").style.display = "flex"
 	
 	var ambassadorDB = firebase.firestore()
-	ambassadorDB.collection("ambassadors").doc(ambassadorID).get().then(function(doc) {
-		document.getElementById("firstName").innerHTML = doc.data().firstName
-		document.getElementById("lastName").innerHTML = doc.data().lastName
+	
+	ambassadorDB.collection("userTest").doc(ambassadorID).get().then(function(doc) {
 		document.getElementById("email").innerHTML = doc.data().email
 		document.getElementById("phoneNumber").innerHTML = doc.data().phoneNumber
 		document.getElementById("school").innerHTML = doc.data().school
-		document.getElementById("year").innerHTML = doc.data().year
 		document.getElementById("major").innerHTML = doc.data().major
+	})
+	ambassadorDB.collection("userTest").doc(ambassadorID).collection("ambassadorApplication").doc("application").get().then(function(doc) {
+		document.getElementById("firstName").innerHTML = doc.data().firstName
+		document.getElementById("lastName").innerHTML = doc.data().lastName
+		document.getElementById("year").innerHTML = doc.data().year
 		document.getElementById("live").innerHTML = doc.data().livesNearCampus
 		document.getElementById("favorite").innerHTML = doc.data().favoriteOffCampus
 		document.getElementById("organizations").innerHTML = doc.data().organizations
