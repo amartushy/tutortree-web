@@ -13,7 +13,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	var approvedAmbassadorSection = document.getElementById('approved-ambassador-section')
     	var rejectedAmbassadorSection = document.getElementById('rejected-ambassador-section')
 
-        ambassadorDB.collection("userTest").where("ambassadorApplicationStatus", "in", ["rejected", "pending", "approved"].onSnapshot(function(allAmbassadors) {
+        ambassadorDB.collection("userTest").where("ambassadorApplicationStatus", "in", ["rejected", "pending", "approved"]).onSnapshot(function(allAmbassadors) {
             //reinitialize arrays on update
             pendingAmbassadorArray = []
 	    approvedAmbassadorArray = []
