@@ -251,7 +251,8 @@ function appendToPendingAmbassadorArea() {
     for( i=0 ; i < items ; i++ ) {
     	var timestampID = pendingAmbassadorArray[i]
     	var pendingAmbassadorBlock = document.getElementById(timestampID)
-        pendingAmbassadorSection.appendChild(pendingAmbassadorBlock)
+	var blockClone = pendingAmbassadorBlock.cloneNode(true)
+        pendingAmbassadorSection.appendChild(blockClone)
     }
 }
 
@@ -269,7 +270,8 @@ function appendToApprovedAmbassadorArea() {
     for( i=0 ; i < items ; i++ ) {
     	var timestampID = approvedAmbassadorArray[i]
     	var approvedAmbassadorBlock = document.getElementById(timestampID)
-        approvedAmbassadorSection.appendChild(approvedAmbassadorBlock)
+	var blockClone = approvedAmbassadorBlock.cloneNode(true)
+        approvedAmbassadorSection.appendChild(blockClone)
     }
 }
 
@@ -287,7 +289,8 @@ function appendToRejectedAmbassadorArea() {
     for( i=0 ; i < items ; i++ ) {
     	var timestampID = rejectedAmbassadorArray[i]
     	var rejectedAmbassadorBlock = document.getElementById(timestampID)
-        rejectedAmbassadorSection.appendChild(rejectedAmbassadorBlock)
+	var blockClone = rejectedAmbassadorBlock.cloneNode(true)
+        rejectedAmbassadorSection.appendChild(blockClone)
     }
 }
 
