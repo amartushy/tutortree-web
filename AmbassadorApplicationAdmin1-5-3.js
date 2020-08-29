@@ -166,12 +166,12 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
   
       var ambassadorApproveButton = document.createElement('div')
       ambassadorApproveButton.setAttribute('class', 'ambapp-approve')
-      ambassadorApproveButton.setAttribute('onClick', 'setAmbassadorPrivileges("' + ambassadorID + '","'+ email +'", "approved")')
+      ambassadorApproveButton.setAttribute('onClick', 'setAmbassadorPrivileges("' + ambassadorID + '","' + firstName + '","' + email +'", "approved")')
       ambassadorApproveButton.innerHTML = 'Approve'
 	  
       var ambassadorRejectButton = document.createElement('div')
       ambassadorRejectButton.setAttribute('class', 'ambapp-reject')
-      ambassadorRejectButton.setAttribute('onClick', 'setAmbassadorPrivileges("' + ambassadorID + '","'+ email +'", "rejected")')
+      ambassadorRejectButton.setAttribute('onClick', 'setAmbassadorPrivileges("' + ambassadorID + '","'+ firstName + '","'+ email +'", "rejected")')
       ambassadorRejectButton.innerHTML = 'Reject'
 	
 	if (status == "pending") {
@@ -191,12 +191,34 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
 
 }
 
-function setAmbassadorPrivileges(ID, email, privileges) {
+function setAmbassadorPrivileges(ID, name, email, privileges) {
 	var ambassadorDB = firebase.firestore()
 	ambassadorDB.collection("userTest").doc(ID).update( { "ambassadorApplicationStatus" : privileges } ).then(function(){
 		ambassadorReviewed(email, privileges)
+		
+		if (privileges == "rejected") {
+			sendAmbassadorRejectionEmail(email, name)
+		} else if (privileges == "approved") {
+			//sendAmbassadorAcceptanceEmail(email, name)
+		}
 	})
 
+}
+
+function sendAmbassadorAcceptanceEmail(email, name) {
+	var xhttp = new XMLHttpRequest();
+    	var herokuURL = "https://tutortree2.herokuapp.com/sendAmbassadorAcceptanceEmail/"+email+"/"+name
+   	console.log(herokuURL)
+	xhttp.open("GET", herokuURL, true);
+	xhttp.send();
+}
+
+function sendAmbassadorRejectionEmail(email, name) {
+	var xhttp = new XMLHttpRequest();
+    	var herokuURL = "https://tutortree2.herokuapp.com/sendAmbassadorRejectionEmail/"+email+"/"+name
+   	console.log(herokuURL)
+	xhttp.open("GET", herokuURL, true);
+	xhttp.send();
 }
 
 function showMeme(ID) {
