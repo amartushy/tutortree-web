@@ -55,13 +55,13 @@ function signUp(){
 						
 					} else if (doc.data().tutorApplicantStatus == "pending") {
 						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
-						userWebsiteLogin(userEmail, doc.data().tutorApplicant)
+						mpUserWebsiteLogin(userEmail, doc.data().tutorApplicant)
 					} else if (doc.data().tutorApplicantStatus == "rejected") {
 						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
-						userWebsiteLogin(userEmail, doc.data().tutorApplicant)
+						mpUserWebsiteLogin(userEmail, doc.data().tutorApplicant)
 					} else if (doc.data().tutorApplicantStatus == "accepted") {
 						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
-						userWebsiteLogin(userEmail, doc.data().tutorApplicant)
+						mpUserWebsiteLogin(userEmail, doc.data().tutorApplicant)
 					}
 				})
 			} else {
