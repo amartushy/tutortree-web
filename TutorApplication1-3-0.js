@@ -43,12 +43,15 @@ function checkApplicantStatus() {
   }
 }
 function createFirestoreTutorApplicant(tutorApplicantID) {
+	
+      var cleanSchoolName = cleanSchoolName(schoolField.value)
+      
       var newTutorDict = {
               "email" : emailField.value,
               "firstName" : firstNameField.value,
               "lastName" : lastNameField.value,
               "phoneNumber" : phoneNumberField.value,
-              "school" : schoolField.value,
+              "school" : cleanSchoolName,
               "howHeard" : howHeardField.value,
               "timeSubmitted" : new Date() / 1000,
               "tutorApplicant" : true,
@@ -117,7 +120,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
                     "email" : emailField.value,
                     "firstName" : firstNameField.value,
                     "lastName" : lastNameField.value,
-                    "school" : schoolField.value,
+                    "school" : cleanSchoolName,
                     "timeSubmitted" : new Date() / 1000,
                     "interviewScore" : 0,
                     "assessmentScore" : 0,
@@ -142,12 +145,15 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
       })
 }
 function createNewUserTutorApplicant(tutorApplicantID) {
+
+      var cleanSchoolName = cleanSchoolName(schoolField.value)	
+	
         var newTutorDict = {
               "email" : emailField.value,
               "firstName" : firstNameField.value,
               "lastName" : lastNameField.value,
               "phoneNumber" : phoneNumberField.value,
-              "school" : schoolField.value,
+              "school" : cleanSchoolName,
               "howHeard" : howHeardField.value,
               "timeSubmitted" : new Date() / 1000,
               "tutorApplicant" : true,
@@ -215,7 +221,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                     "email" : emailField.value,
                     "firstName" : firstNameField.value,
                     "lastName" : lastNameField.value,
-                    "school" : schoolField.value,
+                    "school" : cleanSchoolName,
                     "timeSubmitted" : new Date() / 1000,
                     "interviewScore" : 0,
                     "assessmentScore" : 0,
@@ -273,6 +279,59 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                    location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
               })
           })
+	
+function cleanSchoolName(schoolField){
+
+	var schoolFieldLower = schoolField.toLowerCase()
+	var schoolFieldTrim = schoolFieldLower.trim()
+	var schoolFieldNoComma = schoolFieldTrim.replace(",", "")
+
+	//UC Berkeley
+	if (schoolFieldNoComma.match(/.*berkeley.*/)) {
+		return "berkeley"
+
+	// USC
+	} else if(schoolFieldNoComma.match(/.*usc.*/) || schoolFieldNoComma.match(/.*southern california.*/)) {
+		return "usc"
+	}
+	// University of Oregon
+	else if(schoolFieldNoComma.match(/.*university of oregon.*/) || schoolFieldNoComma.match(/.*uo.*/) || schoolFieldNoComma.match(/oregon/)) {
+	 	return "uoregon"
+	}
+	// Oregon State
+	else if(schoolFieldNoComma.match(/.*oregon state.*/)) {
+	 	return "osu"
+	}
+	// Pepperdine
+	else if(schoolFieldNoComma.match(/.*pepperdine.*/)) {
+	 	return "pepperdine"
+	}
+	// San Jose State
+	else if(schoolFieldNoComma.match(/.*san jos.*/) || schoolFieldNoComma.match(/.*sjsu.*/)) {
+	 	return "sjsu"
+	}
+	// CSUN
+	else if(schoolFieldNoComma.match(/.*northridge.*/) || schoolFieldNoComma.match(/.*csun.*/)) {
+	 	return "csun"
+	}
+	// UCSB
+	else if(schoolFieldNoComma.match(/.*santa barbara.*/) || schoolFieldNoComma.match(/.*ucsb.*/)) {
+	 	return "ucsb"
+	}
+	// UCLA
+	else if(schoolFieldNoComma.match(/.*ucla.*/) || schoolFieldNoComma.match(/.*los angeles.*/)) {
+	 	return "ucla"
+	}
+	// UCSD
+	else if(schoolFieldNoComma.match(/.*ucsd.*/) || schoolFieldNoComma.match(/.*uc san diego.*/) 
+		|| schoolFieldNoComma.match(/.*university of california san diego.*/) || schoolFieldNoComma.match(/.*scripps.*/)) {
+	 	return "ucsd"
+	}
+	// return if no  match
+	else {
+	 	return schoolField
+	}							
+}
 }
                                                                                          
 
