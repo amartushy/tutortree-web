@@ -194,7 +194,7 @@ function buildAmbassadorBlock(ambassadorID, firstName, lastName, email, school, 
 function setAmbassadorPrivileges(ID, name, email, privileges) {
 	var ambassadorDB = firebase.firestore()
 	ambassadorDB.collection("userTest").doc(ID).update( { "ambassadorApplicationStatus" : privileges } ).then(function(){
-		ambassadorReviewed(email, privileges)
+		mpAmbassadorReviewed(email, privileges)
 		
 		if (privileges == "rejected") {
 			sendAmbassadorRejectionEmail(email, name)
