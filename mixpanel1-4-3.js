@@ -193,7 +193,7 @@ function mpIsFirstApprovedTutorAppResolution(email){
 	mixpanel.identify(email);
 	
 	mixpanel.track("Tutor Application Resolution", {
-		"Tutor Application Resolution" : "Approved"
+		"Tutor Application Resolution" : "Extended Offer"
 	});
 	
 	mixpanel.people.set({
