@@ -1,4 +1,4 @@
-tutorSignupPageViewed()
+mpTutorSignupPageViewed()
 
 var emailField = document.getElementById("app-email")
 var firstNameField = document.getElementById("app-first-name")
@@ -134,7 +134,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
                     "howHeard" : howHeardField.value,
 		                "meghanNotes" : "No notes yet"
         }
-     tutorAccountCreated( newTutorDict )
+     mpTutorAccountCreated( newTutorDict )
         
       // Update user collection with tutor info
       console.log("Document successfully written!");
@@ -265,7 +265,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
 		                "tutorApplicantStatus" : "pending"
                 }
         
-          tutorAccountCreated( newTutorDict )
+          mpTutorAccountCreated( newTutorDict )
 
           
   
