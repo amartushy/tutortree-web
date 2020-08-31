@@ -117,7 +117,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 			  	"uploadedTranscript" : true })
 		.then(function() {
 			document.getElementById("transcript-preview-block").style.display = "none"
-			transcriptUpload()
+			mpTranscriptUpload()
 		})
 	}
 	  
@@ -134,7 +134,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 			 	"uploadedFaculty" : true })
 		.then(function() {
 			document.getElementById("faculty-preview-block").style.display = "none"
-			facultyRecUpload()
+			mpFacultyRecUpload()
 		})
 	}	
 
@@ -236,7 +236,7 @@ function submitAssessment(userID) {
 		document.getElementById("assessment-completion").style.display = "flex"
 		document.getElementById("assessment-form-block").style.display = "none"
 		
-		preInterviewSubmission(mixpanelDict)		
+		mpPreInterviewSubmission(mixpanelDict)		
         });
 })
 }
@@ -283,7 +283,7 @@ function scheduleInterview(userID) {
 		document.getElementById("request-interview-form").style.display = "none"
 		var messageString = applicantsName + ' has completed their PIA and is requesting to schedule an interview. Their email is ' + applicantsEmail + ', their school is ' + applicantsSchool
 		sendEmailTo('mcloftus@jointutortree.com', 'New Interview Schedule Request', messageString)
-		requestVirtualInterview()
+		mpRequestVirtualInterview()
 	})
 }
 
