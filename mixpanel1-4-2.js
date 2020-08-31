@@ -17,7 +17,7 @@ It is split into a few sections, separated by user journey:
 
 //This funciton executes when a user loads the tutor sign up page
 
-function tutorSignupPageViewed(){
+function mpTutorSignupPageViewed(){
 	mixpanel.track("Tutor Sign Up Page View");
 
 }
@@ -25,7 +25,7 @@ function tutorSignupPageViewed(){
 //This funciton executes when a user signs up for a tutor account
 
 
-function tutorAccountCreated(user){
+function mpTutorAccountCreated(user){
 	//alias maps the random unique user id assigned by mp to the users email
 	mixpanel.alias(user.email);
 	//adding super property here to always track School and reference
@@ -62,7 +62,7 @@ function tutorAccountCreated(user){
 
 //This funciton executes when a tutor user submits their PIA
 
-function preInterviewSubmission(fieldValue){
+function mpPreInterviewSubmission(fieldValue){
 	mixpanel.identify();
 	
 	mixpanel.register({
@@ -94,7 +94,7 @@ function preInterviewSubmission(fieldValue){
 
 //This funciton executes when a tutor user clicks the request virtual interview button
 
-function requestVirtualInterview(){
+function mpRequestVirtualInterview(){
 	mixpanel.identify();
 	
 	mixpanel.track("Tutor Interview Requested");
@@ -109,7 +109,7 @@ function requestVirtualInterview(){
 
 //This funciton executes when a tutor user uploads a file and clicks "submit transcript" button
 
-function transcriptUpload(){
+function mpTranscriptUpload(){
 	mixpanel.identify();	
 	
 	mixpanel.track("Submitted Transcript");
@@ -124,7 +124,7 @@ function transcriptUpload(){
 
 //This funciton executes when a tutor user uploads their faculty rec and clicks "Submit Faculty Rec" button
 
-function facultyRecUpload(){
+function mpFacultyRecUpload(){
 	mixpanel.identify();
 	
 	mixpanel.track("Submitted Faculty Rec", {
@@ -139,7 +139,7 @@ function facultyRecUpload(){
 
 }
 
-function facultyRecUploadByTutorCoordinator(email){
+function mpFacultyRecUploadByTutorCoordinator(email){
 	mixpanel.identify(email)
 	;	
 	mixpanel.track("Submitted Faculty Rec", {
@@ -157,7 +157,7 @@ function facultyRecUploadByTutorCoordinator(email){
 //This funciton executes when Meghan updates the values in the tutor dashboard
 //function called after entering values into the interview # field
 
-function MPinterviewCompleted(applicantsID, email){
+function mpInterviewCompleted(applicantsID, email){
 
 	mixpanel.identify(email);
 	
@@ -172,7 +172,7 @@ function MPinterviewCompleted(applicantsID, email){
 
 }
 
-function MPreverseInterviewCompleted(applicantsID, email){
+function mpReverseInterviewCompleted(applicantsID, email){
 	
 	mixpanel.identify(email);
 
@@ -189,7 +189,7 @@ function MPreverseInterviewCompleted(applicantsID, email){
 //This funciton executes when a tutor user is approvaed but still might need to complete some steps to be granted access
 //Approved button
 
-function isFirstApprovedTutorAppResolution(email){
+function mpIsFirstApprovedTutorAppResolution(email){
 	mixpanel.identify(email);
 	
 	mixpanel.track("Tutor Application Resolution", {
@@ -208,7 +208,7 @@ function isFirstApprovedTutorAppResolution(email){
 //This funciton executes when a tutor user is waitlisted
 //Wait listed button
 
-function isWaitListedTutorAppResolution(email){
+function mpIsWaitListedTutorAppResolution(email){
 	mixpanel.identify(email);
 	
 	mixpanel.track("Tutor Application Resolution", {
@@ -227,7 +227,7 @@ function isWaitListedTutorAppResolution(email){
 //This funciton executes when a tutor user is rejected
 //Rejcted button
 
-function isRejectedTutorAppResolution(email){
+function mpIsRejectedTutorAppResolution(email){
 	mixpanel.identify(email);
 	
 	mixpanel.track("Tutor Application Resolution", {
@@ -243,74 +243,7 @@ function isRejectedTutorAppResolution(email){
 
 }
 
-//This funciton executes when a tutor user accepts their tutoring position 
-//function in the app when you add tutor code, updates a boolean value, add this there
-//Nick
-
-function tutorAcceptedPosition(email){
-	mixpanel.identify(email);
-	
-	mixpanel.track("Tutor Accepted Position");
-
-	mixpanel.people.set({
-		"Tutor Accepted Position": true,
-		"Tutor Application Resolution" : "Tutor Accepted Position",
-		"Tutor Application Stage": "Tutor Accepted Position",			
-		"Tutor Accepted Position Date": new Date().toISOString()
-	});
-
-}
-
-//This funciton executes when a tutor user sets up their available hours
-//Goal - know if a tutor has set up hours or not
-//Nick
-
-function tutorSetUpHours(hours){
-	mixpanel.identify();
-	
-	mixpanel.track("Tutor Set up Hours Available", {
-		"Number of Hours Available Per Week": hours
-	});
-
-	mixpanel.people.set({
-		"Number of Hours Available Per Week": hours,
-		"Tutor Set Up Hours Available Per Week": true,
-		"Most Recent Tutor Setup Hours Date": new Date().toISOString()
-	});
-	
-	mixpanel.people.set_once({
-		"First Tutor Setup Hours Date": new Date().toISOString()
-	});
-
-}
-
-//This funciton executes when a tutor user selects which courses they will tutor
-//Goal - Know if we need to hire more tutors and coverage of subjects per campus by understanding distribution of courses and subjects a tutor signs up for
-//Nick
-
-function tutorCourseSelect(courses){
-	mixpanel.identify();	
-	
-	mixpanel.track("Tutor Selected Courses", {
-		"Courses Tutoring": courses.list,
-		"Subjects Tutoring": subjects.list
-	});
-
-	mixpanel.people.set({
-		"Courses Tutoring": courses.list,
-		"Tutor Selected Courses": true,
-		"Num of Courses Tutoring": len(courses.list),
-		"Num of Subjects Tutoring": len(subjects.list),		
-		"Most Recent Tutor Selected Courses Date": new Date().toISOString()
-	});
-	
-	mixpanel.people.set_once({
-		"First Tutor Selected Courses Date": new Date().toISOString()
-	});
-
-}
-
-function userWebsiteLogin(email, tutorApplicant){
+function mpUserWebsiteLogin(email, tutorApplicant){
 	mixpanel.identify(email);
 	
 	mixpanel.track("User Signed into Site", {
@@ -323,45 +256,19 @@ function userWebsiteLogin(email, tutorApplicant){
 
 }
 
-//This funciton executes when a student books a session
-//function in the app when you add tutor code, updates a boolean value, add this there
-//Nick
-
-function sessionBooked(student, tutor){
-	mixpanel.identify();	
-	
-	mixpanel.track("Session Booked", {
-		"Student Name": student.name,
-		"Tutor Name": tutor.name
-	});
-	
-	mixpanel.people.track_charge(paymentAmount, {
-    		'$time': new Date().toISOString()
-	});
-	
-	mixpanel.people.increment("Total Sessions Booked");
-	
-	mixpanel.people.set_once({
-		"First Booked Session Date": new Date().toISOString()
-	})
-
-}
-
-
-
 
 /////////////////////////////////// AMBASSADOR PROCESS ////////////////////////////////////
 
 //This funciton executes when a user views the ambassador sign up page
 
-function ambassadorSignupPageViewed(){
+function mpAmbassadorSignupPageViewed(){
 	mixpanel.track("Ambassador Sign Up Page Viewed");
 }
 
 
 //This funciton executes when a user signs up for an ambassador 
 
-function ambassadorAccountCreated(user){
+function mpAmbassadorAccountCreated(user){
 	mixpanel.alias(user.email);
 
 	mixpanel.track("Ambassador Sign Up",{
@@ -393,7 +300,7 @@ function ambassadorAccountCreated(user){
 
 //This funciton executes when a user loads the sign up page
 
-function ambassadorReviewed(email, acceptedOrRejected){
+function mpAmbassadorReviewed(email, acceptedOrRejected){
 	mixpanel.identify(email);
 	
 	mixpanel.track("Ambassador Reviewed");
@@ -403,100 +310,3 @@ function ambassadorReviewed(email, acceptedOrRejected){
 	});
 }
 
-
-/////////////////////////////////// STUDENT PROCESS ////////////////////////////////////
-
-
-//This funciton executes when a user loads the sign up page
-
-function studentSignUp(studentUser){
-	mixpanel.alias(user.email);
-	
-	mixpanel.track("Student User Sign Up");
-	
-	mixpanel.register({
-		"Student Major": user.major,
-		
-	});
-	
-	mixpanel.people.set({
-		"School Name": user.school,
-        	"$first_name": user.firstName,
-        	"$last_name": user.lastName,
-        	"$email": user.email,
-        	"Student User": true
-	});
-}
-
-//This funciton executes when a user loads the sign up page
-
-function studentViewsSubjectPage(studentUser, subject){
-	
-	mixpanel.track("Student Views Subject Page", {
-		"Student major": studentUser.major,
-		
-	});
-	
-}
-
-//This funciton executes when a user loads the sign up page
-
-function studentSelectsSubject(studentUser, subject){
-	
-	mixpanel.identify();
-	
-	mixpanel.track("Student Selects Courses Page", {
-		"Subject Viewed": subject.name,
-		"Student major": studentUser.major,
-		
-	});
-	
-}
-
-//This funciton executes when a user loads the sign up page
-
-function signupPageViewed(){
-
-}
-
-
-/////////////////////////////////// OTHER ////////////////////////////////////
-
-//This funciton executes when a user logs into their account
-//Identify function allows for cross-platform mapping of user 
-
-function userLogin(user){
-	mixpanel.identify(user.email);
-	
-	
-	if(user.tutorApplicant){
-		mixpanel.people.set_once({
-			"Tutor Downloaded and Signed into App": true,
-			"First Tutor Sign in Date": new Date().toISOString()
-		})
-	}
-	elseif()
-
-}
-
-//This funciton executes when a user loads the sign up page
-
-function sessionBooked(){
-	mixpanel.people.increment("Total Sessions Booked");
-	mixpanel.people.set_once("")
-
-}
-
-
-
-//This funciton executes when a user loads the sign up page
-
-function signupPageViewed(){
-
-}
-
-//This funciton executes when a user loads the sign up page
-
-function signupPageViewed(){
-
-}
