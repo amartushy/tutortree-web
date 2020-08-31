@@ -45,7 +45,7 @@ function signUp(){
 
 						//metrics navigation
 						document.getElementById('metrics-nav').addEventListener('click', function() {
-							alert('Not available yet, sorry Jack :(')
+							location.href = 'https://www.jointutortree.com/metrics'
 						})
 						
 						//ambassador navigation
