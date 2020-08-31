@@ -327,6 +327,10 @@ function cleanSchoolName(schoolField){
 		|| schoolFieldNoComma.match(/.*university of california san diego.*/) || schoolFieldNoComma.match(/.*scripps.*/)) {
 	 	return "ucsd"
 	}
+	// Stanford
+	else if(schoolFieldNoComma.match(/.*stanford.*/)) {
+	 	return "stanford"
+	}	
 	// return if no  match
 	else {
 	 	return schoolField
