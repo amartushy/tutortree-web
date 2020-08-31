@@ -422,9 +422,9 @@ function interviewCompleted(applicantsID, email, status) {
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").update({ "completedInterview" : status})
 		.then(function() {
 			if (status) {
-				MPinterviewCompleted(applicantsID, email)
+				mpInterviewCompleted(applicantsID, email)
 			} else {
-				MPreverseInterviewCompleted(applicantsID, email)
+				mpReverseInterviewCompleted(applicantsID, email)
 			}
 		})
 }
@@ -449,7 +449,7 @@ function approveTutor(applicantsID, applicantsEmail) {
 		.update( {'tutorApplicantStatus' : "accepted",
 			  'isTutor' : true})
 	
-	isFirstApprovedTutorAppResolution(applicantsEmail)
+	mpIsFirstApprovedTutorAppResolution(applicantsEmail)
 	
 	
 }
@@ -474,7 +474,7 @@ function rejectTutor(applicantsID, applicantsEmail) {
 		.update( {'tutorApplicantStatus' : "rejected",
 			  'isTutor' : false})
 	
-	isRejectedTutorAppResolution(applicantsEmail)
+	mpIsRejectedTutorAppResolution(applicantsEmail)
 	
 	//Adrian please add this mp function to the function you create for the waitlist button
 	//isWaitListedTutorAppResolution(applicantsEmail)
@@ -985,6 +985,6 @@ async function uploadAndUpdateFirebaseFacultyRec(ID, email) {
 	.then(function() {
 		document.getElementById(globalPreviewID).style.display = "none"
 		document.getElementById(ID + '-upload-completed').style.display = "block"
-		facultyRecUploadByTutorCoordinator(email)
+		mpFacultyRecUploadByTutorCoordinator(email)
 	})
 }
