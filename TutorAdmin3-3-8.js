@@ -282,6 +282,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	var facultyAdminPreviewBlock = document.createElement('div')
 	facultyAdminPreviewBlock.setAttribute('class', 'faculty-admin-preview-block')
 	facultyAdminPreviewBlock.setAttribute('id',  applicantID )
+	facultyAdminPreviewBlock.style.display = "none"
 	facultyAdminParent.appendChild(facultyAdminPreviewBlock)
 
 	var facultyAdminFilePreview = document.createElement('div')
