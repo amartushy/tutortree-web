@@ -52,7 +52,7 @@ function mpTutorAccountCreated(user){
         	"Tutor Interview Completed": false,
         	"Submitted Transcript": false,
         	"Submitted Faculty Rec": false,
-		"Tutor Reached Offer Stage": false,
+		"Reached Resolution Stage": false,
 		"Tutor Application Stage": "Account Created",
 		"Tutor Application Resolution": "Not yet offered",
         	"Tutor Accepted Position": false,
