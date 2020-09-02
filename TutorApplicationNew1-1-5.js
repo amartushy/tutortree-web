@@ -37,6 +37,8 @@ tutorBecomeNext.addEventListener('click', function(e) {
 		 alert('Please enter your first name')  
 	} else if ( tutorLast.value == "" ) {
 		 alert('Please enter your last name')  
+	} else if ( tutorPhone.value == "" ) {
+		 alert('Please enter your last name')  
 	} else if ( tutorPassword.value == "" ) {
 		 alert('Please enter password')  
 	} else if ( tutorSchool.value == "" ) {
