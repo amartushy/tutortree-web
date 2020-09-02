@@ -517,7 +517,7 @@ function showApplication(applicantsID, name) {
 
 	//Assign points fields
 	var yearPoints = document.getElementById('year-points')
-	yearPoints.value = doc.data().assessmentScores.yearPoints
+	yearPoints.value = doc.data().applicationPoints.yearPoints
 	yearPoints.onblur = async function() {
 		await userDB.collection("userTest")
 			.doc(applicantsID)
@@ -528,7 +528,7 @@ function showApplication(applicantsID, name) {
 	}
 		
 	var qualitiesPoints = document.getElementById('qualities-points')
-	qualitiesPoints.value = doc.data().assessmentScores.qualitiesPoints
+	qualitiesPoints.value = doc.data().applicationPoints.qualitiesPoints
 	qualitiesPoints.onblur = async function() {
 		await userDB.collection("userTest")
 			.doc(applicantsID)
@@ -539,7 +539,7 @@ function showApplication(applicantsID, name) {
 	}
 
 	var majorPoints = document.getElementById('major-points')
-	majorPoints.value = doc.data().assessmentScores.majorPoints
+	majorPoints.value = doc.data().applicationPoints.majorPoints
 	majorPoints.onblur = async function() {
 		await userDB.collection("userTest")
 			.doc(applicantsID)
