@@ -52,8 +52,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 						interviewScore = applicant.data().interviewScore,
 						meghanNotes = applicant.data().meghanNotes,
 					    	timeApplied = applicant.data().timeSubmitted,
-					    	firstName = applicant.data().firstName,
-					    	lastName = applicant.data().lastName,
+					    	firstName = applicant.data().applicationFields.firstName,
+					    	lastName = applicant.data().applicationFields.lastName,
 					    	school = applicant.data().school
 
 
@@ -118,6 +118,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	//Name Block
 	var nameBlock = document.createElement('div')
 	nameBlock.setAttribute('class', 'name-block')
+	nameBlock.setAttribute('onClick', 'showApplication("' + applicantID + '", "' + name +'")')
 
 	var nameHeader = document.createElement('h4')
 	nameHeader.setAttribute('class', 'applicants-name')
@@ -143,7 +144,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	nameBlock.appendChild(dateHeader)
 
 	applicantBlock.appendChild(nameBlock)
-
+/*
 	//Pre-interview block
 	var preInterviewBlock = document.createElement('div')
 	preInterviewBlock.setAttribute('class', 'pre-interview-block')
@@ -167,7 +168,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	}
 
 	applicantBlock.appendChild(preInterviewBlock)
-
+*/
 	//Requested Interview Block
 	var requestedBlock = document.createElement('div')
 	requestedBlock.setAttribute('class', 'requested-block')
