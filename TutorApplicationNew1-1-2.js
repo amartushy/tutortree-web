@@ -1,15 +1,82 @@
 mpTutorSignupPageViewed()
 
-var emailField = document.getElementById("app-email")
-var firstNameField = document.getElementById("app-first-name")
-var lastNameField = document.getElementById("app-last-name")
-var phoneNumberField = document.getElementById("app-phone")
-var passwordField = document.getElementById('app-password')
-var schoolField = document.getElementById("app-school")
-var howHeardField = document.getElementById("app-how-heard")
+//Application Sections
+var tutorApplicationOne = document.getElementById("tutor-application-1")
+var tutorApplicationTwo = document.getElementById("tutor-application-2")
+var tutorApplicationThree = document.getElementById("tutor-application-3")
+
+//Core Properties needed for iOS
+var tutorEmail = document.getElementById("tutor-email")
+var tutorPhone = document.getElementById("tutor-phone")
+
+//Application values
+var tutorFirst = document.getElementById("tutor-first")
+var tutorLast = document.getElementById("tutor-last")
+var tutorPassword = document.getElementById('tutor-password')
+var tutorSchool = document.getElementById("tutor-school")
+var tutorHowHeard = document.getElementById("tutor-how-heard")
+
+//Application -> applicationFields
+var tutorMajor = document.getElementById("tutor-major")
+var tutorCourses = document.getElementById("tutor-courses")
+var tutorQualities = document.getElementById("tutor-qualities")
+var tutorYear = document.getElementById("tutor-year")
+
+//Navigation Buttons
+var tutorBecomeNext = document.getElementById("tutor-become-next")
+var tutorAboutBack = document.getElementById("tutor-about-back")
+var tutorAboutNext = document.getElementById("tutor-about-next")
+var tutorAlmostBack = document.getElementById("tutor-almost-back")
+var tutorAppSubmit = document.getElementById("tutor-app-submit")
+
+//Navigation Button Functions
+tutorBecomeNext.addEventListener('click', function(e) {
+	if ( tutorEmail.value == "" ) {
+		alert('Please enter your email')
+	} else if ( tutorFirst.value == " ) {
+		 alert('Please enter your first name')  
+	} else if ( tutorLast.value == " ) {
+		 alert('Please enter your last name')  
+	} else if ( tutorPassword.value == " ) {
+		 alert('Please enter password')  
+	} else if ( tutorSchool.value == " ) {
+		 alert('Please select what school you go to')  
+	} else if ( tutorHowHeard.value == " ) {
+		 alert('Please enter how you heard of TutorTree')  
+	} else {
+		tutorApplicationOne.style.display = "none"
+		tutorApplicationTwo.style.display = "flex"
+	}
+})
+
+tutorAboutBack.addEventListener('click', function(e) {
+	tutorApplicationTwo.style.display = 'none'
+	tutorApplicationOne.style.display = 'flex'
+})
+
+tutorAboutNext.addEventListener('click', function(e) {
+	if ( tutorMajor.value == "" ) {
+		alert('Please enter your major')
+	} else if ( tutorCourses.value == " ) {
+		 alert('Please enter the courses you would like to tutor')  
+	} else if ( tutorQualities.value == " ) {
+		 alert('Please describe your strengths as a tutor')  
+	} else if ( tutorYear.value == " ) {
+		 alert('Please select what year you are')  
+	} else {
+		tutorApplicationTwo.style.display = "none"
+		tutorApplicationThree.style.display = "flex"
+	}
+})
+
+tutorAlmostBack.addEventListener('click', function(e) {
+	tutorApplicationTwo.style.display = "flex"
+	tutorApplicationThree.style.display = "none"
+})
+
+
 
 var userDB = firebase.firestore();
-var nextButton = document.getElementById("app-submit")
 
 nextButton.setAttribute("onClick", "checkApplicantStatus()")
 
