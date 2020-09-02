@@ -76,6 +76,7 @@ tutorAlmostBack.addEventListener('click', function(e) {
 	tutorApplicationThree.style.display = "none"
 })
 
+tutorAppSubmit.setAttribute('onClick', 'checkApplicantStatus()')
 
 var userDB = firebase.firestore();
 
