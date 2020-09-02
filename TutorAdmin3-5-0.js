@@ -846,12 +846,12 @@ function getApplicationPoints(applicantsID) {
 	var userDB = firebase.firestore()
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
 		var yearPoints = doc.data().applicationPoints.yearPoints
-		var experiencePoints = doc.data().applicationPoints.majorPoints
+		var majorPoints = doc.data().applicationPoints.majorPoints
 		var qualitiesPoints = doc.data().applicationPoints.qualitiesPoints
 		
 		var assessmentPoints = parseInt(yearPoints) + 
-		    parseInt(experiencePoints) + 
-		    parseInt(qualitiesPoints) + 
+		    parseInt(majorPoints) + 
+		    parseInt(qualitiesPoints)  
 		userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
