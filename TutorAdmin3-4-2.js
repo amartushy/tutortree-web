@@ -513,40 +513,39 @@ function showApplication(applicantsID, name) {
 		document.getElementById('pia-year').innerHTML = doc.data().applicationFields.year		
 	})
 		
-		//Assign points fields
-		var yearPoints = document.getElementById('year-points')
-		yearPoints.value = doc.data().assessmentScores.yearPoints
-		yearPoints.onblur = async function() {
-			await userDB.collection("userTest")
-				.doc(applicantsID)
-				.collection("tutorApplication")
-				.doc("application")
-				.update( { "applicationPoints.yearPoints" : yearPoints.value } )
-			getApplicationPoints(applicantsID)
-		}
+	//Assign points fields
+	var yearPoints = document.getElementById('year-points')
+	yearPoints.value = doc.data().assessmentScores.yearPoints
+	yearPoints.onblur = async function() {
+		await userDB.collection("userTest")
+			.doc(applicantsID)
+			.collection("tutorApplication")
+			.doc("application")
+			.update( { "applicationPoints.yearPoints" : yearPoints.value } )
+		getApplicationPoints(applicantsID)
+	}
 		
-		var qualitiesPoints = document.getElementById('qualities-points')
-		qualitiesPoints.value = doc.data().assessmentScores.qualitiesPoints
-		qualitiesPoints.onblur = async function() {
-			await userDB.collection("userTest")
-				.doc(applicantsID)
-				.collection("tutorApplication")
-				.doc("application")
-				.update( { "applicationPoints.qualitiesPoints" : qualitiesPoints.value } )
-			getApplicationPoints(applicantsID)
-		}
-		
-		var majorPoints = document.getElementById('major-points')
-		majorPoints.value = doc.data().assessmentScores.majorPoints
-		majorPoints.onblur = async function() {
-			await userDB.collection("userTest")
-				.doc(applicantsID)
-				.collection("tutorApplication")
-				.doc("application")
-				.update( { "applicationPoints.majorPoints" : majorPoints.value } )
-			getApplicationPoints(applicantsID)
-		}		
-	})
+	var qualitiesPoints = document.getElementById('qualities-points')
+	qualitiesPoints.value = doc.data().assessmentScores.qualitiesPoints
+	qualitiesPoints.onblur = async function() {
+		await userDB.collection("userTest")
+			.doc(applicantsID)
+			.collection("tutorApplication")
+			.doc("application")
+			.update( { "applicationPoints.qualitiesPoints" : qualitiesPoints.value } )
+		getApplicationPoints(applicantsID)
+	}
+
+	var majorPoints = document.getElementById('major-points')
+	majorPoints.value = doc.data().assessmentScores.majorPoints
+	majorPoints.onblur = async function() {
+		await userDB.collection("userTest")
+			.doc(applicantsID)
+			.collection("tutorApplication")
+			.doc("application")
+			.update( { "applicationPoints.majorPoints" : majorPoints.value } )
+		getApplicationPoints(applicantsID)
+	}		
 }
 
 /*
