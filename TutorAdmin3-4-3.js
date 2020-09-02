@@ -158,7 +158,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		assessmentCompleted.setAttribute('class', 'admin-complete')
 		assessmentCompleted.innerHTML = 'check-circle'
 		preInterviewBlock.appendChild(assessmentCompleted)
-		preInterviewBlock.setAttribute('onClick', 'showAssessment("' + applicantID + '", "' + name +'")')
+		preInterviewBlock.setAttribute('onClick', 'showApplication("' + applicantID + '", "' + name +'")')
 	} else {
 		var assessmentIncomplete = document.createElement('div')
 		assessmentIncomplete.setAttribute('class', 'admin-incomplete')
