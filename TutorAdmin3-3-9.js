@@ -492,6 +492,64 @@ function deleteTutor(applicantsID, applicantsEmail) {
 			  'isTutor' : false})			  	
 }																
 
+
+function showApplication(applicantsID, name) {
+	document.getElementById("application-wrapper").style.display = 'flex'
+	
+	var tutorPIANameHeader = document.getElementById('pia-tutor-prospect-name')
+	tutorPIANameHeader.innerHTML = name
+	
+	var userDB = firebase.firestore()
+	userDB.collection("userTest").doc(applicantsID).get().then(function(doc) {
+		document.getElementById('pia-email').innerHTML = doc.data().email
+	})
+	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
+		document.getElementById('pia-school').innerHTML = doc.data().school
+		document.getElementById('pia-first').innerHTML = doc.data().firstName
+		document.getElementById('pia-last').innerHTML = doc.data().lastName
+		document.getElementById('pia-major').innerHTML = doc.data().applicationFields.major
+		document.getElementById('pia-courses').innerHTML = doc.data().applicationFields.courses
+		document.getElementById('pia-qualities').innerHTML = doc.data().applicationFields.qualities
+		document.getElementById('pia-year').innerHTML = doc.data().applicationFields.year		
+	})
+		
+		//Assign points fields
+		var yearPoints = document.getElementById('year-points')
+		yearPoints.value = doc.data().assessmentScores.yearPoints
+		yearPoints.onblur = async function() {
+			await userDB.collection("userTest")
+				.doc(applicantsID)
+				.collection("tutorApplication")
+				.doc("assessment")
+				.update( { "applicationScores.yearPoints" : yearPoints.value } )
+			getAssessmentPoints(applicantsID)
+		}
+		
+		var qualitiesPoints = document.getElementById('qualities-points')
+		qualitiesPoints.value = doc.data().assessmentScores.qualitiesPoints
+		qualitiesPoints.onblur = async function() {
+			await userDB.collection("userTest")
+				.doc(applicantsID)
+				.collection("tutorApplication")
+				.doc("assessment")
+				.update( { "applicationScores.qualitiesPoints" : qualitiesPoints.value } )
+			getAssessmentPoints(applicantsID)
+		}
+		
+		var majorPoints = document.getElementById('major-points')
+		majorPoints.value = doc.data().assessmentScores.majorPoints
+		majorPoints.onblur = async function() {
+			await userDB.collection("userTest")
+				.doc(applicantsID)
+				.collection("tutorApplication")
+				.doc("assessment")
+				.update( { "applicationScores.majorPoints" : majorPoints.value } )
+			getAssessmentPoints(applicantsID)
+		}		
+	})
+}
+
+/*
 function showAssessment(applicantsID, name) {
 	document.getElementById("assessment-wrapper").style.display = 'flex'
 	
@@ -571,7 +629,7 @@ function showAssessment(applicantsID, name) {
 			getAssessmentPoints(applicantsID)
 		}
 	})
-}
+}*/
 
 function showInterview(applicantsID, name) {
 	document.getElementById("interview-wrapper").style.display = 'flex'
