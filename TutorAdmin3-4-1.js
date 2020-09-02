@@ -504,9 +504,9 @@ function showApplication(applicantsID, name) {
 		document.getElementById('pia-email').innerHTML = doc.data().email
 	})
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
-		document.getElementById('pia-school').innerHTML = doc.data().school
-		document.getElementById('pia-first').innerHTML = doc.data().firstName
-		document.getElementById('pia-last').innerHTML = doc.data().lastName
+		document.getElementById('pia-school').innerHTML = doc.data().applicationFields.school
+		document.getElementById('pia-first').innerHTML = doc.data().applicationFields.firstName
+		document.getElementById('pia-last').innerHTML = doc.data().applicationFields.lastName
 		document.getElementById('pia-major').innerHTML = doc.data().applicationFields.major
 		document.getElementById('pia-courses').innerHTML = doc.data().applicationFields.courses
 		document.getElementById('pia-qualities').innerHTML = doc.data().applicationFields.qualities
@@ -520,9 +520,9 @@ function showApplication(applicantsID, name) {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
-				.doc("assessment")
-				.update( { "applicationScores.yearPoints" : yearPoints.value } )
-			getAssessmentPoints(applicantsID)
+				.doc("application")
+				.update( { "applicationPoints.yearPoints" : yearPoints.value } )
+			getApplicationPoints(applicantsID)
 		}
 		
 		var qualitiesPoints = document.getElementById('qualities-points')
@@ -531,9 +531,9 @@ function showApplication(applicantsID, name) {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
-				.doc("assessment")
-				.update( { "applicationScores.qualitiesPoints" : qualitiesPoints.value } )
-			getAssessmentPoints(applicantsID)
+				.doc("application")
+				.update( { "applicationPoints.qualitiesPoints" : qualitiesPoints.value } )
+			getApplicationPoints(applicantsID)
 		}
 		
 		var majorPoints = document.getElementById('major-points')
@@ -542,9 +542,9 @@ function showApplication(applicantsID, name) {
 			await userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
-				.doc("assessment")
-				.update( { "applicationScores.majorPoints" : majorPoints.value } )
-			getAssessmentPoints(applicantsID)
+				.doc("application")
+				.update( { "applicationPoints.majorPoints" : majorPoints.value } )
+			getApplicationPoints(applicantsID)
 		}		
 	})
 }
@@ -838,8 +838,26 @@ function showInterview(applicantsID, name) {
 
 	})
 }
+function getApplicationPoints(applicantsID) {
+	var userDB = firebase.firestore()
+	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
+		var yearPoints = doc.data().applicationPoints.yearPoints
+		var experiencePoints = doc.data().applicationPoints.majorPoints
+		var qualitiesPoints = doc.data().applicationPoints.qualitiesPoints
+		
+		var assessmentPoints = parseInt(yearPoints) + 
+		    parseInt(experiencePoints) + 
+		    parseInt(qualitiesPoints) + 
+		userDB.collection("userTest")
+				.doc(applicantsID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "assessmentScore" : assessmentPoints } )
+	})
+}
 
-function getAssessmentPoints(applicantsID) {
+
+/*function getAssessmentPoints(applicantsID) {
 	var userDB = firebase.firestore()
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("assessment").get().then(function(doc) {
 		var yearPoints = doc.data().assessmentScores.yearPoints
@@ -859,7 +877,7 @@ function getAssessmentPoints(applicantsID) {
 				.doc("application")
 				.update( { "assessmentScore" : assessmentPoints } )
 	})
-}
+}*/
 
 function getInterviewPoints(applicantsID) {
 	var userDB = firebase.firestore()
