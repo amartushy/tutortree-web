@@ -198,7 +198,7 @@ function mpIsFirstApprovedTutorAppResolution(email){
 	
 	mixpanel.people.set({
 		"Tutor Application Resolution" : "Extended Offer",
-		"Tutor Application Stage": "Offered",		
+		"Tutor Application Stage": "Extended Offer",		
 		"Reached Resolution Stage": true,
 		"Resolution Stage Date": new Date().toISOString()
 	});
@@ -217,7 +217,7 @@ function mpIsWaitListedTutorAppResolution(email){
 	
 	mixpanel.people.set({
 		"Tutor Application Resolution" : "Wait Listed",
-		"Tutor Application Stage": "Offered",		
+		"Tutor Application Stage": "Wait Listed",		
 		"Reached Resolution Stage": true,
 		"Resolution Stage Date": new Date().toISOString()
 	});
@@ -236,7 +236,7 @@ function mpIsRejectedTutorAppResolution(email){
 	
 	mixpanel.people.set({
 		"Tutor Application Resolution" : "Rejected",
-		"Tutor Application Stage": "Offered",		
+		"Tutor Application Stage": "Rejected",		
 		"Reached Resolution Stage": true,
 		"Resolution Stage Date": new Date().toISOString()
 	});
