@@ -77,13 +77,12 @@ tutorAlmostBack.addEventListener('click', function(e) {
 })
 
 
-
 var userDB = firebase.firestore();
 
 function checkApplicantStatus() {
   //Check if they're a current user
   try {
-      firebase.auth().signInEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
+      firebase.auth().signInEmailAndPassword(tutorEmail.value, tutorPassword.value).then(function(data) {
           firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
                  //Create new tutor applicant
@@ -94,7 +93,7 @@ function checkApplicantStatus() {
       })
     
   } catch {
-      firebase.auth().createUserWithEmailAndPassword(emailField.value, passwordField.value).then(function(data) {
+      firebase.auth().createUserWithEmailAndPassword(tutorEmail.value, tutorPassword.value).then(function(data) {
           //Create User and Tutor Applicant
           var tutorApplicantID = data.user.uid
           createNewUserTutorApplicant(tutorApplicantID)
@@ -110,15 +109,15 @@ function checkApplicantStatus() {
 }
 function createFirestoreTutorApplicant(tutorApplicantID) {
 	
-      var cleanSchoolName = cleanSchoolName(schoolField.value)
+      var cleanSchoolName = cleanSchoolName(tutorSchool.value)
       
       var newTutorDict = {
-              "email" : emailField.value,
-              "firstName" : firstNameField.value,
-              "lastName" : lastNameField.value,
-              "phoneNumber" : phoneNumberField.value,
+              "email" : tutorEmail.value,
+              "firstName" : tutorFirst.value,
+              "lastName" : tutorLast.value,
+              "phoneNumber" : tutorPhone.value,
               "school" : cleanSchoolName,
-              "howHeard" : howHeardField.value,
+              "howHeard" : tutorHowHeard.value,
               "timeSubmitted" : new Date() / 1000,
               "tutorApplicant" : true,
               "application" : {
@@ -183,9 +182,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
                 }
 	
 	var applicationData = {
-                    "email" : emailField.value,
-                    "firstName" : firstNameField.value,
-                    "lastName" : lastNameField.value,
+		    "email" : tutorEmail.value
                     "school" : cleanSchoolName,
                     "timeSubmitted" : new Date() / 1000,
                     "interviewScore" : 0,
@@ -197,8 +194,22 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
                     "facultyFile" : "No file",
                     "uploadedTranscript" : false,
                     "transcriptFile" : "No file",
-                    "howHeard" : howHeardField.value,
-		                "meghanNotes" : "No notes yet"
+		    "meghanNotes" : "No notes yet",
+			"applicationFields" : {
+				"courses" : tutorCourses.value,
+				"firstName" : tutorFirst.value,
+				"lastName" : tutorLast.value,
+				"howHeard" : tutorHowHeard.value,
+				"major" : tutorMajor.value,
+				"qualities" : tutorQualities.value,
+				"schoolName" : tutorSchool.value,
+				"year" : tutorYear.value
+			},
+			"applicationPoints" : {
+				"majorPoints" : 0,
+				"qualitiesPoints" : 0,
+				"yearPoints" : 0
+			}
         }
      mpTutorAccountCreated( newTutorDict )
         
@@ -212,15 +223,15 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
 }
 function createNewUserTutorApplicant(tutorApplicantID) {
 
-      var cleanSchoolName = cleanSchoolName(schoolField.value)	
+      var cleanSchoolName = cleanSchoolName(tutorSchool.value)	
 	
         var newTutorDict = {
-              "email" : emailField.value,
-              "firstName" : firstNameField.value,
-              "lastName" : lastNameField.value,
-              "phoneNumber" : phoneNumberField.value,
+              "email" : tutorEmail.value,
+              "firstName" : tutorFirst.value,
+              "lastName" : tutorLast.value,
+              "phoneNumber" : tutorPhone.value,
               "school" : cleanSchoolName,
-              "howHeard" : howHeardField.value,
+              "howHeard" : tutorHowHeard.value,
               "timeSubmitted" : new Date() / 1000,
               "tutorApplicant" : true,
               "application" : {
@@ -284,9 +295,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                     }
                 }
         var applicationData = {
-                    "email" : emailField.value,
-                    "firstName" : firstNameField.value,
-                    "lastName" : lastNameField.value,
+                    "email" : tutorEmail.value,
                     "school" : cleanSchoolName,
                     "timeSubmitted" : new Date() / 1000,
                     "interviewScore" : 0,
@@ -298,8 +307,22 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                     "facultyFile" : "No file",
                     "uploadedTranscript" : false,
                     "transcriptFile" : "No file",
-                    "howHeard" : howHeardField.value,
-		                "meghanNotes" : "No notes yet"
+		    "meghanNotes" : "No notes yet",
+			"applicationFields" : {
+				"courses" : tutorCourses.value,
+				"firstName" : tutorFirst.value,
+				"lastName" : tutorLast.value,
+				"howHeard" : tutorHowHeard.value,
+				"major" : tutorMajor.value,
+				"qualities" : tutorQualities.value,
+				"schoolName" : tutorSchool.value,
+				"year" : tutorYear.value
+			},
+			"applicationPoints" : {
+				"majorPoints" : 0,
+				"qualitiesPoints" : 0,
+				"yearPoints" : 0
+			}
         }
 
         var appUserInfo = {
@@ -314,7 +337,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                         "Sunday" : 0
                     },
                     "bio" : "Please enter a short description of yourself",
-                    "email" : emailField.value,
+                    "email" : tutorEmail.value,
                     "isAdmin" : false,
                     "isEmailOn" : false,
                     "isPushOn" : false,
@@ -322,8 +345,8 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                     "isTutor" : false,
                     "major" : "No major entered",
                     "maxHPW" : 20,
-                    "name" : firstNameField.value + " " + lastNameField.value,
-                    "phoneNumber" : phoneNumberField.value,
+                    "name" : tutorFirst.value + " " + tutorLast.value,
+                    "phoneNumber" : tutorPhone.value,
                     "pricePHH" : 10,
                     "profileImage" : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/images%2FTTLogo-Mint.png?alt=media&token=c8d6559e-7fa8-4fed-81cc-1f09d5da56a5",
                     "pushToken" : "",
@@ -332,8 +355,6 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                 }
         
           mpTutorAccountCreated( newTutorDict )
-
-          
   
         // Update user collection with tutor info
           userDB.collection("userTest").doc(tutorApplicantID).set(appUserInfo)
