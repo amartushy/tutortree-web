@@ -53,7 +53,7 @@ function mpTutorAccountCreated(user){
         	"Submitted Transcript": false,
         	"Submitted Faculty Rec": false,
 		"Tutor Reached Offer Stage": false,
-		"Tutor Application Stage": "Applied",
+		"Tutor Application Stage": "Account Created",
 		"Tutor Application Resolution": "Not yet offered",
         	"Tutor Accepted Position": false,
 		"Tutor Application Date": new Date().toISOString()
@@ -87,7 +87,7 @@ function mpPreInterviewSubmission(fieldValue){
 		"Pre Invertview Assessment Completed": true,
 		"Pre Invertview Assessment Completed Date": new Date().toISOString(),
 		"Mobile OS": fieldValue.mobileOS,
-		"Tutor Application Stage": "Submitted PIA"		
+		"Tutor Application Stage": "PIA Submitted"		
 	});
 
 }
@@ -101,7 +101,7 @@ function mpRequestVirtualInterview(){
 
 	mixpanel.people.set({
 		"Tutor Interview Requested": true,
-		"Tutor Application Stage": "Requested Interview",		
+		"Tutor Application Stage": "Interview Requested",		
 		"Tutor Interview Requested Date": new Date().toISOString()
 	});
 
@@ -116,7 +116,7 @@ function mpTranscriptUpload(){
 
 	mixpanel.people.set({
 		"Submitted Transcript": true,
-		"Tutor Application Stage": "Submitted Transcript",		
+		"Tutor Application Stage": "Transcripts Submitted",		
 		"Submitted Transcript Date": new Date().toISOString()
 	});
 
@@ -133,7 +133,7 @@ function mpFacultyRecUpload(){
 
 	mixpanel.people.set({
 		"Submitted Faculty Rec": true,
-		"Tutor Application Stage": "Submitted Faculty Rec",		
+		"Tutor Application Stage": "Faculty Rec Submitted",		
 		"Submitted Faculty Rec Date": new Date().toISOString()
 	});
 
@@ -148,7 +148,7 @@ function mpFacultyRecUploadByTutorCoordinator(email){
 
 	mixpanel.people.set({
 		"Submitted Faculty Rec": true,
-		"Tutor Application Stage": "Submitted Faculty Rec",		
+		"Tutor Application Stage": "Faculty Rec Submitted",		
 		"Submitted Faculty Rec Date": new Date().toISOString()
 	});
 
@@ -163,7 +163,7 @@ function mpInterviewCompleted(applicantsID, email){
 	
 	mixpanel.people.set({
 		"Tutor Interview Completed": true,
-		"Tutor Application Stage": "Completed Interview",		
+		"Tutor Application Stage": "Interview Completed",		
 		"Tutor Interview Completed Date": new Date().toISOString()
 	});	
 
@@ -198,7 +198,7 @@ function mpIsFirstApprovedTutorAppResolution(email){
 	
 	mixpanel.people.set({
 		"Tutor Application Resolution" : "Extended Offer",
-		"Tutor Application Stage": "Offered",		
+		"Tutor Application Stage": "Extended Offer",		
 		"Reached Resolution Stage": true,
 		"Resolution Stage Date": new Date().toISOString()
 	});
