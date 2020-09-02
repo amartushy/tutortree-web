@@ -78,9 +78,6 @@ tutorAlmostBack.addEventListener('click', function(e) {
 
 var userDB = firebase.firestore();
 
-nextButton.setAttribute("onClick", "checkApplicantStatus()")
-
-
 function checkApplicantStatus() {
   //Check if they're a current user
   try {
