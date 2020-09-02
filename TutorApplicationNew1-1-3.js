@@ -33,15 +33,15 @@ var tutorAppSubmit = document.getElementById("tutor-app-submit")
 tutorBecomeNext.addEventListener('click', function(e) {
 	if ( tutorEmail.value == "" ) {
 		alert('Please enter your email')
-	} else if ( tutorFirst.value == " ) {
+	} else if ( tutorFirst.value == "" ) {
 		 alert('Please enter your first name')  
-	} else if ( tutorLast.value == " ) {
+	} else if ( tutorLast.value == "" ) {
 		 alert('Please enter your last name')  
-	} else if ( tutorPassword.value == " ) {
+	} else if ( tutorPassword.value == "" ) {
 		 alert('Please enter password')  
-	} else if ( tutorSchool.value == " ) {
+	} else if ( tutorSchool.value == "" ) {
 		 alert('Please select what school you go to')  
-	} else if ( tutorHowHeard.value == " ) {
+	} else if ( tutorHowHeard.value == "" ) {
 		 alert('Please enter how you heard of TutorTree')  
 	} else {
 		tutorApplicationOne.style.display = "none"
@@ -57,11 +57,11 @@ tutorAboutBack.addEventListener('click', function(e) {
 tutorAboutNext.addEventListener('click', function(e) {
 	if ( tutorMajor.value == "" ) {
 		alert('Please enter your major')
-	} else if ( tutorCourses.value == " ) {
+	} else if ( tutorCourses.value == "" ) {
 		 alert('Please enter the courses you would like to tutor')  
-	} else if ( tutorQualities.value == " ) {
+	} else if ( tutorQualities.value == "" ) {
 		 alert('Please describe your strengths as a tutor')  
-	} else if ( tutorYear.value == " ) {
+	} else if ( tutorYear.value == "" ) {
 		 alert('Please select what year you are')  
 	} else {
 		tutorApplicationTwo.style.display = "none"
