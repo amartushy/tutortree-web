@@ -114,6 +114,8 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	var applicantBlock = document.createElement("div")
 	applicantBlock.setAttribute('class', 'applicant-block')
 	applicantBlock.setAttribute('id', timeApplied)
+	
+	var name = firstName + " " + lastName
 
 	//Name Block
 	var nameBlock = document.createElement('div')
@@ -512,8 +514,7 @@ function showApplication(applicantsID, name) {
 		document.getElementById('pia-courses').innerHTML = doc.data().applicationFields.courses
 		document.getElementById('pia-qualities').innerHTML = doc.data().applicationFields.qualities
 		document.getElementById('pia-year').innerHTML = doc.data().applicationFields.year		
-	})
-		
+
 	//Assign points fields
 	var yearPoints = document.getElementById('year-points')
 	yearPoints.value = doc.data().assessmentScores.yearPoints
@@ -546,7 +547,10 @@ function showApplication(applicantsID, name) {
 			.doc("application")
 			.update( { "applicationPoints.majorPoints" : majorPoints.value } )
 		getApplicationPoints(applicantsID)
-	}		
+	}				
+	})
+		
+
 }
 
 /*
