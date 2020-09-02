@@ -494,7 +494,7 @@ function deleteTutor(applicantsID, applicantsEmail) {
 
 
 function showApplication(applicantsID, name) {
-	document.getElementById("application-wrapper").style.display = 'flex'
+	document.getElementById("assessment-wrapper").style.display = 'flex'
 	
 	var tutorPIANameHeader = document.getElementById('pia-tutor-prospect-name')
 	tutorPIANameHeader.innerHTML = name
