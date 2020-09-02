@@ -198,7 +198,7 @@ function mpIsFirstApprovedTutorAppResolution(email){
 	
 	mixpanel.people.set({
 		"Tutor Application Resolution" : "Extended Offer",
-		"Tutor Application Stage": "Extended Offer",		
+		"Tutor Application Stage": "Offered",		
 		"Reached Resolution Stage": true,
 		"Resolution Stage Date": new Date().toISOString()
 	});
