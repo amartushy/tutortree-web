@@ -15,7 +15,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 	userDB.collection("userTest").doc(userID).collection("tutorApplication").doc("application").onSnapshot(function(doc) {
     	//Change header to include name
-	document.getElementById("onboarding-header").innerHTML = "Welcome back, "+doc.get("firstName")	
+	document.getElementById("onboarding-header").innerHTML = "Welcome back, "+doc.get("applicationFields.firstName")	
 		
 	//Assessment completion view
 	if (doc.get("didSubmitPreInterview") == false) {
@@ -258,7 +258,7 @@ function scheduleInterview(userID) {
 		if ( doc.data().didRequestInterview ) {
 			alert("Your tutor coordinator has been notified. Please check your email for a time to meet.")
 		} else {
-			if ( doc.data().didSubmitPreInterview ) {
+			//if ( doc.data().didSubmitPreInterview ) {
 				if (isScheduleShowing) {
 					document.getElementById("request-interview-form")
 						.style.display = "none"
@@ -268,9 +268,9 @@ function scheduleInterview(userID) {
 						.style.display = "block"
 					isScheduleShowing = true	
 				}
-			} else {
-				alert("Please complete your Pre-Interview Assessment before scheduling an interview")
-			}
+			//} else {
+				//alert("Please complete your Pre-Interview Assessment before scheduling an interview")
+			//}
 		}
 	})
 	document.getElementById("submit-interview-request").addEventListener('click', function() {
