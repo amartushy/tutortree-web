@@ -183,7 +183,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
                 }
 	
 	var applicationData = {
-		    "email" : tutorEmail.value
+		    "email" : tutorEmail.value,
                     "school" : cleanSchoolName,
                     "timeSubmitted" : new Date() / 1000,
                     "interviewScore" : 0,
