@@ -11,17 +11,42 @@
 			user.forEach(function(doc) {
 				console.log(doc.id)
 				userDB.collection('userTest').doc(doc.id).collection('tutorApplication').doc('assessment').get().then(function(fields) {
-					console.log(fields.data().assessmentFields.whyTutor)
-					console.log(fields.data().assessmentFields.groups)
-					console.log(fields.data().assessmentPoints.whyTutorPoints)
-					console.log(fields.data().assessmentPoints.activitiesPoints)
+					
+					try {
+						console.log(fields.data())
+						var whyTutor = ""
+						var groups = ""
+						var whyTutorPoints = 0
+						var groupsPoints = 0
+						
+						if (fields.data().assessmentFields.whyTutor != null) {
+							whyTutor = fields.data().assessmentFields.whyTutor
+						}
+						if (fields.data().assessmentFields.groups != null ) {
+							groups = fields.data().assessmentFields.groups
+						}
+						if (fields.data().assessmentScores.whyTutorPoints != null) {
+							whyTutorPoints = fields.data().assessmentScores.whyTutorPoints
+						}
+						if (fields.data().assessmentScores.activitiesPoints != null) {
+							groupsPoints = fields.data().assessmentScores.activitiesPoints
+						}
+						
+						var applicationFields = { "whytutor" : whyTutor,
+									 "groups" :  groups }
+						var applicationPoints = { "whyTutorPoints" : whyTutorPoints,
+									 "groupsPoints" : groupsPoints
+						console.log( applicationFields )
+						console.log(applicationPoints)
+						
+					} catch {
+						
+						
+					}
 					
 				})
-				
-				
 			})
 		})
-		
 	}
 	
 	
