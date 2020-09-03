@@ -512,7 +512,8 @@ function showApplication(applicantsID, name) {
 		document.getElementById('pia-last').innerHTML = doc.data().applicationFields.lastName
 		document.getElementById('pia-major').innerHTML = doc.data().applicationFields.major
 		document.getElementById('pia-courses').innerHTML = doc.data().applicationFields.courses
-		document.getElementById('pia-qualities').innerHTML = doc.data().applicationFields.qualities
+		document.getElementById('pia-whyTutor').innerHTML = doc.data().applicationFields.whyTutor
+		document.getElementById('pia-groups').innerHTML = doc.data().applicationFields.groups
 		document.getElementById('pia-year').innerHTML = doc.data().applicationFields.year		
 
 	//Assign points fields
@@ -527,14 +528,25 @@ function showApplication(applicantsID, name) {
 		getApplicationPoints(applicantsID)
 	}
 		
-	var qualitiesPoints = document.getElementById('qualities-points')
-	qualitiesPoints.value = doc.data().applicationPoints.qualitiesPoints
-	qualitiesPoints.onblur = async function() {
+	var whyTutorPoints = document.getElementById('whyTutor-points')
+	whyTutorPoints.value = doc.data().applicationPoints.whyTutorPoints
+	whyTutorPoints.onblur = async function() {
 		await userDB.collection("userTest")
 			.doc(applicantsID)
 			.collection("tutorApplication")
 			.doc("application")
-			.update( { "applicationPoints.qualitiesPoints" : qualitiesPoints.value } )
+			.update( { "applicationPoints.whyTutorPoints" : whyTutorPoints.value } )
+		getApplicationPoints(applicantsID)
+	}
+		
+	var groupsPoints = document.getElementById('groups-points')
+	groupsPoints.value = doc.data().applicationPoints.groupsPoints
+	groupsPoints.onblur = async function() {
+		await userDB.collection("userTest")
+			.doc(applicantsID)
+			.collection("tutorApplication")
+			.doc("application")
+			.update( { "applicationPoints.groupsPoints" : groupsPoints.value } )
 		getApplicationPoints(applicantsID)
 	}
 
@@ -847,11 +859,13 @@ function getApplicationPoints(applicantsID) {
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
 		var yearPoints = doc.data().applicationPoints.yearPoints
 		var majorPoints = doc.data().applicationPoints.majorPoints
-		var qualitiesPoints = doc.data().applicationPoints.qualitiesPoints
+		var whyTutorPoints = doc.data().applicationPoints.whyTutorPoints
+		var groupsPoints = doc.data().applicationPoints.groupsPoints
 		
 		var assessmentPoints = parseInt(yearPoints) + 
 		    parseInt(majorPoints) + 
-		    parseInt(qualitiesPoints)  
+		    parseInt(whyTutorPoints) +
+		    parseInt(groupsPoints)
 		userDB.collection("userTest")
 				.doc(applicantsID)
 				.collection("tutorApplication")
