@@ -1,5 +1,28 @@
 
 	var userDB = firebase.firestore()
+	
+	var mergeApplication = document.getElementById('merge-application')
+	mergeApplication.setAttribute('onClick', 'updateApplicationMerge()')
+
+	function updateApplicationMerge() {
+		userDB.collection('userTest').where('tutorApplicationStatus', 'array-contains-any',['rejected', 'pending', 'accepted']).onSnapshot(function(user) {
+			user.forEach(function(doc) {
+				userDB.collection('userTest').doc(doc.id).collection('tutorApplication').doc('assessment').get().then(function(fields) {
+					console.log(fields.assessmentFields.whyTutor)
+					console.log(fields.assessmentFields.groups)
+					console.log(fields.assessmentPoints.whyTutorPoints)
+					console.log(fields.assessmentPoints.activitiesPoints)
+					
+				}
+				
+				
+			})
+		})
+		
+	}
+	
+	
+	
 	var mergeAmbassadors = document.getElementById('merge-ambassadors')
 	mergeAmbassadors.setAttribute('onClick', 'updateAmbassadors()')
 	
