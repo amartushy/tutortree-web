@@ -6,7 +6,7 @@
 
 	function updateApplicationMerge() {
 		console.log('I was clicked')
-		userDB.collection('userTest').where('tutorApplicantStatus', 'array-contains-any',['rejected', 'pending', 'accepted']).onSnapshot(function(user) {
+		userDB.collection('userTest').onSnapshot(function(user) {
 			
 			user.forEach(function(doc) {
 				console.log(doc.id)
