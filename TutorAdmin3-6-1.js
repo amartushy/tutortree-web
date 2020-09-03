@@ -378,7 +378,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 			.collection("tutorApplication")
 			.doc("application")
 			.update( { "meghanNotes" : notesField.value } )
-	}
+	})
 	noteContainer.appendChild(submitNotes)	
 	
 	notesField.onblur = function() {
