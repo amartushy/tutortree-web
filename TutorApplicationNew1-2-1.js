@@ -19,7 +19,8 @@ var tutorHowHeard = document.getElementById("tutor-how-heard")
 //Application -> applicationFields
 var tutorMajor = document.getElementById("tutor-major")
 var tutorCourses = document.getElementById("tutor-courses")
-var tutorQualities = document.getElementById("tutor-qualities")
+var tutorWhyTutor = document.getElementById("tutor-whyTutor")
+var tutorGroups = document.getElementById("tutor-groups")
 var tutorYear = document.getElementById("tutor-year")
 
 //Navigation Buttons
@@ -61,8 +62,10 @@ tutorAboutNext.addEventListener('click', function(e) {
 		alert('Please enter your major')
 	} else if ( tutorCourses.value == "" ) {
 		 alert('Please enter the courses you would like to tutor')  
-	} else if ( tutorQualities.value == "" ) {
-		 alert('Please describe your strengths as a tutor')  
+	} else if ( tutorWhyTutor.value == "" ) {
+		 alert("Please describe why you'd like to be a tutor")  
+	} else if ( tutorGroups.value == "" ) {
+		 alert("Please describe if you're in any campus groups")  
 	} else if ( tutorYear.value == "" ) {
 		 alert('Please select what year you are')  
 	} else {
@@ -202,13 +205,15 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
 				"lastName" : tutorLast.value,
 				"howHeard" : tutorHowHeard.value,
 				"major" : tutorMajor.value,
-				"qualities" : tutorQualities.value,
+				"whyTutor" : tutorWhyTutor.value,
+				"groups" : tutorGroups.value,
 				"schoolName" : tutorSchool.value,
 				"year" : tutorYear.value
 			},
 			"applicationPoints" : {
 				"majorPoints" : 0,
-				"qualitiesPoints" : 0,
+				"groupsPoints" : 0,
+				"whyTutorPoints" : 0,
 				"yearPoints" : 0
 			}
         }
@@ -315,13 +320,15 @@ function createNewUserTutorApplicant(tutorApplicantID) {
 				"lastName" : tutorLast.value,
 				"howHeard" : tutorHowHeard.value,
 				"major" : tutorMajor.value,
-				"qualities" : tutorQualities.value,
+				"groups" : tutorGroups.value,
+				"whyTutor" : tutorWhyTutor.value,
 				"schoolName" : tutorSchool.value,
 				"year" : tutorYear.value
 			},
 			"applicationPoints" : {
 				"majorPoints" : 0,
-				"qualitiesPoints" : 0,
+				"whyTutorPoints" : 0,
+				"groupsPoints" : 0,
 				"yearPoints" : 0
 			}
         }
