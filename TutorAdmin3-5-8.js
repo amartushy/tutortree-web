@@ -364,12 +364,10 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	noteContainer.appendChild(notesHeader)
 	
 	var notesField = document.createElement('input')
-	notesField.setAttribute('class', 'meghanNotes')
+	notesField.setAttribute('class', 'notes')
 	notesField.placeholder = meghanNotes
 	noteContainer.appendChild(notesField)
-	notesField.onfocus = function() {
-		console.log("calling")
-	}
+
 	notesField.onblur = function() {
 		console.log("updating notes")
 		userDB.collection("userTest")
