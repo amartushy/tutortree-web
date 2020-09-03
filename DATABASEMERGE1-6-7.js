@@ -35,7 +35,7 @@
 						var applicationFields = { "whytutor" : whyTutor,
 									 "groups" :  groups }
 						var applicationPoints = { "whyTutorPoints" : whyTutorPoints,
-									 "groupsPoints" : groupsPoints
+									 "groupsPoints" : groupsPoints }
 						console.log( applicationFields )
 						console.log(applicationPoints)
 						
