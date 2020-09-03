@@ -40,7 +40,7 @@
 									 	 "groupsPoints" : groupsPoints }
 									}
 						
-						userDB.collection("userTest").doc(doc.id).collection("tutorApplication").doc("application").set(applicationFields, {merge = true})
+						userDB.collection("userTest").doc(doc.id).collection("tutorApplication").doc("application").set(applicationFields, {merge : true})
 						
 					} catch {
 						
