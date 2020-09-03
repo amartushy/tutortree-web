@@ -5,8 +5,11 @@
 	mergeApplication.setAttribute('onClick', 'updateApplicationMerge()')
 
 	function updateApplicationMerge() {
+		console.log('I was clicked')
 		userDB.collection('userTest').where('tutorApplicantStatus', 'array-contains-any',['rejected', 'pending', 'accepted']).onSnapshot(function(user) {
+			
 			user.forEach(function(doc) {
+				console.log(doc.id)
 				userDB.collection('userTest').doc(doc.id).collection('tutorApplication').doc('assessment').get().then(function(fields) {
 					console.log(fields.assessmentFields.whyTutor)
 					console.log(fields.assessmentFields.groups)
