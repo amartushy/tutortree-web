@@ -32,12 +32,15 @@
 							groupsPoints = fields.data().assessmentScores.activitiesPoints
 						}
 						
-						var applicationFields = { "whytutor" : whyTutor,
-									 "groups" :  groups }
-						var applicationPoints = { "whyTutorPoints" : whyTutorPoints,
-									 "groupsPoints" : groupsPoints }
-						console.log( applicationFields )
-						console.log(applicationPoints)
+						var applicationFields = { "applicationFields" : {
+										"whytutor" : whyTutor,
+									 	"groups" :  groups },
+									 "applicationPoints" : {
+										 "whyTutorPoints" : whyTutorPoints,
+									 	 "groupsPoints" : groupsPoints }
+									}
+						
+						userDB.collection("userTest").doc(doc.id).collection("tutorApplication").doc("application").set(applicationFields, {merge = true})
 						
 					} catch {
 						
@@ -126,7 +129,7 @@
 				}
 				
 				userDB.collection("userTest").doc(doc.id).set(appUserInfo, { merge: true })
-				userDB.collection("userTest").doc(doc.id).collection("ambassadorApplication").doc("application").set(ambassadorApplication, { merge: true })
+				userDB.collection("userTest").doc(doc.id).collection("ambassadorApplication").doc("application")
 
 			})
 		})
