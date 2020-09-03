@@ -365,7 +365,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	
 	var notesField = document.createElement('input')
 	notesField.setAttribute('class', 'notes')
-	notesField.value = meghanNotes
+	notesField.placeholder = meghanNotes
 	noteContainer.appendChild(notesField)
 	
 	notesField.onblur = function() {
