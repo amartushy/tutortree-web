@@ -11,10 +11,10 @@
 			user.forEach(function(doc) {
 				console.log(doc.id)
 				userDB.collection('userTest').doc(doc.id).collection('tutorApplication').doc('assessment').get().then(function(fields) {
-					console.log(fields.assessmentFields.whyTutor)
-					console.log(fields.assessmentFields.groups)
-					console.log(fields.assessmentPoints.whyTutorPoints)
-					console.log(fields.assessmentPoints.activitiesPoints)
+					console.log(fields.data().assessmentFields.whyTutor)
+					console.log(fields.data().assessmentFields.groups)
+					console.log(fields.data().assessmentPoints.whyTutorPoints)
+					console.log(fields.data().assessmentPoints.activitiesPoints)
 					
 				})
 				
