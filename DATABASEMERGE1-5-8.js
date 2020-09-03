@@ -13,7 +13,7 @@
 					console.log(fields.assessmentPoints.whyTutorPoints)
 					console.log(fields.assessmentPoints.activitiesPoints)
 					
-				}
+				})
 				
 				
 			})
