@@ -369,6 +369,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	noteContainer.appendChild(notesField)
 	
 	notesField.onblur = function() {
+		console.log("updating notes")
 		userDB.collection("userTest")
 			.doc(applicantID)
 			.collection("tutorApplication")
