@@ -366,20 +366,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 	var notesField = document.createElement('input')
 	notesField.setAttribute('class', 'notes')
 	notesField.placeholder = meghanNotes
-	noteContainer.appendChild(notesField)
-	
-	var submitNotes = document.createElement('div')
-	submitNotes.innerHTML = "submit notes"
-	submitNotes.setAttribute('class', 'submit-notes')
-	submitNotes.addEventListener('click', function(e) {
-		console.log("updating notes")
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("application")
-			.update( { "meghanNotes" : notesField.value } )
-	})
-	noteContainer.appendChild(submitNotes)	
+	noteContainer.appendChild(notesField)	
 	
 	notesField.onblur = function() {
 		console.log("updating notes")
