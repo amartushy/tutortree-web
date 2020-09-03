@@ -512,7 +512,7 @@ function showApplication(applicantsID, name) {
 		document.getElementById('pia-last').innerHTML = doc.data().applicationFields.lastName
 		document.getElementById('pia-major').innerHTML = doc.data().applicationFields.major
 		document.getElementById('pia-courses').innerHTML = doc.data().applicationFields.courses
-		document.getElementById('pia-whyTutor').innerHTML = doc.data().applicationFields.whyTutor
+		document.getElementById('pia-whyTutor').innerHTML = doc.data().applicationFields.whytutor
 		document.getElementById('pia-groups').innerHTML = doc.data().applicationFields.groups
 		document.getElementById('pia-year').innerHTML = doc.data().applicationFields.year		
 
