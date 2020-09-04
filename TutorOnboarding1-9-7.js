@@ -13,6 +13,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 	var userID = user.uid
 	console.log("user is signed in with uid: " + userID)
 
+	userDB.collection("userTest").doc(userID).get().then(function(doc) {
+		tutorApplicantStatus = doc.data().tutorApplicantStatus
+
+		document.getElementById("tutor-hiring-status").innerHTML = tutorApplicantStatus
+
+	})
+
 	userDB.collection("userTest").doc(userID).collection("tutorApplication").doc("application").onSnapshot(function(doc) {
     	//Change header to include name
 	document.getElementById("onboarding-header").innerHTML = "Welcome back, "+doc.get("applicationFields.firstName")	
