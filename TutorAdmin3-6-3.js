@@ -209,17 +209,18 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		interviewCompleted.setAttribute('class', 'admin-complete')
 		interviewCompleted.innerHTML = 'check-circle'
 		completedInterviewBlock.appendChild(interviewCompleted)
-		completedInterviewBlock.setAttribute('onClick', 'interviewCompleted("'+applicantID+'", "'+email+'", false)')		
+		//completedInterviewBlock.setAttribute('onClick', 'interviewCompleted("'+applicantID+'", "'+email+'", false)')		
 	} else {
 		var interviewIncomplete = document.createElement('div')
 		interviewIncomplete.setAttribute('class', 'admin-incomplete')
 		interviewIncomplete.innerHTML = 'circle'
 		completedInterviewBlock.appendChild(interviewIncomplete)
-		completedInterviewBlock.setAttribute('onClick', 'interviewCompleted("'+applicantID+'", "'+email+'", true)')		
+		//completedInterviewBlock.setAttribute('onClick', 'interviewCompleted("'+applicantID+'", "'+email+'", true)')		
 	}
 	
 
 	applicantBlock.appendChild(completedInterviewBlock)	
+
 
 	//Transcript Block
 	var transcriptBlock = document.createElement('div')
@@ -675,6 +676,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewNotes.challengingNotes" : challengingNotes.value } )
+			//interviewCompletedReporting()
 		}
 		
 		var troubleNotes = document.getElementById('trouble-notes')
@@ -685,6 +687,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewNotes.troubleNotes" : troubleNotes.value } )
+			//interviewCompletedReporting()			
 		}
 		
 		var situationNotes = document.getElementById('situation-notes')
@@ -695,6 +698,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewNotes.situationNotes" : situationNotes.value } )
+			//interviewCompletedReporting()			
 		}
 		var confidenceNotes = document.getElementById('confidence-notes')
 		confidenceNotes.value = doc.data().interviewNotes.confidenceNotes
@@ -704,6 +708,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewNotes.confidenceNotes" : confidenceNotes.value } )
+			//interviewCompletedReporting()			
 		}
 		var preparedNotes = document.getElementById('prepared-notes')
 		preparedNotes.value = doc.data().interviewNotes.preparedNotes
@@ -713,6 +718,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewNotes.preparedNotes" : preparedNotes.value } )
+			//interviewCompletedReporting()			
 		}
 		var explainNotes = document.getElementById('explain-notes')
 		explainNotes.value = doc.data().interviewNotes.explainNotes
@@ -898,8 +904,43 @@ function getApplicationPoints(applicantsID) {
 	})
 }*/
 
+
+function interviewCompletedReporting(applicantsID) {
+	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
+		
+		if(doc.data().completedInterview == false){
+			
+			userDB.collection("userTest")
+				.doc(applicantsID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "completedInterview" : true } )
+			
+			mpInterviewCompleted()
+		}
+	})
+}
+
+
+
 function getInterviewPoints(applicantsID) {
 	var userDB = firebase.firestore()
+	
+	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
+		
+		if(doc.data().completedInterview == false){
+			
+			userDB.collection("userTest")
+				.doc(applicantsID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "completedInterview" : true } )
+			
+			mpInterviewCompleted()
+		}
+	})	
+		
+	
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("interview").get().then(function(doc) {
 		var onTimeScore = doc.data().interviewScores.onTimeScore
 		var challengingScore = doc.data().interviewScores.challengingScore
