@@ -244,6 +244,17 @@ function submitAssessment(userID) {
 //Schedule Interview
 var isScheduleShowing = false
 function scheduleInterview(userID) {
+	
+	if (isScheduleShowing) {
+		document.getElementById("request-interview-form")
+			.style.display = "none"
+		isScheduleShowing = false
+	} else {
+		document.getElementById("request-interview-form")
+			.style.display = "block"
+		isScheduleShowing = true	
+	}	
+	
 	var applicantsName = ''
 	var applicantsEmail = ''
 	var applicantsSchool = ''
@@ -253,19 +264,6 @@ function scheduleInterview(userID) {
 		applicantsName = doc.data().applicationFields.firstName + ' ' + doc.data().applicationFields.lastName
 		applicantsSchool = doc.data().school
 		applicantsEmail = doc.data().email
-			//if ( doc.data().didSubmitPreInterview ) {
-		if (isScheduleShowing) {
-			document.getElementById("request-interview-form")
-				.style.display = "none"
-			isScheduleShowing = false
-		   	} else {
-			document.getElementById("request-interview-form")
-				.style.display = "block"
-			isScheduleShowing = true	
-		}
-			//} else {
-				//alert("Please complete your Pre-Interview Assessment before scheduling an interview")
-			//}
 		})
 	document.getElementById("submit-interview-request").addEventListener('click', function() {
 		userDB.collection("userTest")
