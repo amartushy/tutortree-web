@@ -236,7 +236,7 @@ function submitAssessment(userID) {
 		document.getElementById("assessment-completion").style.display = "flex"
 		document.getElementById("assessment-form-block").style.display = "none"
 		
-		mpPreInterviewSubmission(mixpanelDict)		
+		//mpPreInterviewSubmission(mixpanelDict)		
         });
 })
 }
@@ -249,40 +249,34 @@ function scheduleInterview(userID) {
 	var applicantsSchool = ''
 	var userDB = firebase.firestore()
 	
-	userDB.collection("userTest").doc(userID).get().then(function(doc) {
-		applicantsEmail = doc.data().email
-	})
 	userDB.collection("userTest").doc(userID).collection("tutorApplication").doc("application").get().then(function(doc) {
-		applicantsName = doc.data().firstName + ' ' + doc.data().lastName
+		applicantsName = doc.data().applicationFields.firstName + ' ' + doc.data().applicationFields.lastName
 		applicantsSchool = doc.data().school
-		if ( doc.data().didRequestInterview ) {
-			alert("Your tutor coordinator has been notified. Please check your email for a time to meet.")
-		} else {
+		applicantsEmail = doc.data().email
 			//if ( doc.data().didSubmitPreInterview ) {
-				if (isScheduleShowing) {
-					document.getElementById("request-interview-form")
-						.style.display = "none"
-					isScheduleShowing = false
-		    		} else {
-					document.getElementById("request-interview-form")
-						.style.display = "block"
-					isScheduleShowing = true	
-				}
+		if (isScheduleShowing) {
+			document.getElementById("request-interview-form")
+				.style.display = "none"
+			isScheduleShowing = false
+		   	} else {
+			document.getElementById("request-interview-form")
+				.style.display = "block"
+			isScheduleShowing = true	
+		}
 			//} else {
 				//alert("Please complete your Pre-Interview Assessment before scheduling an interview")
 			//}
 		}
-	})
 	document.getElementById("submit-interview-request").addEventListener('click', function() {
 		userDB.collection("userTest")
 		.doc(userID)
 		.collection("tutorApplication")
 		.doc("application")
 		.update( { "didRequestInterview" : true } )
-		document.getElementById("interview-complete").style.display = "flex"
-		document.getElementById("request-interview-form").style.display = "none"
-		var messageString = applicantsName + ' has completed their PIA and is requesting to schedule an interview. Their email is ' + applicantsEmail + ', their school is ' + applicantsSchool
-		sendEmailTo('mcloftus@jointutortree.com', 'New Interview Schedule Request', messageString)
+		//document.getElementById("interview-complete").style.display = "flex"
+		//document.getElementById("request-interview-form").style.display = "none"
+		var messageString = applicantsName + ' has opened the calendly window to schedule an interview. Please check your email to confirm this user has actually scheduled. Their email is ' + applicantsEmail + ', their school is ' + applicantsSchool
+		sendEmailTo('mcloftus@jointutortree.com', 'Calendly Window Opened - Look out for an interview', messageString)
 		mpRequestVirtualInterview()
 	})
 }
