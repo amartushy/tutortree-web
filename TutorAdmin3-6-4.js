@@ -185,7 +185,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 		requestCompleted.setAttribute('class', 'admin-complete')
 		requestCompleted.innerHTML = 'check-circle'
 		requestedBlock.appendChild(requestCompleted)
-		requestedBlock.setAttribute('onClick', 'showInterview("' + applicantID + '", "' + name +'")')
+		requestedBlock.setAttribute('onClick', 'showInterview("' + applicantID + '", "' + name +'", "' + email +'")')
 	} else {
 		var requestIncomplete = document.createElement('div')
 		requestIncomplete.setAttribute('class', 'admin-incomplete')
@@ -649,7 +649,7 @@ function showAssessment(applicantsID, name) {
 	})
 }*/
 
-function showInterview(applicantsID, name) {
+function showInterview(applicantsID, name, email) {
 	document.getElementById("interview-wrapper").style.display = 'flex'
 	
 	var tutorInterviewNameHeader = document.getElementById('interview-tutor-prospect-name')
@@ -766,7 +766,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewScores.onTimeScore" : onTimeScore.value } )
-			getInterviewPoints(applicantsID)
+			getInterviewPoints(applicantsID, email)
 		}
 		var challengingScore = document.getElementById('challenging-score')
 		challengingScore.value = doc.data().interviewScores.challengingScore
@@ -776,7 +776,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewScores.challengingScore" : challengingScore.value } )
-			getInterviewPoints(applicantsID)
+			getInterviewPoints(applicantsID, email)
 		}
 		var troubleScore = document.getElementById('trouble-score')
 		troubleScore.value = doc.data().interviewScores.troubleScore
@@ -786,7 +786,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewScores.troubleScore" : troubleScore.value } )
-			getInterviewPoints(applicantsID)
+			getInterviewPoints(applicantsID, email)
 		}
 		var situationScore = document.getElementById('situation-score')
 		situationScore.value = doc.data().interviewScores.situationScore
@@ -796,7 +796,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewScores.situationScore" : situationScore.value } )
-			getInterviewPoints(applicantsID)
+			getInterviewPoints(applicantsID, email)
 		}
 		var confidenceScore = document.getElementById('confidence-score')
 		confidenceScore.value = doc.data().interviewScores.confidenceScore
@@ -806,7 +806,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewScores.confidenceScore" : confidenceScore.value } )
-			getInterviewPoints(applicantsID)
+			getInterviewPoints(applicantsID, email)
 		}
 		var preparedScore = document.getElementById('prepared-score')
 		preparedScore.value = doc.data().interviewScores.preparedScore
@@ -816,7 +816,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewScores.preparedScore" : preparedScore.value } )
-			getInterviewPoints(applicantsID)
+			getInterviewPoints(applicantsID, email)
 		}	
 		var explainScore = document.getElementById('explain-score')
 		explainScore.value = doc.data().interviewScores.explainScore
@@ -826,7 +826,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewScores.explainScore" : explainScore.value } )
-			getInterviewPoints(applicantsID)
+			getInterviewPoints(applicantsID, email)
 		}
 		var onlineScore = document.getElementById('online-score')
 		onlineScore.value = doc.data().interviewScores.onlineScore
@@ -836,7 +836,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewScores.onlineScore" : onlineScore.value } )
-			getInterviewPoints(applicantsID)
+			getInterviewPoints(applicantsID, email)
 		}
 		var helpScore = document.getElementById('help-score')
 		helpScore.value = doc.data().interviewScores.helpScore
@@ -846,7 +846,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewScores.helpScore" : helpScore.value } )
-			getInterviewPoints(applicantsID)
+			getInterviewPoints(applicantsID, email)
 		}
 		var questionScore = document.getElementById('question-score')
 		questionScore.value = doc.data().interviewScores.questionScore
@@ -856,7 +856,7 @@ function showInterview(applicantsID, name) {
 				.collection("tutorApplication")
 				.doc("interview")
 				.update( { "interviewScores.questionScore" : questionScore.value } )
-			getInterviewPoints(applicantsID)
+			getInterviewPoints(applicantsID, email)
 		}
 
 	})
@@ -923,7 +923,7 @@ function interviewCompletedReporting(applicantsID) {
 
 
 
-function getInterviewPoints(applicantsID) {
+function getInterviewPoints(applicantsID, email) {
 	var userDB = firebase.firestore()
 	
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").get().then(function(doc) {
@@ -936,7 +936,7 @@ function getInterviewPoints(applicantsID) {
 				.doc("application")
 				.update( { "completedInterview" : true } )
 			
-			mpInterviewCompleted()
+			mpInterviewCompleted(applicantsID, email)
 		}
 	})	
 		
