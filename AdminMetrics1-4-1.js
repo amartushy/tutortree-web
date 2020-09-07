@@ -43,7 +43,6 @@ function showTTMetrics() {
         while(subjectArea.firstChild) {
             subjectArea.removeChild(subjectArea.firstChild)
         }
-        var numSchools = school.docs.length
         var tutortreeMetrics = document.createElement('div')
         tutortreeMetrics.setAttribute('class', 'tutortree-metrics')
         tutortreeMetrics.setAttribute('id', 'tutortree-metrics-block')
@@ -56,9 +55,7 @@ function showTTMetrics() {
             var schoolTitle = doc.data().title
             var schoolPath = doc.id
             getTutors(schoolPath, schoolTitle)
-            if (counter == numSchools) {
-                buildTutortreeMetrics()
-            }
+
         })
     })
 }
@@ -94,7 +91,7 @@ function buildTutortreeMetrics() {
     
     var totalCumulativeCountHeader = document.createElement('h4')
     totalCoursesWithTutorsHeader.setAttribute('class', 'metrics-subheader')
-    tutortreeMetricsBlock.appendChild(totalCoursesWithTutorsHeader)
+    tutortreeMetricsBlock.appendChild(totalCumulativeCountHeader)
     totalCumulativeCountHeader.innerHTML = totalCumulativeCount + " Cumulative Tutor-Courses"
 }
 
@@ -137,7 +134,9 @@ async function getTutors(schoolPath, schoolTitle) {
 
 
 async function buildSchoolMetrics(tutorsArray, countOfTutors, coursesCount, coursesWithTutors, cumulativeCount, schoolTitle) {
-
+    if (schoolTitle = "USC") {
+        buildTutortreeMetrics
+    }
     var schoolMetrics = document.createElement('div')
     schoolMetrics.setAttribute('class', 'school-metrics')
     subjectArea.appendChild(schoolMetrics)
