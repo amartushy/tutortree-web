@@ -52,6 +52,7 @@ var tutorAppSubmit = document.getElementById("tutor-app-submit")
 
 //Navigation Button Functions
 tutorBecomeNext.addEventListener('click', function(e) {
+	console.log("tutorSchool " + tutorSchool.value)
 	if ( tutorEmail.value == "" ) {
 		alert('Please enter your email')
 	} else if ( tutorFirst.value == "" ) {
