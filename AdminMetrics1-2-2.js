@@ -42,26 +42,33 @@ function showTTMetrics() {
     })
 }
 
-async function buildSchoolMetrics(schoolPath, schoolTitle) {
-       var tutorsArray = []
-       var countOfTutors = 0
-        await schoolDB.collection("schools").doc(schoolPath).collection('courses').onSnapshot(function(subjects) {
-            subjects.forEach(function(subject) {
-                var courseDict = subject.data()
-                for ( var course in courseDict ) {
-                    if (courseDict.hasOwnProperty(course)) {
-                        countOfTutors += courseDict[course].info.numTutors
-                        for (var tutor in courseDict[course].tutors) {
-                            if (!tutorsArray.includes(tutor)) {
-                                tutorsArray.push(tutor)
-                                console.log(tutorsArray)
-                            }
+async function getTutors(schoolPath, schoolTitle) {
+    var tutorsArray = []
+    var countOfTutors = 0
+    await schoolDB.collection("schools").doc(schoolPath).collection('courses').onSnapshot(function(subjects) {
+        subjects.forEach(function(subject) {
+            var courseDict = subject.data()
+            for ( var course in courseDict ) {
+                if (courseDict.hasOwnProperty(course)) {
+                    countOfTutors += courseDict[course].info.numTutors
+                    for (var tutor in courseDict[course].tutors) {
+                        if (!tutorsArray.includes(tutor)) {
+                            tutorsArray.push(tutor)
+                            console.log(tutorsArray)
+                            buildSchoolMetrics(tutorsArray, countOfTutors, schoolTitle)
                         }
                     }
                 }
-            })
-       })
-    
+            }
+        })
+    })
+}
+
+
+
+
+async function buildSchoolMetrics(tutorsArray, countOfTutors, schoolTitle) {
+
     var schoolMetrics = document.createElement('div')
     schoolMetrics.setAttribute('class', 'school-metrics')
     subjectArea.appendChild(schoolMetrics)
