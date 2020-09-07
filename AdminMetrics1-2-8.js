@@ -45,12 +45,15 @@ function showTTMetrics() {
 async function getTutors(schoolPath, schoolTitle) {
     var tutorsArray = []
     var countOfTutors = 0
+    var coursesCount = 0
+    var cumulativeCount = 0
     await schoolDB.collection("schools").doc(schoolPath).collection('courses').onSnapshot(function(subjects) {
         subjects.forEach(function(subject) {
             var courseDict = subject.data()
             for ( var course in courseDict ) {
                 if (courseDict.hasOwnProperty(course)) {
-                    countOfTutors += courseDict[course].info.numTutors
+                    coursesCount += 1
+                    cumulativeCount += courseDict[course].info.numTutors
                     for (var tutor in courseDict[course].tutors) {
                         if (!tutorsArray.includes(tutor)) {
                             tutorsArray.push(tutor)
@@ -60,14 +63,15 @@ async function getTutors(schoolPath, schoolTitle) {
                 }
             }
         })
-        buildSchoolMetrics(tutorsArray, countOfTutors, schoolTitle)
+        countOfTutors = tutorsArray.length
+        buildSchoolMetrics(tutorsArray, countOfTutors, coursesCount, cumulativeCount,  schoolTitle)
     })
 }
 
 
 
 
-async function buildSchoolMetrics(tutorsArray, countOfTutors, schoolTitle) {
+async function buildSchoolMetrics(tutorsArray, countOfTutors, coursesCount, cumulativeCount, schoolTitle) {
 
     var schoolMetrics = document.createElement('div')
     schoolMetrics.setAttribute('class', 'school-metrics')
@@ -83,11 +87,27 @@ async function buildSchoolMetrics(tutorsArray, countOfTutors, schoolTitle) {
     console.log(schoolTitle)
     schoolMetricsHeader.appendChild(schoolTitleElement)
     
-    var numTutors = document.createElement('div')
-    numTutors.setAttribute('class', 'numTutors')
-    numTutors.innerHTML = countOfTutors + " tutors"
-    schoolMetricsHeader.appendChild(numTutors)
+    //Metrics Block
+    var metricsBlock = document.createElement('div')
+    metricsBlock.setAttribute('class', 'metrics-block')
+    schoolMetricsHeader.appendChild(metricsBlock)
+
+    var numTutors = document.createElement('h3')
+    numTutors.setAttribute('class', 'metrics-header')
+    numTutors.innerHTML = countOfTutors + " Tutors"
+    metricsBlock.appendChild(numTutors)
     
+    var countCourses = document.createElement('h3')
+    countCourses.setAttribute('class', 'metrics-header')
+    countCourses.innerHTML = coursesCount + " Courses"
+    metricsBlock.appendChild(countCourses)
+    
+    var cumulativeCount = document.createElement('h3')
+    cumulativeCount.setAttribute('class', 'metrics-header')
+    cumulativeCount.innerHTML = cumulativeCount + " Cumulative Tutors"
+    metricsBlock.appendChild(cumulativeCount)
+    
+    //Tutors images
     var tutorsBlock = document.createElement('tutors-block')
     tutorsBlock.setAttribute('class', 'tutors-block')
     schoolMetrics.appendChild(tutorsBlock)
@@ -104,7 +124,7 @@ async function buildSchoolMetrics(tutorsArray, countOfTutors, schoolTitle) {
             tutorImage.src = tutor.data().profileImage
             tutorBlockMetrics.appendChild(tutorImage)
             
-            var tutorsNameMetrics = document.createElement('div')
+            var tutorsNameMetrics = document.createElement('h5')
             tutorsNameMetrics.setAttribute('class', 'tutors-name-metrics')
             tutorsNameMetrics.innerHTML = tutor.data().name
             tutorBlockMetrics.appendChild(tutorsNameMetrics)
