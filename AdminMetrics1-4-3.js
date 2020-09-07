@@ -134,7 +134,7 @@ async function getTutors(schoolPath, schoolTitle) {
 
 
 async function buildSchoolMetrics(tutorsArray, countOfTutors, coursesCount, coursesWithTutors, cumulativeCount, schoolTitle) {
-    if (schoolTitle = "USC") {
+    if (schoolTitle == "USC") {
         buildTutortreeMetrics()
     }
     var schoolMetrics = document.createElement('div')
