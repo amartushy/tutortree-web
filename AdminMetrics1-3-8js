@@ -46,7 +46,7 @@ function showTTMetrics() {
         var numSchools = school.docs.length
         var tutortreeMetrics = document.createElement('div')
         tutortreeMetrics.setAttribute('class', 'tutortree-metrics')
-        tutortreeMetrics.setAttribuute('id', 'tutortree-metrics-block')
+        tutortreeMetrics.setAttribute('id', 'tutortree-metrics-block')
         
         subjectArea.appendChild(tutortreeMetrics)
         
