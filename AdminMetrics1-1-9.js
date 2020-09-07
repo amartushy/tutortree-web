@@ -47,7 +47,7 @@ async function buildSchoolMetrics(schoolPath, schoolTitle) {
        var countOfTutors = 0
         await schoolDB.collection("schools").doc(schoolPath).collection('courses').onSnapshot(function(subjects) {
             subjects.forEach(function(subject) {
-                var courseDict = subjects.data()
+                var courseDict = subject.data()
                 console.log(courseDict)
                 for ( var course in courseDict ) {
                     if (courseDict.hasOwnProperty(course)) {
