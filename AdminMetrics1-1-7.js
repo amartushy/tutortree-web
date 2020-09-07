@@ -35,7 +35,6 @@ function showTTMetrics() {
         }
         
         school.forEach(function(doc) {
-            console.log(doc.data().title)
             buildSchoolMetrics(doc.id, doc.data().title)
         })
     })
@@ -72,6 +71,7 @@ async function buildSchoolMetrics(schoolPath, schoolTitle) {
     var schoolTitle = document.createElement('h3')
     schoolTitle.setAttribute('class', 'school-title')
     schoolTitle.innerHTML = schoolTitle
+    console.log(schoolTitle)
     schoolMetricsHeader.appendChild(schoolTitle)
     
     var numTutors = document.createElement('div')
