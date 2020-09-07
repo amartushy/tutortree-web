@@ -35,7 +35,9 @@ function showTTMetrics() {
         }
         
         school.forEach(function(doc) {
-            buildSchoolMetrics(doc.id, doc.data().title)
+            var schoolTitle = doc.data().title
+            var schoolPath = doc.id
+            buildSchoolMetrics(schoolPath, schoolTitle)
         })
     })
 }
@@ -43,7 +45,7 @@ function showTTMetrics() {
 async function buildSchoolMetrics(schoolPath, schoolTitle) {
        var tutorsArray = []
        var countOfTutors = 0
-        await schoolDB.collection("schools").doc(schoolTitle).collection('courses').onSnapshot(function(subjects) {
+        await schoolDB.collection("schools").doc(schoolPath).collection('courses').onSnapshot(function(subjects) {
             subjects.forEach(function(subject) {
                 var courseDict = subjects.data()
                 console.log(courseDict)
@@ -68,11 +70,10 @@ async function buildSchoolMetrics(schoolPath, schoolTitle) {
     schoolMetricsHeader.setAttribute('class', 'school-metrics-header')
     schoolMetrics.appendChild(schoolMetricsHeader)
     
-    var schoolTitle = document.createElement('h3')
-    schoolTitle.setAttribute('class', 'school-title')
-    schoolTitle.innerHTML = schoolTitle
-    console.log(schoolTitle)
-    schoolMetricsHeader.appendChild(schoolTitle)
+    var schoolTitleElement = document.createElement('h3')
+    schoolTitleElement.setAttribute('class', 'school-title')
+    schoolTitleElement.innerHTML = schoolTitle
+    schoolMetricsHeader.appendChild(schoolTitleElement)
     
     var numTutors = document.createElement('div')
     numTutors.setAttribute('class', 'numTutors')
