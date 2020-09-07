@@ -35,6 +35,7 @@ function showTTMetrics() {
         }
         
         school.forEach(function(doc) {
+            console.log(doc.data().title)
             buildSchoolMetrics(doc.id, doc.data().title)
         })
     })
@@ -46,6 +47,7 @@ async function buildSchoolMetrics(schoolPath, schoolTitle) {
         await schoolDB.collection("schools").doc(schoolTitle).collection('courses').onSnapshot(function(subjects) {
             subjects.forEach(function(subject) {
                 var courseDict = subject.data()
+                console.log(courseDict)
                 for ( var course in courseDict ) {
                     if (courseDict.hasOwnProperty(course)) {
                         countOfTutors += courseDict[course].info.numTutors
