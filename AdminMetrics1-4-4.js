@@ -51,7 +51,6 @@ function showTTMetrics() {
         
         var counter = 0
         school.forEach(function(doc) {
-            counter += 1
             var schoolTitle = doc.data().title
             var schoolPath = doc.id
             getTutors(schoolPath, schoolTitle)
@@ -120,12 +119,13 @@ async function getTutors(schoolPath, schoolTitle) {
                 }
             }
         })
+        countOfTutors = tutorsArray.length
+        
         totalTutors += countOfTutors
         totalCourses += coursesCount
         totalCoursesWithTutors += coursesWithTutors
         totalCumulativeCount += cumulativeCount
-        
-        countOfTutors = tutorsArray.length
+
         buildSchoolMetrics(tutorsArray, countOfTutors, coursesCount, coursesWithTutors, cumulativeCount,  schoolTitle)
     })
 }
