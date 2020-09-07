@@ -274,6 +274,7 @@ function scheduleInterview(userID) {
 		destinationSchool = doc.data().destinationSchool
 		})
 	document.getElementById("submit-interview-request").addEventListener('click', function() {	
+		console.log(destinationSchool)
 		
 		if(destinationSchool){
 			userDB.collection("userTest")
