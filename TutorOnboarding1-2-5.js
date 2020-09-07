@@ -251,6 +251,7 @@ function submitAssessment(userID) {
 //Schedule Interview
 var isScheduleShowing = false
 function scheduleInterview(userID) {
+	console.log("1 " + destinationSchool)
 	
 	if (isScheduleShowing) {
 		document.getElementById("request-interview-form")
@@ -273,6 +274,9 @@ function scheduleInterview(userID) {
 		applicantsEmail = doc.data().email
 		destinationSchool = doc.data().destinationSchool
 		})
+	
+	console.log("2 " + destinationSchool)
+	
 	document.getElementById("submit-interview-request").addEventListener('click', function() {	
 		console.log(destinationSchool)
 		
