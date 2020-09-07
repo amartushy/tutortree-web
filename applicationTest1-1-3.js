@@ -65,6 +65,8 @@ tutorBecomeNext.addEventListener('click', function(e) {
 	} else if ( tutorSchool.value == "" ) {
 		 alert('Please select what school you go to')  
 	} else if ( contains.call(usUniversities, tutorSchool) !== true ) {
+		console.log("tutorSchool " + tutorSchool)
+		console.log("contains.call " + contains.call(usUniversities, tutorSchool))
 		 alert('Please select a school listed in drop down')       
 	} else if ( tutorHowHeard.value == "" ) {
 		 alert('Please enter how you heard of TutorTree')  
