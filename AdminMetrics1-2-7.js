@@ -55,12 +55,12 @@ async function getTutors(schoolPath, schoolTitle) {
                         if (!tutorsArray.includes(tutor)) {
                             tutorsArray.push(tutor)
                             console.log(tutorsArray)
-                            buildSchoolMetrics(tutorsArray, countOfTutors, schoolTitle)
                         }
                     }
                 }
             }
         })
+        buildSchoolMetrics(tutorsArray, countOfTutors, schoolTitle)
     })
 }
 
