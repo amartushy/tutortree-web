@@ -250,9 +250,7 @@ function submitAssessment(userID) {
 
 //Schedule Interview
 var isScheduleShowing = false
-function scheduleInterview(userID) {
-	console.log("1 " + destinationSchool)
-	
+function scheduleInterview(userID) {	
 	if (isScheduleShowing) {
 		document.getElementById("request-interview-form")
 			.style.display = "none"
