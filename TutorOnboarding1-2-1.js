@@ -252,9 +252,9 @@ function submitAssessment(userID) {
 var isScheduleShowing = false
 function scheduleInterview(userID) {
 	
-		if(!destinationSchool){
-			alert("Thank you for your interest in tutoring with TutorTree! We are excited to launch at UC Berkeley, UC San Diego, UCLA, UCSB, San Jose State, Cal State Northridge, Pepperdine, USC, Stanford, Oregon State and University of Oregon in the Fall of 2020. We are accepting applications from all other schools but unfortunately will not be interviewing anyone that does not attend the above universities. Please email the tutor coordinator, Meghan, if you have any other questions!")
-		}
+	if(destinationSchool == false){
+		alert("Thank you for your interest in tutoring with TutorTree! We are excited to launch at UC Berkeley, UC San Diego, UCLA, UCSB, San Jose State, Cal State Northridge, Pepperdine, USC, Stanford, Oregon State and University of Oregon in the Fall of 2020. We are accepting applications from all other schools but unfortunately will not be interviewing anyone that does not attend the above universities. Please email the tutor coordinator, Meghan, if you have any other questions!")
+	}
 	
 	if (isScheduleShowing) {
 		document.getElementById("request-interview-form")
