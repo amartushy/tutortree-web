@@ -271,9 +271,10 @@ function scheduleInterview(userID) {
 		applicantsSchool = doc.data().school
 		applicantsEmail = doc.data().email
 		destinationSchool = doc.data().destinationSchool
+		console.log("2 " + destinationSchool)
 		})
 	
-	console.log("2 " + destinationSchool)
+	
 	
 	document.getElementById("submit-interview-request").addEventListener('click', function() {	
 		console.log(destinationSchool)
