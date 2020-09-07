@@ -28,12 +28,22 @@ tutortree.setAttribute('onClick', 'showTTMetrics()')
 
 var subjectArea = document.getElementById('subject-area')
 
+var totalTutors = 0
+var totalCourses = 0
+var totalCoursesWithTutors = 0
+var totalCumulativeCount = 0
+
 function showTTMetrics() {
+    totalTutors = 0
+    totalCourses = 0
+    totalCoursesWithTutors = 0
+    totalCumulativeCount = 0
+    
     schoolDB.collection("schools").onSnapshot(function(school) {
         while(subjectArea.firstChild) {
             subjectArea.removeChild(subjectArea.firstChild)
         }
-        
+        console.log(school.data())
         school.forEach(function(doc) {
             var schoolTitle = doc.data().title
             var schoolPath = doc.id
@@ -67,6 +77,11 @@ async function getTutors(schoolPath, schoolTitle) {
                 }
             }
         })
+        totalTutors += countOfTutors
+        totalCourses += coursesCount
+        totalCoursesWithTutors += coursesWithTutors
+        totalCumulativeCount += cumulativeCount
+        
         countOfTutors = tutorsArray.length
         buildSchoolMetrics(tutorsArray, countOfTutors, coursesCount, coursesWithTutors, cumulativeCount,  schoolTitle)
     })
@@ -140,6 +155,7 @@ async function buildSchoolMetrics(tutorsArray, countOfTutors, coursesCount, cour
         })
     }
 }
+
 
 function showTutorsForSchool(schoolTitle) {
 
