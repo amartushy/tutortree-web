@@ -273,17 +273,23 @@ function scheduleInterview(userID) {
 		applicantsEmail = doc.data().email
 		destinationSchool = doc.data().destinationSchool
 		})
-	document.getElementById("submit-interview-request").addEventListener('click', function() {
-		userDB.collection("userTest")
-		.doc(userID)
-		.collection("tutorApplication")
-		.doc("application")
-		.update( { "didRequestInterview" : true } )
-		//document.getElementById("interview-complete").style.display = "flex"
-		//document.getElementById("request-interview-form").style.display = "none"
-		var messageString = applicantsName + ' has opened the calendly window to schedule an interview. Please check your email to confirm this user has actually scheduled. Their email is ' + applicantsEmail + ', their school is ' + applicantsSchool
-		sendEmailTo('mcloftus@jointutortree.com', 'Calendly Window Opened - Look out for an interview', messageString)
-		mpRequestVirtualInterview()
+	document.getElementById("submit-interview-request").addEventListener('click', function() {	
+		
+		if(destinationSchool){
+			userDB.collection("userTest")
+			.doc(userID)
+			.collection("tutorApplication")
+			.doc("application")
+			.update( { "didRequestInterview" : true } )
+			//document.getElementById("interview-complete").style.display = "flex"
+			//document.getElementById("request-interview-form").style.display = "none"
+			var messageString = applicantsName + ' has opened the calendly window to schedule an interview. Please check your email to confirm this user has actually scheduled. Their email is ' + applicantsEmail + ', their school is ' + applicantsSchool
+			sendEmailTo('mcloftus@jointutortree.com', 'Calendly Window Opened - Look out for an interview', messageString)
+			mpRequestVirtualInterview()
+			
+		} else {
+			alert("Thank you for your interest in tutoring with TutorTree! We are excited to launch at UC Berkeley, UC San Diego, UCLA, UCSB, San Jose State, Cal State Northridge, Pepperdine, USC, Stanford, Oregon State and University of Oregon in the Fall of 2020. We are accepting applications from all other schools but unfortunately will not be interviewing anyone that does not attend the above universities. Please email the tutor coordinator, Meghan, if you have any other questions!")
+		}
 		
 	})
 }
