@@ -55,6 +55,7 @@ async function buildSchoolMetrics(schoolPath, schoolTitle) {
                         for (var tutor in courseDict[course].tutors) {
                             if (!tutorsArray.includes(tutor)) {
                                 tutorsArray.push(tutor)
+                                console.log(tutorsArray)
                             }
                         }
                     }
