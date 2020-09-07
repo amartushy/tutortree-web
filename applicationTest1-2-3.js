@@ -33,7 +33,7 @@ var tutorPhone = document.getElementById("tutor-phone")
 var tutorFirst = document.getElementById("tutor-first")
 var tutorLast = document.getElementById("tutor-last")
 var tutorPassword = document.getElementById('tutor-password')
-var tutorSchool = document.getElementById("forms-html")
+var tutorSchool = document.getElementById("myInput")
 var tutorHowHeard = document.getElementById("tutor-how-heard")
 
 //Application -> applicationFields
@@ -52,7 +52,7 @@ var tutorAppSubmit = document.getElementById("tutor-app-submit")
 
 //Navigation Button Functions
 tutorBecomeNext.addEventListener('click', function(e) {
-	console.log("tutorSchool " + tutorSchool.innerHTML)
+	console.log("tutorSchool " + tutorSchool.value)
 	if ( tutorEmail.value == "" ) {
 		alert('Please enter your email')
 	} else if ( tutorFirst.value == "" ) {
