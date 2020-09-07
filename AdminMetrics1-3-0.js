@@ -46,6 +46,7 @@ async function getTutors(schoolPath, schoolTitle) {
     var tutorsArray = []
     var countOfTutors = 0
     var coursesCount = 0
+    var coursesWithTutors = 0
     var cumulativeCount = 0
     await schoolDB.collection("schools").doc(schoolPath).collection('courses').onSnapshot(function(subjects) {
         subjects.forEach(function(subject) {
@@ -53,6 +54,9 @@ async function getTutors(schoolPath, schoolTitle) {
             for ( var course in courseDict ) {
                 if (courseDict.hasOwnProperty(course)) {
                     coursesCount += 1
+                    if( courseDict[course].info.numTutors != 0) {
+                        coursesWithTutors += 1
+                    }
                     cumulativeCount += courseDict[course].info.numTutors
                     for (var tutor in courseDict[course].tutors) {
                         if (!tutorsArray.includes(tutor)) {
@@ -64,14 +68,14 @@ async function getTutors(schoolPath, schoolTitle) {
             }
         })
         countOfTutors = tutorsArray.length
-        buildSchoolMetrics(tutorsArray, countOfTutors, coursesCount, cumulativeCount,  schoolTitle)
+        buildSchoolMetrics(tutorsArray, countOfTutors, coursesCount, coursesWithTutors, cumulativeCount,  schoolTitle)
     })
 }
 
 
 
 
-async function buildSchoolMetrics(tutorsArray, countOfTutors, coursesCount, cumulativeCount, schoolTitle) {
+async function buildSchoolMetrics(tutorsArray, countOfTutors, coursesCount, coursesWithTutors, cumulativeCount, schoolTitle) {
 
     var schoolMetrics = document.createElement('div')
     schoolMetrics.setAttribute('class', 'school-metrics')
@@ -101,6 +105,11 @@ async function buildSchoolMetrics(tutorsArray, countOfTutors, coursesCount, cumu
     countCourses.setAttribute('class', 'metrics-header')
     countCourses.innerHTML = coursesCount + " Courses"
     metricsBlock.appendChild(countCourses)
+    
+    var coursesWithBlock = document.createElement('h3')
+    coursesWithBlock.setAttribute('class', 'metrics-header')
+    coursesWithBlock.innerHTML = coursesWithTutors + " Courses with Tutors"
+    metricsBlock.appendChild(coursesWithBlock)
     
     var cumulativeBlock = document.createElement('h3')
     cumulativeBlock.setAttribute('class', 'metrics-header')
