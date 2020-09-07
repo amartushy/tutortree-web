@@ -43,13 +43,59 @@ function showTTMetrics() {
         while(subjectArea.firstChild) {
             subjectArea.removeChild(subjectArea.firstChild)
         }
-        console.log(school.docs)
+        var numSchools = school.docs.length
+        var tutortreeMetrics = document.createElement('div')
+        tutortreeMetrics.setAttribute('class', 'tutortree-metrics')
+        tutortreeMetrics.setAttribuute('id', 'tutortree-metrics-block')
+        
+        subjectArea.appendChild(tutortreeMetrics)
+        
+        var counter = 0
         school.forEach(function(doc) {
+            counter += 1
             var schoolTitle = doc.data().title
             var schoolPath = doc.id
             getTutors(schoolPath, schoolTitle)
+            if (counter == numSchools) {
+                buildTutortreeMetrics()
+            }
         })
     })
+}
+
+function buildTutortreeMetrics() {
+    var tutortreeBlock = document.createElement('div')
+    tutortreeBlock.setAttribute('class', 'tutortree-metrics-header')
+    document.getElementById('tutortree-metrics-block').appendChild(tutortreeBlock)
+    
+    var tutortreeHeader = document.createElement('h3') 
+    tutortreeHeader.setAttribute('class', 'school-title')
+    tutortreeBlock.appendChild(tutortreeHeader)
+    tutortreeHeader.innerHTML = "TUTORTREE"
+    
+    var tutortreeMetricsBlock = document.createElement('div')
+    tutortreeMetricsBlock.setAttribute('class', 'metrics-block')
+    tutortreeBlock.appendChild(tutortreeMetricsBlock)
+
+    var totalTutorsHeader = document.createElement('h3')
+    totalTutorsHeader.setAttribute('class', 'metrics-header')
+    tutortreeMetricsBlock.appendChild(totalTutorsHeader)
+    totalTutorsHeader.innerHTML = totalTutors + " Total Tutors"
+    
+    var totalCoursesHeader = document.createElement('h4')
+    totalCoursesHeader.setAttribute('class', 'metrics-subheader')
+    tutortreeMetricsBlock.appendChild(totalCoursesHeader)
+    totalCoursesHeader.innerHTML = totalCourses + " Total Courses"
+
+    var totalCoursesWithTutorsHeader = document.createElement('h4')
+    totalCoursesWithTutorsHeader.setAttribute('class', 'metrics-subheader')
+    tutortreeMetricsBlock.appendChild(totalCoursesWithTutorsHeader)
+    totalCoursesWithTutorsHeader.innerHTML = totalCoursesWithTutors + " Courses With Tutors"
+    
+    var totalCumulativeCountHeader = document.createElement('h4')
+    totalCoursesWithTutorsHeader.setAttribute('class', 'metrics-subheader')
+    tutortreeMetricsBlock.appendChild(totalCoursesWithTutorsHeader)
+    totalCumulativeCountHeader.innerHTML = totalCumulativeCount + " Cumulative Tutor-Courses"
 }
 
 async function getTutors(schoolPath, schoolTitle) {
