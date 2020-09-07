@@ -102,18 +102,18 @@ async function buildSchoolMetrics(tutorsArray, countOfTutors, coursesCount, cour
     metricsBlock.appendChild(numTutors)
     
     var countCourses = document.createElement('h3')
-    countCourses.setAttribute('class', 'metrics-header')
+    countCourses.setAttribute('class', 'metrics-subheader')
     countCourses.innerHTML = coursesCount + " Courses"
     metricsBlock.appendChild(countCourses)
     
     var coursesWithBlock = document.createElement('h3')
-    coursesWithBlock.setAttribute('class', 'metrics-header')
+    coursesWithBlock.setAttribute('class', 'metrics-subheader')
     coursesWithBlock.innerHTML = coursesWithTutors + " Courses with Tutors"
     metricsBlock.appendChild(coursesWithBlock)
     
     var cumulativeBlock = document.createElement('h3')
-    cumulativeBlock.setAttribute('class', 'metrics-header')
-    cumulativeBlock.innerHTML = cumulativeCount + " Cumulative Tutors"
+    cumulativeBlock.setAttribute('class', 'metrics-subheader')
+    cumulativeBlock.innerHTML = cumulativeCount + " Cumulative Tutor-Courses"
     metricsBlock.appendChild(cumulativeBlock)
     
     //Tutors images
