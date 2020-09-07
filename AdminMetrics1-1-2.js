@@ -26,8 +26,81 @@ ucsd.setAttribute('onClick', 'showTutorsForSchool("ucsd")')
 usc.setAttribute('onClick', 'showTutorsForSchool("usc")')
 tutortree.setAttribute('onClick', 'showTTMetrics()')
 
-
 var subjectArea = document.getElementById('subject-area')
+
+function showTTMetrics() {
+    schoolDB.collection("schools").onSnapshot(function(school) {
+        while(subjectArea.firstChild) {
+            subjectArea.removeChild(subjectArea.firstChild)
+        }
+        
+        school.forEach(function(doc) {
+            buildSchoolMetrics(doc.id, doc.data().title)
+        })
+    })
+}
+
+async function buildSchoolMetrics(schoolPath, schoolTitle) {
+       var tutorsArray = []
+       var countOfTutors = 0
+        await userDB.collection("schools").doc(schoolTitle).collection('courses').onSnapshot(function(subjects) {
+            subjects.forEach(function(subject) {
+                var courseDict = subject.data()
+                for ( var course in courseDict ) {
+                    if (courseDict.hasOwnProperty(course)) {
+                        countOfTutors += courseDict[course].info.numTutors
+                        for (var tutor in courseDict[course].tutors) {
+                            if !(tutorsArray.includes(tutor) {
+                                tutorsArray.push(tutor)
+                            }
+                        }
+                    }
+                }
+            })
+       })
+    
+    var schoolMetrics = document.createElement('div')
+    schoolMetrics.setAttribute('class', 'school-metrics')
+    subjectArea.appendChild(schoolMetrics)
+    
+    var schoolMetricsHeader = document.createElement('div')
+    schoolMetricsHeader.setAttribute('class', 'school-metrics-header')
+    schoolMetrics.appendChild(schoolMetricsHeader)
+    
+    var schoolTitle = document.createElement('h3')
+    schoolTitle.setAttribute('class', 'school-title')
+    schoolTitle.innerHTML = schoolTitle
+    schoolMetricsHeader.appendChild(schoolTitle)
+    
+    var numTutors = document.createElement('div')
+    numTutors.setAttribute('class', 'numTutors')
+    numTutors.innerHTML = countOfTutors + " tutors"
+    schoolMetricsHeader.appendChild(numTutors)
+    
+    var tutorsBlock = document.createElement('tutors-block')
+    tutorsBlock.setAttribute('class', 'tutors-block')
+    schoolMetrics.appendChild(tutorsBlock)
+    
+    for ( i = 0; i < tutorsArray.length; i++) {
+        await userDB.collection('userTest').doc( tutorsArray[i] ).onSnapshot(function(tutor) {
+            var tutorBlockMetrics = document.createElement('div')
+            tutorBlockMetrics.setAttribute('class', 'tutor-block-metrics')
+            tutorsBlock.appendChild(tutorBlockMetrics)
+            
+            var tutorImage = document.createElement('img')
+            tutorImage.setAttribute('class', 'tutor-image')
+            tutorBlockMetrics.appendChild(tutorImage)
+            tutorImage.src = tutor.data().profileImage
+            tutorBlockMetrics.appendChild(tutorImage)
+            
+            var tutorsNameMetrics = document.createElement('div')
+            tutorsNameMetrics.setAttribute('class', 'tutors-name-metrics')
+            tutorsNameMetrics.innerHTML = tutor.data().name
+            tutorBlockMetrics.appendChild(tutorsNameMetrics)
+        })
+    }
+}
+
 function showTutorsForSchool(schoolTitle) {
 
     while(subjectArea.firstChild) {
@@ -78,7 +151,6 @@ async function buildSubjectBlock(schoolTitle, subject, courseDict) {
 
                 for (var tutor in courseDict[course].tutors) {
                     console.log(tutor)
-
 
                     var tutorBlock = document.createElement('div')
                     tutorBlock.setAttribute('class', 'tutor-block-metrics')
