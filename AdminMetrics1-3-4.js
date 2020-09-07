@@ -43,7 +43,7 @@ function showTTMetrics() {
         while(subjectArea.firstChild) {
             subjectArea.removeChild(subjectArea.firstChild)
         }
-        console.log(school.data())
+        console.log(school.length)
         school.forEach(function(doc) {
             var schoolTitle = doc.data().title
             var schoolPath = doc.id
