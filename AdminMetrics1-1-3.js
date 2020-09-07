@@ -50,7 +50,7 @@ async function buildSchoolMetrics(schoolPath, schoolTitle) {
                     if (courseDict.hasOwnProperty(course)) {
                         countOfTutors += courseDict[course].info.numTutors
                         for (var tutor in courseDict[course].tutors) {
-                            if !(tutorsArray.includes(tutor) {
+                            if (!tutorsArray.includes(tutor)) {
                                 tutorsArray.push(tutor)
                             }
                         }
