@@ -43,7 +43,7 @@ function showTTMetrics() {
 async function buildSchoolMetrics(schoolPath, schoolTitle) {
        var tutorsArray = []
        var countOfTutors = 0
-        await userDB.collection("schools").doc(schoolTitle).collection('courses').onSnapshot(function(subjects) {
+        await schoolDB.collection("schools").doc(schoolTitle).collection('courses').onSnapshot(function(subjects) {
             subjects.forEach(function(subject) {
                 var courseDict = subject.data()
                 for ( var course in courseDict ) {
@@ -82,7 +82,7 @@ async function buildSchoolMetrics(schoolPath, schoolTitle) {
     schoolMetrics.appendChild(tutorsBlock)
     
     for ( i = 0; i < tutorsArray.length; i++) {
-        await userDB.collection('userTest').doc( tutorsArray[i] ).onSnapshot(function(tutor) {
+        await schoolDB.collection('userTest').doc( tutorsArray[i] ).onSnapshot(function(tutor) {
             var tutorBlockMetrics = document.createElement('div')
             tutorBlockMetrics.setAttribute('class', 'tutor-block-metrics')
             tutorsBlock.appendChild(tutorBlockMetrics)
