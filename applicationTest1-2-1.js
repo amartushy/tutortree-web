@@ -33,7 +33,7 @@ var tutorPhone = document.getElementById("tutor-phone")
 var tutorFirst = document.getElementById("tutor-first")
 var tutorLast = document.getElementById("tutor-last")
 var tutorPassword = document.getElementById('tutor-password')
-var tutorSchool = document.getElementById("tutor-school-test")
+var tutorSchool = document.getElementById("forms-html")
 var tutorHowHeard = document.getElementById("tutor-how-heard")
 
 //Application -> applicationFields
