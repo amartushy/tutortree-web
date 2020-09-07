@@ -37,7 +37,7 @@ function showTTMetrics() {
         school.forEach(function(doc) {
             var schoolTitle = doc.data().title
             var schoolPath = doc.id
-            buildSchoolMetrics(schoolPath, schoolTitle)
+            getTutors(schoolPath, schoolTitle)
         })
     })
 }
