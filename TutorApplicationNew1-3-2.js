@@ -262,6 +262,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
 				"firstName" : tutorFirst.value,
 				"lastName" : tutorLast.value,
 				"howHeard" : tutorHowHeard.value,
+				"referredBy" : referralField.value,
 				"major" : tutorMajor.value,
 				"whyTutor" : tutorWhyTutor.value,
 				"groups" : tutorGroups.value,
@@ -380,6 +381,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
 				"firstName" : tutorFirst.value,
 				"lastName" : tutorLast.value,
 				"howHeard" : tutorHowHeard.value,
+				"referredBy" :referralField.value,
 				"major" : tutorMajor.value,
 				"groups" : tutorGroups.value,
 				"whyTutor" : tutorWhyTutor.value,
@@ -419,7 +421,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                     "pricePHH" : 10,
                     "profileImage" : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/images%2FTTLogo-Mint.png?alt=media&token=c8d6559e-7fa8-4fed-81cc-1f09d5da56a5",
                     "pushToken" : "",
-                    "school" : "Invalid School",
+                    "school" : tutorSchool.value,
 		                "tutorApplicantStatus" : "pending"
                 }
         
@@ -456,7 +458,7 @@ function cleanSchoolName(schoolField){
 	}
 	// Oregon State
 	else if(schoolFieldNoComma.match(/.*oregon state.*/)) {
-	 	return "osu"
+	 	return "oregonstate"
 	}
 	// Pepperdine
 	else if(schoolFieldNoComma.match(/.*pepperdine.*/)) {
