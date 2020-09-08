@@ -69,7 +69,7 @@ function showApplicants() {
 				applicantEmail = doc.data().email,
 				applicantPhone = doc.data().phoneNumber,
 				applicantSchool = doc.data().school,
-				applicantStatus = doc.data().tutorApplicationStatus
+				applicantStatus = doc.data().tutorApplicantStatus
 			
 			buildApplicantBlock(applicantID, applicantCount, applicantName, applicantEmail, applicantPhone, applicantSchool, applicantStatus)
 			count += 1		
