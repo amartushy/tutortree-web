@@ -78,6 +78,7 @@ function showApplicants() {
 }
 
 function buildApplicantBlock(ID, count, name, email, phone, school, status) {
+	console.log(status)
 	//Main block that holds all applicant elements
 	var applicantBlock = document.createElement('div')
 	applicantBlock.setAttribute('id', ID)
