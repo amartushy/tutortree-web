@@ -61,7 +61,7 @@ var referralField = document.getElementById('referral-field')
 
 //Show referral field if necessary
 $("#tutor-how-heard").change(function () {
-	if (tutorHowHeard.value == "other") {
+	if (tutorHowHeard.value == "referral") {
 		referralField.style.display = "block"
 	} else {
 		referralField.style.display = "none"
