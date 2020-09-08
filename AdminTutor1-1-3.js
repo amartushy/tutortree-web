@@ -117,7 +117,7 @@ function buildApplicantBlock(ID, count, name, email, phone, school, status) {
 	} else if (status == "pending") {
 		applicantStatus.setAttribute('class', 'applicant-status-pending')
 		applicantStatus.innerHTML = "PENDING"
-	} else (status == "approved") {
+	} else if (status == "approved") {
 		applicantStatus.setAttribute('class', 'applicant-status-approved')
 		applicantStatus.innerHTML = "APPROVED"
 	}
