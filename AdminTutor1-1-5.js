@@ -19,9 +19,17 @@ var berkeleyButton = document.getElementById('berkeley-button')
 var oregonstateButton = document.getElementById('oregonstate-button')
 var uoregonButton = document.getElementById('uoregon-button')
 
+//School filter functions
+function tutortreeApplicants() {
+	tabFilters = ["pending", "waitlisted", "rejected", "approved"]
+	schoolFilters = ""
+	showApplicants()
+}
+
 //Section to append all applicants
 var applicantSection = document.getElementById('tutor-applicant-section')
 
+//FILTERS
 var tabFilters = ["pending", "waitlisted", "rejected", "approved"]
 var schoolFilters = ""
 
