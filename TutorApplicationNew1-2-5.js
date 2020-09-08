@@ -58,7 +58,7 @@ var tutorAppSubmit = document.getElementById("tutor-app-submit")
 //Show school input if changed
 $("#tutor-school").change(function () {
 	if (tutorSchool.value == "other") {
-		tutorSchoolOther.style.display == "flex"
+		document.getElementById('other-school-input').style.display == "flex"
 	}
  });
 //Navigation Button Functions
