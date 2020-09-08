@@ -1,3 +1,6 @@
+//Initialize database
+var userDB = firebase.firestore()
+
 //Tab filters
 var allTab = document.getElementById('admin-tutor-all')
 var rejectedTab = document.getElementById('admin-tutor-rejected')
@@ -38,7 +41,6 @@ var schoolFilters = ""
 
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
-		var userDB = firebase.firestore()
 		var userID = user.uid
 		 
 		//Check if user is admin, else redirect: TODO
