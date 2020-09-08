@@ -27,7 +27,7 @@ tutortreeButton.addEventListener('click', tutortreeApplicants)
 
 //School filter functions
 function tutortreeApplicants() {
-	tabFilters = ["pending", "waitlisted", "rejected", "approved"]
+	tabFilters = ["pending", "waitlisted", "rejected", "accepted"]
 	schoolFilters = ""
 	showApplicants()
 }
