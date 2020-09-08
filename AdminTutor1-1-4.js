@@ -130,21 +130,21 @@ function buildApplicantBlock(ID, count, name, email, phone, school, status) {
 
 	var applicantTutorAccept = document.createElement('div')
 	applicantTutorAccept.setAttribute('class', 'admin-tutor-accept')
-	applicantTutorAccept.innerHTML = 
+	applicantTutorAccept.innerHTML = 'check-circle'
 	applicantActions.appendChild(applicantTutorAccept)
 
 	var applicantTutorReject = document.createElement('div')
 	applicantTutorReject.setAttribute('class', 'admin-tutor-reject')
-	applicantTutorReject.innerHTML = 
+	applicantTutorReject.innerHTML = 'user-times'
 	applicantActions.appendChild(applicantTutorReject)
 
 	var applicantTutorWaitlist = document.createElement('div')
 	applicantTutorWaitlist.setAttribute('class', 'admin-tutor-waitlist')
-	applicantTutorWaitlist.innerHTML = 
+	applicantTutorWaitlist.innerHTML = 'hourglass-half'
 	applicantActions.appendChild(applicantTutorWaitlist)
 
 	var applicantTutorDelete = document.createElement('div')
 	applicantTutorDelete.setAttribute('class', 'admin-tutor-delete')
-	applicantTutorDelete.innerHTML = 
+	applicantTutorDelete.innerHTML = 'trash-alt'
 	applicantActions.appendChild(applicantTutorDelete)
 }
