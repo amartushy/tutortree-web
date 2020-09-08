@@ -85,7 +85,7 @@ function buildApplicantBlock(ID, count, name, email, phone, school, status) {
 	if (count % 2 == 0) {
 		applicantBlock.setAttribute('class', 'applicant-block-gray')
 	} else {
-		applicantBlock.setAttribute('class', 'applicant-block-block')
+		applicantBlock.setAttribute('class', 'applicant-block-black')
 	}
 	applicantSection.appendChild(applicantBlock)
 	
