@@ -36,7 +36,7 @@ function tutortreeApplicants() {
 var applicantSection = document.getElementById('tutor-applicant-section')
 
 //FILTERS
-var tabFilters = ["pending", "waitlisted", "rejected", "approved"]
+var tabFilters = ["pending", "waitlisted", "rejected", "accepted"]
 var schoolFilters = ""
 
 firebase.auth().onAuthStateChanged(function(user) {
