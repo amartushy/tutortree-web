@@ -55,16 +55,28 @@ var tutorAboutNext = document.getElementById("tutor-about-next")
 var tutorAlmostBack = document.getElementById("tutor-almost-back")
 var tutorAppSubmit = document.getElementById("tutor-app-submit")
 
+//Variable displays
+var referralField = document.getElementById('referral-field')
+
+
+//Show referral field if necessary
+$("#tutor-how-heard").change(function () {
+	if (tutorHowHeard.value == "other") {
+		referralField.style.display = "block"
+	} else {
+		referralField.style.display = "none"
+	}
+ });
+
 //Show school input if changed
 $("#tutor-school").change(function () {
-	console.log(tutorSchool.value)
 	if (tutorSchool.value == "other") {
-		console.log("other is selected")
 		document.getElementById('other-school-input').style.display = "block"
 	} else {
 		document.getElementById('other-school-input').style.display = "none"
 	}
  });
+
 //Navigation Button Functions
 tutorBecomeNext.addEventListener('click', function(e) {
 	if ( tutorEmail.value == "" ) {
@@ -79,10 +91,16 @@ tutorBecomeNext.addEventListener('click', function(e) {
 		 alert('Please enter password')  
 	} else if ( tutorSchool.value == "" ) {
 		 alert('Please select what school you go to')  
-	} else if ( contains.call(usUniversities, tutorSchoolOther.value) !== true ) {
-		 alert('Please select a school listed in drop down')       		
+	} else if ( tutorSchool.value == "other" ) {
+		 if ( contains.call(usUniversities, tutorSchoolOther.value) !== true ) {
+		 	alert('Please select a school listed in drop down')   
+		 }
 	} else if ( tutorHowHeard.value == "" ) {
 		 alert('Please enter how you heard of TutorTree')  
+	} else if ( tutorHowHeard.value == "referral" ) {
+		if (referralField.value == "") {
+			alert('Please enter who referred you')  
+		}
 	} else {
 		tutorApplicationOne.style.display = "none"
 		tutorApplicationTwo.style.display = "flex"
