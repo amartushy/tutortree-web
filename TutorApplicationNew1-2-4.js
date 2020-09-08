@@ -37,7 +37,8 @@ var tutorPhone = document.getElementById("tutor-phone")
 var tutorFirst = document.getElementById("tutor-first")
 var tutorLast = document.getElementById("tutor-last")
 var tutorPassword = document.getElementById('tutor-password')
-var tutorSchool = document.getElementById("myInput")
+var tutorSchool = document.getElementById("tutor-school")
+var tutorSchoolOther = document.getElementById("myInput")
 var tutorHowHeard = document.getElementById("tutor-how-heard")
 
 //Application -> applicationFields
@@ -54,6 +55,12 @@ var tutorAboutNext = document.getElementById("tutor-about-next")
 var tutorAlmostBack = document.getElementById("tutor-almost-back")
 var tutorAppSubmit = document.getElementById("tutor-app-submit")
 
+//Show school input if changed
+$("#tutor-school").change(function () {
+	if (tutorSchool.value == "other") {
+		tutorSchoolOther.style.display == "flex"
+	}
+ });
 //Navigation Button Functions
 tutorBecomeNext.addEventListener('click', function(e) {
 	if ( tutorEmail.value == "" ) {
@@ -68,7 +75,7 @@ tutorBecomeNext.addEventListener('click', function(e) {
 		 alert('Please enter password')  
 	} else if ( tutorSchool.value == "" ) {
 		 alert('Please select what school you go to')  
-	} else if ( contains.call(usUniversities, tutorSchool.value) !== true ) {
+	} else if ( contains.call(usUniversities, tutorSchoolOther.value) !== true ) {
 		 alert('Please select a school listed in drop down')       		
 	} else if ( tutorHowHeard.value == "" ) {
 		 alert('Please enter how you heard of TutorTree')  
