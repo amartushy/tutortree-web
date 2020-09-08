@@ -19,6 +19,9 @@ var berkeleyButton = document.getElementById('berkeley-button')
 var oregonstateButton = document.getElementById('oregonstate-button')
 var uoregonButton = document.getElementById('uoregon-button')
 
+//Add school onclick listeners
+tutortreeButton.addEventListener('click', tutortreeApplicants)
+
 //School filter functions
 function tutortreeApplicants() {
 	tabFilters = ["pending", "waitlisted", "rejected", "approved"]
