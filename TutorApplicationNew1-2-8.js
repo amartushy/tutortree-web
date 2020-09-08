@@ -60,7 +60,7 @@ $("#tutor-school").change(function () {
 	console.log(tutorSchool.value)
 	if (tutorSchool.value == "other") {
 		console.log("other is selected")
-		document.getElementById('other-school-input').style.display == "flex"
+		document.getElementById('other-school-input').style.display = "flex"
 	}
  });
 //Navigation Button Functions
