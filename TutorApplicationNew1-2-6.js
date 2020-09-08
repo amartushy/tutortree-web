@@ -57,6 +57,7 @@ var tutorAppSubmit = document.getElementById("tutor-app-submit")
 
 //Show school input if changed
 $("#tutor-school").change(function () {
+	console.log(tutorSchool.value)
 	if (tutorSchool.value == "other") {
 		document.getElementById('other-school-input').style.display == "flex"
 	}
