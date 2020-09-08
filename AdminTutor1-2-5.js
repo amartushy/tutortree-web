@@ -1,12 +1,52 @@
 //Initialize database
 var userDB = firebase.firestore()
 
+//FILTERS
+var tabFilters = ["pending", "waitlisted", "rejected", "accepted"]
+var schoolFilters = ""
+
+//______________________
+
 //Tab filters
 var allTab = document.getElementById('admin-tutor-all')
 var rejectedTab = document.getElementById('admin-tutor-rejected')
 var waitlistedTab = document.getElementById('admin-tutor-waitlisted')
 var pendingTab = document.getElementById('admin-tutor-pending')
 var approvedTab = document.getElementById('admin-tutor-approved')
+
+//Tab filter onclick listeners
+allTab.addEventListener('click', allApplicants)
+rejectedTab.addEventListener('click', rejectedApplicants)
+waitlistedTab.addEventListener('click', waitlistedApplicants)
+pendingTab.addEventListener('click', pendingApplicants)
+approvedTab.addEventListener('click', approvedApplicants)
+
+//Tab filter functions
+function allApplicants() {
+	tabFilters = ["pending", "waitlisted", "rejected", "accepted"]
+	showApplicants()
+}
+
+function rejectedApplicants() {
+	tabFilters = ["rejected"]
+	showApplicants()
+}
+
+function waitlistedApplicants() {
+	tabFilters = ["waitlisted"]
+	showApplicants()
+}
+
+function pendingApplicants() {
+	tabFilters = ["pending"]
+	showApplicants()
+}
+
+function approvedApplicants() {
+	tabFilters = ["accepted"]
+	showApplicants()
+}
+//__________________________
 
 //School filters
 var tutortreeButton = document.getElementById('tutortree-button')
@@ -22,8 +62,19 @@ var berkeleyButton = document.getElementById('berkeley-button')
 var oregonstateButton = document.getElementById('oregonstate-button')
 var uoregonButton = document.getElementById('uoregon-button')
 
-//Add school onclick listeners
+//School filter onclick listeners
 tutortreeButton.addEventListener('click', tutortreeApplicants)
+ucsdButton.addEventListener('click', tutortreeApplicants)
+uscButton.addEventListener('click', tutortreeApplicants)
+uclaButton.addEventListener('click', tutortreeApplicants)
+pepperdineButton.addEventListener('click', tutortreeApplicants)
+csunButton.addEventListener('click', tutortreeApplicants)
+ucsbButton.addEventListener('click', tutortreeApplicants)
+stanfordButton.addEventListener('click', tutortreeApplicants)
+sjsuButton.addEventListener('click', tutortreeApplicants)
+berkeleyButton.addEventListener('click', tutortreeApplicants)
+oregonstateButton.addEventListener('click', tutortreeApplicants)
+uoregonButton.addEventListener('click', tutortreeApplicants)
 
 //School filter functions
 function tutortreeApplicants() {
@@ -35,9 +86,6 @@ function tutortreeApplicants() {
 //Section to append all applicants
 var applicantSection = document.getElementById('tutor-applicant-section')
 
-//FILTERS
-var tabFilters = ["pending", "waitlisted", "rejected", "accepted"]
-var schoolFilters = ""
 
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
