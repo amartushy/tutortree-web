@@ -131,7 +131,7 @@ var userDB = firebase.firestore();
 
 function checkApplicantStatus() {
   //Check if they're a current user
-      firebase.auth().signInEmailAndPassword(tutorEmail.value, tutorPassword.value).then(function(data) {
+      firebase.auth().signInWithEmailAndPassword(tutorEmail.value, tutorPassword.value).then(function(data) {
           firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
                  //Create new tutor applicant
