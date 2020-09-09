@@ -158,9 +158,11 @@ function checkApplicantStatus() {
 }
 function createFirestoreTutorApplicant(tutorApplicantID) {
 	
-      var cleanSchoolName = cleanSchoolName(tutorSchool.value)
-      
-      var FA20DestinationSchool = FA20destinationSchoolList.indexOf(tutorSchool.value) !== -1
+	if(tutorSchool.value == "other"){
+		var cleanSchoolName = tutorSchoolOther.value
+	} else {
+		var cleanSchoolName = cleanSchoolName(tutorSchool.value)
+	}
       
       var newTutorDict = {
               "email" : tutorEmail.value,
@@ -236,7 +238,6 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
 		    "email" : tutorEmail.value,
                     "school" : cleanSchoolName,
                     "timeSubmitted" : new Date() / 1000,
-		    "destinationSchool" : FA20DestinationSchool,
                     "interviewScore" : 0,
                     "assessmentScore" : 0,
                     "completedInterview" : false,
@@ -256,7 +257,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
 				"major" : tutorMajor.value,
 				"whyTutor" : tutorWhyTutor.value,
 				"groups" : tutorGroups.value,
-				"schoolName" : tutorSchool.value,
+				"schoolName" : cleanSchoolName,
 				"year" : tutorYear.value
 			},
 			"applicationPoints" : {
@@ -277,10 +278,12 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
       })
 }
 function createNewUserTutorApplicant(tutorApplicantID) {
-
-      var cleanSchoolName = cleanSchoolName(tutorSchool.value)	
-      
-      var FA20DestinationSchool = FA20destinationSchoolList.indexOf(tutorSchool.value) !== -1
+	
+	if(tutorSchool.value == "other"){
+		var cleanSchoolName = tutorSchoolOther.value
+	} else {
+		var cleanSchoolName = cleanSchoolName(tutorSchool.value)
+	}
 	
         var newTutorDict = {
               "email" : tutorEmail.value,
@@ -290,7 +293,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
               "school" : cleanSchoolName,
               "howHeard" : tutorHowHeard.value,
               "timeSubmitted" : new Date() / 1000,
-              "tutorApplicant" : true,
+              "tutorApplicant" : true,≈ c
               "application" : {
                   "didSubmitPreInterview" : false,
                   "didRequestInterview" : false,
@@ -355,7 +358,6 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                     "email" : tutorEmail.value,
                     "school" : cleanSchoolName,
                     "timeSubmitted" : new Date() / 1000,
-		    "destinationSchool" : FA20DestinationSchool,		
                     "interviewScore" : 0,
                     "assessmentScore" : 0,
                     "completedInterview" : false,
@@ -375,7 +377,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
 				"major" : tutorMajor.value,
 				"groups" : tutorGroups.value,
 				"whyTutor" : tutorWhyTutor.value,
-				"schoolName" : tutorSchool.value,
+				"schoolName" : cleanSchoolName,
 				"year" : tutorYear.value
 			},
 			"applicationPoints" : {
@@ -411,7 +413,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                     "pricePHH" : 10,
                     "profileImage" : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/images%2FTTLogo-Mint.png?alt=media&token=c8d6559e-7fa8-4fed-81cc-1f09d5da56a5",
                     "pushToken" : "",
-                    "school" : tutorSchool.value,
+                    "school" : 	tutorSchool.value,
 		                "tutorApplicantStatus" : "pending"
                 }
         
@@ -489,30 +491,3 @@ function cleanSchoolName(schoolField){
 	}							
 }
 }
-
-var contains = function(needle) {
-    // Per spec, the way to identify NaN is that it is not equal to itself
-    var findNaN = needle !== needle;
-    var indexOf;
-
-    if(!findNaN && typeof Array.prototype.indexOf === 'function') {
-        indexOf = Array.prototype.indexOf;
-    } else {
-        indexOf = function(needle) {
-            var i = -1, index = -1;
-
-            for(i = 0; i < this.length; i++) {
-                var item = this[i];
-
-                if((findNaN && item !== item) || item === needle) {
-                    index = i;
-                    break;
-                }
-            }
-
-            return index;
-        };
-    }
-
-    return indexOf.call(this, needle) > -1;
-};
