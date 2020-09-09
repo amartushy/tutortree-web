@@ -131,7 +131,6 @@ var userDB = firebase.firestore();
 
 function checkApplicantStatus() {
   //Check if they're a current user
-  try {
       firebase.auth().signInEmailAndPassword(tutorEmail.value, tutorPassword.value).then(function(data) {
           firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
@@ -142,7 +141,7 @@ function checkApplicantStatus() {
           })
       })
     
-  } catch {
+  .catch(function(error) {
       firebase.auth().createUserWithEmailAndPassword(tutorEmail.value, tutorPassword.value).then(function(data) {
           //Create User and Tutor Applicant
           var tutorApplicantID = data.user.uid
@@ -155,7 +154,7 @@ function checkApplicantStatus() {
           var errorMessage = error.message;
           alert(errorMessage)
       });
-  }
+  })
 }
 function createFirestoreTutorApplicant(tutorApplicantID) {
 	
