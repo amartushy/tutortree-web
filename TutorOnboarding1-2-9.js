@@ -11,11 +11,12 @@ firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
 	var userDB = firebase.firestore()
 	var userID = user.uid
+	var usersSchool = ""
 	console.log("user is signed in with uid: " + userID)
 
 	userDB.collection("userTest").doc(userID).get().then(function(doc) {
 		tutorApplicantStatus = capitalizeFirstLetter(doc.data().tutorApplicantStatus)
-
+		usersSchool = doc.data().school
 		document.getElementById("tutor-hiring-status").innerHTML = tutorApplicantStatus
 
 	})
@@ -36,13 +37,18 @@ firebase.auth().onAuthStateChanged(function(user) {
         	.setAttribute('onClick', 'assessmentForm("'+userID+'")')  
 		
         //Interview completion view
-        if (doc.get("didRequestInterview") == false) {
-        	interviewIncomplete.style.display = "block"
-            	interviewComplete.style.display = "none"
-        } else {
-        	interviewIncomplete.style.display = "none"
-            	interviewComplete.style.display = "block"        
-        }
+	if (usersSchool == "other") {
+		alert("Sorry, we are currently unable to interview applicants that don't attend our current schools. Please check back later or email us if you think TutorTree should come to your campus!")
+	} else {
+		if (doc.get("didRequestInterview") == false) {
+        		interviewIncomplete.style.display = "block"
+            		interviewComplete.style.display = "none"
+		} else {
+			interviewIncomplete.style.display = "none"
+			interviewComplete.style.display = "block"        
+		}
+	}
+        
         document.getElementById("schedule-interview")
             	.setAttribute('onClick', 'scheduleInterview("'+userID+'")')
 
