@@ -479,6 +479,10 @@ function cleanSchoolName(schoolField){
 	else if(schoolFieldNoComma.match(/.*stanford.*/)) {
 	 	return "stanford"
 	}	
+	// SDSU
+	else if(schoolFieldNoComma.match(/.*san diego state.*/)) {
+	 	return "sdsu"
+	}		
 	// return if no  match
 	else {
 	 	return schoolField
