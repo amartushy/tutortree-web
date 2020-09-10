@@ -252,7 +252,7 @@ function submitAssessment(userID) {
 
 //Schedule Interview
 var isScheduleShowing = false
-function scheduleInterview(userID) {	
+function scheduleInterview(userID, usersSchool) {	
 	
 	if (usersSchool == "other") {
 		alert("Sorry, we are currently unable to interview applicants that don't attend our current schools. Please check back later or email us if you think TutorTree should come to your campus!")
