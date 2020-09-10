@@ -293,7 +293,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
               "school" : cleanSchoolName,
               "howHeard" : tutorHowHeard.value,
               "timeSubmitted" : new Date() / 1000,
-              "tutorApplicant" : true,≈ c
+              "tutorApplicant" : true,
               "application" : {
                   "didSubmitPreInterview" : false,
                   "didRequestInterview" : false,
