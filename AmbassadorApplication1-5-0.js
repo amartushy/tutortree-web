@@ -214,7 +214,8 @@ function createNewUserAmbassadorApplicant(ambassadorID) {
 		"dateApplied" : new Date / 1000,
 		"numberOfFollowers" : followersField.value,
 		"organizations" : organizationsField.value,
-		"socialHandle" : socialMediaField.value,
+		"socialMediaField" : socialMediaField.value,
+		"socialHandle" : socialHandleField.value,
 		"year" : yearField.value,
 		"major" : majorField.value,
 		"email" : emailField.value,
@@ -233,7 +234,8 @@ function createNewUserAmbassadorApplicant(ambassadorID) {
 		"dateApplied" : new Date / 1000,
 		"numberOfFollowers" : followersField.value,
 		"organizations" : organizationsField.value,
-		"socialHandle" : socialMediaField.value,
+		"socialMediaField" : socialMediaField.value,
+		"socialHandle" : socialHandleField.value,
 		"year" : yearField.value,
 	}
 
@@ -296,7 +298,8 @@ function createFirestoreAmbassadorApplicant(ambassadorID) {
 		"dateApplied" : new Date / 1000,
 		"numberOfFollowers" : followersField.value,
 		"organizations" : organizationsField.value,
-		"socialHandle" : socialMediaField.value,
+		"socialMediaField" : socialMediaField.value,
+		"socialHandle" : socialHandleField.value,
 		"year" : yearField.value,
 		"major" : majorField.value,
 		"email" : emailField.value,
@@ -315,7 +318,8 @@ function createFirestoreAmbassadorApplicant(ambassadorID) {
 		"dateApplied" : new Date / 1000,
 		"numberOfFollowers" : followersField.value,
 		"organizations" : organizationsField.value,
-		"socialHandle" : socialMediaField.value,
+		"socialMediaField" : socialMediaField.value,
+		"socialHandle" : socialHandleField.value,
 		"year" : yearField.value
 	}
 	
