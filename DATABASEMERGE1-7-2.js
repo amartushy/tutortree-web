@@ -66,7 +66,7 @@ function updateAmbassadors() {
 			 if (doc.data().socialMediaField != null) {
 				 socialMediaField = doc.data().socialMediaField
 			 }
-			userDB.collection("ambassadorTest").doc(doc.id).collection('ambassadorApplication').doc('application').set({"socialMediaField" : socialMediaField }, { merge: true })
+			userDB.collection("userTest").doc(doc.id).collection('ambassadorApplication').doc('application').set({"socialMediaField" : socialMediaField }, { merge: true })
 
 		})
 	})
