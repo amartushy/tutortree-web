@@ -54,86 +54,23 @@
 	
 	
 	
-	var mergeAmbassadors = document.getElementById('merge-ambassadors')
-	mergeAmbassadors.setAttribute('onClick', 'updateAmbassadors()')
-	
-	function updateAmbassadors() {
-		
-		userDB.collection('ambassadors').onSnapshot(function(user) {
-			user.forEach(function(doc) {
-				
-				var favoriteOffCampus = "",
-				    howHeardField = "",
-				    knowsEmployees = "",
-				    firstName = "",
-				    lastName = "",
-				    livesNearCampus = "",
-				    memeURL = "",
-	
-				    numberOfFollowers = "",
-				    organizations = "",
-				    socialHandle = "",
-				    year = ""
-				
-				var dateApplied = ""
-				try {
-					if (doc.data().metadata.dateApplied != null) {
-						dateApplied = doc.data().metadata.dateApplied
-					}
-				} catch {
-					console.log("no date applied")
-				}
-				
-				var ambassadorApplication = {
-					"favoriteOffCampus" : doc.data().favoriteOffCampus,
-					"howHeardField" : doc.data().howHeardField,
-					"knowsEmployees" : doc.data().knowsEmployees,
-					"firstName" : doc.data().firstName,
-					"lastName" : doc.data().lastName,
-					"livesNearCampus" : doc.data().livesNearCampus,
-					"memeURL" : doc.data().memeURL,
-					"dateApplied" : dateApplied,
-					"numberOfFollowers" : doc.data().numberOfFollowers,
-					"organizations" : doc.data().organizations,
-					"socialHandle" : doc.data().socialHandle,
-					"year" : doc.data().year
-				}
-				
-				var appUserInfo = {
-					"agreedTOS" : true,
-					"availability" : {
-						"Monday" : 0,
-						"Tuesday" : 0,
-						"Wednesday" : 0,
-						"Thursday" : 0,
-						"Friday" : 0,
-						"Saturday" : 0,
-						"Sunday" : 0
-					},
-					"bio" : "Please enter a short description of yourself",
-					"email" : doc.data().email,
-					"isAdmin" : false,
-					"isEmailOn" : false,
-					"isPushOn" : false,
-					"isSMSOn" : false,
-					"isTutor" : false,
-					"major" : doc.data().major,
-					"maxHPW" : 20,
-					"name" : doc.data().firstName + " " + doc.data().lastName,
-					"phoneNumber" : doc.data().phoneNumber,
-					"pricePHH" : 10,
-					"profileImage" : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/images%2FTTLogo-Mint.png?alt=media&token=c8d6559e-7fa8-4fed-81cc-1f09d5da56a5",
-					"pushToken" : "",
-					"school" : doc.data().school,
-					"ambassadorApplicationStatus" : doc.data().status
-				}
-				
-				userDB.collection("userTest").doc(doc.id).set(appUserInfo, { merge: true })
-				userDB.collection("userTest").doc(doc.id).collection("ambassadorApplication").doc("application")
+var mergeAmbassadors = document.getElementById('merge-ambassadors')
+mergeAmbassadors.setAttribute('onClick', 'updateAmbassadors()')
 
-			})
+function updateAmbassadors() {
+
+	userDB.collection('ambassadors').onSnapshot(function(user) {
+		user.forEach(function(doc) {
+
+			var socialMediaField = ""
+			 if (doc.data().socialMediaField != null) {
+				 socialMediaField = doc.data().socialMediaField
+			 }
+			userDB.collection("ambassadorTest").doc(doc.id).set({"socialMediaField" : socialMediaField }, { merge: true })
+
 		})
-	}
+	})
+}
    
     
     var timeCreatedButton = document.getElementById('update-time-created')
