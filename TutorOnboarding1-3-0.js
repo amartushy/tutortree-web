@@ -37,20 +37,16 @@ firebase.auth().onAuthStateChanged(function(user) {
         	.setAttribute('onClick', 'assessmentForm("'+userID+'")')  
 		
         //Interview completion view
-	if (usersSchool == "other") {
-		alert("Sorry, we are currently unable to interview applicants that don't attend our current schools. Please check back later or email us if you think TutorTree should come to your campus!")
+	if (doc.get("didRequestInterview") == false) {
+		interviewIncomplete.style.display = "block"
+		interviewComplete.style.display = "none"
 	} else {
-		if (doc.get("didRequestInterview") == false) {
-        		interviewIncomplete.style.display = "block"
-            		interviewComplete.style.display = "none"
-		} else {
-			interviewIncomplete.style.display = "none"
-			interviewComplete.style.display = "block"        
-		}
+		interviewIncomplete.style.display = "none"
+		interviewComplete.style.display = "block"        
 	}
-        
+	
         document.getElementById("schedule-interview")
-            	.setAttribute('onClick', 'scheduleInterview("'+userID+'")')
+            	.setAttribute('onClick', 'scheduleInterview("'+userID+ '","'+usersSchool+'")')
 
 	//Upload transcript view
 	if (doc.get("uploadedTranscript") == false ) {
@@ -257,15 +253,21 @@ function submitAssessment(userID) {
 //Schedule Interview
 var isScheduleShowing = false
 function scheduleInterview(userID) {	
-	if (isScheduleShowing) {
-		document.getElementById("request-interview-form")
-			.style.display = "none"
-		isScheduleShowing = false
+	
+	if (usersSchool == "other") {
+		alert("Sorry, we are currently unable to interview applicants that don't attend our current schools. Please check back later or email us if you think TutorTree should come to your campus!")
 	} else {
-		document.getElementById("request-interview-form")
-			.style.display = "block"
-		isScheduleShowing = true	
-	}	
+		if (isScheduleShowing) {
+			document.getElementById("request-interview-form")
+				.style.display = "none"
+			isScheduleShowing = false
+		} else {
+			document.getElementById("request-interview-form")
+				.style.display = "block"
+			isScheduleShowing = true	
+		}
+	}
+	
 	
 	var applicantsName = ''
 	var applicantsEmail = ''
