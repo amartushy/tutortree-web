@@ -168,7 +168,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
               "firstName" : tutorFirst.value,
               "lastName" : tutorLast.value,
               "phoneNumber" : tutorPhone.value,
-              "school" : cleanSchoolName,
+              "school" : schoolNameClean,
               "howHeard" : tutorHowHeard.value,
               "timeSubmitted" : new Date() / 1000,
               "tutorApplicant" : true,
@@ -235,7 +235,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
 	
 	var applicationData = {
 		    "email" : tutorEmail.value,
-                    "school" : cleanSchoolName,
+                    "school" : schoolNameClean,
                     "timeSubmitted" : new Date() / 1000,
                     "interviewScore" : 0,
                     "assessmentScore" : 0,
@@ -256,7 +256,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
 				"major" : tutorMajor.value,
 				"whyTutor" : tutorWhyTutor.value,
 				"groups" : tutorGroups.value,
-				"schoolName" : cleanSchoolName,
+				"schoolName" : schoolNameClean,
 				"year" : tutorYear.value
 			},
 			"applicationPoints" : {
@@ -289,7 +289,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
               "firstName" : tutorFirst.value,
               "lastName" : tutorLast.value,
               "phoneNumber" : tutorPhone.value,
-              "school" : cleanSchoolName,
+              "school" : schoolNameClean,
               "howHeard" : tutorHowHeard.value,
               "timeSubmitted" : new Date() / 1000,
               "tutorApplicant" : true,
@@ -355,7 +355,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                 }
         var applicationData = {
                     "email" : tutorEmail.value,
-                    "school" : cleanSchoolName,
+                    "school" : schoolNameClean,
                     "timeSubmitted" : new Date() / 1000,
                     "interviewScore" : 0,
                     "assessmentScore" : 0,
