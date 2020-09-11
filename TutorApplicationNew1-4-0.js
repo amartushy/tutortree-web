@@ -428,7 +428,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                    location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
               })
           })
-	
+}	
 function cleanSchoolName(schoolField){
 
 	var schoolFieldLower = schoolField.toLowerCase()
@@ -489,4 +489,4 @@ function cleanSchoolName(schoolField){
 	 	return schoolField
 	}							
 }
-}
+
