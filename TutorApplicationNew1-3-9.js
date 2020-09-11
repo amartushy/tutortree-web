@@ -157,11 +157,10 @@ function checkApplicantStatus() {
   })
 }
 function createFirestoreTutorApplicant(tutorApplicantID) {
+	var schoolNameClean = cleanSchoolName(tutorSchool.value)
 	
 	if(tutorSchool.value == "other"){
-		var cleanSchoolName = tutorSchoolOther.value
-	} else {
-		var cleanSchoolName = cleanSchoolName(tutorSchool.value)
+		var schoolNameClean = tutorSchoolOther.value
 	}
       
       var newTutorDict = {
@@ -279,10 +278,10 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
 }
 function createNewUserTutorApplicant(tutorApplicantID) {
 	
+	var schoolNameClean = cleanSchoolName(tutorSchool.value)
+	
 	if(tutorSchool.value == "other"){
-		var cleanSchoolName = tutorSchoolOther.value
-	} else {
-		var cleanSchoolName = cleanSchoolName(tutorSchool.value)
+		var schoolNameClean = tutorSchoolOther.value
 	}
 	
         var newTutorDict = {
