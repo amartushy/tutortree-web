@@ -284,7 +284,7 @@ var tutorFacultyComplete = document.getElementById('tutor-faculty-complete')
 //TUTOR MODAL FUNCTIONS_________________________________________________________________________
 
 function showTutorModal(ID) {
-	document.getElementById('tutor-inf-modal').style.display = 'flex'
+	document.getElementById('tutor-info-modal').style.display = 'flex'
 	//Stored values
 	var assessmentScore = 0
 	var interviewScore = 0
