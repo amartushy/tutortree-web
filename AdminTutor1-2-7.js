@@ -317,12 +317,12 @@ function showTutorModal(ID) {
 		//Open Transcript
 		tutorTranscript.addEventListener('click', function() {
 			window.open(doc.data().transcriptFile)
-		}
+		})
 						 
 		//Open Faculty Recommendation				 				
 		tutorFaculty.addEventListener('click', function() {
 			window.open(doc.data().transcriptFile)
-		}
+		})
 		
 		//Application Tab Data
 		tutorFirst.innerHTML = doc.data().applicationFields.firstName
