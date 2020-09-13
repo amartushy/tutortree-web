@@ -345,10 +345,10 @@ function showTutorModal(ID) {
 		//Application Tab Data
 		tutorFirst.placeholder = doc.data().applicationFields.firstName
 		tutorLast.placeholder = doc.data().applicationFields.lastName
-		tutorSchool.placeholder = doc.data().applicationFields.school
+		tutorSchool.placeholder = doc.data().applicationFields.schoolName
 		tutorYear.placeholder = doc.data().applicationFields.year
 		tutorCourses.placeholder = doc.data().applicationFields.courses
-		tutorWhy.placeholder = doc.data().applicationFields.whyTutor
+		tutorWhy.placeholder = doc.data().applicationFields.whytutor
 		tutorGroups.placeholder = doc.data().applicationFields.groups
 		
 		//More Tab Data
