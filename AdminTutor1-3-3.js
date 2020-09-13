@@ -248,7 +248,7 @@ tutorInterviewTab.addEventListener('click', function() {
 	tutorInterviewSection.style.display = 'flex'
 	tutorMoreSection.style.display = 'none'
 })	
-tutorMoreSection.addEventListener('click', function() {
+tutorMoreTab.addEventListener('click', function() {
 	tutorApplicationSection.style.display = 'none'
 	tutorInterviewSection.style.display = 'none'
 	tutorMoreSection.style.display = 'flex'
@@ -311,8 +311,8 @@ function showTutorModal(ID) {
 	userDB.collection("userTest").doc(ID).get().then(function(tutor) {
 		tutorImage.src = tutor.data().profileImage
 		tutorName.innerHTML = tutor.data().name
-		tutorEmail.innerHTML = tutor.data().email
-		tutorMajor.innerHTML = tutor.data().major
+		tutorEmail.placeholder = tutor.data().email
+		tutorMajor.placeholder = tutor.data().major
 	})
 	
 	//Application snapshot values
@@ -343,13 +343,13 @@ function showTutorModal(ID) {
 		})
 		
 		//Application Tab Data
-		tutorFirst.innerHTML = doc.data().applicationFields.firstName
-		tutorLast.innerHTML = doc.data().applicationFields.lastName
-		tutorSchool.innerHTML = doc.data().applicationFields.school
-		tutorYear.innerHTML = doc.data().applicationFields.year
-		tutorCourses.innerHTML = doc.data().applicationFields.courses
-		tutorWhy.innerHTML = doc.data().applicationFields.whyTutor
-		tutorGroups.innerHTML = doc.data().applicationFields.groups
+		tutorFirst.placeholder = doc.data().applicationFields.firstName
+		tutorLast.placeholder = doc.data().applicationFields.lastName
+		tutorSchool.placeholder = doc.data().applicationFields.school
+		tutorYear.placeholder = doc.data().applicationFields.year
+		tutorCourses.placeholder = doc.data().applicationFields.courses
+		tutorWhy.placeholder = doc.data().applicationFields.whyTutor
+		tutorGroups.placeholder = doc.data().applicationFields.groups
 		
 		//More Tab Data
 		tutorApplied.innerHTML = "Date Applied: " + formatApplicantDate(doc.data().timeApplied)
