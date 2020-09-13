@@ -329,17 +329,22 @@ function showTutorModal(ID) {
 		var didTranscript = doc.data().uploadedTranscript
 		var didFaculty = doc.data().uploadedFaculty
 		
+		
+		//Get Files
+		var facultyFile = doc.data().facultyFile
+		var transcriptFile = doc.data().transcriptFile
+		
 		//Conditionally Display Elements
 		displayProgress(didRequest, didComplete, didTranscript, didFaculty)
 		
 		//Open Transcript
 		tutorTranscript.addEventListener('click', function() {
-			window.open(doc.data().transcriptFile)
+			window.open(transcriptFile)
 		})
 						 
 		//Open Faculty Recommendation				 				
 		tutorFaculty.addEventListener('click', function() {
-			window.open(doc.data().facultyFile)
+			window.open(facultyFile)
 		})
 		
 		//Application Tab Data
