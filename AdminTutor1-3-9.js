@@ -392,12 +392,12 @@ function showTutorModal(ID) {
 //Interview Onblurs_____________________________________________________________________________________________________
 
 function setInterviewOnblurs(applicantID) {
-	tutorTime.onblur = function() {
+	tutorOnTime.onblur = function() {
 		userDB.collection("userTest")
 			.doc(applicantID)
 			.collection("tutorApplication")
 			.doc("interview")
-			.update( { "interviewNotes.onTimeNotes" : tutorTime.value } )
+			.update( { "interviewNotes.onTimeNotes" : tutorOnTime.value } )
 	}
 	tutorChallenge.onblur = function() {
 		userDB.collection("userTest")
