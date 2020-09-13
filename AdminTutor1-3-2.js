@@ -242,17 +242,17 @@ tutorApplicationTab.addEventListener('click', function() {
 	tutorApplicationSection.style.display = 'flex'
 	tutorInterviewSection.style.display = 'none'
 	tutorMoreSection.style.display = 'none'
-}				     
+})			     
 tutorInterviewTab.addEventListener('click', function() {
 	tutorApplicationSection.style.display = 'none'
 	tutorInterviewSection.style.display = 'flex'
 	tutorMoreSection.style.display = 'none'
-}	
+})	
 tutorMoreSection.addEventListener('click', function() {
 	tutorApplicationSection.style.display = 'none'
 	tutorInterviewSection.style.display = 'none'
 	tutorMoreSection.style.display = 'flex'
-}
+})
 
 //Application Section Elements
 var tutorFirst = document.getElementById('tutor-first')
