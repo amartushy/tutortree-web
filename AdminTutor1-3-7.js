@@ -339,7 +339,7 @@ function showTutorModal(ID) {
 						 
 		//Open Faculty Recommendation				 				
 		tutorFaculty.addEventListener('click', function() {
-			window.open(doc.data().transcriptFile)
+			window.open(doc.data().facultyFile)
 		})
 		
 		//Application Tab Data
