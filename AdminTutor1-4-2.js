@@ -334,9 +334,8 @@ function showTutorModal(ID) {
 		displayProgress(didRequest, didComplete, didTranscript, didFaculty)
 		
 		//Open Transcript
-		tutorTranscript.addEventListener('click', function() {
-			window.open(doc.data().transcriptFile)
-		})
+		var transcriptFile = doc.data().transcriptFile
+		tutorTranscript.setAttribute('onclick', 'showTranscript("' + transcriptFile + '")')
 						 
 		//Open Faculty Recommendation				 				
 		tutorFaculty.addEventListener('click', function() {
@@ -517,7 +516,13 @@ function setApplicationOnblurs(applicantID) {
 	}
 }
 
+function showTranscript(transcriptFile) {
+	window.open(transcriptFile)
+}
 
+function showFaculty(facultyFile) {
+	window.open(facultyFile)
+}
 
 function displayProgress(didRequest, didComplete, didTranscript, didFaculty) {
 	//Requested Interview 
