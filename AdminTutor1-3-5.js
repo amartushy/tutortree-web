@@ -367,16 +367,16 @@ function showTutorModal(ID) {
 	//Interview Snapshot Values
 	userDB.collection("userTest").doc(ID).collection("tutorApplication").doc("interview").onSnapshot(function(doc) {
 		//Populate Interview Notes Data
-		tutorTime.innerHTML = doc.data().interviewNotes.onTimeNotes
-		tutorChallenge.innerHTML = doc.data().interviewNotes.challengingNotes
-		tutorApproach.innerHTML = doc.data().interviewNotes.troubleNotes
-		tutorSituation.innerHTML = doc.data().interviewNotes.situationNotes
-		tutorConfidence.innerHTML = doc.data().interviewNotes.confidenceNotes
-		tutorPrepared.innerHTML = doc.data().interviewNotes.preparedNotes
-		tutorConcept.innerHTML = doc.data().interviewNotes.explainNotes
-		tutorOnline.innerHTML = doc.data().interviewNotes.onlineNotes
-		tutorTree.innerHTML = doc.data().interviewNotes.helpNotes
-		tutorQuestions.innerHTML = doc.data().interviewNotes.questionNotes
+		tutorTime.placeholder = doc.data().interviewNotes.onTimeNotes
+		tutorChallenge.placeholder = doc.data().interviewNotes.challengingNotes
+		tutorApproach.placeholder = doc.data().interviewNotes.troubleNotes
+		tutorSituation.placeholder = doc.data().interviewNotes.situationNotes
+		tutorConfidence.placeholder = doc.data().interviewNotes.confidenceNotes
+		tutorPrepared.placeholder = doc.data().interviewNotes.preparedNotes
+		tutorConcept.placeholder = doc.data().interviewNotes.explainNotes
+		tutorOnline.placeholder = doc.data().interviewNotes.onlineNotes
+		tutorTree.placeholder = doc.data().interviewNotes.helpNotes
+		tutorQuestions.placeholder = doc.data().interviewNotes.questionNotes
 		
 		setInterviewOnblurs()
 	})
