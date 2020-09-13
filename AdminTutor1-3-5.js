@@ -267,7 +267,7 @@ var tutorGroups = document.getElementById('tutor-groups')
 
 
 //Interview Section Elements
-var tutorTime = document.getElementById('tutor-time')
+var tutorOnTime = document.getElementById('tutor-onTime')
 var tutorChallenge = document.getElementById('tutor-challenge')
 var tutorApproach = document.getElementById('tutor-approach')
 var tutorSituation = document.getElementById('tutor-situation')
@@ -280,7 +280,7 @@ var tutorQuestions = document.getElementById('tutor-questions')
 
 
 //More Section Elements
-var tutorApplied = document.getElementById('tutor-time')
+var tutorApplied = document.getElementById('tutor-applied')
 var tutorNotes = document.getElementById('tutor-notes')
 
 var tutorRequestedInterview = document.getElementById('tutor-requested-interview')
@@ -367,7 +367,7 @@ function showTutorModal(ID) {
 	//Interview Snapshot Values
 	userDB.collection("userTest").doc(ID).collection("tutorApplication").doc("interview").onSnapshot(function(doc) {
 		//Populate Interview Notes Data
-		tutorTime.placeholder = doc.data().interviewNotes.onTimeNotes
+		tutorOnTime.placeholder = doc.data().interviewNotes.onTimeNotes
 		tutorChallenge.placeholder = doc.data().interviewNotes.challengingNotes
 		tutorApproach.placeholder = doc.data().interviewNotes.troubleNotes
 		tutorSituation.placeholder = doc.data().interviewNotes.situationNotes
