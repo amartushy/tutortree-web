@@ -339,11 +339,13 @@ function showTutorModal(ID) {
 		
 		//Open Transcript
 		tutorTranscript.addEventListener('click', function() {
+			console.log(transcriptFile)
 			window.open(transcriptFile)
 		})
 						 
 		//Open Faculty Recommendation				 				
 		tutorFaculty.addEventListener('click', function() {
+			console.log(facultyFile)
 			window.open(facultyFile)
 		})
 		
@@ -353,7 +355,7 @@ function showTutorModal(ID) {
 		tutorSchool.placeholder = doc.data().applicationFields.schoolName
 		tutorYear.placeholder = doc.data().applicationFields.year
 		tutorCourses.placeholder = doc.data().applicationFields.courses
-		tutorWhy.placeholder = doc.data().applicationFields.whytutor
+		tutorWhy.placeholder = doc.data().applicationFields.whyTutor
 		tutorGroups.placeholder = doc.data().applicationFields.groups
 		
 		//More Tab Data
