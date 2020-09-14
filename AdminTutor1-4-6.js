@@ -329,6 +329,8 @@ function showTutorModal(ID) {
 		var didTranscript = doc.data().uploadedTranscript
 		var didFaculty = doc.data().uploadedFaculty
 		
+		tutorTranscript.removeChild(tutorTranscript.firstChild)
+		tutorFaculty.removeChild(tutorFaculty.firstChild)
 		//Display header transcript and faculty buttons
 		if (didTranscript) {
 			
