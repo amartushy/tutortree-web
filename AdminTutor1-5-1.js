@@ -108,7 +108,6 @@ function showApplicants() {
 		while(applicantSection.firstChild) {
 			applicantSection.removeChild(applicantSection.firstChild)
 		}
-		var tutorsEmails = []
 		//Reinitialize Counter
 		var count = 1
 		allTutors.forEach(function(doc)  {
@@ -119,10 +118,8 @@ function showApplicants() {
 				applicantPhone = doc.data().phoneNumber,
 				applicantSchool = doc.data().school,
 				applicantStatus = doc.data().tutorApplicantStatus
-			tutorsEmails.push(applicantEmail)
 			buildApplicantBlock(applicantID, applicantCount, applicantName, applicantEmail, applicantPhone, applicantSchool, applicantStatus)
 			count += 1	
-			console.log(tutorsEmails)
 		})
 		
 	})
