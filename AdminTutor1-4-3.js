@@ -127,7 +127,6 @@ function showApplicants() {
 }
 
 function buildApplicantBlock(ID, count, name, email, phone, school, status) {
-	console.log(status)
 	
 	//Main block that holds all applicant elements
 	var applicantBlock = document.createElement('div')
@@ -221,8 +220,8 @@ function buildApplicantBlock(ID, count, name, email, phone, school, status) {
 var tutorImage = document.getElementById('tutor-image')
 var tutorName = document.getElementById('tutor-name')
 var tutorScore = document.getElementById('tutor-score')
-var tutorTranscript = document.getElementById('tutor-transcript')
-var tutorFaculty = document.getElementById('tutor-faculty')
+var tutorTranscript = document.getElementById('transcript-div')
+var tutorFaculty = document.getElementById('faculty-div')
 
 
 //Tabs
@@ -301,6 +300,10 @@ var tutorFacultyComplete = document.getElementById('tutor-faculty-complete')
 //TUTOR MODAL FUNCTIONS_________________________________________________________________________
 
 function showTutorModal(ID) {
+	//remove transcript and faculty buttons on open
+	tutorTranscript.removeChild(tutorTranscript.firstChild)
+	tutorFaculty.removeChild(tutorFaculty.firstChild)
+	
 	document.getElementById('tutor-info-modal').style.display = 'flex'
 	//Stored values
 	var assessmentScore = 0
@@ -329,18 +332,29 @@ function showTutorModal(ID) {
 		var didTranscript = doc.data().uploadedTranscript
 		var didFaculty = doc.data().uploadedFaculty
 		
+		//Display header transcript and faculty buttons
+		if (didTranscript) {
+			var transcriptButton = document.createElement('div')
+			transcriptButton.innerHTML = 'file-alt'
+			transcriptButton.setAttribute('class', 'tutor-transcript')
+			transcriptButton.addEventListener('click', function() {
+				window.open(doc.data().transcriptFile)
+			})
+			tutorTranscript.appendChild(transcriptButton)
+		}
+		
+		if (didFaculty) {
+			var facultyButton = document.createElement('div')
+			facultyButton.innerHTML = 'graduation-cap'
+			facultyButton.setAttribute('class', 'tutor-faculty')
+			facultyButton.addEventListener('click', function() {
+				window.open(doc.data().facultyFile)
+			})
+			tutorFaculty.appendChild(facultyButton)
+		}
 		
 		//Conditionally Display Elements
 		displayProgress(didRequest, didComplete, didTranscript, didFaculty)
-		
-		//Open Transcript
-		var transcriptFile = doc.data().transcriptFile
-		tutorTranscript.setAttribute('onclick', 'showTranscript("' + transcriptFile + '")')
-						 
-		//Open Faculty Recommendation				 				
-		tutorFaculty.addEventListener('click', function() {
-			window.open(doc.data().facultyFile)
-		})
 		
 		//Application Tab Data
 		tutorFirst.placeholder = doc.data().applicationFields.firstName
@@ -545,22 +559,18 @@ function displayProgress(didRequest, didComplete, didTranscript, didFaculty) {
 
 	//Transcript 
 	if(didTranscript) {
-		tutorTranscript.style.display = "block"
 		tutorTranscriptComplete.style.display = "block"
 		tutorTranscriptIncomplete.style.display = "none"
 	} else {
-		tutorTranscript.style.display = "none"
 		tutorTranscriptComplete.style.display = "none"
 		tutorTranscriptIncomplete.style.display = "block"
 	}
 
 	//Faculty
 	if (didFaculty) {
-		tutorFaculty.style.display = "block"
 		tutorFacultyComplete.style.display = "block"
 		tutorFacultyIncomplete.style.display = "none"
 	} else {
-		tutorFaculty.style.display = "none"
 		tutorFacultyComplete.style.display = "none"
 		tutorFacultyIncomplete.style.display = "block"
 	}
