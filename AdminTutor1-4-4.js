@@ -300,9 +300,6 @@ var tutorFacultyComplete = document.getElementById('tutor-faculty-complete')
 //TUTOR MODAL FUNCTIONS_________________________________________________________________________
 
 function showTutorModal(ID) {
-	//remove transcript and faculty buttons on open
-	tutorTranscript.removeChild(tutorTranscript.firstChild)
-	tutorFaculty.removeChild(tutorFaculty.firstChild)
 	
 	document.getElementById('tutor-info-modal').style.display = 'flex'
 	//Stored values
@@ -334,6 +331,7 @@ function showTutorModal(ID) {
 		
 		//Display header transcript and faculty buttons
 		if (didTranscript) {
+			
 			var transcriptButton = document.createElement('div')
 			transcriptButton.innerHTML = 'file-alt'
 			transcriptButton.setAttribute('class', 'tutor-transcript')
@@ -341,6 +339,8 @@ function showTutorModal(ID) {
 				window.open(doc.data().transcriptFile)
 			})
 			tutorTranscript.appendChild(transcriptButton)
+			tutorTranscript.removeChild(tutorTranscript.firstChild)
+
 		}
 		
 		if (didFaculty) {
@@ -351,6 +351,8 @@ function showTutorModal(ID) {
 				window.open(doc.data().facultyFile)
 			})
 			tutorFaculty.appendChild(facultyButton)
+			tutorFaculty.removeChild(tutorFaculty.firstChild)
+
 		}
 		
 		//Conditionally Display Elements
