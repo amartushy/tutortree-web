@@ -339,8 +339,6 @@ function showTutorModal(ID) {
 				window.open(doc.data().transcriptFile)
 			})
 			tutorTranscript.appendChild(transcriptButton)
-			tutorTranscript.removeChild(tutorTranscript.firstChild)
-
 		}
 		
 		if (didFaculty) {
@@ -351,8 +349,6 @@ function showTutorModal(ID) {
 				window.open(doc.data().facultyFile)
 			})
 			tutorFaculty.appendChild(facultyButton)
-			tutorFaculty.removeChild(tutorFaculty.firstChild)
-
 		}
 		
 		//Conditionally Display Elements
