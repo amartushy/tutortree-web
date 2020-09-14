@@ -264,6 +264,20 @@ var tutorCourses = document.getElementById('tutor-courses')
 var tutorWhy = document.getElementById('tutor-why')
 var tutorGroups = document.getElementById('tutor-groups')
 
+var applicationScore = document.getElementById('application-score')
+var majorScore = document.getElementById('major-score')
+var yearScore = document.getElementById('year-score')
+var whyScore = document.getElementById('why-score')
+var groupsScore = document.getElementById('groups-score')
+
+var majorMinus = document.getElementById('major-minus')
+var majorPlus = document.getElementById('major-plus')
+var yearMinus = document.getElementById('year-minus')
+var yearPlus = document.getElementById('year-plus')
+var whyMinus = document.getElementById('why-minus')
+var whyPlus = document.getElementById('why-plus')
+var groupsMinus = document.getElementById('groups-minus')
+var groupsPlus = document.getElementById('groups-plus')
 
 //Interview Section Elements
 var tutorOnTime = document.getElementById('tutor-onTime')
@@ -276,6 +290,39 @@ var tutorConcept = document.getElementById('tutor-concept')
 var tutorOnline = document.getElementById('tutor-online')
 var tutorTree = document.getElementById('tutor-tree')
 var tutorQuestions = document.getElementById('tutor-questions')
+
+var interviewScore = document.getElementById('interview-score')
+var onTimeScore = document.getElementById('onTime-score')
+var challengeScore = document.getElementById('challenge-score')
+var approachScore = document.getElementById('approach-score')
+var situationScore = document.getElementById('situation-score')
+var confidenceScore = document.getElementById('confidence-score')
+var preparedScore = document.getElementById('prepared-score')
+var conceptScore = document.getElementById('concept-score')
+var onlineScore = document.getElementById('online-score')
+var treeScore = document.getElementById('tree-score')
+var questionsScore = document.getElementById('questions-score')
+
+var onTimeMinus = document.getElementById('onTime-minus')
+var onTimePlus = document.getElementById('onTime-plus')
+var challengeMinus = document.getElementById('challenge-minus')
+var challengePlus = document.getElementById('challenge-plus')
+var approachMinus = document.getElementById('approach-minus')
+var approachPlus = document.getElementById('approach-plus')
+var situationMinus = document.getElementById('situation-minus')
+var situationPlus = document.getElementById('situation-plus')
+var confidenceMinus = document.getElementById('confidence-minus')
+var confidencePlus = document.getElementById('confidence-plus')
+var preparedMinus = document.getElementById('prepared-minus')
+var preparedPlus = document.getElementById('prepared-plus')
+var conceptMinus = document.getElementById('concept-minus')
+var conceptPlus = document.getElementById('concept-plus')
+var onlineMinus = document.getElementById('online-minus')
+var onlinePlus = document.getElementById('online-minus')
+var treeMinus = document.getElementById('tree-minus')
+var treePlus = document.getElementById('tree-plus')
+var questionsPlus = document.getElementById('questions-minus')
+var questionsPlus = document.getElementById('questions-minus')
 
 
 //More Section Elements
@@ -368,6 +415,13 @@ function showTutorModal(ID) {
 		tutorWhy.placeholder = doc.data().applicationFields.whyTutor
 		tutorGroups.placeholder = doc.data().applicationFields.groups
 		
+		applicationScore.innerHTML = doc.data().assessmentScore
+		interviewScore.innerHTML = doc.data().interviewScore
+		majorScore.innerHTML = doc.data().applicationPoints.majorPoints
+		yearScore.innerHTML = doc.data().applicationPoints.yearPoints
+		whyScore.innerHTML = doc.data().applicationPoints.whyTutorPoints
+		groupsScore.innerHTML = doc.data().applicationPoints.groupsPoints
+		
 		//More Tab Data
 		tutorApplied.innerHTML = "Date Applied: " + formatApplicantDate(doc.data().timeApplied)
 		
@@ -394,6 +448,18 @@ function showTutorModal(ID) {
 		tutorOnline.placeholder = doc.data().interviewNotes.onlineNotes
 		tutorTree.placeholder = doc.data().interviewNotes.helpNotes
 		tutorQuestions.placeholder = doc.data().interviewNotes.questionNotes
+		
+		onTimeScore.innerHTML = doc.data().interviewScores.onTimeScore
+		challengeScore.innerHTML = doc.data().interviewScores.challengingScore
+		situationScore.innerHTML = doc.data().interviewScores.situationScore
+		approachScore.innerHTML = doc.data().interviewScores.troubleScore
+		confidenceScore.innerHTML = doc.data().interviewScores.confidenceScore
+		preparedScore.innerHTML = doc.data().interviewScores.preparedScore
+		conceptScore.innerHTML = doc.data().interviewScores.explainScore
+		onlineScore.innerHTML = doc.data().interviewScores.onlineScore
+		treeScore.innerHTML = doc.data().interviewScores.helpScore
+		questionsScore.innerHTML = doc.data().interviewScores.questionScore
+		
 		
 		setInterviewOnblurs()
 	})
