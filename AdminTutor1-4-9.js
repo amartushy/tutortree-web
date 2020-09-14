@@ -291,7 +291,7 @@ var tutorOnline = document.getElementById('tutor-online')
 var tutorTree = document.getElementById('tutor-tree')
 var tutorQuestions = document.getElementById('tutor-questions')
 
-var interviewScore = document.getElementById('interview-score')
+var interviewScoreHeader = document.getElementById('interview-score')
 var onTimeScore = document.getElementById('onTime-score')
 var challengeScore = document.getElementById('challenge-score')
 var approachScore = document.getElementById('approach-score')
@@ -416,7 +416,7 @@ function showTutorModal(ID) {
 		tutorGroups.placeholder = doc.data().applicationFields.groups
 		
 		applicationScore.innerHTML = doc.data().assessmentScore
-		interviewScore.innerHTML = doc.data().interviewScore
+		interviewScoreHeader.innerHTML = doc.data().interviewScore
 		majorScore.innerHTML = doc.data().applicationPoints.majorPoints
 		yearScore.innerHTML = doc.data().applicationPoints.yearPoints
 		whyScore.innerHTML = doc.data().applicationPoints.whyTutorPoints
