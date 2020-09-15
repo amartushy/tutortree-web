@@ -345,7 +345,10 @@ var tutorFacultyComplete = document.getElementById('tutor-faculty-complete')
 
 //TUTOR MODAL FUNCTIONS_________________________________________________________________________
 
+var globalApplicantID = ''
+
 function showTutorModal(ID) {
+	globalApplicantID = ID
 	
 	document.getElementById('tutor-info-modal').style.display = 'flex'
 	//Stored values
@@ -461,6 +464,8 @@ function showTutorModal(ID) {
 		
 		
 		setInterviewOnblurs()
+		setInterviewScoring()
+		
 	})
 }
 
@@ -596,6 +601,102 @@ function setApplicationOnblurs(applicantID) {
 			.doc("application")
 			.update( { "applicationFields.groups" : tutorGroups.value } )
 	}
+}
+function updateInterviewPoints(pathString, incrementor) {
+	//Get current value
+	var path = "interviewScores." + pathString
+	var valueToUpdate
+	userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = doc.data().interviewScores.pathString + incrementor
+		}
+	
+	//Update score
+	userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.update( { path : valueToUpdate } )
+}
+
+		questionsScore.innerHTML = doc.data().interviewScores.questionScore
+
+function setInterviewScoring() {
+	onTimeMinus.addEventListener('click', function() {
+		updateInterviewPoints('onTimeScore', -1)
+	})
+	onTimePlus.addEventListener('click', function() {
+		updateInterviewPoints('onTimeScore', 1)
+	})
+	
+	challengeMinus.addEventListener('click', function() {
+		updateInterviewPoints('challengingScore', -1)
+	})
+	challengePlus.addEventListener('click', function() {
+		updateInterviewPoints('challengingScore', 1)
+	})
+	
+	approachMinus.addEventListener('click', function() {
+		updateInterviewPoints('troubleScore', -1)
+	})
+	approachPlus.addEventListener('click', function() {
+		updateInterviewPoints('troubleScore', 1)
+	})
+	
+	situationMinus.addEventListener('click', function() {
+		updateInterviewPoints('situationScore', -1)
+	})
+	situationPlus.addEventListener('click', function() {
+		updateInterviewPoints('situationScore', 1)
+	})
+	
+	confidenceMinus.addEventListener('click', function() {
+		updateInterviewPoints('confidenceScore', -1)
+	})
+	confidencePlus.addEventListener('click', function() {
+		updateInterviewPoints('confidenceScore', 1)
+	})
+	
+	preparedMinus.addEventListener('click', function() {
+		updateInterviewPoints('preparedScore', -1)
+	})
+	preparedPlus.addEventListener('click', function() {
+		updateInterviewPoints('preparedScore', 1)
+	})
+	
+	conceptMinus.addEventListener('click', function() {
+		updateInterviewPoints('explainScore', -1)
+	})
+	conceptPlus.addEventListener('click', function() {
+		updateInterviewPoints('explainScore', 1)
+	})
+	
+	onlineMinus.addEventListener('click', function() {
+		updateInterviewPoints('onlineScore', -1)
+	})
+	onlinePlus.addEventListener('click', function() {
+		updateInterviewPoints('onlineScore', 1)
+	})
+	
+	treeMinus.addEventListener('click', function() {
+		updateInterviewPoints('helpScore', -1)
+	})
+	treePlus.addEventListener('click', function() {
+		updateInterviewPoints('helpScore', 1)
+	})
+	
+	questionsMinus.addEventListener('click', function() {
+		updateInterviewPoints('questionScore', -1)
+	})
+	questionsPlus.addEventListener('click', function() {
+		updateInterviewPoints('questionScore', 1)
+	})
+	
+	
 }
 
 function showTranscript(transcriptFile) {
