@@ -623,7 +623,6 @@ function updateInterviewPoints(pathString, incrementor) {
 		.update( { path : valueToUpdate } )
 }
 
-		questionsScore.innerHTML = doc.data().interviewScores.questionScore
 
 function setInterviewScoring() {
 	onTimeMinus.addEventListener('click', function() {
