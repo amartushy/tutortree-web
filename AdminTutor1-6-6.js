@@ -603,9 +603,44 @@ function setApplicationOnblurs(applicantID) {
 	}
 }
 
+function incrementInterviewScore() {
+	userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScore) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "interviewScore" : valueToUpdate } )
+		})
+	
+}
+
+function decrementInterviewScore() {
+	userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScore) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "interviewScore" : valueToUpdate } )
+		})
+	
+}
 
 function setInterviewScoring() {
 	onTimeMinus.addEventListener('click', function() {
+		decrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -621,6 +656,8 @@ function setInterviewScoring() {
 		})
 	})
 	onTimePlus.addEventListener('click', function() {
+		incrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -637,6 +674,8 @@ function setInterviewScoring() {
 	})
 	
 	challengeMinus.addEventListener('click', function() {
+		decrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -652,6 +691,8 @@ function setInterviewScoring() {
 		})
 	})
 	challengePlus.addEventListener('click', function() {
+		incrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -668,6 +709,8 @@ function setInterviewScoring() {
 	})
 	
 	approachMinus.addEventListener('click', function() {
+		decrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -683,6 +726,8 @@ function setInterviewScoring() {
 		})
 	})
 	approachPlus.addEventListener('click', function() {
+		incrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -699,6 +744,8 @@ function setInterviewScoring() {
 	})
 	
 	situationMinus.addEventListener('click', function() {
+		decrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -714,6 +761,8 @@ function setInterviewScoring() {
 		})
 	})
 	situationPlus.addEventListener('click', function() {
+		incrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -730,6 +779,8 @@ function setInterviewScoring() {
 	})
 	
 	confidenceMinus.addEventListener('click', function() {
+		decrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -745,6 +796,8 @@ function setInterviewScoring() {
 		})
 	})
 	confidencePlus.addEventListener('click', function() {
+		incrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -761,6 +814,8 @@ function setInterviewScoring() {
 	})
 	
 	preparedMinus.addEventListener('click', function() {
+		decrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -776,6 +831,8 @@ function setInterviewScoring() {
 		})
 	})
 	preparedPlus.addEventListener('click', function() {
+		incrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -792,6 +849,8 @@ function setInterviewScoring() {
 	})
 	
 	conceptMinus.addEventListener('click', function() {
+		decrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -807,6 +866,8 @@ function setInterviewScoring() {
 		})
 	})
 	conceptPlus.addEventListener('click', function() {
+		incrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -823,6 +884,8 @@ function setInterviewScoring() {
 	})
 	
 	onlineMinus.addEventListener('click', function() {
+		decrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -838,6 +901,8 @@ function setInterviewScoring() {
 		})
 	})
 	onlinePlus.addEventListener('click', function() {
+		incrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -854,6 +919,8 @@ function setInterviewScoring() {
 	})
 	
 	treeMinus.addEventListener('click', function() {
+		decrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -869,6 +936,8 @@ function setInterviewScoring() {
 		})
 	})
 	treePlus.addEventListener('click', function() {
+		incrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -885,6 +954,8 @@ function setInterviewScoring() {
 	})
 	
 	questionsMinus.addEventListener('click', function() {
+		decrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
@@ -900,6 +971,8 @@ function setInterviewScoring() {
 		})
 	})
 	questionsPlus.addEventListener('click', function() {
+		incrementInterviewScore()
+		
 		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
