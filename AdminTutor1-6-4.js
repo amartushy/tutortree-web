@@ -612,7 +612,7 @@ function setInterviewScoring() {
 		.doc("interview")
 		.get()
 		.then(function(doc) {
-			valueToUpdate = parseInt(doc.data().interviewScores.pathString) - 1
+			valueToUpdate = parseInt(doc.data().interviewScores.onTimeScore) - 1
 			userDB.collection("userTest")
 				.doc(globalApplicantID)
 				.collection("tutorApplication")
@@ -627,7 +627,7 @@ function setInterviewScoring() {
 		.doc("interview")
 		.get()
 		.then(function(doc) {
-			valueToUpdate = parseInt(doc.data().interviewScores.pathString) + 1
+			valueToUpdate = parseInt(doc.data().interviewScores.onTimeScore) + 1
 			userDB.collection("userTest")
 				.doc(globalApplicantID)
 				.collection("tutorApplication")
@@ -637,66 +637,282 @@ function setInterviewScoring() {
 	})
 	
 	challengeMinus.addEventListener('click', function() {
-		updateInterviewPoints('challengingScore', -1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.challengingScore) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.challengingScore" : valueToUpdate } )
+		})
 	})
 	challengePlus.addEventListener('click', function() {
-		updateInterviewPoints('challengingScore', 1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.challengingScore) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.challengingScore" : valueToUpdate } )
+		})
 	})
 	
 	approachMinus.addEventListener('click', function() {
-		updateInterviewPoints('troubleScore', -1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.troubleScore) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.troubleScore" : valueToUpdate } )
+		})
 	})
 	approachPlus.addEventListener('click', function() {
-		updateInterviewPoints('troubleScore', 1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.troubleScore) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.troubleScore" : valueToUpdate } )
+		})
 	})
 	
 	situationMinus.addEventListener('click', function() {
-		updateInterviewPoints('situationScore', -1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.situationScore) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.situationScore" : valueToUpdate } )
+		})
 	})
 	situationPlus.addEventListener('click', function() {
-		updateInterviewPoints('situationScore', 1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.situationScore) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.situationScore" : valueToUpdate } )
+		})
 	})
 	
 	confidenceMinus.addEventListener('click', function() {
-		updateInterviewPoints('confidenceScore', -1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.confidenceScore) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.confidenceScore" : valueToUpdate } )
+		})
 	})
 	confidencePlus.addEventListener('click', function() {
-		updateInterviewPoints('confidenceScore', 1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.confidenceScore) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.confidenceScore" : valueToUpdate } )
+		})
 	})
 	
 	preparedMinus.addEventListener('click', function() {
-		updateInterviewPoints('preparedScore', -1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.preparedScore) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.preparedScore" : valueToUpdate } )
+		})
 	})
 	preparedPlus.addEventListener('click', function() {
-		updateInterviewPoints('preparedScore', 1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.preparedScore) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.preparedScore" : valueToUpdate } )
+		})
 	})
 	
 	conceptMinus.addEventListener('click', function() {
-		updateInterviewPoints('explainScore', -1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.explainScore) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.explainScore" : valueToUpdate } )
+		})
 	})
 	conceptPlus.addEventListener('click', function() {
-		updateInterviewPoints('explainScore', 1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.explainScore) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.explainScore" : valueToUpdate } )
+		})
 	})
 	
 	onlineMinus.addEventListener('click', function() {
-		updateInterviewPoints('onlineScore', -1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.onlineScore) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.onlineScore" : valueToUpdate } )
+		})
 	})
 	onlinePlus.addEventListener('click', function() {
-		updateInterviewPoints('onlineScore', 1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.onlineScore) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.onlineScore" : valueToUpdate } )
+		})
 	})
 	
 	treeMinus.addEventListener('click', function() {
-		updateInterviewPoints('helpScore', -1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.helpScore) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.helpScore" : valueToUpdate } )
+		})
 	})
 	treePlus.addEventListener('click', function() {
-		updateInterviewPoints('helpScore', 1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.helpScore) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.helpScore" : valueToUpdate } )
+		})
 	})
 	
 	questionsMinus.addEventListener('click', function() {
-		updateInterviewPoints('questionScore', -1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.questionScore) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.questionScore" : valueToUpdate } )
+		})
 	})
 	questionsPlus.addEventListener('click', function() {
-		updateInterviewPoints('questionScore', 1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.questionScore) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.questionScore" : valueToUpdate } )
+		})
 	})
 	
 	
