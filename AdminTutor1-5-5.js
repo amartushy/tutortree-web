@@ -613,14 +613,14 @@ function updateInterviewPoints(pathString, incrementor) {
 		.get()
 		.then(function(doc) {
 			valueToUpdate = doc.data().interviewScores.pathString + incrementor
+			//Update score
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { path : valueToUpdate } )
 		})
 	
-	//Update score
-	userDB.collection("userTest")
-		.doc(globalApplicantID)
-		.collection("tutorApplication")
-		.doc("interview")
-		.update( { path : valueToUpdate } )
 }
 
 
