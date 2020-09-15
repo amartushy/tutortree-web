@@ -613,7 +613,7 @@ function updateInterviewPoints(pathString, incrementor) {
 		.doc("interview")
 		.get()
 		.then(function(doc) {
-			valueToUpdate = doc.data().interviewScores.pathString + incrementor
+			valueToUpdate = parseInt(doc.data().interviewScores.pathString) + incrementor
 			//Update score
 			console.log(valueToUpdate)
 			userDB.collection("userTest")
