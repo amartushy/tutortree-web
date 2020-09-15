@@ -602,37 +602,38 @@ function setApplicationOnblurs(applicantID) {
 			.update( { "applicationFields.groups" : tutorGroups.value } )
 	}
 }
-function updateInterviewPoints(pathString, incrementor) {
-	console.log('updating: ' + globalApplicantID)
-	//Get current value
-	var path = "interviewScores." + pathString
-	var valueToUpdate
-	userDB.collection("userTest")
+
+
+function setInterviewScoring() {
+	onTimeMinus.addEventListener('click', function() {
+		userDB.collection("userTest")
 		.doc(globalApplicantID)
 		.collection("tutorApplication")
 		.doc("interview")
 		.get()
 		.then(function(doc) {
-			valueToUpdate = parseInt(doc.data().interviewScores.pathString) + incrementor
-			//Update score
-			console.log(pathString)
-			console.log(doc.data().interviewScores.pathString)
+			valueToUpdate = parseInt(doc.data().interviewScores.pathString) - 1
 			userDB.collection("userTest")
 				.doc(globalApplicantID)
 				.collection("tutorApplication")
 				.doc("interview")
-				.update( { path : valueToUpdate } )
+				.update( { "interviewScores.onTimeScore" : valueToUpdate } )
 		})
-	
-}
-
-
-function setInterviewScoring() {
-	onTimeMinus.addEventListener('click', function() {
-		updateInterviewPoints('onTimeScore', -1)
 	})
 	onTimePlus.addEventListener('click', function() {
-		updateInterviewPoints('onTimeScore', 1)
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("interview")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().interviewScores.pathString) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("interview")
+				.update( { "interviewScores.onTimeScore" : valueToUpdate } )
+		})
 	})
 	
 	challengeMinus.addEventListener('click', function() {
