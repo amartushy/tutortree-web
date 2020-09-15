@@ -603,6 +603,7 @@ function setApplicationOnblurs(applicantID) {
 	}
 }
 function updateInterviewPoints(pathString, incrementor) {
+	console.log('updating: ' + globalApplicantID)
 	//Get current value
 	var path = "interviewScores." + pathString
 	var valueToUpdate
