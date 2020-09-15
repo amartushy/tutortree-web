@@ -221,7 +221,7 @@ function updateApplicantStatus(status, ID) {
 	
 	userDB.collection('userTest')
 		.doc(ID)
-		.update( {'tutorApplicationStatus' : status,
+		.update( {'tutorApplicantStatus' : status,
 			  'isTutor' : false } )
 	
 	if(status == 'accepted') {
