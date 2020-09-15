@@ -320,8 +320,8 @@ var onlineMinus = document.getElementById('online-minus')
 var onlinePlus = document.getElementById('online-minus')
 var treeMinus = document.getElementById('tree-minus')
 var treePlus = document.getElementById('tree-plus')
-var questionsPlus = document.getElementById('questions-minus')
-var questionsPlus = document.getElementById('questions-minus')
+var questionsMinus = document.getElementById('questions-minus')
+var questionsPlus = document.getElementById('questions-plus')
 
 
 //More Section Elements
