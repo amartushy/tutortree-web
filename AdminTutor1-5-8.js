@@ -615,6 +615,7 @@ function updateInterviewPoints(pathString, incrementor) {
 		.then(function(doc) {
 			valueToUpdate = doc.data().interviewScores.pathString + incrementor
 			//Update score
+			console.log(valueToUpdate)
 			userDB.collection("userTest")
 				.doc(globalApplicantID)
 				.collection("tutorApplication")
