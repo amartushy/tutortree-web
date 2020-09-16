@@ -28,26 +28,53 @@ function allApplicants() {
 	
 	allTab.className = 'admin-tutor-filters-selected'
 	rejectedTab.className = 'admin-tutor-filters'
+	waitlistedTab.className = 'admin-tutor-filters'
+	pendingTab.className = 'admin-tutor-filters'
+	approvedTab.className = 'admin-tutor-filters'
 }
 
 function rejectedApplicants() {
 	tabFilters = ["rejected"]
 	showApplicants()
+	
+	allTab.className = 'admin-tutor-filters'
+	rejectedTab.className = 'admin-tutor-filters-selected'
+	waitlistedTab.className = 'admin-tutor-filters'
+	pendingTab.className = 'admin-tutor-filters'
+	approvedTab.className = 'admin-tutor-filters'
 }
 
 function waitlistedApplicants() {
 	tabFilters = ["waitlisted"]
 	showApplicants()
+	
+	allTab.className = 'admin-tutor-filters'
+	rejectedTab.className = 'admin-tutor-filters'
+	waitlistedTab.className = 'admin-tutor-filters-selected'
+	pendingTab.className = 'admin-tutor-filters'
+	approvedTab.className = 'admin-tutor-filters'
 }
 
 function pendingApplicants() {
 	tabFilters = ["pending"]
 	showApplicants()
+	
+	allTab.className = 'admin-tutor-filters'
+	rejectedTab.className = 'admin-tutor-filters'
+	waitlistedTab.className = 'admin-tutor-filters'
+	pendingTab.className = 'admin-tutor-filters-selected'
+	approvedTab.className = 'admin-tutor-filters'
 }
 
 function approvedApplicants() {
 	tabFilters = ["accepted"]
 	showApplicants()
+	
+	allTab.className = 'admin-tutor-filters'
+	rejectedTab.className = 'admin-tutor-filters'
+	waitlistedTab.className = 'admin-tutor-filters'
+	pendingTab.className = 'admin-tutor-filters'
+	approvedTab.className = 'admin-tutor-filters-selected'
 }
 //__________________________
 
