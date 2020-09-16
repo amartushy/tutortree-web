@@ -141,14 +141,19 @@ function showApplicants() {
 		}
 		//Reinitialize Counter
 		var count = 1
-		allTutors.forEach(function(doc)  {
+		allTutors.forEach(async function(doc)  {
 			var 	applicantID = doc.id,
 			    	applicantCount = count,
 			    	applicantName = doc.data().name,
 				applicantEmail = doc.data().email,
-				applicantDate = doc.data().timeApplied,
+			    	applicantDate,
 				applicantSchool = doc.data().school,
 				applicantStatus = doc.data().tutorApplicantStatus
+			
+			await userDB.collection('userTest').doc(doc.id).collection('tutorApplication').doc('application').get().then(function(app) {
+				applicantDate = doc.data().timeApplied
+			})
+			
 			buildApplicantBlock(applicantID, applicantCount, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus)
 			count += 1	
 		})
