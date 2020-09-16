@@ -141,26 +141,8 @@ function showApplicants() {
 		}
 		//Reinitialize Counter
 		var count = 1
-		
-		await Promise.all(allTutors.map(async (i) => {
-			var 	applicantID = doc.id,
-			    	applicantCount = count,
-			    	applicantName = doc.data().name,
-				applicantEmail = doc.data().email,
-			    	applicantDate,
-				applicantSchool = doc.data().school,
-				applicantStatus = doc.data().tutorApplicantStatus
-			
-			await userDB.collection('userTest').doc(doc.id).collection('tutorApplication').doc('application').get().then(function(app) {
-				applicantDate = doc.data().timeSubmitted
-				buildApplicantBlock(applicantID, applicantCount, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus)
-				count += 1
-			})
-		}));
-		/*
 		allTutors.forEach(async function(doc)  {
 			var 	applicantID = doc.id,
-			    	applicantCount = count,
 			    	applicantName = doc.data().name,
 				applicantEmail = doc.data().email,
 			    	applicantDate,
@@ -169,11 +151,11 @@ function showApplicants() {
 			
 			await userDB.collection('userTest').doc(doc.id).collection('tutorApplication').doc('application').get().then(function(app) {
 				applicantDate = doc.data().timeSubmitted
-				buildApplicantBlock(applicantID, applicantCount, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus)
+				buildApplicantBlock(applicantID, count, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus)
 				count += 1
 			})
 				
-		})*/
+		})
 		
 	})
 }
