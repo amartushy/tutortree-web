@@ -742,7 +742,7 @@ function setApplicationScoring() {
 				.doc(globalApplicantID)
 				.collection("tutorApplication")
 				.doc("application")
-				.update( { "applicationPoints.whyTutorPoints" : valueToUpdate } )
+				.update( { "applicationPoints.groupsPoints" : valueToUpdate } )
 		})
 	})
 	groupsPlus.addEventListener('click', function() {
@@ -759,7 +759,7 @@ function setApplicationScoring() {
 				.doc(globalApplicantID)
 				.collection("tutorApplication")
 				.doc("application")
-				.update( { "applicationPoints.whyTutorPoints" : valueToUpdate } )
+				.update( { "applicationPoints.groupsPoints" : valueToUpdate } )
 		})
 	})
 	
