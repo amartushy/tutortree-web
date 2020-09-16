@@ -737,7 +737,7 @@ function setApplicationScoring() {
 		.doc("application")
 		.get()
 		.then(function(doc) {
-			valueToUpdate = parseInt(doc.data().applicationPoints.groupsPoints) + 1
+			valueToUpdate = parseInt(doc.data().applicationPoints.groupsPoints) - 1
 			userDB.collection("userTest")
 				.doc(globalApplicantID)
 				.collection("tutorApplication")
