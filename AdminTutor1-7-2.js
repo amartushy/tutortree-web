@@ -442,6 +442,8 @@ function showTutorModal(ID) {
 		whyScore.innerHTML = doc.data().applicationPoints.whyTutorPoints
 		groupsScore.innerHTML = doc.data().applicationPoints.groupsPoints
 		
+		setApplicationScoring()
+		
 		//More Tab Data
 		tutorApplied.innerHTML = "Date Applied: " + formatApplicantDate(doc.data().timeApplied)
 		
@@ -568,7 +570,6 @@ function setInterviewOnblurs(applicantID) {
 
 //Application Onblurs_____________________________________________________________________________________________________
 
-
 function setApplicationOnblurs(applicantID) {
 	tutorFirst.onblur = function() {
 		userDB.collection("userTest")
@@ -621,6 +622,149 @@ function setApplicationOnblurs(applicantID) {
 	}
 }
 
+function setApplicationScoring() {
+	
+	majorMinus.addEventListener('click', function() {
+		decrementApplicationScore()
+		
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().applicationPoints.majorPoints) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "applicationPoints.majorPoints" : valueToUpdate } )
+		})
+	})
+	
+	majorPlus.addEventListener('click', function() {
+		incrementApplicationScore()
+		
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().applicationPoints.majorPoints) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "applicationPoints.majorPoints" : valueToUpdate } )
+		})
+	})
+	
+	yearMinus.addEventListener('click', function() {
+		decrementApplicationScore()
+		
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().applicationPoints.yearPoints) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "applicationPoints.yearPoints" : valueToUpdate } )
+		})
+	})
+	yearPlus.addEventListener('click', function() {
+		incrementApplicationScore()
+		
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().applicationPoints.yearPoints) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "applicationPoints.yearPoints" : valueToUpdate } )
+		})
+	})
+	whyMinus.addEventListener('click', function() {
+		decrementApplicationScore()
+		
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().applicationPoints.whyTutorPoints) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "applicationPoints.whyTutorPoints" : valueToUpdate } )
+		})
+	})
+	whyPlus.addEventListener('click', function() {
+		incrementApplicationScore()
+		
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().applicationPoints.whyTutorPoints) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "applicationPoints.whyTutorPoints" : valueToUpdate } )
+		})
+	})
+	groupsMinus.addEventListener('click', function() {
+		decrementApplicationScore()
+		
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().applicationPoints.groupsPoints) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "applicationPoints.whyTutorPoints" : valueToUpdate } )
+		})
+	})
+	groupsPlus.addEventListener('click', function() {
+		incrementApplicationScore()
+		
+		userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().applicationPoints.groupsPoints) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "applicationPoints.whyTutorPoints" : valueToUpdate } )
+		})
+	})
+	
+}
+
 function incrementInterviewScore() {
 	userDB.collection("userTest")
 		.doc(globalApplicantID)
@@ -638,6 +782,23 @@ function incrementInterviewScore() {
 	
 }
 
+function incrementApplicationScore() {
+	userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().assessmentScore) + 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "assessmentScore" : valueToUpdate } )
+		})
+	
+}
+
 function decrementInterviewScore() {
 	userDB.collection("userTest")
 		.doc(globalApplicantID)
@@ -651,6 +812,23 @@ function decrementInterviewScore() {
 				.collection("tutorApplication")
 				.doc("application")
 				.update( { "interviewScore" : valueToUpdate } )
+		})
+	
+}
+
+function decrementApplicationScore() {
+	userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get()
+		.then(function(doc) {
+			valueToUpdate = parseInt(doc.data().assessmentScore) - 1
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "assessmentScore" : valueToUpdate } )
 		})
 	
 }
