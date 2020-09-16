@@ -152,10 +152,10 @@ function showApplicants() {
 			
 			await userDB.collection('userTest').doc(doc.id).collection('tutorApplication').doc('application').get().then(function(app) {
 				applicantDate = doc.data().timeApplied
+				buildApplicantBlock(applicantID, applicantCount, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus)
+				count += 1
 			})
-			
-			buildApplicantBlock(applicantID, applicantCount, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus)
-			count += 1	
+				
 		})
 		
 	})
