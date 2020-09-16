@@ -196,7 +196,7 @@ function buildApplicantBlock(ID, count, name, email, date, school, status) {
 	
 	//Date Block
 	var applicantDate = document.createElement('div')
-	applicantDate.setAttribute('class', 'applicant-contact')
+	applicantDate.setAttribute('class', 'applicant-date-object')
 	applicantDate.innerHTML = formatApplicantDate(date)
 	applicantBlock.appendChild(applicantDate)
 	
