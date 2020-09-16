@@ -133,7 +133,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 //Calls when a tab is clicked, builds applicant blocks for filters
 function showApplicants() {
-	userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).onSnapshot(function(allTutors) {
+	userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).onSnapshot(async function(allTutors) {
 
 		//remove all children when updated
 		while(applicantSection.firstChild) {
