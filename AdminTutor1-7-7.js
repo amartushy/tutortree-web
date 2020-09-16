@@ -131,6 +131,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	}
 })
 
+//Calls when a tab is clicked, builds applicant blocks for filters
 function showApplicants() {
 	userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).onSnapshot(function(allTutors) {
 
@@ -145,17 +146,18 @@ function showApplicants() {
 			    	applicantCount = count,
 			    	applicantName = doc.data().name,
 				applicantEmail = doc.data().email,
-				applicantPhone = doc.data().phoneNumber,
+				applicantDate = doc.data().timeApplied,
 				applicantSchool = doc.data().school,
 				applicantStatus = doc.data().tutorApplicantStatus
-			buildApplicantBlock(applicantID, applicantCount, applicantName, applicantEmail, applicantPhone, applicantSchool, applicantStatus)
+			buildApplicantBlock(applicantID, applicantCount, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus)
 			count += 1	
 		})
 		
 	})
 }
 
-function buildApplicantBlock(ID, count, name, email, phone, school, status) {
+var applicantArray = []
+function buildApplicantBlock(ID, count, name, email, date, school, status) {
 	
 	//Main block that holds all applicant elements
 	var applicantBlock = document.createElement('div')
@@ -188,11 +190,11 @@ function buildApplicantBlock(ID, count, name, email, phone, school, status) {
 	applicantEmail.innerHTML = email
 	applicantBlock.appendChild(applicantEmail)
 	
-	//Phone Block
-	var applicantPhone = document.createElement('div')
-	applicantPhone.setAttribute('class', 'applicant-contact')
-	applicantPhone.innerHTML = phone
-	applicantBlock.appendChild(applicantPhone)
+	//Date Block
+	var applicantDate = document.createElement('div')
+	applicantDate.setAttribute('class', 'applicant-contact')
+	applicantDate.innerHTML = formatApplicantDate(date)
+	applicantBlock.appendChild(applicantDate)
 	
 	//School Block
 	var applicantSchool = document.createElement('div')
