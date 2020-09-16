@@ -149,8 +149,8 @@ function showApplicants() {
 				applicantSchool = doc.data().school,
 				applicantStatus = doc.data().tutorApplicantStatus
 			
-			await userDB.collection('userTest').doc(doc.id).collection('tutorApplication').doc('application').get().then(function(app) {
-				applicantDate = doc.data().timeSubmitted
+			await userDB.collection('userTest').doc(applicantID).collection('tutorApplication').doc('application').get().then(function(app) {
+				applicantDate = app.data().timeSubmitted
 				buildApplicantBlock(applicantID, count, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus)
 				count += 1
 			})
