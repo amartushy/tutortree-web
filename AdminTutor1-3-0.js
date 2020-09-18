@@ -167,15 +167,16 @@ function showApplicants() {
 
 function buildApplicants(applicantsArray) {
 	console.log(applicantsArray)
-
+	console.log(applicantsArray.length)
 	for( var count = 0; count < applicantsArray.length; count++ ) {
+		console.log(applicantsArray[count][1][0])
 		var applicantID = applicantsArray[count][1][0],
 			name = applicantsArray[count][1][1],
 			email = applicantsArray[count][1][2],
 			date = applicantsArray[count][0],
 			school = applicantsArray[count][1][3],
 			status = applicantsArray[count][1][4]
-		console.log(applicantID)
+		
 		buildApplicantBlock(applicantID, count, name, email, date, school, status)
 	}
 }
