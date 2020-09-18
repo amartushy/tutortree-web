@@ -173,7 +173,7 @@ function buildApplicants(applicantsArray) {
 			date = applicantsArray[count][0],
 			school = applicantsArray[count][1][3],
 			status = applicantsArray[count][1][4]
-
+		console.log([applicantID, count, name, email, date, school, status])
 		buildApplicantBlock(applicantID, count, name, email, date, school, status)
 	}
 }
