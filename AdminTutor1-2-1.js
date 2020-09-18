@@ -161,10 +161,8 @@ function showApplicants() {
 		
 		Promise.all(promises).then(results => {
 			console.log(applicantsArray)
-			var sortedArray = applicantsArray.sort(function(a, b) {
-  				return b[0] - a[0];
-			})
-			for( count = 0; count < sortedArray.length; count++ ) {
+			
+			for( count = 0; count < applicantsArray.length; count++ ) {
 				var ID = sortedArray[count][1][0],
 					name = sortedArray[count][1][1],
 					email = sortedArray[count][1][2],
