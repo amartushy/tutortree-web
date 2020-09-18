@@ -154,7 +154,7 @@ function showApplicants() {
 				const promise = app.data()
 				promises.push(promise)
 				applicantDate = app.data().timeSubmitted
-				applicantsArray.push([applicantDate, [applicantID, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus]])
+				applicantsArray.push([applicantDate, [applicantID, applicantName, applicantEmail, applicantSchool, applicantStatus]])
 				
 			})
 		})
@@ -165,12 +165,13 @@ function showApplicants() {
   				return b[0] - a[0];
 			})
 			for( count = 0; count < sortedArray.length; count++ ) {
-				ID = sortedArray[count][0]
-				name = sortedArray[count][1]
-				email = sortedArray[count][1]
-				date = sortedArray[count][1]
-				school = sortedArray[count][1]
-				status = sortedArray[count][1]
+				ID = sortedArray[count][1][0]
+				name = sortedArray[count][1][1]
+				email = sortedArray[count][1][2]
+				date = sortedArray[count][0]
+				school = sortedArray[count][1][4]
+				status = sortedArray[count][1][5]
+				
 				buildApplicantBlock(ID, count, name, email, date, school, status)
 			}
 		})
