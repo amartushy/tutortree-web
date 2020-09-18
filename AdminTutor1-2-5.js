@@ -161,19 +161,21 @@ function showApplicants() {
 		
 		Promise.all(promises).then(results => {
 			console.log(applicantsArray)
-			
-			for( count = 0; count < applicantsArray.length; count++ ) {
-				var applicantID = applicantsArray[count][1][0],
-					name = applicantsArray[count][1][1],
-					email = applicantsArray[count][1][2],
-					date = applicantsArray[count][0],
-					school = applicantsArray[count][1][3],
-					status = applicantsArray[count][1][4]
-				
-				buildApplicantBlock(applicantID, count, name, email, date, school, status)
-			}
+			buildApplicants(applicantsArray)
 		})
 	})
+}
+function buildApplicants(applicantArray) {
+	for( count = 0; count < applicantsArray.length; count++ ) {
+		var applicantID = applicantsArray[count][1][0],
+			name = applicantsArray[count][1][1],
+			email = applicantsArray[count][1][2],
+			date = applicantsArray[count][0],
+			school = applicantsArray[count][1][3],
+			status = applicantsArray[count][1][4]
+
+		buildApplicantBlock(applicantID, count, name, email, date, school, status)
+	}
 }
 
 function buildApplicantBlock(ID, count, name, email, date, school, status) {
