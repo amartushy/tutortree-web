@@ -168,8 +168,9 @@ function showApplicants() {
 function buildApplicants(applicantsArray) {
 	console.log(applicantsArray)
 	console.log(applicantsArray.length)
-	for( var count = 0; count < applicantsArray.length; count++ ) {
-		console.log(applicantsArray[count][1][0])
+	
+	applicantsArray.forEach(function (applicant, count) {
+  		console.log(applicant, count)
 		var applicantID = applicantsArray[count][1][0],
 			name = applicantsArray[count][1][1],
 			email = applicantsArray[count][1][2],
@@ -178,7 +179,7 @@ function buildApplicants(applicantsArray) {
 			status = applicantsArray[count][1][4]
 		
 		buildApplicantBlock(applicantID, count, name, email, date, school, status)
-	}
+	})
 }
 
 function buildApplicantBlock(ID, count, name, email, date, school, status) {
