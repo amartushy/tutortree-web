@@ -1275,4 +1275,48 @@ function formatApplicantDate(epochDate) {
 			hour: 'numeric', minute:'numeric'})
 	return formattedDate
 }
+
+
+//Upload documents functions ___________________________________________________________________________________________
+
+var facultyButton = document.getElementById('upload-transcript')
+facultyButton.addEventListener('click', openFacultyRecDialog)
+
+function openFacultyRecDialog(ID) {
+	globalPreviewID = ID
+	hiddenFacultyRecButton.click();
+}
+
+var hiddenFacultyRecButton = document.getElementById("faculty-admin-select") 
+hiddenFacultyRecButton.addEventListener('change', handleFacultyRecUploadChange);
+
+var selectedFacultyRecFile;
+function handleFacultyRecUploadChange(e) {
+	selectedFacultyRecFile = e.target.files[0];
+	document.getElementById("faculty-preview-block").style.display = "flex"
+	document.getElementById("faculty-preview").innerHTML = selectedFacultyRecFile.name
+}
+
+document.getElementById('submit-faculty').addEventListener('click', handleFacultyRecUpload)
+async function handleFacultyRecUpload() {
+	const uploadTask = await storageRef.child(`faculty/${selectedFacultyRecFile.name}`).put(selectedFacultyRecFile);
+	uploadAndUpdateFirebaseFacultyRec()
+}
+
+//final submit button and update firebase
+async function uploadAndUpdateFirebaseFacultyRec() {
+	var facultyRecFileURL = ""
+	await storageRef.child('/faculty/'+selectedFacultyRecFile.name)
+		.getDownloadURL()
+		.then(function(url) { facultyRecFileURL = url.toString() })
+	userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.update( {"facultyFile" : facultyRecFileURL,
+			"uploadedFaculty" : true })
+	.then(function() {
+		document.getElementById("faculty-preview-block").style.display = "none"
+	})
+}
 	
