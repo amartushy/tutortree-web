@@ -151,7 +151,7 @@ function showApplicants() {
 				applicantStatus = doc.data().tutorApplicantStatus
 			
 			userDB.collection('userTest').doc(applicantID).collection('tutorApplication').doc('application').get().then(function(app) {
-				const promise = app.data()
+				const promise = [app.data().timeSubmitted, [applicantID, applicantName, applicantEmail, applicantSchool, applicantStatus]]
 				promises.push(promise)
 				applicantDate = app.data().timeSubmitted
 				applicantsArray.push([applicantDate, [applicantID, applicantName, applicantEmail, applicantSchool, applicantStatus]])
@@ -160,6 +160,7 @@ function showApplicants() {
 		})
 		
 		Promise.all(promises).then(results => {
+			console.log(results)
 			buildApplicants(applicantsArray)
 		})
 	})
