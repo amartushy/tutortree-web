@@ -398,6 +398,21 @@ var tutorTranscriptComplete = document.getElementById('tutor-transcript-complete
 var tutorFacultyIncomplete = document.getElementById('tutor-faculty-incomplete')
 var tutorFacultyComplete = document.getElementById('tutor-faculty-complete')
 	
+tutorCompletedInterview.addEventListener('click', function() {
+	userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.get()
+		.then(function(doc) {
+			didCompleteInterview = doc.data().completedInterview
+			userDB.collection("userTest")
+				.doc(globalApplicantID)
+				.collection("tutorApplication")
+				.doc("application")
+				.update( { "completedInterview" : !didCompleteInterview } )
+		})
+})
 
 //TUTOR MODAL FUNCTIONS_________________________________________________________________________
 
