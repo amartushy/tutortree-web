@@ -444,7 +444,7 @@ function approveTutor(applicantsID, applicantsEmail) {
 		.collection("tutorApplication")
 		.doc("application")
 		.get().then(function(doc) {
-			applicantsName = doc.data().firstName
+			applicantsName = doc.data().applicationFields.firstName
 			//Send Email
 			sendTutorAcceptanceEmail(applicantsEmail, applicantsName)
 		})
