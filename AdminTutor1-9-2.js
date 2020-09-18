@@ -316,6 +316,8 @@ var tutorYear = document.getElementById('tutor-year')
 var tutorCourses = document.getElementById('tutor-courses')
 var tutorWhy = document.getElementById('tutor-why')
 var tutorGroups = document.getElementById('tutor-groups')
+var tutorHow = document.getElementById('tutor-how')
+var tutorReferral = document.getElementById('tutor-referral')
 
 var applicationScore = document.getElementById('application-score')
 var majorScore = document.getElementById('major-score')
@@ -470,6 +472,8 @@ function showTutorModal(ID) {
 		tutorCourses.placeholder = doc.data().applicationFields.courses
 		tutorWhy.placeholder = doc.data().applicationFields.whyTutor
 		tutorGroups.placeholder = doc.data().applicationFields.groups
+		tutorHow.placeholder = doc.data().applicationFields.howHeard
+		tutorReferral.placeholder = doc.data().applicationFields.referredBy
 		
 		applicationScore.innerHTML = doc.data().assessmentScore
 		interviewScoreHeader.innerHTML = doc.data().interviewScore
