@@ -1292,6 +1292,7 @@ hiddenFacultyRecButton.addEventListener('change', handleFacultyRecUploadChange);
 
 var selectedFacultyRecFile;
 function handleFacultyRecUploadChange(e) {
+	console.log('hidden button clicked')
 	selectedFacultyRecFile = e.target.files[0];
 	document.getElementById("faculty-preview-block").style.display = "flex"
 	document.getElementById("faculty-preview").innerHTML = selectedFacultyRecFile.name
