@@ -161,7 +161,7 @@ function showApplicants() {
 		
 		Promise.all(promises).then(results => {
 			console.log(applicantsArray)
-			var sortedArray = array.sort(function(a, b) {
+			var sortedArray = applicantsArray.sort(function(a, b) {
   				return b[0] - a[0];
 			})
 			for( count = 0; count < sortedArray.length; count++ ) {
