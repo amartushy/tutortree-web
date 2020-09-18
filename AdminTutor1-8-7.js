@@ -1279,7 +1279,7 @@ function formatApplicantDate(epochDate) {
 
 //Upload documents functions ___________________________________________________________________________________________
 
-var facultyButton = document.getElementById('upload-transcript')
+var facultyButton = document.getElementById('upload-faculty')
 facultyButton.addEventListener('click', openFacultyRecDialog)
 
 function openFacultyRecDialog(ID) {
