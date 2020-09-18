@@ -141,7 +141,9 @@ function showApplicants() {
 		}
 		//Reinitialize Counter
 		var count = 1
-		allTutors.forEach(async function(doc)  {
+		const promises = []
+		var applicantsArray = []
+		allTutors.forEach(function(doc)  {
 			var 	applicantID = doc.id,
 			    	applicantName = doc.data().name,
 				applicantEmail = doc.data().email,
@@ -149,14 +151,20 @@ function showApplicants() {
 				applicantSchool = doc.data().school,
 				applicantStatus = doc.data().tutorApplicantStatus
 			
-			await userDB.collection('userTest').doc(applicantID).collection('tutorApplication').doc('application').get().then(function(app) {
+			userDB.collection('userTest').doc(applicantID).collection('tutorApplication').doc('application').get().then(function(app) {
+				const promise = app.data()
+				promises.push(promise)
 				applicantDate = app.data().timeSubmitted
+				applicantsArray.push([applicantDate, [applicantID, count, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus]])
+				
 				buildApplicantBlock(applicantID, count, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus)
 				count += 1
 			})
-				
 		})
 		
+		Promise.all(promises).then(results => {
+			console.log(applicantsArray)
+		})
 	})
 }
 
