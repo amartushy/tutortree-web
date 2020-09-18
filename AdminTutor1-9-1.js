@@ -1281,11 +1281,11 @@ function formatApplicantDate(epochDate) {
 
 storageRef = storageService.ref()
 
+//Faculty Upload
 var facultyButton = document.getElementById('upload-faculty')
 facultyButton.addEventListener('click', openFacultyRecDialog)
 
-function openFacultyRecDialog(ID) {
-	globalPreviewID = ID
+function openFacultyRecDialog() {
 	hiddenFacultyRecButton.click();
 }
 
@@ -1322,4 +1322,48 @@ async function uploadAndUpdateFirebaseFacultyRec() {
 		document.getElementById("faculty-preview-block").style.display = "none"
 	})
 }
+
+
+//Transcript Upload
+var transcriptButton = document.getElementById('upload-transcript')
+transcriptButton.addEventListener('click', openTranscriptRecDialog)
+
+function openTranscriptRecDialog() {
+	hiddenTranscriptButton.click();
+}
+
+var hiddenTranscriptButton = document.getElementById("transcript-admin-select") 
+hiddenTranscriptButton.addEventListener('change', handleTranscriptUploadChange);
+
+var selectedTranscriptFile;
+function handleTranscriptUploadChange(e) {
+	console.log('hidden button clicked for : ' + globalApplicantID)
+	selectedTranscriptFile = e.target.files[0];
+	document.getElementById("transcript-preview-block").style.display = "flex"
+	document.getElementById("transcript-preview").innerHTML = selectedTranscriptFile.name
+}
+
+document.getElementById('submit-transcript').addEventListener('click', handleTranscriptUpload)
+async function handleTranscriptUpload() {
+	const uploadTask = await storageRef.child(`faculty/${selectedTranscriptFile.name}`).put(selectedTranscriptFile);
+	uploadAndUpdateFirebaseTranscript()
+}
+
+//final submit button and update firebase
+async function uploadAndUpdateFirebaseTranscript() {
+	var transcriptFileURL = ""
+	await storageRef.child('/faculty/'+selectedTranscriptFile.name)
+		.getDownloadURL()
+		.then(function(url) { transcriptFileURL = url.toString() })
+	userDB.collection("userTest")
+		.doc(globalApplicantID)
+		.collection("tutorApplication")
+		.doc("application")
+		.update( {"transcriptFile" : transcriptFileURL,
+			"uploadedTranscript" : true })
+	.then(function() {
+		document.getElementById("transcript-preview-block").style.display = "none"
+	})
+}
+
 	
