@@ -1279,6 +1279,8 @@ function formatApplicantDate(epochDate) {
 
 //Upload documents functions ___________________________________________________________________________________________
 
+storageRef = storageService.ref()
+
 var facultyButton = document.getElementById('upload-faculty')
 facultyButton.addEventListener('click', openFacultyRecDialog)
 
