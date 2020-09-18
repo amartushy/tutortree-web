@@ -140,7 +140,6 @@ function showApplicants() {
 			applicantSection.removeChild(applicantSection.firstChild)
 		}
 		//Reinitialize Counter
-		var count = 1
 		const promises = []
 		var applicantsArray = []
 		allTutors.forEach(function(doc)  {
@@ -155,15 +154,25 @@ function showApplicants() {
 				const promise = app.data()
 				promises.push(promise)
 				applicantDate = app.data().timeSubmitted
-				applicantsArray.push([applicantDate, [applicantID, count, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus]])
+				applicantsArray.push([applicantDate, [applicantID, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus]])
 				
-				buildApplicantBlock(applicantID, count, applicantName, applicantEmail, applicantDate, applicantSchool, applicantStatus)
-				count += 1
 			})
 		})
 		
 		Promise.all(promises).then(results => {
 			console.log(applicantsArray)
+			var sortedArray = array.sort(function(a, b) {
+  				return b[0] - a[0];
+			})
+			for( count = 0; count < sortedArray.length; count++ ) {
+				ID = sortedArray[count][0]
+				name = sortedArray[count][1]
+				email = sortedArray[count][1]
+				date = sortedArray[count][1]
+				school = sortedArray[count][1]
+				status = sortedArray[count][1]
+				buildApplicantBlock(ID, count, name, email, date, school, status)
+			}
 		})
 	})
 }
