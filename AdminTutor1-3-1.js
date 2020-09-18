@@ -160,7 +160,7 @@ function showApplicants() {
 		})
 		
 		Promise.all(promises).then(results => {
-			buildApplicants(applicantsArray)
+			buildApplicants(results)
 		})
 	})
 }
