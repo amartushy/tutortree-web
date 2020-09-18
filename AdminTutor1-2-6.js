@@ -165,7 +165,7 @@ function showApplicants() {
 		})
 	})
 }
-function buildApplicants(applicantArray) {
+function buildApplicants(applicantsArray) {
 	for( count = 0; count < applicantsArray.length; count++ ) {
 		var applicantID = applicantsArray[count][1][0],
 			name = applicantsArray[count][1][1],
