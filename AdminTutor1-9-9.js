@@ -169,8 +169,8 @@ function showApplicants() {
 				name = sortedArray[count][1][1]
 				email = sortedArray[count][1][2]
 				date = sortedArray[count][0]
-				school = sortedArray[count][1][4]
-				status = sortedArray[count][1][5]
+				school = sortedArray[count][1][3]
+				status = sortedArray[count][1][4]
 				
 				buildApplicantBlock(ID, count, name, email, date, school, status)
 			}
@@ -178,7 +178,6 @@ function showApplicants() {
 	})
 }
 
-var applicantArray = []
 function buildApplicantBlock(ID, count, name, email, date, school, status) {
 	
 	//Main block that holds all applicant elements
@@ -437,7 +436,7 @@ tutorCompletedInterview.addEventListener('click', function() {
 var globalApplicantID = ''
 
 function showTutorModal(ID) {
-	globalApplicantID = ID
+	console.log(globalApplicantID)
 	
 	document.getElementById('tutor-info-modal').style.display = 'flex'
 	//Stored values
