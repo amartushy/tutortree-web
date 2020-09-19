@@ -417,7 +417,24 @@ updateApplicationResponses.addEventListener('click', function() {
 	    howVal = tutorHow.value,
 	    referralVal = tutorReferral.value
 	
-	console.log( [firstVal, lastVal, majorVal, schoolVal, yearVal, coursesVal, whyVal, groupsVal, howVal, referralVal] )
+	
+	userDB.collection("userTest")
+			.doc(globalApplicantID)
+			.collection("tutorApplication")
+			.doc("application")
+			.update( { 
+				"applicationFields.firstName" : tutorFirst.value,
+				"applicationFields.lastName" : tutorLast.value,
+				"applicationFields.major" : tutorMajor.value,
+				"applicationFields.schoolName" : tutorSchool.value,
+				"applicationFields.year" : tutorYear.value,
+				"applicationFields.courses" : tutorCourses.value,
+				"applicationFields.whyTutor" : tutorWhy.value,
+				"applicationFields.groups" : tutorGroups.value,
+				"applicationFields.howHeard" : tutorHow.value,
+				"applicationFields.referredBy" : tutorReferral.value
+				} )
+	
 	updateApplicationResponses.style.display = "none"
 })
 
