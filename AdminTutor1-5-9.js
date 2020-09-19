@@ -112,7 +112,7 @@ var oregonstateButton = document.getElementById('oregonstate-button')
 var uoregonButton = document.getElementById('uoregon-button')
 
 //School filter onclick listeners
-/*
+
 tutortreeButton.addEventListener('click', tutortreeApplicants)
 ucsdButton.addEventListener('click', tutortreeApplicants)
 uscButton.addEventListener('click', tutortreeApplicants)
@@ -132,7 +132,7 @@ function tutortreeApplicants() {
 	schoolFilters = ""
 	showApplicants()
 }
-*/
+
 
 //Section to append all applicants
 var applicantSection = document.getElementById('tutor-applicant-section')
@@ -144,7 +144,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		//Check if user is admin, else redirect: TODO
 		
 		//Load all applicants with no filters applied
-		//tutortreeApplicants()
+		tutortreeApplicants()
 		
 		while(applicantSection.firstChild) {
 			applicantSection.removeChild(applicantSection.firstChild)
@@ -158,7 +158,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 //Calls when a tab is clicked, builds applicant blocks for filters
 function showApplicants() {
-	userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).onSnapshot(async function(allTutors) {
+	userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).get().then(async function(allTutors) {
 
 		//remove all children when updated
 		while(applicantSection.firstChild) {
@@ -328,6 +328,8 @@ function updateApplicantStatus(status, ID, first, email) {
 		
 		mpIsRejectedTutorAppResolution(email)
 	}
+	
+	showApplicants()
 	
 }
 
