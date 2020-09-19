@@ -127,7 +127,7 @@ uoregonButton.addEventListener('click', tutortreeApplicants)
 
 //School filter functions
 function tutortreeApplicants() {
-	tabFilters = ["pending", "waitlisted", "rejected", "accepted"]
+	tabFilters = ["pending", "waitlisted", "rejected", "accepted", "deleted"]
 	schoolFilters = ""
 	showApplicants()
 }
