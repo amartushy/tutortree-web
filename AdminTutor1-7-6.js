@@ -185,6 +185,8 @@ function schoolFilterBackground(school) {
 	var schoolOptions = ['uoregon', 'oregonstate', 'stanford', 'berkeley', 'sjsu', 'ucsb', 'ucla', 'usc', 'pepperdine', 'sdsu', 'ucsd']	
 				 
 	for( var i = 0;  i < schoolOptions.length; i++) {
+		console.log(school)
+		console.log(schoolOptions[i])
 		if (schoolOptions[i] == school) {
 			document.getElementById(schoolOptions[i] + '-button').className = 'admin-tutor-logo-holder-selected'
 		} else {
