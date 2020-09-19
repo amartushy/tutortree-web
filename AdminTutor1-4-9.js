@@ -711,25 +711,25 @@ function setInterviewOnblurs(applicantID) {
 //Application Onblurs_____________________________________________________________________________________________________
 
 function setApplicationFocuses() {
-	tutorFirst.onFocus = function() {
+	tutorFirst.onfocus = function() {
 		updateApplicationResponses.style.display = "flex"
 	}
-	tutorLast.onFocus = function() {
+	tutorLast.onfocus = function() {
 		updateApplicationResponses.style.display = "flex"
 	}
-	tutorSchool.onFocus = function() {
+	tutorSchool.onfocus = function() {
 		updateApplicationResponses.style.display = "flex"
 	}
-	tutorYear.onFocus = function() {
+	tutorYear.onfocus = function() {
 		updateApplicationResponses.style.display = "flex"
 	}
-	tutorCourses.onFocus = function() {
+	tutorCourses.onfocus = function() {
 		updateApplicationResponses.style.display = "flex"
 	}
-	tutorWhy.onFocus = function() {
+	tutorWhy.onfocus = function() {
 		updateApplicationResponses.style.display = "flex"
 	}
-	tutorGroups.onFocus = function() {
+	tutorGroups.onfocus = function() {
 		updateApplicationResponses.style.display = "flex"
 	}
 }
