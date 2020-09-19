@@ -287,14 +287,21 @@ function updateApplicantStatus(status, ID, first, email) {
 			  'isTutor' : false } )
 	
 	if(status == 'accepted') {
+		sendTutorAcceptanceEmail(email, first)
+		
 		userDB.collection('userTest')
 		.doc(ID)
 		.update( {'isTutor' : true } )
 		
-		sendTutorAcceptanceEmail(email, first)
+	} else {
+		userDB.collection('userTest')
+		.doc(ID)
+		.update( {'tutorApplicantStatus' : status,
+			  'isTutor' : false } )
 		
-	} else if (status == 'rejected') {
-		sendTutorRejectionEmail(email, first)
+		if (status == 'rejected') {
+			sendTutorRejectionEmail(email, first)
+		}
 	}
 }
 
