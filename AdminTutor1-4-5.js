@@ -2,13 +2,14 @@
 var userDB = firebase.firestore()
 
 //FILTERS
-var tabFilters = ["pending", "waitlisted", "rejected", "accepted"]
+var tabFilters = ["pending", "waitlisted", "rejected", "accepted", "deleted"]
 var schoolFilters = ""
 
 //______________________
 
 //Tab filters
 var allTab = document.getElementById('admin-tutor-all')
+var deletedTab = document.getElementById('admin-tutor-deleted')
 var rejectedTab = document.getElementById('admin-tutor-rejected')
 var waitlistedTab = document.getElementById('admin-tutor-waitlisted')
 var pendingTab = document.getElementById('admin-tutor-pending')
@@ -16,6 +17,7 @@ var approvedTab = document.getElementById('admin-tutor-approved')
 
 //Tab filter onclick listeners
 allTab.addEventListener('click', allApplicants)
+deletedTab.addEventListener('click', deletedApplicants)
 rejectedTab.addEventListener('click', rejectedApplicants)
 waitlistedTab.addEventListener('click', waitlistedApplicants)
 pendingTab.addEventListener('click', pendingApplicants)
@@ -27,6 +29,19 @@ function allApplicants() {
 	showApplicants()
 	
 	allTab.className = 'admin-tutor-filters-selected'
+	deletedTab.className = 'admin-tutor-filters'
+	rejectedTab.className = 'admin-tutor-filters'
+	waitlistedTab.className = 'admin-tutor-filters'
+	pendingTab.className = 'admin-tutor-filters'
+	approvedTab.className = 'admin-tutor-filters'
+}
+
+function deletedApplicants() {
+	tabFilters = ["deleted"]
+	showApplicants()
+	
+	allTab.className = 'admin-tutor-filters'
+	deletedTab.className = 'admin-tutor-filters-selected'
 	rejectedTab.className = 'admin-tutor-filters'
 	waitlistedTab.className = 'admin-tutor-filters'
 	pendingTab.className = 'admin-tutor-filters'
@@ -38,6 +53,7 @@ function rejectedApplicants() {
 	showApplicants()
 	
 	allTab.className = 'admin-tutor-filters'
+	deletedTab.className = 'admin-tutor-filters'
 	rejectedTab.className = 'admin-tutor-filters-selected'
 	waitlistedTab.className = 'admin-tutor-filters'
 	pendingTab.className = 'admin-tutor-filters'
@@ -49,6 +65,7 @@ function waitlistedApplicants() {
 	showApplicants()
 	
 	allTab.className = 'admin-tutor-filters'
+	deletedTab.className = 'admin-tutor-filters'
 	rejectedTab.className = 'admin-tutor-filters'
 	waitlistedTab.className = 'admin-tutor-filters-selected'
 	pendingTab.className = 'admin-tutor-filters'
@@ -60,6 +77,7 @@ function pendingApplicants() {
 	showApplicants()
 	
 	allTab.className = 'admin-tutor-filters'
+	deletedTab.className = 'admin-tutor-filters'
 	rejectedTab.className = 'admin-tutor-filters'
 	waitlistedTab.className = 'admin-tutor-filters'
 	pendingTab.className = 'admin-tutor-filters-selected'
@@ -71,6 +89,7 @@ function approvedApplicants() {
 	showApplicants()
 	
 	allTab.className = 'admin-tutor-filters'
+	deletedTab.className = 'admin-tutor-filters'
 	rejectedTab.className = 'admin-tutor-filters'
 	waitlistedTab.className = 'admin-tutor-filters'
 	pendingTab.className = 'admin-tutor-filters'
@@ -237,6 +256,9 @@ function buildApplicantBlock(ID, count, name, email, date, school, status, first
 	if (status == "rejected") {
 		applicantStatus.setAttribute('class', 'applicant-status-rejected')
 		applicantStatus.innerHTML = "REJECTED"
+	} else if (status == "deleted") {
+		applicantStatus.setAttribute('class', 'applicant-status-deleted')
+		applicantStatus.innerHTML = "DELETED"
 	} else if (status == "waitlisted") {
 		applicantStatus.setAttribute('class', 'applicant-status-waitlisted')
 		applicantStatus.innerHTML = "WAITLISTED"
