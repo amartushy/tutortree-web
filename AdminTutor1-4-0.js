@@ -154,7 +154,7 @@ function showApplicants() {
 			var docRef = userDB.collection('userTest').doc(applicantID).collection('tutorApplication').doc('application')
 			const promise = docRef.get().then(function(app) {
 				applicantDate = app.data().timeSubmitted
-				applicantFirstName = app.data().firstName
+				applicantFirstName = app.data().applicationFields.firstName
 				applicantsArray.push([applicantDate, [applicantID, applicantName, applicantEmail, applicantSchool, applicantStatus, applicantFirstName]])
 			})
 			
@@ -181,7 +181,7 @@ function buildApplicants(applicantsArray) {
 			date = sortedApplicants[count][0],
 			school = sortedApplicants[count][1][3],
 			status = sortedApplicants[count][1][4],
-		    	first = sortedApplicants[count][1][5],
+		    	first = sortedApplicants[count][1][5]
 		
 		buildApplicantBlock(applicantID, count, name, email, date, school, status, first)
 	})
