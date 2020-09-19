@@ -182,7 +182,7 @@ uoregonButton.addEventListener('click', function() {
 })
 
 function schoolFilterBackground(school) {
-	var schoolOptions = ['uoregon', 'oregonstate', 'stanford', 'berkeley', 'sjsu', 'ucsb', 'ucla', 'usc', 'pepperdine', 'sdsu', 'ucsd']	
+	var schoolOptions = ['uoregon', 'oregonstate', 'stanford', 'berkeley', 'sjsu', 'ucsb', 'ucla', 'usc', 'pepperdine', 'sdsu', 'ucsd', 'tutortree']	
 				 
 	for( var i = 0;  i < schoolOptions.length; i++) {
 		console.log(school)
