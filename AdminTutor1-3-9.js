@@ -147,13 +147,15 @@ function showApplicants() {
 			    	applicantName = doc.data().name,
 				applicantEmail = doc.data().email,
 			    	applicantDate,
+			    	applicantFirstName,
 				applicantSchool = doc.data().school,
 				applicantStatus = doc.data().tutorApplicantStatus
 			
 			var docRef = userDB.collection('userTest').doc(applicantID).collection('tutorApplication').doc('application')
 			const promise = docRef.get().then(function(app) {
 				applicantDate = app.data().timeSubmitted
-				applicantsArray.push([applicantDate, [applicantID, applicantName, applicantEmail, applicantSchool, applicantStatus]])
+				applicantFirstName = app.data().firstName
+				applicantsArray.push([applicantDate, [applicantID, applicantName, applicantEmail, applicantSchool, applicantStatus, applicantFirstName]])
 			})
 			
 			promises.push(promise)
@@ -178,13 +180,14 @@ function buildApplicants(applicantsArray) {
 			email = sortedApplicants[count][1][2],
 			date = sortedApplicants[count][0],
 			school = sortedApplicants[count][1][3],
-			status = sortedApplicants[count][1][4]
+			status = sortedApplicants[count][1][4],
+		    	first = sortedApplicants[count][1][5],
 		
-		buildApplicantBlock(applicantID, count, name, email, date, school, status)
+		buildApplicantBlock(applicantID, count, name, email, date, school, status, first)
 	})
 }
 
-function buildApplicantBlock(ID, count, name, email, date, school, status) {
+function buildApplicantBlock(ID, count, name, email, date, school, status, first) {
 	
 	//Main block that holds all applicant elements
 	var applicantBlock = document.createElement('div')
@@ -259,24 +262,24 @@ function buildApplicantBlock(ID, count, name, email, date, school, status) {
 
 	var applicantTutorReject = document.createElement('div')
 	applicantTutorReject.setAttribute('class', 'admin-tutor-reject')
-	applicantTutorReject.setAttribute('onClick', 'updateApplicantStatus("rejected","' + ID + '")')
+	applicantTutorReject.setAttribute('onClick', 'updateApplicantStatus("rejected","' + ID + '","' + first + '","' + email + '")')
 	applicantTutorReject.innerHTML = 'user-times'
 	applicantActions.appendChild(applicantTutorReject)
 
 	var applicantTutorWaitlist = document.createElement('div')
 	applicantTutorWaitlist.setAttribute('class', 'admin-tutor-waitlist')
-	applicantTutorWaitlist.setAttribute('onClick', 'updateApplicantStatus("waitlisted","' + ID + '")')
+	applicantTutorWaitlist.setAttribute('onClick', 'updateApplicantStatus("waitlisted","' + ID + '","' + first +'","' + email +'")')
 	applicantTutorWaitlist.innerHTML = 'hourglass-half'
 	applicantActions.appendChild(applicantTutorWaitlist)
 
 	var applicantTutorDelete = document.createElement('div')
 	applicantTutorDelete.setAttribute('class', 'admin-tutor-delete')
-	applicantTutorDelete.setAttribute('onClick', 'updateApplicantStatus("deleted","' + ID + '")')
+	applicantTutorDelete.setAttribute('onClick', 'updateApplicantStatus("deleted","' + ID + '","' + first +'","' + email +'")')
 	applicantTutorDelete.innerHTML = 'trash-alt'
 	applicantActions.appendChild(applicantTutorDelete)
 }
 
-function updateApplicantStatus(status, ID) {
+function updateApplicantStatus(status, ID, first, email) {
 	
 	userDB.collection('userTest')
 		.doc(ID)
@@ -287,7 +290,28 @@ function updateApplicantStatus(status, ID) {
 		userDB.collection('userTest')
 		.doc(ID)
 		.update( {'isTutor' : true } )
+		
+		sendTutorAcceptanceEmail(email, first)
+		
+	} else if (status == 'rejected') {
+		sendTutorRejectionEmail(email, first)
 	}
+}
+
+function sendTutorAcceptanceEmail(email, name) {
+	var xhttp = new XMLHttpRequest();
+    	var herokuURL = "https://tutortree2.herokuapp.com/sendTutorAcceptanceEmail/"+email+"/"+name
+   	console.log(herokuURL)
+	xhttp.open("GET", herokuURL, true);
+	xhttp.send();
+}
+
+function sendTutorRejectionEmail(email, name) {
+	var xhttp = new XMLHttpRequest();
+    	var herokuURL = "https://tutortree2.herokuapp.com/sendTutorRejectionEmail/"+email+"/"+name
+   	console.log(herokuURL)
+	xhttp.open("GET", herokuURL, true);
+	xhttp.send();
 }
 
 //TUTOR MODAL ELEMENTS________________________________________________________________________________
