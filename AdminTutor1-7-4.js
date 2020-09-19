@@ -184,15 +184,13 @@ uoregonButton.addEventListener('click', function() {
 function schoolFilterBackground(school) {
 	var schoolOptions = ['uoregon', 'oregonstate', 'stanford', 'berkeley', 'sjsu', 'ucsb', 'ucla', 'usc', 'pepperdine', 'sdsu', 'ucsd']	
 				 
-	schoolOptions.forEach(function (item) {
-		console.log(school)
-		console.log(item)
-		if (school == item) {
+	for( var i = 0;  i < schoolOptions.length; i++) {
+		if (schoolOptions[i] == school) {
 			document.getElementById(school + '-button').className = 'admin-tutor-logo-holder-selected'
 		} else {
 			document.getElementById(school + '-button').className = 'admin-tutor-logo-holder'
 		}
-	})
+	}
 }
 
 //Section to append all applicants
