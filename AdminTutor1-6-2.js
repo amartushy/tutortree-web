@@ -113,9 +113,9 @@ var uoregonButton = document.getElementById('uoregon-button')
 
 //School filter onclick listeners
 
-tutortreeButton.addEventListener('click', tutortreeApplicants(TT))
-ucsdButton.addEventListener('click', tutortreeApplicants(ucsd))
-uscButton.addEventListener('click', tutortreeApplicants(usc))
+tutortreeButton.addEventListener('click', tutortreeApplicants('TT'))
+ucsdButton.addEventListener('click', tutortreeApplicants('ucsd'))
+uscButton.addEventListener('click', tutortreeApplicants('usc'))
 uclaButton.addEventListener('click', 'tutortreeApplicants(ucla)')
 pepperdineButton.addEventListener('click', 'tutortreeApplicants(pepperdine)')
 csunButton.addEventListener('click', 'tutortreeApplicants(csun)')
