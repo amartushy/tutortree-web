@@ -144,7 +144,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		//Check if user is admin, else redirect: TODO
 		
 		//Load all applicants with no filters applied
-		tutortreeApplicants()
+		//tutortreeApplicants()
 		
 	//If user is not logged in (or an Admin) return them home
 	} else {
