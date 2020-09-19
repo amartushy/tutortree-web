@@ -100,6 +100,7 @@ function approvedApplicants() {
 //School filters
 var tutortreeButton = document.getElementById('tutortree-button')
 var ucsdButton = document.getElementById('ucsd-button')
+var sdsuButton = document.getElementById('sdsu-button')
 var uscButton = document.getElementById('usc-button')
 var uclaButton = document.getElementById('ucla-button')
 var pepperdineButton = document.getElementById('pepperdine-button')
@@ -113,61 +114,58 @@ var uoregonButton = document.getElementById('uoregon-button')
 
 //School filter onclick listeners
 
-tutortreeButton.addEventListener('click', tutortreeApplicants('TT'))
-ucsdButton.addEventListener('click', tutortreeApplicants('ucsd'))
-uscButton.addEventListener('click', tutortreeApplicants('usc'))
-uclaButton.addEventListener('click', tutortreeApplicants('ucla'))
-pepperdineButton.addEventListener('click', tutortreeApplicants('pepperdine'))
-csunButton.addEventListener('click', tutortreeApplicants('csun'))
-ucsbButton.addEventListener('click', tutortreeApplicants('ucsb'))
-stanfordButton.addEventListener('click', tutortreeApplicants('stanford'))
-sjsuButton.addEventListener('click', tutortreeApplicants('sjsu'))
-berkeleyButton.addEventListener('click', tutortreeApplicants('berkeley'))
-oregonstateButton.addEventListener('click', tutortreeApplicants('oregonstate'))
-uoregonButton.addEventListener('click', tutortreeApplicants('uoregon'))
-
-//School filter functions
-function tutortreeApplicants(school) {	
-	switch (school) {
-		case 'uoregon':
-			schoolFilters = "uoregon"
-			break;
-		case 'oregonstate':
-			schoolFilters = "oregonstate"
-			break;
-		case 'stanford':
-			schoolFilters = "stanford"
-			break;
-		case 'berkeley':
-			schoolFilters = "berkeley"
-			break;
-		case 'sjsu':
-			schoolFilters = "sjsu"
-			break;
-		case 'ucsb':
-			schoolFilters = "ucsb"
-			break;
-		case 'ucla':
-			schoolFilters = "ucla"
-			break;
-		case 'usc':
-			schoolFilters = "usc"
-			break;
-		case 'pepperdine':
-			schoolFilters = "pepperdine"
-			break;
-		case 'ucsd':
-			schoolFilters = "ucsd"
-			break;
-		case 'sdsu':
-			schoolFilters = "sdsu"
-			break;
-		case 'TT':
-			schoolFilters = "All Schools"
-		}
+tutortreeButton.addEventListener('click', function() {
+	schoolFilters = 'All Schools'
 	showApplicants()
-}
-
+})
+ucsdButton.addEventListener('click', function() {
+	schoolFilters = 'ucsd'
+	showApplicants()
+})
+sdsuButton.addEventListener('click', function() {
+	schoolFilters = 'sdsu'
+	showApplicants()
+})
+uscButton.addEventListener('click', function() {
+	schoolFilters = 'usc'
+	showApplicants()
+})
+uclaButton.addEventListener('click', function() {
+	schoolFilters = 'ucla'
+	showApplicants()
+})
+pepperdineButton.addEventListener('click', function() {
+	schoolFilters = 'pepperdine'
+	showApplicants()
+})
+csunButton.addEventListener('click', function() {
+	schoolFilters = 'csun'
+	showApplicants()
+})
+ucsbButton.addEventListener('click', function() {
+	schoolFilters = 'ucsb'
+	showApplicants()
+})
+stanfordButton.addEventListener('click', function() {
+	schoolFilters = 'stanford'
+	showApplicants()
+})
+sjsuButton.addEventListener('click', function() {
+	schoolFilters = 'sjsu'
+	showApplicants()
+})
+berkeleyButton.addEventListener('click', function() {
+	schoolFilters = 'berkeley'
+	showApplicants()
+})
+oregonstateButton.addEventListener('click', function() {
+	schoolFilters = 'oregonstate'
+	showApplicants()
+})
+uoregonButton.addEventListener('click', function() {
+	schoolFilters = 'uoregon'
+	showApplicants()
+})
 
 //Section to append all applicants
 var applicantSection = document.getElementById('tutor-applicant-section')
