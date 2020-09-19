@@ -95,6 +95,7 @@ function approvedApplicants() {
 	pendingTab.className = 'admin-tutor-filters'
 	approvedTab.className = 'admin-tutor-filters-selected'
 }
+
 //__________________________
 
 //School filters
@@ -117,55 +118,80 @@ var uoregonButton = document.getElementById('uoregon-button')
 tutortreeButton.addEventListener('click', function() {
 	schoolFilters = 'All Schools'
 	showApplicants()
+	schoolFilterBackground('tutortree')
 })
 ucsdButton.addEventListener('click', function() {
 	schoolFilters = 'ucsd'
 	showApplicants()
+	schoolFilterBackground('ucsd')
 })
 sdsuButton.addEventListener('click', function() {
 	schoolFilters = 'sdsu'
 	showApplicants()
+	schoolFilterBackground('sdsu')
 })
 uscButton.addEventListener('click', function() {
 	schoolFilters = 'usc'
 	showApplicants()
+	schoolFilterBackground('usc')
 })
 uclaButton.addEventListener('click', function() {
 	schoolFilters = 'ucla'
 	showApplicants()
+	schoolFilterBackground('ucla')
 })
 pepperdineButton.addEventListener('click', function() {
 	schoolFilters = 'pepperdine'
 	showApplicants()
+	schoolFilterBackground('pepperdine')
 })
 csunButton.addEventListener('click', function() {
 	schoolFilters = 'csun'
 	showApplicants()
+	schoolFilterBackground('csun')
 })
 ucsbButton.addEventListener('click', function() {
 	schoolFilters = 'ucsb'
 	showApplicants()
+	schoolFilterBackground('ucsb')
 })
 stanfordButton.addEventListener('click', function() {
 	schoolFilters = 'stanford'
 	showApplicants()
+	schoolFilterBackground('stanford')
 })
 sjsuButton.addEventListener('click', function() {
 	schoolFilters = 'sjsu'
 	showApplicants()
+	schoolFilterBackground('sjsu')
 })
 berkeleyButton.addEventListener('click', function() {
 	schoolFilters = 'berkeley'
 	showApplicants()
+	schoolFilterBackground('berkeley')
 })
 oregonstateButton.addEventListener('click', function() {
 	schoolFilters = 'oregonstate'
 	showApplicants()
+	schoolFilterBackground('oregonstate')
 })
 uoregonButton.addEventListener('click', function() {
 	schoolFilters = 'uoregon'
 	showApplicants()
+	schoolFilterBackground('uoregon')
 })
+
+function schoolFilterBackground(school) {
+	var schoolOptions = ['uoregon', 'oregonstate', 'stanford', 'berkeley', 'sjsu', 'ucsb', 'ucla', 'usc', 'pepperdine', 'sdsu', 'ucsd']	
+				 
+	schoolOptions.forEach(function (item) {
+		if (school == item) {
+			document.getElementById(school + ' button').className = 'admin-tutor-logo-holder-selected'
+		} else {
+			document.getElementById(school + ' button').className = 'admin-tutor-logo-holder'
+		}
+	})
+}
 
 //Section to append all applicants
 var applicantSection = document.getElementById('tutor-applicant-section')
