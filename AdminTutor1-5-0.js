@@ -413,7 +413,9 @@ updateApplicationResponses.addEventListener('click', function() {
 	    yearVal = tutorYear.value,
 	    coursesVal = tutorCourses.value,
 	    whyVal = tutorWhy.value,
-	    groupsVal = tutorGroups.value
+	    groupsVal = tutorGroups.value,
+	    howVal = tutorHow.value,
+	    referralVal = tutorReferral.value
 	
 	console.log( [firstVal, lastVal, majorVal, schoolVal, yearVal, coursesVal, whyVal, groupsVal] )
 })
@@ -516,7 +518,7 @@ function showTutorModal(ID) {
 		tutorImage.src = tutor.data().profileImage
 		tutorName.innerHTML = tutor.data().name
 		tutorEmail.placeholder = tutor.data().email
-		tutorMajor.placeholder = tutor.data().major
+		tutorMajor.value = tutor.data().major
 	})
 	
 	//Application snapshot values
