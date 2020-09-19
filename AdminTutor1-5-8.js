@@ -321,8 +321,12 @@ function updateApplicantStatus(status, ID, first, email) {
 		.doc(ID)
 		.update( {'isTutor' : true } )
 		
+		mpIsFirstApprovedTutorAppResolution(email)
+		
 	} else if (status == 'rejected') {
 		sendTutorRejectionEmail(email, first)
+		
+		mpIsRejectedTutorAppResolution(email)
 	}
 	
 }
@@ -539,11 +543,19 @@ tutorCompletedInterview.addEventListener('click', function() {
 		.get()
 		.then(function(doc) {
 			didCompleteInterview = doc.data().completedInterview
+			tutorEmail = doc.data().email
 			userDB.collection("userTest")
 				.doc(globalApplicantID)
 				.collection("tutorApplication")
 				.doc("application")
 				.update( { "completedInterview" : !didCompleteInterview } )
+					.then(function() {
+						if (didCompleteInterview) {
+							mpInterviewCompleted(globalApplicantID, tutorEmail)
+						} else {
+							mpReverseInterviewCompleted(globalApplicantID, tutorEmail)
+						}
+					})
 		})
 })
 
