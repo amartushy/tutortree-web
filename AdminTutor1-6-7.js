@@ -229,7 +229,7 @@ function showApplicants() {
 		})
 		
 	} else {
-		userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).where("school", "==", schoolFilters).get().then(async function(allTutors) {
+		userDB.collection("userTest").where("school", "==", schoolFilters).where("tutorApplicantStatus", "in", tabFilters).get().then(async function(allTutors) {
 
 			//remove all children when updated
 			while(applicantSection.firstChild) {
