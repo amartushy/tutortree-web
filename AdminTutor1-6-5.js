@@ -160,7 +160,7 @@ function tutortreeApplicants(school) {
 			schoolFilters = "ucsd"
 			break;
 		case 'sdsu':
-			schoolFilters = "sdsu"]
+			schoolFilters = "sdsu"
 			break;
 		case 'TT':
 			schoolFilters = "All Schools"
