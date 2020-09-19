@@ -112,6 +112,7 @@ var oregonstateButton = document.getElementById('oregonstate-button')
 var uoregonButton = document.getElementById('uoregon-button')
 
 //School filter onclick listeners
+/*
 tutortreeButton.addEventListener('click', tutortreeApplicants)
 ucsdButton.addEventListener('click', tutortreeApplicants)
 uscButton.addEventListener('click', tutortreeApplicants)
@@ -131,6 +132,7 @@ function tutortreeApplicants() {
 	schoolFilters = ""
 	showApplicants()
 }
+*/
 
 //Section to append all applicants
 var applicantSection = document.getElementById('tutor-applicant-section')
