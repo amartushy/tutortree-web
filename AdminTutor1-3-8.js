@@ -167,15 +167,18 @@ function showApplicants() {
 }
 
 function buildApplicants(applicantsArray) {
+	var sortedApplicants = applicantsArray.sort(function(a, b) {
+  		return b[0] - a[0];
+	})
 	
-	applicantsArray.forEach(function (applicant, count) {
+	sortedApplicants.forEach(function (applicant, count) {
   		console.log(applicant, count)
-		var applicantID = applicantsArray[count][1][0],
-			name = applicantsArray[count][1][1],
-			email = applicantsArray[count][1][2],
-			date = applicantsArray[count][0],
-			school = applicantsArray[count][1][3],
-			status = applicantsArray[count][1][4]
+		var applicantID = sortedApplicants[count][1][0],
+			name = sortedApplicants[count][1][1],
+			email = sortedApplicants[count][1][2],
+			date = sortedApplicants[count][0],
+			school = sortedApplicants[count][1][3],
+			status = sortedApplicants[count][1][4]
 		
 		buildApplicantBlock(applicantID, count, name, email, date, school, status)
 	})
