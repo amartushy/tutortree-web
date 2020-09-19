@@ -489,6 +489,29 @@ var treePlus = document.getElementById('tree-plus')
 var questionsMinus = document.getElementById('questions-minus')
 var questionsPlus = document.getElementById('questions-plus')
 
+var updateInterviewResponses = document.getElementById('update-interview-responses')
+updateInterviewResponses.addEventListener('click', function() {
+
+	userDB.collection("userTest")
+			.doc(globalApplicantID)
+			.collection("tutorApplication")
+			.doc("interview")
+			.update( { 
+				"interviewNotes.onTimeNotes" : tutorOnTime.value,
+				"interviewNotes.challengingNotes" : tutorChallenge.value,
+				"interviewNotes.troubleNotes" : tutorApproach.value,
+				"interviewNotes.situationNotes" : tutorSituation.value,
+				"interviewNotes.confidenceNotes" : tutorConfidence.value,
+				"interviewNotes.preparedNotes" : tutorPrepared.value,
+				"interviewNotes.explainNotes" : tutorConcept.value,
+				"interviewNotes.onlineNotes" : tutorOnline.value,
+				"interviewNotes.helpNotes" : tutorTree.value,
+				"interviewNotes.questionNotes" : tutorQuestions.value
+				} )
+	
+	updateInterviewResponses.style.display = "none"
+})
+
 
 //More Section Elements
 var tutorApplied = document.getElementById('tutor-applied')
@@ -627,16 +650,16 @@ function showTutorModal(ID) {
 	//Interview Snapshot Values
 	userDB.collection("userTest").doc(ID).collection("tutorApplication").doc("interview").onSnapshot(function(doc) {
 		//Populate Interview Notes Data
-		tutorOnTime.placeholder = doc.data().interviewNotes.onTimeNotes
-		tutorChallenge.placeholder = doc.data().interviewNotes.challengingNotes
-		tutorApproach.placeholder = doc.data().interviewNotes.troubleNotes
-		tutorSituation.placeholder = doc.data().interviewNotes.situationNotes
-		tutorConfidence.placeholder = doc.data().interviewNotes.confidenceNotes
-		tutorPrepared.placeholder = doc.data().interviewNotes.preparedNotes
-		tutorConcept.placeholder = doc.data().interviewNotes.explainNotes
-		tutorOnline.placeholder = doc.data().interviewNotes.onlineNotes
-		tutorTree.placeholder = doc.data().interviewNotes.helpNotes
-		tutorQuestions.placeholder = doc.data().interviewNotes.questionNotes
+		tutorOnTime.value = doc.data().interviewNotes.onTimeNotes
+		tutorChallenge.value = doc.data().interviewNotes.challengingNotes
+		tutorApproach.value = doc.data().interviewNotes.troubleNotes
+		tutorSituation.value = doc.data().interviewNotes.situationNotes
+		tutorConfidence.value = doc.data().interviewNotes.confidenceNotes
+		tutorPrepared.value = doc.data().interviewNotes.preparedNotes
+		tutorConcept.value = doc.data().interviewNotes.explainNotes
+		tutorOnline.value = doc.data().interviewNotes.onlineNotes
+		tutorTree.value = doc.data().interviewNotes.helpNotes
+		tutorQuestions.value = doc.data().interviewNotes.questionNotes
 		
 		onTimeScore.innerHTML = doc.data().interviewScores.onTimeScore
 		challengeScore.innerHTML = doc.data().interviewScores.challengingScore
@@ -650,7 +673,7 @@ function showTutorModal(ID) {
 		questionsScore.innerHTML = doc.data().interviewScores.questionScore
 		
 		
-		setInterviewOnblurs()
+		setInterviewOnfocuses()
 		setInterviewScoring()
 		
 	})
@@ -660,76 +683,36 @@ function showTutorModal(ID) {
 
 //Interview Onblurs_____________________________________________________________________________________________________
 
-function setInterviewOnblurs(applicantID) {
-	tutorOnTime.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("interview")
-			.update( { "interviewNotes.onTimeNotes" : tutorOnTime.value } )
+function setInterviewOnfocuses() {
+	tutorOnTime.onfocus = function() {
+		updateInterviewResponses.style.display = 'block'
 	}
-	tutorChallenge.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("interview")
-			.update( { "interviewNotes.challengingNotes" : tutorChallenge.value } )
+	tutorChallenge.onfocus = function() {
+		updateInterviewResponses.style.display = 'block'
 	}
-	tutorApproach.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("interview")
-			.update( { "interviewNotes.troubleNotes" : tutorApproach.value } )
+	tutorApproach.onfocus = function() {
+		updateInterviewResponses.style.display = 'block'
 	}
-	tutorSituation.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("interview")
-			.update( { "interviewNotes.situationNotes" : tutorSituation.value } )
+	tutorSituation.onfocus = function() {
+		updateInterviewResponses.style.display = 'block'
 	}
-	tutorConfidence.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("interview")
-			.update( { "interviewNotes.confidenceNotes" : tutorConfidence.value } )
+	tutorConfidence.onfocus = function() {
+		updateInterviewResponses.style.display = 'block'
 	}
-	tutorPrepared.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("interview")
-			.update( { "interviewNotes.preparedNotes" : tutorPrepared.value } )
+	tutorPrepared.onfocus = function() {
+		updateInterviewResponses.style.display = 'block'
 	}
-	tutorConcept.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("interview")
-			.update( { "interviewNotes.explainNotes" : tutorConcept.value } )
+	tutorConcept.onfocus = function() {
+		updateInterviewResponses.style.display = 'block'
 	}
-	tutorOnline.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("interview")
-			.update( { "interviewNotes.onlineNotes" : tutorOnline.value } )
+	tutorOnline.onfocus = function() {
+		updateInterviewResponses.style.display = 'block'
 	}
-	tutorTree.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("interview")
-			.update( { "interviewNotes.helpNotes" : tutorTree.value } )
+	tutorTree.onfocus = function() {
+		updateInterviewResponses.style.display = 'block'
 	}
-	tutorQuestions.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("interview")
-			.update( { "interviewNotes.questionNotes" : tutorQuestions.value } )
+	tutorQuestions.onfocus = function() {
+		updateInterviewResponses.style.display = 'block'
 	}
 }
 
