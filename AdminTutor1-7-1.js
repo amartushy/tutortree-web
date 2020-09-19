@@ -186,9 +186,9 @@ function schoolFilterBackground(school) {
 				 
 	schoolOptions.forEach(function (item) {
 		if (school == item) {
-			document.getElementById(school + ' button').className = 'admin-tutor-logo-holder-selected'
+			document.getElementById(school + '-button').className = 'admin-tutor-logo-holder-selected'
 		} else {
-			document.getElementById(school + ' button').className = 'admin-tutor-logo-holder'
+			document.getElementById(school + '-button').className = 'admin-tutor-logo-holder'
 		}
 	})
 }
