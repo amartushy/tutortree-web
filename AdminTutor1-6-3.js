@@ -3,7 +3,7 @@ var userDB = firebase.firestore()
 
 //FILTERS
 var tabFilters = ["pending", "waitlisted", "rejected", "accepted", "deleted"]
-var schoolFilters = ["uoregon", "oregonstate", "stanford", "berkeley", "sjsu", "ucsb", "ucla", "usc", "pepperdine", "ucsd", "sdsu", "Invalid School"]
+var schoolFilters = ["uoregon", "stanford", "berkeley", "sjsu", "ucsb", "ucla", "usc", "pepperdine", "ucsd", "sdsu", "oregonstate", "Invalid School"]
 
 //______________________
 
@@ -129,9 +129,6 @@ uoregonButton.addEventListener('click', 'tutortreeApplicants(uoregon)')
 //School filter functions
 function tutortreeApplicants(school) {	
 	switch (school) {
-		case 'TT':
-			schoolFilters = ["uoregon", "oregonstate", "stanford", "berkeley", "sjsu", "ucsb", "ucla", "usc", "pepperdine", "ucsd", "sdsu", "Invalid School"]
-			break;
 		case 'uoregon':
 			schoolFilters = ["uoregon"]
 			break;
@@ -163,9 +160,11 @@ function tutortreeApplicants(school) {
 			schoolFilters = ["ucsd"]
 			break;
 		case 'sdsu':
-			schoolFilters = ["sdsu"]		
+			schoolFilters = ["sdsu"]	
+			break;
+		case 'TT':
+			schoolFilters = ["uoregon", "oregonstate", "stanford", "berkeley", "sjsu", "ucsb", "ucla", "usc", "pepperdine", "ucsd", "sdsu", "Invalid School"]
 		}
-
 	showApplicants()
 }
 
@@ -194,39 +193,76 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 //Calls when a tab is clicked, builds applicant blocks for filters
 function showApplicants() {
-	userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).where("school", "in", schoolFilters).get().then(async function(allTutors) {
+	
+	if (schoolFilters.length > 2) {
+		userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).get().then(async function(allTutors) {
+			//remove all children when updated
+			while(applicantSection.firstChild) {
+				applicantSection.removeChild(applicantSection.firstChild)
+			}
+			//Reinitialize Counter
+			const promises = []
+			var applicantsArray = []
+			allTutors.forEach(function(doc)  {
+				var 	applicantID = doc.id,
+					applicantName = doc.data().name,
+					applicantEmail = doc.data().email,
+					applicantDate,
+					applicantFirstName,
+					applicantSchool = doc.data().school,
+					applicantStatus = doc.data().tutorApplicantStatus
 
-		//remove all children when updated
-		while(applicantSection.firstChild) {
-			applicantSection.removeChild(applicantSection.firstChild)
-		}
-		//Reinitialize Counter
-		const promises = []
-		var applicantsArray = []
-		allTutors.forEach(function(doc)  {
-			var 	applicantID = doc.id,
-			    	applicantName = doc.data().name,
-				applicantEmail = doc.data().email,
-			    	applicantDate,
-			    	applicantFirstName,
-				applicantSchool = doc.data().school,
-				applicantStatus = doc.data().tutorApplicantStatus
-			
-			var docRef = userDB.collection('userTest').doc(applicantID).collection('tutorApplication').doc('application')
-			const promise = docRef.get().then(function(app) {
-				applicantDate = app.data().timeSubmitted
-				applicantFirstName = app.data().applicationFields.firstName
-				applicantsArray.push([applicantDate, [applicantID, applicantName, applicantEmail, applicantSchool, applicantStatus, applicantFirstName]])
+				var docRef = userDB.collection('userTest').doc(applicantID).collection('tutorApplication').doc('application')
+				const promise = docRef.get().then(function(app) {
+					applicantDate = app.data().timeSubmitted
+					applicantFirstName = app.data().applicationFields.firstName
+					applicantsArray.push([applicantDate, [applicantID, applicantName, applicantEmail, applicantSchool, applicantStatus, applicantFirstName]])
+				})
+
+				promises.push(promise)
 			})
-			
-			promises.push(promise)
+
+			Promise.all(promises).then(results => {
+				console.log(results)
+				buildApplicants(applicantsArray)
+			})
 		})
 		
-		Promise.all(promises).then(results => {
-			console.log(results)
-			buildApplicants(applicantsArray)
+	} else {
+		userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).where("school", "in", schoolFilters).get().then(async function(allTutors) {
+
+			//remove all children when updated
+			while(applicantSection.firstChild) {
+				applicantSection.removeChild(applicantSection.firstChild)
+			}
+			//Reinitialize Counter
+			const promises = []
+			var applicantsArray = []
+			allTutors.forEach(function(doc)  {
+				var 	applicantID = doc.id,
+					applicantName = doc.data().name,
+					applicantEmail = doc.data().email,
+					applicantDate,
+					applicantFirstName,
+					applicantSchool = doc.data().school,
+					applicantStatus = doc.data().tutorApplicantStatus
+
+				var docRef = userDB.collection('userTest').doc(applicantID).collection('tutorApplication').doc('application')
+				const promise = docRef.get().then(function(app) {
+					applicantDate = app.data().timeSubmitted
+					applicantFirstName = app.data().applicationFields.firstName
+					applicantsArray.push([applicantDate, [applicantID, applicantName, applicantEmail, applicantSchool, applicantStatus, applicantFirstName]])
+				})
+
+				promises.push(promise)
+			})
+
+			Promise.all(promises).then(results => {
+				console.log(results)
+				buildApplicants(applicantsArray)
+			})
 		})
-	})
+	}
 }
 
 function buildApplicants(applicantsArray) {
