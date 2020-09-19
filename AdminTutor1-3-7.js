@@ -167,8 +167,6 @@ function showApplicants() {
 }
 
 function buildApplicants(applicantsArray) {
-	console.log(applicantsArray)
-	console.log(applicantsArray.length)
 	
 	applicantsArray.forEach(function (applicant, count) {
   		console.log(applicant, count)
@@ -184,7 +182,7 @@ function buildApplicants(applicantsArray) {
 }
 
 function buildApplicantBlock(ID, count, name, email, date, school, status) {
-	console.log('building: ' + [ID, count, name, email, date, school, status])
+	
 	//Main block that holds all applicant elements
 	var applicantBlock = document.createElement('div')
 	applicantBlock.setAttribute('id', ID)
