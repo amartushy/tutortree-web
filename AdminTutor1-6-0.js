@@ -3,7 +3,7 @@ var userDB = firebase.firestore()
 
 //FILTERS
 var tabFilters = ["pending", "waitlisted", "rejected", "accepted", "deleted"]
-var schoolFilters = ""
+var schoolFilters = ["uoregon", "oregonstate", "stanford", "berkeley", "sjsu", "ucsb", "ucla", "usc", "pepperdine", "ucsd", "sdsu", "Invalid School"]
 
 //______________________
 
@@ -113,23 +113,59 @@ var uoregonButton = document.getElementById('uoregon-button')
 
 //School filter onclick listeners
 
-tutortreeButton.addEventListener('click', tutortreeApplicants)
-ucsdButton.addEventListener('click', tutortreeApplicants)
-uscButton.addEventListener('click', tutortreeApplicants)
-uclaButton.addEventListener('click', tutortreeApplicants)
-pepperdineButton.addEventListener('click', tutortreeApplicants)
-csunButton.addEventListener('click', tutortreeApplicants)
-ucsbButton.addEventListener('click', tutortreeApplicants)
-stanfordButton.addEventListener('click', tutortreeApplicants)
-sjsuButton.addEventListener('click', tutortreeApplicants)
-berkeleyButton.addEventListener('click', tutortreeApplicants)
-oregonstateButton.addEventListener('click', tutortreeApplicants)
-uoregonButton.addEventListener('click', tutortreeApplicants)
+tutortreeButton.addEventListener('click', 'tutortreeApplicants(TT)')
+ucsdButton.addEventListener('click', 'tutortreeApplicants(ucsd)')
+uscButton.addEventListener('click', 'tutortreeApplicants(usc)')
+uclaButton.addEventListener('click', 'tutortreeApplicants(ucla)')
+pepperdineButton.addEventListener('click', 'tutortreeApplicants(pepperdine)')
+csunButton.addEventListener('click', 'tutortreeApplicants(csun)')
+ucsbButton.addEventListener('click', 'tutortreeApplicants(ucsb)')
+stanfordButton.addEventListener('click', 'tutortreeApplicants(stanford)')
+sjsuButton.addEventListener('click', 'tutortreeApplicants(sjsu)')
+berkeleyButton.addEventListener('click', 'tutortreeApplicants(berkeley)')
+oregonstateButton.addEventListener('click', 'tutortreeApplicants(oregonstate)')
+uoregonButton.addEventListener('click', 'tutortreeApplicants(uoregon)')
 
 //School filter functions
-function tutortreeApplicants() {
-	tabFilters = ["pending", "waitlisted", "rejected", "accepted", "deleted"]
-	schoolFilters = ""
+function tutortreeApplicants(school) {	
+	switch (school) {
+		case 'TT':
+			schoolFilters = ["uoregon", "oregonstate", "stanford", "berkeley", "sjsu", "ucsb", "ucla", "usc", "pepperdine", "ucsd", "sdsu", "Invalid School"]
+			break;
+		case 'uoregon':
+			schoolFilters = ["uoregon"]
+			break;
+		case 'oregonstate':
+			schoolFilters = ["oregonstate"]
+			break;
+		case 'stanford':
+			schoolFilters = ["stanford"]
+			break;
+		case 'berkeley':
+			schoolFilters = ["berkeley"]
+			break;
+		case 'sjsu':
+			schoolFilters = ["sjsu"]
+			break;
+		case 'ucsb':
+			schoolFilters = ["ucsb"]
+			break;
+		case 'ucla':
+			schoolFilters = ["ucla"]
+			break;
+		case 'usc':
+			schoolFilters = ["usc"]
+			break;
+		case 'pepperdine':
+			schoolFilters = ["pepperdine"]
+			break;
+		case 'ucsd':
+			schoolFilters = ["ucsd"]
+			break;
+		case 'sdsu':
+			schoolFilters = ["sdsu"]		
+		}
+
 	showApplicants()
 }
 
@@ -158,7 +194,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 //Calls when a tab is clicked, builds applicant blocks for filters
 function showApplicants() {
-	userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).get().then(async function(allTutors) {
+	userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).where("school", "in", schoolFilters).get().then(async function(allTutors) {
 
 		//remove all children when updated
 		while(applicantSection.firstChild) {
