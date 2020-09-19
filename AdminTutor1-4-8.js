@@ -404,6 +404,20 @@ var whyPlus = document.getElementById('why-plus')
 var groupsMinus = document.getElementById('groups-minus')
 var groupsPlus = document.getElementById('groups-plus')
 
+var updateApplicationResponses = document.getElementById('update-application-responses')
+updateApplicationResponses.addEventListener('click', function() {
+	var firstVal = tutorFirst.value,
+	    lastVal = tutorLast.value,
+	    majorVal = tutorMajor.value,
+	    schoolVal = tutorSchool.value,
+	    yearVal = tutorYear.value,
+	    coursesVal = tutorCourses.value,
+	    whyVal = tutorWhy.value,
+	    groupsVal = tutorGroups.value
+	
+	console.log( [firstVal, lastVal, majorVal, schoolVal, yearVal, coursesVal, whyVal, groupsVal] )
+})
+
 //Interview Section Elements
 var tutorOnTime = document.getElementById('tutor-onTime')
 var tutorChallenge = document.getElementById('tutor-challenge')
@@ -550,15 +564,15 @@ function showTutorModal(ID) {
 		displayProgress(didRequest, didComplete, didTranscript, didFaculty)
 		
 		//Application Tab Data
-		tutorFirst.placeholder = doc.data().applicationFields.firstName
-		tutorLast.placeholder = doc.data().applicationFields.lastName
-		tutorSchool.placeholder = doc.data().applicationFields.schoolName
-		tutorYear.placeholder = doc.data().applicationFields.year
-		tutorCourses.placeholder = doc.data().applicationFields.courses
-		tutorWhy.placeholder = doc.data().applicationFields.whyTutor
-		tutorGroups.placeholder = doc.data().applicationFields.groups
-		tutorHow.placeholder = doc.data().applicationFields.howHeard
-		tutorReferral.placeholder = doc.data().applicationFields.referredBy
+		tutorFirst.value = doc.data().applicationFields.firstName
+		tutorLast.value = doc.data().applicationFields.lastName
+		tutorSchool.value = doc.data().applicationFields.schoolName
+		tutorYear.value = doc.data().applicationFields.year
+		tutorCourses.value = doc.data().applicationFields.courses
+		tutorWhy.value = doc.data().applicationFields.whyTutor
+		tutorGroups.value = doc.data().applicationFields.groups
+		tutorHow.value = doc.data().applicationFields.howHeard
+		tutorReferral.value = doc.data().applicationFields.referredBy
 		
 		applicationScore.innerHTML = doc.data().assessmentScore
 		interviewScoreHeader.innerHTML = doc.data().interviewScore
@@ -568,6 +582,7 @@ function showTutorModal(ID) {
 		groupsScore.innerHTML = doc.data().applicationPoints.groupsPoints
 		
 		setApplicationScoring()
+		setApplicationFocuses()
 		
 		//More Tab Data
 		tutorApplied.innerHTML = "Date Applied: " + formatApplicantDate(doc.data().timeApplied)
@@ -695,55 +710,27 @@ function setInterviewOnblurs(applicantID) {
 
 //Application Onblurs_____________________________________________________________________________________________________
 
-function setApplicationOnblurs(applicantID) {
-	tutorFirst.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("application")
-			.update( { "applicationFields.firstName" : tutorFirst.value } )
+function setApplicationFocuses() {
+	tutorFirst.onFocus = function() {
+		updateApplicationResponses.style.display = "flex"
 	}
-	tutorLast.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("application")
-			.update( { "applicationFields.lastName" : tutorLast.value } )
+	tutorLast.onFocus = function() {
+		updateApplicationResponses.style.display = "flex"
 	}
-	tutorSchool.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("application")
-			.update( { "applicationFields.schoolName" : tutorSchool.value } )
+	tutorSchool.onFocus = function() {
+		updateApplicationResponses.style.display = "flex"
 	}
-	tutorYear.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("application")
-			.update( { "applicationFields.year" : tutorYear.value } )
+	tutorYear.onFocus = function() {
+		updateApplicationResponses.style.display = "flex"
 	}
-	tutorCourses.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("application")
-			.update( { "applicationFields.courses" : tutorCourses.value } )
+	tutorCourses.onFocus = function() {
+		updateApplicationResponses.style.display = "flex"
 	}
-	tutorWhy.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("application")
-			.update( { "applicationFields.whyTutor" : tutorWhy.value } )
+	tutorWhy.onFocus = function() {
+		updateApplicationResponses.style.display = "flex"
 	}
-	tutorGroups.onblur = function() {
-		userDB.collection("userTest")
-			.doc(applicantID)
-			.collection("tutorApplication")
-			.doc("application")
-			.update( { "applicationFields.groups" : tutorGroups.value } )
+	tutorGroups.onFocus = function() {
+		updateApplicationResponses.style.display = "flex"
 	}
 }
 
