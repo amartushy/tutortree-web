@@ -3,7 +3,7 @@ var userDB = firebase.firestore()
 
 //FILTERS
 var tabFilters = ["pending", "waitlisted", "rejected", "accepted", "deleted"]
-var schoolFilters = ["uoregon", "stanford", "berkeley", "sjsu", "ucsb", "ucla", "usc", "pepperdine", "ucsd", "sdsu", "oregonstate", "Invalid School"]
+var schoolFilters = "All Schools"
 
 //______________________
 
@@ -130,40 +130,40 @@ uoregonButton.addEventListener('click', 'tutortreeApplicants(uoregon)')
 function tutortreeApplicants(school) {	
 	switch (school) {
 		case 'uoregon':
-			schoolFilters = ["uoregon"]
+			schoolFilters = "uoregon"
 			break;
 		case 'oregonstate':
-			schoolFilters = ["oregonstate"]
+			schoolFilters = "oregonstate"
 			break;
 		case 'stanford':
-			schoolFilters = ["stanford"]
+			schoolFilters = "stanford"
 			break;
 		case 'berkeley':
-			schoolFilters = ["berkeley"]
+			schoolFilters = "berkeley"
 			break;
 		case 'sjsu':
-			schoolFilters = ["sjsu"]
+			schoolFilters = "sjsu"
 			break;
 		case 'ucsb':
-			schoolFilters = ["ucsb"]
+			schoolFilters = "ucsb"
 			break;
 		case 'ucla':
-			schoolFilters = ["ucla"]
+			schoolFilters = "ucla"
 			break;
 		case 'usc':
-			schoolFilters = ["usc"]
+			schoolFilters = "usc"
 			break;
 		case 'pepperdine':
-			schoolFilters = ["pepperdine"]
+			schoolFilters = "pepperdine"
 			break;
 		case 'ucsd':
-			schoolFilters = ["ucsd"]
+			schoolFilters = "ucsd"
 			break;
 		case 'sdsu':
-			schoolFilters = ["sdsu"]	
+			schoolFilters = "sdsu"]
 			break;
 		case 'TT':
-			schoolFilters = ["uoregon", "oregonstate", "stanford", "berkeley", "sjsu", "ucsb", "ucla", "usc", "pepperdine", "ucsd", "sdsu", "Invalid School"]
+			schoolFilters = "All Schools"
 		}
 	showApplicants()
 }
@@ -194,7 +194,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 //Calls when a tab is clicked, builds applicant blocks for filters
 function showApplicants() {
 	
-	if (schoolFilters.length > 2) {
+	if (schoolFilters == "All Schools") {
 		userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).get().then(async function(allTutors) {
 			//remove all children when updated
 			while(applicantSection.firstChild) {
@@ -229,7 +229,7 @@ function showApplicants() {
 		})
 		
 	} else {
-		userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).where("school", "in", schoolFilters).get().then(async function(allTutors) {
+		userDB.collection("userTest").where("tutorApplicantStatus", "in", tabFilters).where("school", "==", schoolFilters).get().then(async function(allTutors) {
 
 			//remove all children when updated
 			while(applicantSection.firstChild) {
