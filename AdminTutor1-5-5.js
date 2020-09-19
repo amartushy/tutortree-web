@@ -146,6 +146,10 @@ firebase.auth().onAuthStateChanged(function(user) {
 		//Load all applicants with no filters applied
 		//tutortreeApplicants()
 		
+		while(applicantSection.firstChild) {
+			applicantSection.removeChild(applicantSection.firstChild)
+		}
+		
 	//If user is not logged in (or an Admin) return them home
 	} else {
 		location.href = "https://www.jointutortree.com"
