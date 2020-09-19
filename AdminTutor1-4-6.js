@@ -25,7 +25,7 @@ approvedTab.addEventListener('click', approvedApplicants)
 
 //Tab filter functions
 function allApplicants() {
-	tabFilters = ["pending", "waitlisted", "rejected", "accepted"]
+	tabFilters = ["pending", "waitlisted", "rejected", "accepted", "deleted"]
 	showApplicants()
 	
 	allTab.className = 'admin-tutor-filters-selected'
