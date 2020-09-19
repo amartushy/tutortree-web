@@ -281,11 +281,6 @@ function buildApplicantBlock(ID, count, name, email, date, school, status, first
 
 function updateApplicantStatus(status, ID, first, email) {
 	
-	userDB.collection('userTest')
-		.doc(ID)
-		.update( {'tutorApplicantStatus' : status,
-			  'isTutor' : false } )
-	
 	if(status == 'accepted') {
 		sendTutorAcceptanceEmail(email, first)
 		
