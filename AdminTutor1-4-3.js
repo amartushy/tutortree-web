@@ -256,7 +256,7 @@ function buildApplicantBlock(ID, count, name, email, date, school, status, first
 
 	var applicantTutorAccept = document.createElement('div')
 	applicantTutorAccept.setAttribute('class', 'admin-tutor-accept')
-	applicantTutorAccept.setAttribute('onClick', 'updateApplicantStatus("accepted","' + ID + '")')
+	applicantTutorAccept.setAttribute('onClick', 'updateApplicantStatus("accepted","' + ID + '","' + first + '","' + email + '")')
 	applicantTutorAccept.innerHTML = 'check-circle'
 	applicantActions.appendChild(applicantTutorAccept)
 
