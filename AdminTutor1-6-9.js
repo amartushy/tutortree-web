@@ -177,7 +177,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		//Check if user is admin, else redirect: TODO
 		
 		//Load all applicants with no filters applied
-		tutortreeApplicants()
+		showApplicants()
 		
 		while(applicantSection.firstChild) {
 			applicantSection.removeChild(applicantSection.firstChild)
