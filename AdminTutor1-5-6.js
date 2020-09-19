@@ -529,6 +529,7 @@ tutorCompletedInterview.addEventListener('click', function() {
 var globalApplicantID = ''
 
 function showTutorModal(ID) {
+	globalApplicantID = ID
 	console.log(globalApplicantID)
 	
 	document.getElementById('tutor-info-modal').style.display = 'flex'
