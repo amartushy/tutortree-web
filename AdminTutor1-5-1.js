@@ -417,7 +417,8 @@ updateApplicationResponses.addEventListener('click', function() {
 	    howVal = tutorHow.value,
 	    referralVal = tutorReferral.value
 	
-	console.log( [firstVal, lastVal, majorVal, schoolVal, yearVal, coursesVal, whyVal, groupsVal] )
+	console.log( [firstVal, lastVal, majorVal, schoolVal, yearVal, coursesVal, whyVal, groupsVal, howVal, referralVal] )
+	updateApplicationResponses.style.display = "none"
 })
 
 //Interview Section Elements
@@ -722,6 +723,9 @@ function setApplicationFocuses() {
 	tutorSchool.onfocus = function() {
 		updateApplicationResponses.style.display = "flex"
 	}
+	tutorMajor.onfocus = function() {
+		updateApplicationResponses.style.display = "flex"
+	}
 	tutorYear.onfocus = function() {
 		updateApplicationResponses.style.display = "flex"
 	}
@@ -732,6 +736,12 @@ function setApplicationFocuses() {
 		updateApplicationResponses.style.display = "flex"
 	}
 	tutorGroups.onfocus = function() {
+		updateApplicationResponses.style.display = "flex"
+	}
+	tutorHow.onfocus = function() {
+		updateApplicationResponses.style.display = "flex"
+	}
+	tutorReferral.onfocus = function() {
 		updateApplicationResponses.style.display = "flex"
 	}
 }
