@@ -40,7 +40,7 @@ function signUp(){
 
 						//tutor navigation
 						document.getElementById('applicants-nav').addEventListener('click', function() {
-							location.href = 'https://www.jointutortree.com/tutor/tutor-admin'
+							location.href = 'https://www.jointutortree.com/tutor/admin-tutor'
 						})
 
 						//metrics navigation
