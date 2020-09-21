@@ -229,6 +229,7 @@ function showApplicants() {
 			//Reinitialize Counter
 			const promises = []
 			var applicantsArray = []
+			var applicantEmails = []
 			allTutors.forEach(function(doc)  {
 				var 	applicantID = doc.id,
 					applicantName = doc.data().name,
@@ -237,7 +238,7 @@ function showApplicants() {
 					applicantFirstName,
 					applicantSchool = doc.data().school,
 					applicantStatus = doc.data().tutorApplicantStatus
-				console.log(applicantEmail)
+				applicantEmails.push(applicantEmail)
 				var docRef = userDB.collection('userTest').doc(applicantID).collection('tutorApplication').doc('application')
 				const promise = docRef.get().then(function(app) {
 					applicantDate = app.data().timeSubmitted
@@ -249,7 +250,7 @@ function showApplicants() {
 			})
 
 			Promise.all(promises).then(results => {
-				console.log(results)
+				console.log(applicantEmails)
 				buildApplicants(applicantsArray)
 			})
 		})
@@ -297,7 +298,6 @@ function buildApplicants(applicantsArray) {
 	})
 	
 	sortedApplicants.forEach(function (applicant, count) {
-  		console.log(applicant, count)
 		var applicantID = sortedApplicants[count][1][0],
 			name = sortedApplicants[count][1][1],
 			email = sortedApplicants[count][1][2],
