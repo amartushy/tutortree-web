@@ -237,7 +237,7 @@ function showApplicants() {
 					applicantFirstName,
 					applicantSchool = doc.data().school,
 					applicantStatus = doc.data().tutorApplicantStatus
-
+				console.log(applicantEmail)
 				var docRef = userDB.collection('userTest').doc(applicantID).collection('tutorApplication').doc('application')
 				const promise = docRef.get().then(function(app) {
 					applicantDate = app.data().timeSubmitted
