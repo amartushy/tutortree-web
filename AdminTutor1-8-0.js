@@ -677,7 +677,7 @@ function showTutorModal(ID) {
 	userDB.collection("userTest").doc(ID).get().then(function(tutor) {
 		tutorImage.src = tutor.data().profileImage
 		tutorName.innerHTML = tutor.data().name
-		tutorEmail.placeholder = tutor.data().email
+		tutorEmail.value = tutor.data().email
 		tutorMajor.value = tutor.data().major
 	})
 	
