@@ -267,20 +267,20 @@ async function buildSubjectBlock(schoolTitle, subject, courseDict) {
 
 async function getRatingForUser(ID) {
     var rating = 0
-    await userDB.collection('userTest').doc(ID).collection('sessions').get().then(function(doc) {
-        var sessionsDict = doc.data()
+
+    await userDB.collection('userTest').doc(ID).collection('sessions').get().then(function(session) {
         var ratingSum = 0
         var sessionsWithRating = 0
-        for(session in sessionDict) {
-            if (sessionDict.hasOwnProperty(session)) {
-                if(session.ratingFromOtherUser != null) {
-                    ratingSum += session.ratingFromOtherUser
-                    sessionsWithRating += 1
-                    rating = ratingSum / sessionsWithRating
-                }
+
+        session.forEach(function(doc) {
+            if(doc.data().ratingFromOtherUser != null) {
+                ratingSum += session.ratingFromOtherUser
+                sessionsWithRating += 1
+                rating = ratingSum / sessionsWithRating
             }
-        }
+        })
     })
+
     if (rating == 0) {
         return ('NEW')
     } else {
