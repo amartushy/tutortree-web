@@ -1,3 +1,5 @@
+
+
 //Global Variables__________________________________________________________________
 var userDB = firebase.firestore()
 
@@ -40,12 +42,15 @@ var featuredTutorsArea = document.getElementById('featured-tutors-area')
 var tutorsOnCampus = document.getElementById('tutors-on-campus')
 
 //Profile
+var profileImageBlock = document.getElementById('profile-image-block')
 var tutorsProfilePhoto = document.getElementById('tutors-profile-photo')
 var tutorsName = document.getElementById('tutors-name')
 var sessionsText = document.getElementById('sessions-text')
 var averageText = document.getElementById('average-text')
 var hourlyText = document.getElementById('hourly-text')
 var tutorsBio = document.getElementById('tutors-bio')
+var updateProfileBlock = document.getElementById('update-profile-block')
+var updateProfile = document.getElementById('update-profile')
 
 //Upcoming
 var pastSessionsArea = document.getElementById('past-sessions-area')
@@ -185,7 +190,7 @@ function buildFeaturedTutor(featuredID) {
     featuredTutorRatingBlock.appendChild(featuredTutorStar)
     featuredTutorRatingBlock.appendChild(featuredTutorRating)
 
-    userDB.collection('userTest').doc(featuredID).get().then(async function(doc) {
+    userDB.collection('userTest').doc(featuredID).get().then(function(doc) {
         var name = doc.data().name 
         var image = doc.data().profileImage 
 
@@ -194,8 +199,7 @@ function buildFeaturedTutor(featuredID) {
         featuredTutorImage.src = image
 
         //TODO
-	var featuredRating = await getRatingForUser(featuredID)
-        featuredTutorRating.innerHTML = featuredRating
+        featuredTutorRating.innerHTML = getRatingForUser(featuredID)
 
     })
 }
@@ -266,3 +270,38 @@ async function buildSubjectBlock(schoolTitle, subject, courseDict) {
         }
 }
 
+async function getRatingForUser(ID) {
+    var rating = 0
+
+    await userDB.collection('userTest').doc(ID).collection('sessions').get().then(function(session) {
+        var ratingSum = 0
+        var sessionsWithRating = 0
+
+        session.forEach(function(doc) {
+            if(doc.data().ratingFromOtherUser != null) {
+                ratingSum += doc.data().ratingFromOtherUser
+                sessionsWithRating += 1
+                rating = ratingSum / sessionsWithRating
+            }
+        })
+    })
+
+    if (rating == 0) {
+        return ('NEW')
+    } else {
+        return rating.toFixed(2)
+    }
+}
+
+async function getCountOfSessions(ID) {
+    var sessions = 0
+
+    await userDB.collection('userTest').doc(ID).collection('sessions').get().then(function(session) {
+
+        session.forEach(function(doc) {
+            sessions += 1
+        })
+    })
+
+    return sessions
+}
