@@ -42,6 +42,7 @@ var featuredTutorsArea = document.getElementById('featured-tutors-area')
 var tutorsOnCampus = document.getElementById('tutors-on-campus')
 
 //Profile
+var hiddenPhotoUploadButton = document.getElementById('hidden-photo-upload-button')
 var profileImageBlock = document.getElementById('profile-image-block')
 var tutorsProfilePhoto = document.getElementById('tutors-profile-photo')
 var tutorsName = document.getElementById('tutors-name')
