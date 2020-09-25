@@ -275,7 +275,7 @@ async function getRatingForUser(ID) {
 
         session.forEach(function(doc) {
             if(doc.data().ratingFromOtherUser != null) {
-                ratingSum += session.ratingFromOtherUser
+                ratingSum += doc.data().ratingFromOtherUser
                 sessionsWithRating += 1
                 rating = ratingSum / sessionsWithRating
             }
