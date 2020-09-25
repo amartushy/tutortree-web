@@ -189,7 +189,7 @@ function buildFeaturedTutor(featuredID) {
         var name = doc.data().name 
         var image = doc.data().profileImage 
 
-        featuredTutorStar.innerHTML = 'star'
+        featuredTutorStar.innerHTML = ''
         featuredTutorName.innerHTML = name
         featuredTutorImage.src = image
 
