@@ -241,9 +241,11 @@ function showApplicants() {
 				applicantEmails.push(applicantEmail)
 				var docRef = userDB.collection('userTest').doc(applicantID).collection('tutorApplication').doc('application')
 				const promise = docRef.get().then(function(app) {
-					console.log(applicantID)
-					applicantDate = app.data().timeSubmitted
-					console.log('then: ' + applicantDate)
+					try {
+						applicantDate = app.data().timeSubmitted
+					} catch {
+						console.log(applicantID)
+					}
 					applicantFirstName = app.data().applicationFields.firstName
 					applicantsArray.push([applicantDate, [applicantID, applicantName, applicantEmail, applicantSchool, applicantStatus, applicantFirstName]])
 				})
