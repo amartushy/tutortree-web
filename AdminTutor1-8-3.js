@@ -243,7 +243,8 @@ function showApplicants() {
 				const promise = docRef.get().then(function(app) {
 					
 					applicantDate = app.data().timeSubmitted
-					console.log(applicantID + ';' + applicantDate)
+					console.log(applicantID)
+					console.log('then: ' + applicantDate)
 					applicantFirstName = app.data().applicationFields.firstName
 					applicantsArray.push([applicantDate, [applicantID, applicantName, applicantEmail, applicantSchool, applicantStatus, applicantFirstName]])
 				})
