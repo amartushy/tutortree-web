@@ -157,7 +157,7 @@ premiumBuyNow.addEventListener('click', function() {
     loadParentCheckout()
 })
 
-checkoutButton.addEventListener('click', function() {
+checkoutButton.addEventListener('click', async function() {
     summaryError.style.display = 'none'
 
     var paymentDict = {
@@ -174,7 +174,8 @@ checkoutButton.addEventListener('click', function() {
         'billingCountry' : billingCountry.value,
         'billingEmail' : billingEmail.value
     }
-
+    await( checkErrors(paymentDict) )
+	
     if (summaryError.style.display == 'none') {
         updateParentDatabase(paymentDict)
     } else { 
