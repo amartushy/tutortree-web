@@ -70,7 +70,9 @@ braintree.client.create({
     	await( checkErrors(paymentDict) )
 	
 	if (summaryError.style.display == 'none') {
-		updateParentDatabase(paymentDict)
+		console.log('processing')
+		
+		updateParentDatabase('test1', paymentDict)
 		hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
 		if (tokenizeErr) {
 			console.error(tokenizeErr);
@@ -302,7 +304,7 @@ async function braintreeCheckout(nonce, amount, checkoutDict) {
 }
 
 function updateParentDatabase(checkoutID, checkoutDict) {
-
+	console.log('updating Database')
     var updateDict = {
                 'studentName' : checkoutDict.studentName,
                 'studentEmail' : checkoutDict.studentEmail,
