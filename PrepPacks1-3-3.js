@@ -235,7 +235,8 @@ function updateParentDatabase(checkoutID, checkoutDict) {
                         checkoutDict.billingEmail,
                         checkoutDict.studentEmail)
 
-        sendParentReceipt(checkoutID,
+        sendParentReceipt(checkoutDict.billingEmail,
+			checkoutID,
                         checkoutDict.packTitle,
                         checkoutDict.checkoutTotal)
 
@@ -260,11 +261,11 @@ function sendTutorTreeSMS(checkoutID, parentEmail, email) {
 	xhttp.send();
 }
 
-function sendParentReceipt(checkoutID, packTitle, checkoutTotal) {
+function sendParentReceipt(billingEmail, checkoutID, packTitle, checkoutTotal) {
 	const checkoutString = checkoutTotal.toString().replace('.', 'decimal');
 	
     	var xhttp = new XMLHttpRequest();
-        var herokuURL = "https://tutortree2.herokuapp.com/sendParentReceipt/"+checkoutID+"/"+packTitle+"/"+checkoutString
+        var herokuURL = "https://tutortree2.herokuapp.com/sendParentReceipt/"+billingEmail+"/"+checkoutID+"/"+packTitle+"/"+checkoutString
    	console.log(herokuURL)
 	xhttp.open("GET", herokuURL, true);
 	xhttp.send();
