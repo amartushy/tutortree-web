@@ -320,13 +320,7 @@ function sendParentReceipt(checkoutID, packTitle, checkoutTotal) {
 
           checkoutButton.addEventListener('click', function (event) {
             event.preventDefault();
-
-            hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
-              if (tokenizeErr) {
-                console.error(tokenizeErr);
-                return;
-              }
-		ummaryError.style.display = 'none'
+		summaryError.style.display = 'none'
 
 		var paymentDict = {
 			'packTitle' : prepPackTitle,
@@ -349,13 +343,19 @@ function sendParentReceipt(checkoutID, packTitle, checkoutTotal) {
 			console.log('processing')
 
 			updateParentDatabase('test1', paymentDict)
+			
+			hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+		      if (tokenizeErr) {
+			console.error(tokenizeErr);
+			return;
+		      }
 			console.log('Got a nonce: ' + payload.nonce);
+		    });
 
 		} else { 
 			console.log('error found')
 		}
-         
-            });
+            
           }, false);
         });
       });
