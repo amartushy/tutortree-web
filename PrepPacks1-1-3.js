@@ -321,6 +321,7 @@ braintree.client.create({
     }
 
     checkoutButton.addEventListener('click', async  function (event) {
+	console.log('clicked')
       	event.preventDefault();
     	summaryError.style.display = 'none'
 
