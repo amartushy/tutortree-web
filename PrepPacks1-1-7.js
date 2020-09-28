@@ -88,7 +88,7 @@ premiumBuyNow.addEventListener('click', function() {
     loadParentCheckout()
 })
 
-checkoutButton.addEventListener('click, function() {
+checkoutButton.addEventListener('click', function() {
 	console.log('testing')			
 }
 
