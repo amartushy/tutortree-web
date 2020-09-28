@@ -318,7 +318,7 @@ function sendParentReceipt(checkoutID, packTitle, checkoutTotal) {
 
           checkoutButton.removeAttribute('disabled');
 
-          checkoutButton.addEventListener('click', function (event) {
+          checkoutButton.addEventListener('click', async function (event) {
             event.preventDefault();
 		summaryError.style.display = 'none'
 
