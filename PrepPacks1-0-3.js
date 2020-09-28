@@ -175,7 +175,7 @@ checkoutButton.addEventListener('click', function() {
         'billingEmail' : billingEmail.value
     }
 
-    if (checkErrors(paymentDict) == true) {
+    if (summaryError.style.display == 'none') {
         updateParentDatabase()
     } else { 
         console.log('error found')
@@ -219,13 +219,10 @@ function checkErrors(paymentDict) {
                     continue
                 } else {
                     break
-                    return(false)
                 }
             }
         }
     }
-
-    return(true)
 }
 function displayError(errorType) {
 
