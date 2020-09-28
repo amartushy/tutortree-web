@@ -48,7 +48,7 @@ braintree.client.create({
       return;
     }
 
-    checkoutButton.addEventListener('click', function (event) {
+    checkoutButton.addEventListener('click', async  function (event) {
       	event.preventDefault();
     	summaryError.style.display = 'none'
 
@@ -80,6 +80,7 @@ braintree.client.create({
 		// If this was a real integration, this is where you would
 		// send the nonce to your server.
 		console.log('Got a nonce: ' + payload.nonce);
+		}
 	} else { 
 		console.log('error found')
 	}
