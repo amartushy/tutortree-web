@@ -88,7 +88,7 @@ braintree.client.create({
       });
     }, false);
   });
-});      
+      
 
 
 
