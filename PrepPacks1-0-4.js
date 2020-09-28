@@ -176,7 +176,7 @@ checkoutButton.addEventListener('click', function() {
     }
 
     if (summaryError.style.display == 'none') {
-        updateParentDatabase()
+        updateParentDatabase(paymentDict)
     } else { 
         console.log('error found')
     }
