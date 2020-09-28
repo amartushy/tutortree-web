@@ -264,7 +264,7 @@ function sendParentReceipt(checkoutID, packTitle, checkoutTotal) {
 	const checkoutString = checkoutTotal.toString().replace('.', 'decimal');
 	
     	var xhttp = new XMLHttpRequest();
-        var herokuURL = "https://tutortree2.herokuapp.com/sendParentReciept/"+checkoutID+"/"+packTitle+"/"+checkoutString
+        var herokuURL = "https://tutortree2.herokuapp.com/sendParentReceipt/"+checkoutID+"/"+packTitle+"/"+checkoutString
    	console.log(herokuURL)
 	xhttp.open("GET", herokuURL, true);
 	xhttp.send();
