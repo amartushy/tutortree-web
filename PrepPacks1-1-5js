@@ -88,6 +88,10 @@ premiumBuyNow.addEventListener('click', function() {
     loadParentCheckout()
 })
 
+checkoutButton.addEventListener('click, function() {
+	console.log('testing')			
+}
+
 
 
 
@@ -320,7 +324,7 @@ braintree.client.create({
       return;
     }
 
-    document.getElementById('checkout-button').addEventListener('click', async  function (event) {
+    checkoutButton.addEventListener('click', async  function (event) {
 	console.log('clicked')
       	event.preventDefault();
     	summaryError.style.display = 'none'
