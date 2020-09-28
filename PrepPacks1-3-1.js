@@ -243,24 +243,28 @@ function updateParentDatabase(checkoutID, checkoutDict) {
 }
 
 function sendParentCheckoutEmail(packTitle, name, university, email, bName, address1, address2, city, state, zip, country, pEmail, cTotal) {
+	const checkoutString = cTotal.toString().replace('.', 'decimal');
+	
 	var xhttp = new XMLHttpRequest();
-        var herokuURL = "https://tutortree2.herokuapp.com/sendParentCheckoutEmail/"+packTitle+"/"+name+"/"+university+"/"+email+"/"+bName+"/"+address1+"/"+address2+"/"+city+"/"+state+"/"+zip+"/"+country+"/"+pEmail+"/"+cTotal
+        var herokuURL = "https://tutortree2.herokuapp.com/sendParentCheckoutEmail/"+packTitle+"/"+name+"/"+university+"/"+email+"/"+bName+"/"+address1+"/"+address2+"/"+city+"/"+state+"/"+zip+"/"+country+"/"+pEmail+"/"+checkoutString
    	console.log(herokuURL)
 	xhttp.open("GET", herokuURL, true);
 	xhttp.send();
 }
 
 function sendTutorTreeSMS(checkoutID, parentEmail, email) {
-    var xhttp = new XMLHttpRequest();
-    var message = "New Parent Purchase: " + checkoutID + ", purchasers email: " + parentEmail + ", recipients email: " + email
+    	var xhttp = new XMLHttpRequest();
+    	var message = "New Parent Purchase: " + checkoutID + ", purchasers email: " + parentEmail + ", recipients email: " + email
 	var herokuURL = "https://tutortree-development.herokuapp.com/sendSMSTo/+14582108156/"+message
 	xhttp.open("GET", herokuURL, true);
 	xhttp.send();
 }
 
 function sendParentReceipt(checkoutID, packTitle, checkoutTotal) {
-    var xhttp = new XMLHttpRequest();
-        var herokuURL = "https://tutortree2.herokuapp.com/sendParentCheckoutEmail/"+checkoutID+"/"+packTitle+"/"+checkoutTotal
+	const checkoutString = checkoutTotal.toString().replace('.', 'decimal');
+	
+    	var xhttp = new XMLHttpRequest();
+        var herokuURL = "https://tutortree2.herokuapp.com/sendParentReciept/"+checkoutID+"/"+packTitle+"/"+checkoutString
    	console.log(herokuURL)
 	xhttp.open("GET", herokuURL, true);
 	xhttp.send();
