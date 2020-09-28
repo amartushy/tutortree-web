@@ -267,10 +267,6 @@ function sendParentReceipt(checkoutID, packTitle, checkoutTotal) {
 
 //Braintree______________________________________________________________________________________
 
-<!-- Load additional components when required. -->
-
-<!-- Use the components. We'll see usage instructions next. -->
-
 braintree.client.create({
   authorization: 'production_yks4fjkg_j3thkst7k9j6mkvc'
 }, function (clientErr, clientInstance) {
@@ -328,6 +324,7 @@ braintree.client.create({
 		// If this was a real integration, this is where you would
 		// send the nonce to your server.
 		console.log('Got a nonce: ' + payload.nonce);
+		});
 	});
     }, false);
   });
