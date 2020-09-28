@@ -1,101 +1,5 @@
 
-<!-- Load additional components when required. -->
 
-<!-- Use the components. We'll see usage instructions next. -->
-
-braintree.client.create({
-  authorization: 'production_yks4fjkg_j3thkst7k9j6mkvc'
-}, function (clientErr, clientInstance) {
-  if (clientErr) {
-    console.error(clientErr);
-    return;
-  }
-
-  // This example shows Hosted Fields, but you can also use this
-  // client instance to create additional components here, such as
-  // PayPal or Data Collector.
-
-  braintree.hostedFields.create({
-    client: clientInstance,
-    styles: {
-      'input': {
-        'font-size': '14px'
-      },
-      'input.invalid': {
-        'color': 'red'
-      },
-      'input.valid': {
-        'color': 'green'
-      }
-    },
-    fields: {
-      number: {
-        selector: '#billing-card-number',
-        placeholder: '4111 1111 1111 1111'
-      },
-      cvv: {
-        selector: '#billing-cvv',
-        placeholder: '123'
-      },
-      expirationDate: {
-        selector: '#billing-expiration',
-        placeholder: '10/2022'
-      }
-    }
-  }, function (hostedFieldsErr, hostedFieldsInstance) {
-    if (hostedFieldsErr) {
-      console.error(hostedFieldsErr);
-      return;
-    }
-
-    checkoutButton.addEventListener('click', async  function (event) {
-      	event.preventDefault();
-    	summaryError.style.display = 'none'
-
-	var paymentDict = {
-		'packTitle' : prepPackTitle,
-		'studentName' : studentName.value,
-		'studentUniversity' : studentUniversity.value,
-		'studentEmail' : studentEmail.value,
-		'billingName': billingName.value,
-		'billingAddress1' : billingAddress1.value,
-		'billingAddress2' : billingAddress2.value,
-		'billingCity' : billingCity.value,
-		'billingState' : billingState.value,
-		'billingZip' : billingZip.value,
-		'billingCountry' : billingCountry.value,
-		'billingEmail' : billingEmail.value,
-		'checkoutTotal' : checkoutTotal
-	}
-    	await( checkErrors(paymentDict) )
-	
-	if (summaryError.style.display == 'none') {
-		console.log('processing')
-		
-		updateParentDatabase('test1', paymentDict)
-		hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
-		if (tokenizeErr) {
-			console.error(tokenizeErr);
-			return;
-		}
-
-		// If this was a real integration, this is where you would
-		// send the nonce to your server.
-		console.log('Got a nonce: ' + payload.nonce);
-		})
-	} else { 
-		console.log('error found')
-	}
-			
-      });
-    }, false);
-  });
-      
-
-
-
-
-//Global Variables__________________________________________________________
 //Global Variables__________________________________________________________
 var checkoutTotal,
     prepPackTitle,
@@ -363,3 +267,98 @@ function sendParentReceipt(checkoutID, packTitle, checkoutTotal) {
 	xhttp.open("GET", herokuURL, true);
 	xhttp.send();
 }
+
+
+//Braintree______________________________________________________________________________________
+
+<!-- Load additional components when required. -->
+
+<!-- Use the components. We'll see usage instructions next. -->
+
+braintree.client.create({
+  authorization: 'production_yks4fjkg_j3thkst7k9j6mkvc'
+}, function (clientErr, clientInstance) {
+  if (clientErr) {
+    console.error(clientErr);
+    return;
+  }
+
+  // This example shows Hosted Fields, but you can also use this
+  // client instance to create additional components here, such as
+  // PayPal or Data Collector.
+
+  braintree.hostedFields.create({
+    client: clientInstance,
+    styles: {
+      'input': {
+        'font-size': '14px'
+      },
+      'input.invalid': {
+        'color': 'red'
+      },
+      'input.valid': {
+        'color': 'green'
+      }
+    },
+    fields: {
+      number: {
+        selector: '#billing-card-number',
+        placeholder: '4111 1111 1111 1111'
+      },
+      cvv: {
+        selector: '#billing-cvv',
+        placeholder: '123'
+      },
+      expirationDate: {
+        selector: '#billing-expiration',
+        placeholder: '10/2022'
+      }
+    }
+  }, function (hostedFieldsErr, hostedFieldsInstance) {
+    if (hostedFieldsErr) {
+      console.error(hostedFieldsErr);
+      return;
+    }
+
+    checkoutButton.addEventListener('click', async  function (event) {
+      	event.preventDefault();
+    	summaryError.style.display = 'none'
+
+	var paymentDict = {
+		'packTitle' : prepPackTitle,
+		'studentName' : studentName.value,
+		'studentUniversity' : studentUniversity.value,
+		'studentEmail' : studentEmail.value,
+		'billingName': billingName.value,
+		'billingAddress1' : billingAddress1.value,
+		'billingAddress2' : billingAddress2.value,
+		'billingCity' : billingCity.value,
+		'billingState' : billingState.value,
+		'billingZip' : billingZip.value,
+		'billingCountry' : billingCountry.value,
+		'billingEmail' : billingEmail.value,
+		'checkoutTotal' : checkoutTotal
+	}
+    	await( checkErrors(paymentDict) )
+	
+	if (summaryError.style.display == 'none') {
+		console.log('processing')
+		
+		updateParentDatabase('test1', paymentDict)
+		hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+		if (tokenizeErr) {
+			console.error(tokenizeErr);
+			return;
+		}
+
+		// If this was a real integration, this is where you would
+		// send the nonce to your server.
+		console.log('Got a nonce: ' + payload.nonce);
+		})
+	} else { 
+		console.log('error found')
+	}
+			
+      });
+    }, false);
+  });
