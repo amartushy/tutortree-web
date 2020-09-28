@@ -172,10 +172,7 @@ checkoutButton.addEventListener('click', function() {
         'billingState' : billingState.value,
         'billingZip' : billingZip.value,
         'billingCountry' : billingCountry.value,
-        'billingEmail' : billingEmail.value,
-        'billingCardNumber' : billingCardNumber.value,
-        'billingExpiration' : billingExpiration.value,
-        'billingCVC' : billingCVC.value
+        'billingEmail' : billingEmail.value
     }
 
     if (checkErrors(paymentDict) == true) {
