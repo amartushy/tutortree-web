@@ -211,7 +211,7 @@ function updateParentDatabase(checkoutID, checkoutDict) {
                 'studentAccountID' : '',
                 'studentUniversity' : checkoutDict.studentUniversity,
                 'packTitle' : checkoutDict.packTitle,
-                'purchaserEmail' : checkoutDict.parentEmail,
+                'purchaserEmail' : checkoutDict.parentEmail
             }
     userDB.collection('prepPacks').doc(checkoutID).set(updateDict, { merge: true }).then(function() {
 
@@ -326,10 +326,35 @@ function sendParentReceipt(checkoutID, packTitle, checkoutTotal) {
                 console.error(tokenizeErr);
                 return;
               }
+		ummaryError.style.display = 'none'
 
-              // If this was a real integration, this is where you would
-              // send the nonce to your server.
-              console.log('Got a nonce: ' + payload.nonce);
+		var paymentDict = {
+			'packTitle' : prepPackTitle,
+			'studentName' : studentName.value,
+			'studentUniversity' : studentUniversity.value,
+			'studentEmail' : studentEmail.value,
+			'billingName': billingName.value,
+			'billingAddress1' : billingAddress1.value,
+			'billingAddress2' : billingAddress2.value,
+			'billingCity' : billingCity.value,
+			'billingState' : billingState.value,
+			'billingZip' : billingZip.value,
+			'billingCountry' : billingCountry.value,
+			'billingEmail' : billingEmail.value,
+			'checkoutTotal' : checkoutTotal
+			}
+		await( checkErrors(paymentDict) )
+
+		if (summaryError.style.display == 'none') {
+			console.log('processing')
+
+			updateParentDatabase('test1', paymentDict)
+			console.log('Got a nonce: ' + payload.nonce);
+
+		} else { 
+			console.log('error found')
+		}
+         
             });
           }, false);
         });
