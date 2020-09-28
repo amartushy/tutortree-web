@@ -213,7 +213,7 @@ function updateParentDatabase(checkoutID, checkoutDict) {
                 'studentAccountID' : '',
                 'studentUniversity' : checkoutDict.studentUniversity,
                 'packTitle' : checkoutDict.packTitle,
-                'purchaserEmail' : checkoutDict.parentEmail
+                'billingEmail' : checkoutDict.billingEmail
             }
     userDB.collection('prepPacks').doc(checkoutID).set(updateDict, { merge: true }).then(function() {
 
@@ -228,11 +228,11 @@ function updateParentDatabase(checkoutID, checkoutDict) {
                                 checkoutDict.billingState,
                                 checkoutDict.billingZip,
                                 checkoutDict.billingCountry,
-                                checkoutDict.parentEmail,
+                                checkoutDict.billingEmail,
                                 checkoutDict.checkoutTotal)
 
         sendTutorTreeSMS(checkoutID,
-                        checkoutDict.parentEmail,
+                        checkoutDict.billingEmail,
                         checkoutDict.studentEmail)
 
         sendParentReceipt(checkoutID,
