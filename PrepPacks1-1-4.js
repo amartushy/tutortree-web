@@ -320,7 +320,7 @@ braintree.client.create({
       return;
     }
 
-    checkoutButton.addEventListener('click', async  function (event) {
+    document.getElementById('checkout-button').addEventListener('click', async  function (event) {
 	console.log('clicked')
       	event.preventDefault();
     	summaryError.style.display = 'none'
