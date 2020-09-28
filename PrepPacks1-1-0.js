@@ -182,32 +182,6 @@ premiumBuyNow.addEventListener('click', function() {
     loadParentCheckout()
 })
 
-checkoutButton.addEventListener('click', async function() {
-    summaryError.style.display = 'none'
-
-    var paymentDict = {
-        'packTitle' : prepPackTitle,
-        'studentName' : studentName.value,
-        'studentUniversity' : studentUniversity.value,
-        'studentEmail' : studentEmail.value,
-        'billingName': billingName.value,
-        'billingAddress1' : billingAddress1.value,
-        'billingAddress2' : billingAddress2.value,
-        'billingCity' : billingCity.value,
-        'billingState' : billingState.value,
-        'billingZip' : billingZip.value,
-        'billingCountry' : billingCountry.value,
-        'billingEmail' : billingEmail.value,
-	'checkoutTotal' : checkoutTotal
-    }
-    await( checkErrors(paymentDict) )
-	
-    if (summaryError.style.display == 'none') {
-        updateParentDatabase(paymentDict)
-    } else { 
-        console.log('error found')
-    }
-})
 
 
 
