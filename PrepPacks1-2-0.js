@@ -1,5 +1,3 @@
-
-
 //Global Variables__________________________________________________________
 var checkoutTotal,
     prepPackTitle,
@@ -319,7 +317,26 @@ braintree.client.create({
     }
 	 	  
     checkoutButton.addEventListener('click', function (event) {
-	console.log('clicked')
+	    
+	    hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+		if (tokenizeErr) {
+			console.error(tokenizeErr);
+			return;
+		}
+
+		// If this was a real integration, this is where you would
+		// send the nonce to your server.
+		console.log('Got a nonce: ' + payload.nonce);
+		})
+	   
+			
+      });
+    }, false);
+  });
+
+
+/*
+console.log('clicked')
       	event.preventDefault();
     	summaryError.style.display = 'none'
 
@@ -337,27 +354,17 @@ braintree.client.create({
 		'billingCountry' : billingCountry.value,
 		'billingEmail' : billingEmail.value,
 		'checkoutTotal' : checkoutTotal
-	}
+		}
     	await( checkErrors(paymentDict) )
 	
 	if (summaryError.style.display == 'none') {
 		console.log('processing')
 		
 		updateParentDatabase('test1', paymentDict)
-		hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
-		if (tokenizeErr) {
-			console.error(tokenizeErr);
-			return;
-		}
-
-		// If this was a real integration, this is where you would
-		// send the nonce to your server.
-		console.log('Got a nonce: ' + payload.nonce);
-		})
+		
 	} else { 
 		console.log('error found')
 	}
-			
-      });
-    }, false);
-  });
+	
+	
+	*/
