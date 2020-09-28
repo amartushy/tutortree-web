@@ -90,7 +90,7 @@ premiumBuyNow.addEventListener('click', function() {
 
 checkoutButton.addEventListener('click', function() {
 	console.log('testing')			
-}
+})
 
 
 
