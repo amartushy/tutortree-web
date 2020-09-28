@@ -64,16 +64,10 @@ braintree.client.create({
     }, false);
   });
 });      
-</script>
 
 
 
 
-
-
-
-
-<script>
 //Global Variables__________________________________________________________
 //Global Variables__________________________________________________________
 var checkoutTotal,
