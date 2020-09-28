@@ -429,6 +429,11 @@ function updateApplicantStatus(status, ID, first, email) {
 		sendTutorRejectionEmail(email, first)
 		
 		mpIsRejectedTutorAppResolution(email)
+		
+	} else if (status == 'waitlisted') {
+		sendTutorWaitlistEmail(email, first)
+		
+		mpIsRejectedTutorAppResolution(email)
 	}
 	
 	showApplicants()
@@ -446,6 +451,14 @@ function sendTutorAcceptanceEmail(email, name) {
 function sendTutorRejectionEmail(email, name) {
 	var xhttp = new XMLHttpRequest();
     	var herokuURL = "https://tutortree2.herokuapp.com/sendTutorRejectionEmail/"+email+"/"+name
+   	console.log(herokuURL)
+	xhttp.open("GET", herokuURL, true);
+	xhttp.send();
+}
+
+function sendTutorWaitlistEmail(email, name) {
+	var xhttp = new XMLHttpRequest();
+    	var herokuURL = "https://tutortree2.herokuapp.com/sendTutorWaitlistEmail/"+email+"/"+name
    	console.log(herokuURL)
 	xhttp.open("GET", herokuURL, true);
 	xhttp.send();
