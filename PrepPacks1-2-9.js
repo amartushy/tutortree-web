@@ -5,6 +5,8 @@ var checkoutTotal,
     fees, 
     check
 
+var userDB = firebase.firestore()
+
 
 //Elements__________________________________________________________________
 var miniBuyNow = document.getElementById('mini-buy-now')
@@ -341,14 +343,14 @@ function sendParentReceipt(checkoutID, packTitle, checkoutTotal) {
 
 		if (summaryError.style.display == 'none') {
 			console.log('processing')
-
-			updateParentDatabase('test1', paymentDict)
 			
 			hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
 		      if (tokenizeErr) {
 			console.error(tokenizeErr);
 			return;
 		      }
+				
+			updateParentDatabase('test1', paymentDict)
 			console.log('Got a nonce: ' + payload.nonce);
 		    });
 
@@ -360,36 +362,3 @@ function sendParentReceipt(checkoutID, packTitle, checkoutTotal) {
         });
       });
 
-/*
-console.log('clicked')
-      	event.preventDefault();
-    	summaryError.style.display = 'none'
-
-	var paymentDict = {
-		'packTitle' : prepPackTitle,
-		'studentName' : studentName.value,
-		'studentUniversity' : studentUniversity.value,
-		'studentEmail' : studentEmail.value,
-		'billingName': billingName.value,
-		'billingAddress1' : billingAddress1.value,
-		'billingAddress2' : billingAddress2.value,
-		'billingCity' : billingCity.value,
-		'billingState' : billingState.value,
-		'billingZip' : billingZip.value,
-		'billingCountry' : billingCountry.value,
-		'billingEmail' : billingEmail.value,
-		'checkoutTotal' : checkoutTotal
-		}
-    	await( checkErrors(paymentDict) )
-	
-	if (summaryError.style.display == 'none') {
-		console.log('processing')
-		
-		updateParentDatabase('test1', paymentDict)
-		
-	} else { 
-		console.log('error found')
-	}
-	
-	
-	*/
