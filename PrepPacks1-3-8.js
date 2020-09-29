@@ -197,6 +197,8 @@ async function braintreeCheckout(nonce, amount, checkoutDict) {
             if (xhttp.readyState == XMLHttpRequest.DONE) {
                     var response = xhttp.responseText
                     updateParentDatabase( response , checkoutDict)
+		    alert('Thanks for your purchase! A receipt has been sent to your email.')
+		    parentCheckout.style.display = 'none'
             }
     }
     await xhttp.open("GET", herokuURL, true);
