@@ -43,13 +43,13 @@ function mpTutorAccountCreated(user){
 		"School Name": user.school,
         	"$first_name": user.firstName,
         	"$last_name": user.lastName,
+		"$name" : user.firstName + " " + user.lastName,
         	"$email": user.email,
         	"$phone": user.phoneNumber,
         	"How Heard": user.howHeard,
 		"Major": user.major,
 		"Courses Seeking to Tutor": user.courses,
 		"Academic Year": user.year,
-		"Tutoring Qualities": user.qualities,
         	"Tutor User": true,
         	"Tutor Interview Requested": false,
         	"Tutor Interview Completed": false,
@@ -59,41 +59,13 @@ function mpTutorAccountCreated(user){
 		"Tutor Application Stage": "Account Created",
 		"Tutor Application Resolution": "Not yet offered",
         	"Tutor Accepted Position": false,
-		"Tutor Application Date": new Date().toISOString()
+		"Tutor Application Date": new Date().toISOString(),
+		"Referral": user.referredBy,
+		"Interest in Tutoring": user.whyTutor,
+		"Groups Involved": user.groups
 	});
 }
 
-//This funciton executes when a tutor user submits their PIA
-
-function mpPreInterviewSubmission(fieldValue){
-	mixpanel.identify();
-	
-	mixpanel.register({
-		"Major": fieldValue.major,
-		"Academic Year": fieldValue.year
-	});
-
-	mixpanel.track("Pre Invertview Assessment",{
-		"Major": fieldValue.major,
-		"Academic Year": fieldValue.year
-	});
-	
-	mixpanel.people.set({
-		"Major": fieldValue.major,
-		"Groups Involved": fieldValue.groups,
-		"Tutoring Experience": fieldValue.experience,
-		"Courses Seeking to Tutor": fieldValue.courses,
-		"Amount of Hours Interested Tutoring Weekly": fieldValue.hours,
-		"Tutoring Qualities": fieldValue.qualities,
-		"Interest in Tutoring": fieldValue.whyTutor,	
-		"Academic Year": fieldValue.year,
-		"Pre Invertview Assessment Completed": true,
-		"Pre Invertview Assessment Completed Date": new Date().toISOString(),
-		"Mobile OS": fieldValue.mobileOS,
-		"Tutor Application Stage": "PIA Submitted"		
-	});
-
-}
 
 //This funciton executes when a tutor user clicks the request virtual interview button
 
