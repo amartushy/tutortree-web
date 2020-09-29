@@ -48,9 +48,9 @@ miniBuyNow.addEventListener('click', function() {
     parentCheckout.style.display = 'flex'
     
     prepPackTitle = 'Mini Prep Pack'
-    subtotal = 50
+    subtotal = 0
     fees = 3.95
-    checkoutTotal = 53.95
+    checkoutTotal = 3.95
     displayBadges('mini')
     loadParentCheckout()
 })
@@ -271,7 +271,6 @@ function sendParentReceipt(billingEmail, checkoutID, packTitle, checkoutTotal) {
 	xhttp.send();
 }
 
-
 //Braintree______________________________________________________________________________________
 
 
@@ -356,9 +355,9 @@ function sendParentReceipt(billingEmail, checkoutID, packTitle, checkoutTotal) {
 			console.error(tokenizeErr);
 			return;
 		      }
-				
-			updateParentDatabase('test1', paymentDict)
-			console.log('Got a nonce: ' + payload.nonce);
+			
+			var nonce = payload.nonce
+			braintreeCheckout(nonce, checkoutTotal, paymentDict)
 		    });
 
 		} else { 
