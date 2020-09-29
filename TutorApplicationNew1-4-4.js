@@ -172,17 +172,12 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
               "howHeard" : tutorHowHeard.value,
               "timeSubmitted" : new Date() / 1000,
               "tutorApplicant" : true,
-              "application" : {
-                  "didSubmitPreInterview" : false,
-                  "didRequestInterview" : false,
-                  "completedInterview" : false,
-                  "uploadedTranscript" : false,
-                  "uploadedFaculty" : false,
-                  "isApproved" : false,
-              },
-              "interview" : {
-                  "challengingScore" : "0"
-              }
+	      "courses" : tutorCourses.value,
+	      "referredBy" : referralField.value,
+	      "major" : tutorMajor.value,
+	      "whyTutor" : tutorWhyTutor.value,
+	      "groups" : tutorGroups.value,
+	      "year" : tutorYear.value
           }
       var interviewData = {
                     "interviewNotes" : {
@@ -284,7 +279,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
 		var schoolNameClean = tutorSchoolOther.value
 	}
 	
-        var newTutorDict = {
+      var newTutorDict = {
               "email" : tutorEmail.value,
               "firstName" : tutorFirst.value,
               "lastName" : tutorLast.value,
@@ -293,17 +288,12 @@ function createNewUserTutorApplicant(tutorApplicantID) {
               "howHeard" : tutorHowHeard.value,
               "timeSubmitted" : new Date() / 1000,
               "tutorApplicant" : true,
-              "application" : {
-                  "didSubmitPreInterview" : false,
-                  "didRequestInterview" : false,
-                  "completedInterview" : false,
-                  "uploadedTranscript" : false,
-                  "uploadedFaculty" : false,
-                  "isApproved" : false,
-              },
-              "interview" : {
-                  "challengingScore" : "0"
-              }
+	      "courses" : tutorCourses.value,
+	      "referredBy" : referralField.value,
+	      "major" : tutorMajor.value,
+	      "whyTutor" : tutorWhyTutor.value,
+	      "groups" : tutorGroups.value,
+	      "year" : tutorYear.value
           }
         
         var interviewData = {
