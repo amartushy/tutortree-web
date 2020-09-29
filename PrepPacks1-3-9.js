@@ -50,7 +50,7 @@ miniBuyNow.addEventListener('click', function() {
     prepPackTitle = 'Mini Prep Pack'
     subtotal = 50
     fees = 3.95
-    checkoutTotal = 3.95
+    checkoutTotal = 53.95
     displayBadges('mini')
     loadParentCheckout()
 })
