@@ -328,7 +328,9 @@ function sendParentReceipt(billingEmail, checkoutID, packTitle, checkoutTotal) {
           checkoutButton.addEventListener('click', async function (event) {
             event.preventDefault();
 		summaryError.style.display = 'none'
-
+		if (billingAddress.value == '') {
+			billingAddress.value = 'none'
+		}
 		var paymentDict = {
 			'packTitle' : prepPackTitle,
 			'studentName' : studentName.value,
