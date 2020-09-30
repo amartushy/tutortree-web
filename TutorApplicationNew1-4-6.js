@@ -406,13 +406,13 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                     "school" : 	tutorSchool.value,
 		                "tutorApplicantStatus" : "pending"
                 }
-        
-          mpTutorAccountCreated( newTutorDict )
-  
+          
         // Update user collection with tutor info
           userDB.collection("userTest").doc(tutorApplicantID).set(appUserInfo)
           .then(function() {
               console.log("Document successfully written!");
+	      mpTutorAccountCreated( newTutorDict )
+		  
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("application").set(applicationData)
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("assessment").set(assessmentData)
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() {
