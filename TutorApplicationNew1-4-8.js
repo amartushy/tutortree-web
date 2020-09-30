@@ -134,18 +134,68 @@ function checkApplicantStatus() {
       firebase.auth().signInWithEmailAndPassword(tutorEmail.value, tutorPassword.value).then(function(data) {
           firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
+
                  //Create new tutor applicant
                 var tutorApplicantID = user.uid
                 createFirestoreTutorApplicant(tutorApplicantID)
+		      
+		     //Update Mixpanel
+		var schoolNameClean = cleanSchoolName(tutorSchool.value)
+		if(tutorSchool.value == "other"){
+			var schoolNameClean = tutorSchoolOther.value
+		}
+
+		var newTutorDict = {
+		      "email" : tutorEmail.value,
+		      "firstName" : tutorFirst.value,
+		      "lastName" : tutorLast.value,
+		      "phoneNumber" : tutorPhone.value,
+		      "school" : schoolNameClean,
+		      "howHeard" : tutorHowHeard.value,
+		      "timeSubmitted" : new Date() / 1000,
+		      "tutorApplicant" : true,
+		      "courses" : tutorCourses.value,
+		      "referredBy" : referralField.value,
+		      "major" : tutorMajor.value,
+		      "whyTutor" : tutorWhyTutor.value,
+		      "groups" : tutorGroups.value,
+		      "year" : tutorYear.value
+		  }
+		mpTutorAccountCreated( newTutorDict )
+		      
               }
           })
       })
     
   .catch(function(error) {
       firebase.auth().createUserWithEmailAndPassword(tutorEmail.value, tutorPassword.value).then(function(data) {
-          //Create User and Tutor Applicant
-          var tutorApplicantID = data.user.uid
-          createNewUserTutorApplicant(tutorApplicantID)
+	//Create User and Tutor Applicant
+	var tutorApplicantID = data.user.uid
+	createNewUserTutorApplicant(tutorApplicantID)
+	      
+	//Update Mixpanel
+	var schoolNameClean = cleanSchoolName(tutorSchool.value)
+	if(tutorSchool.value == "other"){
+		var schoolNameClean = tutorSchoolOther.value
+	}
+
+	var newTutorDict = {
+	      "email" : tutorEmail.value,
+	      "firstName" : tutorFirst.value,
+	      "lastName" : tutorLast.value,
+	      "phoneNumber" : tutorPhone.value,
+	      "school" : schoolNameClean,
+	      "howHeard" : tutorHowHeard.value,
+	      "timeSubmitted" : new Date() / 1000,
+	      "tutorApplicant" : true,
+	      "courses" : tutorCourses.value,
+	      "referredBy" : referralField.value,
+	      "major" : tutorMajor.value,
+	      "whyTutor" : tutorWhyTutor.value,
+	      "groups" : tutorGroups.value,
+	      "year" : tutorYear.value
+	  }
+	mpTutorAccountCreated( newTutorDict )
         
       })
       .catch(function(error) {
@@ -163,22 +213,6 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
 		var schoolNameClean = tutorSchoolOther.value
 	}
       
-      var newTutorDict = {
-              "email" : tutorEmail.value,
-              "firstName" : tutorFirst.value,
-              "lastName" : tutorLast.value,
-              "phoneNumber" : tutorPhone.value,
-              "school" : schoolNameClean,
-              "howHeard" : tutorHowHeard.value,
-              "timeSubmitted" : new Date() / 1000,
-              "tutorApplicant" : true,
-	      "courses" : tutorCourses.value,
-	      "referredBy" : referralField.value,
-	      "major" : tutorMajor.value,
-	      "whyTutor" : tutorWhyTutor.value,
-	      "groups" : tutorGroups.value,
-	      "year" : tutorYear.value
-          }
       var interviewData = {
                     "interviewNotes" : {
                         "challengingNotes" : "No notes yet",
@@ -267,8 +301,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
       console.log("Document successfully written!");
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("application").set(applicationData)
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("assessment").set(assessmentData)
-      userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() {
-	   mpTutorAccountCreated( newTutorDict )
+      userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() 
            location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
       })
 }
@@ -280,22 +313,6 @@ function createNewUserTutorApplicant(tutorApplicantID) {
 		var schoolNameClean = tutorSchoolOther.value
 	}
 	
-      var newTutorDict = {
-              "email" : tutorEmail.value,
-              "firstName" : tutorFirst.value,
-              "lastName" : tutorLast.value,
-              "phoneNumber" : tutorPhone.value,
-              "school" : schoolNameClean,
-              "howHeard" : tutorHowHeard.value,
-              "timeSubmitted" : new Date() / 1000,
-              "tutorApplicant" : true,
-	      "courses" : tutorCourses.value,
-	      "referredBy" : referralField.value,
-	      "major" : tutorMajor.value,
-	      "whyTutor" : tutorWhyTutor.value,
-	      "groups" : tutorGroups.value,
-	      "year" : tutorYear.value
-          }
         
         var interviewData = {
                     "interviewNotes" : {
@@ -410,9 +427,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
         // Update user collection with tutor info
           userDB.collection("userTest").doc(tutorApplicantID).set(appUserInfo)
           .then(function() {
-              console.log("Document successfully written!");
-	      mpTutorAccountCreated( newTutorDict )
-		  
+              console.log("Document successfully written!");		  
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("application").set(applicationData)
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("assessment").set(assessmentData)
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() {
