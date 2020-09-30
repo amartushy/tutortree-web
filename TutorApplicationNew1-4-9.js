@@ -301,7 +301,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
       console.log("Document successfully written!");
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("application").set(applicationData)
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("assessment").set(assessmentData)
-      userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() 
+      userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() {
            location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
       })
 }
