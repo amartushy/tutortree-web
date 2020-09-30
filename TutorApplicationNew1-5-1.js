@@ -161,7 +161,7 @@ function checkApplicantStatus() {
 		      "groups" : tutorGroups.value,
 		      "year" : tutorYear.value
 		  }
-		mpExistingTutorSignUp( newTutorDict )
+		mpExistingAccountTutorSignUp( newTutorDict )
 		      
               }
           })
