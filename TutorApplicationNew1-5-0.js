@@ -161,7 +161,7 @@ function checkApplicantStatus() {
 		      "groups" : tutorGroups.value,
 		      "year" : tutorYear.value
 		  }
-		mpTutorAccountCreated( newTutorDict )
+		mpExistingTutorSignUp( newTutorDict )
 		      
               }
           })
@@ -195,7 +195,7 @@ function checkApplicantStatus() {
 	      "groups" : tutorGroups.value,
 	      "year" : tutorYear.value
 	  }
-	mpTutorAccountCreated( newTutorDict )
+	mpTutorSignUp( newTutorDict )
         
       })
       .catch(function(error) {
