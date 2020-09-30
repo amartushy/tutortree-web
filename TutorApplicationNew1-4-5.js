@@ -261,13 +261,14 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
 				"yearPoints" : 0
 			}
         }
-     mpTutorAccountCreated( newTutorDict )
+  
         
       // Update user collection with tutor info
       console.log("Document successfully written!");
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("application").set(applicationData)
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("assessment").set(assessmentData)
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() {
+	   mpTutorAccountCreated( newTutorDict )
            location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
       })
 }
