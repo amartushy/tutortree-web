@@ -367,7 +367,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
 				"major" : tutorMajor.value,
 				"groups" : tutorGroups.value,
 				"whyTutor" : tutorWhyTutor.value,
-				"schoolName" : cleanSchoolName,
+				"schoolName" : schoolNameClean,
 				"year" : tutorYear.value
 			},
 			"applicationPoints" : {
