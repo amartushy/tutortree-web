@@ -15,10 +15,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 	console.log("user is signed in with uid: " + userID)
 
 	userDB.collection("userTest").doc(userID).get().then(function(doc) {
-		tutorApplicantStatus = capitalizeFirstLetter(doc.data().tutorApplicantStatus)
 		usersSchool = doc.data().school
-		document.getElementById("tutor-hiring-status").innerHTML = tutorApplicantStatus
-
+		document.getElementById("tutor-hiring-status").innerHTML = doc.data().tutorApplicantStatus
 	})
 
 	userDB.collection("userTest").doc(userID).collection("tutorApplication").doc("application").onSnapshot(function(doc) {
@@ -326,6 +324,3 @@ function sendEmailTo(email, title, message) {
 	xhttp.send();
 }
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
