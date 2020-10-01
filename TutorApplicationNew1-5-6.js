@@ -184,15 +184,12 @@ function assignMixpanelSignUp(isExisting) {
 	  }
 
 	if (isExisting) {
-		mixpanel.identify(tutorEmail.value)
+		
+		mpExistingTutorSignUp(newTutorDict)
 		
 	} else {
-		mixpanel.alias(tutorEmail.value)
-		
+		mpTutorSignUp(newTutorDict)
 	}
-	
-	mpTutorSignUp(newTutorDict)
-	
 }
 
 
