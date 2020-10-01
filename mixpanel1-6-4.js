@@ -278,7 +278,7 @@ function mpAmbassadorAccountCreated(user){
 
 	mixpanel.track("Ambassador Sign Up",{
 		"School Name": user.school,
-		"How Heard": user.howHeard
+		"How Heard": user.howHeardField
 	});
 	//
 	mixpanel.people.set({
@@ -296,8 +296,9 @@ function mpAmbassadorAccountCreated(user){
         	"Knows Anyone at TutorTree": user.knowsEmployees,
         	"Social Handle": user.socialHandle,
         	"Ambassador User": true,
-        	//"Ambassador Interview Completed": false,
-        	"Ambassador Hiring Status": "Not yet Interviewed"
+        	"Ambassador Hiring Status": "Not yet Interviewed",
+		"Academic Year": user.year,
+		"Major": user.major
 	});
 
 }
