@@ -32,7 +32,7 @@ function mpTutorSignUp(user){
 		'How Heard' : user.howHeard,
 		'School Name' : user.school
 	})
-	/*
+	
 	mixpanel.people.set({
 		"School Name": user.school,
         	"$first_name": user.firstName,
@@ -57,7 +57,7 @@ function mpTutorSignUp(user){
 		"Referral": user.referredBy,
 		"Interest in Tutoring": user.whyTutor,
 		"Groups Involved": user.groups
-	})*/
+	})
 }
 
 
