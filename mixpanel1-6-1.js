@@ -61,6 +61,42 @@ function mpTutorSignUp(user){
 	})
 }
 
+function mpExistingTutorSignUp(user){
+	mixpanel.alias(user.email);
+	
+	//tracks the event of tutor signing up
+	mixpanel.track("Tutor Sign Up", {
+		'How Heard' : user.howHeard,
+		'School Name' : user.school
+	})
+	
+	mixpanel.people.set({
+		"School Name": user.school,
+        	"$first_name": user.firstName,
+        	"$last_name": user.lastName,
+		"$name" : user.firstName + " " + user.lastName,
+        	"$email": user.email,
+        	"$phone": user.phoneNumber,
+        	"How Heard": user.howHeard,
+		"Major": user.major,
+		"Courses Seeking to Tutor": user.courses,
+		"Academic Year": user.year,
+        	"Tutor User": true,
+        	"Tutor Interview Requested": false,
+        	"Tutor Interview Completed": false,
+        	"Submitted Transcript": false,
+        	"Submitted Faculty Rec": false,
+		"Reached Resolution Stage": false,
+		"Tutor Application Stage": "Account Created",
+		"Tutor Application Resolution": "Not yet offered",
+        	"Tutor Accepted Position": false,
+		"Tutor Application Date": new Date().toISOString(),
+		"Referral": user.referredBy,
+		"Interest in Tutoring": user.whyTutor,
+		"Groups Involved": user.groups
+	})
+}
+
 
 //This funciton executes when a tutor user clicks the request virtual interview button
 
