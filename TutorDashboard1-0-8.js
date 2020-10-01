@@ -306,3 +306,149 @@ async function getCountOfSessions(ID) {
 
     return sessions
 }
+
+
+//Profile Functions_______________________________________________________________________________________________
+//Profile functions_____________________________________________________________________________
+storageRef = storageService.ref()
+
+function loadProfile() {
+
+    userDB.collection('userTest').doc(globalTutorID).get().then(async function(doc) {
+        var tutorData = doc.data()
+        var tutorsRating = await getRatingForUser(globalTutorID)
+        var sessionsCount = await getCountOfSessions(globalTutorID)
+
+        //create Photo element because setting src doesn't work :/
+        while(profileImageBlock.firstChild) {
+			profileImageBlock.removeChild(profileImageBlock.firstChild)
+        }
+        var tutorsProfilePhoto = document.createElement('img') 
+        tutorsProfilePhoto.setAttribute('class', 'upload-image')
+        tutorsProfilePhoto.src = tutorData.profileImage
+        tutorsProfilePhoto.addEventListener('click', function() {
+            uploadProfileImage()
+            updateProfileBlock.style.display = 'flex'
+        })
+        profileImageBlock.appendChild(tutorsProfilePhoto)
+
+        tutorsName.innerHTML = tutorData.name
+        sessionsText.innerHTML = sessionsCount
+        averageText.innerHTML = tutorsRating
+        hourlyText.innerHTML = '$' + tutorData.pricePHH * 2
+        tutorsBio.value = tutorData.bio
+
+        tutorsBio.onfocus = function() {
+            updateProfileBlock.style.display = 'flex'
+        }
+
+        tutorsName.onfocus = function() {
+            updateProfileBlock.style.display = 'flex'
+        }
+
+    })
+
+    updateProfile.addEventListener('click', function() {
+        //Update Profile Image
+
+        //Update Name
+
+        //Update Bio
+                
+    })
+}
+
+//Profile functions_____________________________________________________________________________
+
+function loadProfile() {
+
+    userDB.collection('userTest').doc(globalTutorID).get().then(async function(doc) {
+        var tutorData = doc.data()
+        var tutorsRating = await getRatingForUser(globalTutorID)
+        var sessionsCount = await getCountOfSessions(globalTutorID)
+
+        //create Photo element because setting src doesn't work :/
+		profileImageBlock.removeChild(profileImageBlock.firstChild)
+        var tutorsProfilePhoto = document.createElement('img') 
+        tutorsProfilePhoto.setAttribute('class', 'upload-image')
+        tutorsProfilePhoto.src = tutorData.profileImage
+        tutorsProfilePhoto.addEventListener('click', openPhotoUploadDialog)
+
+        profileImageBlock.appendChild(tutorsProfilePhoto)
+
+        tutorsName.value = tutorData.name
+        sessionsText.innerHTML = sessionsCount
+        averageText.innerHTML = tutorsRating
+        hourlyText.innerHTML = '$' + tutorData.pricePHH * 2
+        tutorsBio.value = tutorData.bio
+
+        tutorsBio.onfocus = function() {
+            updateProfileBlock.style.display = 'flex'
+        }
+
+        tutorsName.onfocus = function() {
+            updateProfileBlock.style.display = 'flex'
+        }
+
+    })
+
+    updateProfile.addEventListener('click', function() {
+        var newName = tutorsName.value
+        var newBio = tutorsBio.value
+
+        userDB.collection("userTest")
+		.doc(globalTutorID)
+        .update( {"name" : newName,
+                    "bio" : newBio })     
+                    
+    updateProfileBlock.style.display = 'none'
+    })
+}
+
+//Photo Upload
+storageRef = storageService.ref()
+
+function openPhotoUploadDialog() {
+	hiddenPhotoUploadButton.click();
+}
+
+hiddenPhotoUploadButton.addEventListener('change', uploadProfileImage);
+
+var selectedPhotoFile;
+function uploadProfileImage(e) {
+    selectedPhotoFile = e.target.files[0];
+    handlePhotoUpload()
+}
+
+async function handlePhotoUpload() {
+	const uploadTask = await storageRef.child(`images/${selectedPhotoFile.name}`).put(selectedPhotoFile);
+	uploadAndUpdateFirebasePhoto()
+}
+
+//final submit button and update firebase
+async function uploadAndUpdateFirebasePhoto() {
+	var phototFileURL = ""
+	await storageRef.child('/images/'+selectedPhotoFile.name)
+		.getDownloadURL()
+		.then(function(url) { phototFileURL = url.toString() })
+	userDB.collection("userTest")
+		.doc(globalTutorID)
+        .update( {"profileImage" : phototFileURL })
+        .then(function() {
+            userDB.collection('userTest').doc(globalTutorID).get().then(async function(doc) {
+                profileImageBlock.removeChild(profileImageBlock.firstChild)
+                
+                var tutorsProfilePhoto = document.createElement('img') 
+                tutorsProfilePhoto.setAttribute('class', 'upload-image')
+                tutorsProfilePhoto.src = doc.data().profileImage
+                tutorsProfilePhoto.addEventListener('click', function() {
+                    uploadProfileImage()
+                })
+                profileImageBlock.appendChild(tutorsProfilePhoto)
+            })
+        })
+}
+
+
+
+
