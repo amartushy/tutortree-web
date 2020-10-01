@@ -29,8 +29,6 @@ function mpTutorSignUp(user){
 
 	//tracks the event of tutor signing up
 	mixpanel.track("Tutor Sign Up", {
-		'Academic Year' : user.year,
-		'Major' : user.major,
 		'How Heard' : user.howHeard,
 		'School Name' : user.school
 	})
