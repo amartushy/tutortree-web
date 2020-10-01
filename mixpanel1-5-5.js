@@ -26,14 +26,14 @@ function mpTutorSignupPageViewed(){
 
 
 function mpTutorSignUp(user){
-	//adding super property here to always track School and reference
-	mixpanel.register({
-		"School Name": user.school,
-		"How Heard": user.howHeard
-	});
-	
+
 	//tracks the event of tutor signing up
-	mixpanel.track("Tutor Sign Up")
+	mixpanel.track("Tutor Sign Up", {
+		'Academic Year' : user.year,
+		'Major' : user.major,
+		'How Heard' : user.howHeard,
+		'School Name' : user.school
+	})
 	//
 	mixpanel.people.set({
 		"School Name": user.school,
