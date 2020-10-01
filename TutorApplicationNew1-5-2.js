@@ -139,30 +139,6 @@ function checkApplicantStatus() {
                 var tutorApplicantID = user.uid
                 createFirestoreTutorApplicant(tutorApplicantID)
 		      
-		     //Update Mixpanel
-		var schoolNameClean = cleanSchoolName(tutorSchool.value)
-		if(tutorSchool.value == "other"){
-			var schoolNameClean = tutorSchoolOther.value
-		}
-
-		var newTutorDict = {
-		      "email" : tutorEmail.value,
-		      "firstName" : tutorFirst.value,
-		      "lastName" : tutorLast.value,
-		      "phoneNumber" : tutorPhone.value,
-		      "school" : schoolNameClean,
-		      "howHeard" : tutorHowHeard.value,
-		      "timeSubmitted" : new Date() / 1000,
-		      "tutorApplicant" : true,
-		      "courses" : tutorCourses.value,
-		      "referredBy" : referralField.value,
-		      "major" : tutorMajor.value,
-		      "whyTutor" : tutorWhyTutor.value,
-		      "groups" : tutorGroups.value,
-		      "year" : tutorYear.value
-		  }
-		mpExistingAccountTutorSignUp( newTutorDict )
-		      
               }
           })
       })
@@ -172,7 +148,18 @@ function checkApplicantStatus() {
 	//Create User and Tutor Applicant
 	var tutorApplicantID = data.user.uid
 	createNewUserTutorApplicant(tutorApplicantID)
-	      
+        
+      })
+      .catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          alert(errorMessage)
+      });
+  })
+}
+
+function assignMixpanelSignUp(isExisting) {
 	//Update Mixpanel
 	var schoolNameClean = cleanSchoolName(tutorSchool.value)
 	if(tutorSchool.value == "other"){
@@ -195,17 +182,18 @@ function checkApplicantStatus() {
 	      "groups" : tutorGroups.value,
 	      "year" : tutorYear.value
 	  }
-	mpTutorSignUp( newTutorDict )
-        
-      })
-      .catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          alert(errorMessage)
-      });
-  })
+
+	if (isExisting) {
+		mpExistingAccountTutorSignUp( newTutorDict )
+		
+	} else {
+		mpTutorSignUp( newTutorDict )
+		
+	}
+	
 }
+
+
 function createFirestoreTutorApplicant(tutorApplicantID) {
 	var schoolNameClean = cleanSchoolName(tutorSchool.value)
 	
@@ -302,6 +290,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("application").set(applicationData)
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("assessment").set(assessmentData)
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() {
+	   assignMixpanelSignUp(true)
            location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
       })
 }
@@ -431,6 +420,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("application").set(applicationData)
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("assessment").set(assessmentData)
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() {
+		      assignMixpanelSignUp(false)
                    location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
               })
           })
