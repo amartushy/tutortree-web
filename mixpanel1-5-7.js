@@ -32,8 +32,6 @@ function mpTutorSignUp(user){
 		'How Heard' : user.howHeard,
 		'School Name' : user.school
 	})
-	
-	mixpanel.track("Tutor Application")
 	//
 	mixpanel.people.set({
 		"School Name": user.school,
