@@ -293,7 +293,8 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("assessment").set(assessmentData)
       userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() {
 	   assignMixpanelSignUp(true)
-           location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
+	      console.log('called true')
+           //location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
       })
 }
 function createNewUserTutorApplicant(tutorApplicantID) {
@@ -422,8 +423,9 @@ function createNewUserTutorApplicant(tutorApplicantID) {
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("application").set(applicationData)
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("assessment").set(assessmentData)
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() {
+		      console.log('called false')
 		      assignMixpanelSignUp(false)
-                   location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
+                   //location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
               })
           })
 }	
