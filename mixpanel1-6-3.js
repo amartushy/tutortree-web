@@ -19,7 +19,6 @@ It is split into a few sections, separated by user journey:
 
 function mpTutorSignupPageViewed(){
 	mixpanel.track("Tutor Sign Up Page View");
-
 }
 
 //This funciton executes when a user signs up for a tutor account
@@ -29,7 +28,10 @@ function mpTutorSignUp(user){
 	mixpanel.identify();
 	
 	//tracks the event of tutor signing up
-	mixpanel.track("Tutor Application")
+	mixpanel.track("Tutor Sign Up", {
+		'How Heard' : user.howHeard,
+		'School Name' : user.school
+	})
 	
 	mixpanel.people.set({
 		"School Name": user.school,
