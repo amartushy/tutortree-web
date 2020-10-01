@@ -184,10 +184,12 @@ function assignMixpanelSignUp(isExisting) {
 	  }
 
 	if (isExisting) {
-		
+		mixpanel.track('Tutor Sign Up')
+			
 		mpExistingTutorSignUp(newTutorDict)
 		
 	} else {
+		mixpanel.track('Tutor Application')
 		mpTutorSignUp(newTutorDict)
 	}
 }
