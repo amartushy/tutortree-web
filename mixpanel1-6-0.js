@@ -26,7 +26,8 @@ function mpTutorSignupPageViewed(){
 
 
 function mpTutorSignUp(user){
-
+	mixpanel.identify();
+	
 	//tracks the event of tutor signing up
 	mixpanel.track("Tutor Sign Up", {
 		'How Heard' : user.howHeard,
