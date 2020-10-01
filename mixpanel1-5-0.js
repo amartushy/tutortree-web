@@ -26,8 +26,6 @@ function mpTutorSignupPageViewed(){
 
 
 function mpTutorSignUp(user){
-	//alias maps the random unique user id assigned by mp to the users email
-	mixpanel.alias(user.email);
 	//adding super property here to always track School and reference
 	mixpanel.register({
 		"School Name": user.school,
@@ -63,50 +61,7 @@ function mpTutorSignUp(user){
 		"Referral": user.referredBy,
 		"Interest in Tutoring": user.whyTutor,
 		"Groups Involved": user.groups
-	});
-}
-
-//Existing account but first submission of tutor application
-function mpExistingAccountTutorSignUp(user){
-	//Identify user
-	mixpanel.identify()
-	
-	//adding super property here to always track School and reference
-	mixpanel.register({
-		"School Name": user.school,
-		"How Heard": user.howHeard
-	});
-	//tracks the event of tutor signing up
-	mixpanel.track("Tutor Sign Up",{
-		"School Name": user.school,
-		"How Heard": user.howHeard
-	});
-	//
-	mixpanel.people.set({
-		"School Name": user.school,
-        	"$first_name": user.firstName,
-        	"$last_name": user.lastName,
-		"$name" : user.firstName + " " + user.lastName,
-        	"$email": user.email,
-        	"$phone": user.phoneNumber,
-        	"How Heard": user.howHeard,
-		"Major": user.major,
-		"Courses Seeking to Tutor": user.courses,
-		"Academic Year": user.year,
-        	"Tutor User": true,
-        	"Tutor Interview Requested": false,
-        	"Tutor Interview Completed": false,
-        	"Submitted Transcript": false,
-        	"Submitted Faculty Rec": false,
-		"Reached Resolution Stage": false,
-		"Tutor Application Stage": "Account Created",
-		"Tutor Application Resolution": "Not yet offered",
-        	"Tutor Accepted Position": false,
-		"Tutor Application Date": new Date().toISOString(),
-		"Referral": user.referredBy,
-		"Interest in Tutoring": user.whyTutor,
-		"Groups Involved": user.groups
-	});
+	})
 }
 
 
