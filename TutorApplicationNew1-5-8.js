@@ -183,14 +183,10 @@ function assignMixpanelSignUp(isExisting) {
 	      "year" : tutorYear.value
 	  }
 
-	if (isExisting) {
-		mixpanel.track('Tutor Sign Up')
-			
-		mpExistingTutorSignUp(newTutorDict)
-		
-	} else {
-		mixpanel.track('Tutor Application')
+	if (!isExisting) {
 		mpTutorSignUp(newTutorDict)
+	} else {
+		mpExistingTutorSignUp(newTutorDict)
 	}
 }
 
