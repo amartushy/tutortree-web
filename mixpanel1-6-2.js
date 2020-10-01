@@ -29,10 +29,7 @@ function mpTutorSignUp(user){
 	mixpanel.identify();
 	
 	//tracks the event of tutor signing up
-	mixpanel.track("Tutor Sign Up", {
-		'How Heard' : user.howHeard,
-		'School Name' : user.school
-	})
+	mixpanel.track("Tutor Application")
 	
 	mixpanel.people.set({
 		"School Name": user.school,
