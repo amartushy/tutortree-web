@@ -482,7 +482,7 @@ function getSessions() {
             //Build past sessions 
             if (sessionDict.status == 'confirmed' && sessionDict.end < currentTime && sessionDict.rated == false) {
                 noPastSessions.style.display = 'none'
-                buildPastSessionBlock(sessionDict)
+                buildPastSessionBlock(sessionDict, doc.id)
             }
 
             //Build pending sessions
