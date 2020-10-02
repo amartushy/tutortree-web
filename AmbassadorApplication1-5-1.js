@@ -265,7 +265,8 @@ function createNewUserAmbassadorApplicant(ambassadorID) {
 		"profileImage" : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/images%2FTTLogo-Mint.png?alt=media&token=c8d6559e-7fa8-4fed-81cc-1f09d5da56a5",
 		"pushToken" : "",
 		"school" : schoolField.value,
-		"ambassadorApplicationStatus" : "pending"
+		"ambassadorApplicationStatus" : "pending",
+		"currentBalance" : 0
 	}
 	
 	userDB.collection("userTest").doc(ambassadorID).set(appUserInfo, {merge: true})
