@@ -452,6 +452,52 @@ async function uploadAndUpdateFirebasePhoto() {
         })
 }
 
+//Upcoming Functions________________________________________________________________________________________________________________
+upcoming.addEventListener('click', function(){
+    getSessions()
+})
 
+function getSessions() {
+    var currentTime = (new Date()).getTime() / 1000
+
+    userDB.collection('userTest').doc(globalTutorID).collection('sessions').onSnapshot( function(sessions) {
+        
+        //Remove elements on session changes
+        while(pastSessionsArea.firstChild) {
+            noPastSessions.style.display = 'block'
+            pastSessionsArea.removeChild(pastSessionsArea.firstChild)
+        }
+        while(pendingSessionsArea.firstChild) {
+            noPendingSessions.style.display = 'block'
+            pendingSessionsArea.removeChild(pendingSessionsArea.firstChild)
+        }
+        while(upcomingSessionsArea.firstChild) {
+            noUpcomingSessions.style.display = 'block'
+            upcomingSessionsArea.removeChild(upcomingSessionsArea.firstChild)
+        }
+
+        sessions.forEach( function(doc) {
+            var sessionDict = doc.data()
+
+            //Build past sessions 
+            if (sessionDict.status == 'confirmed' && sessionDict.end < currentTime && sessionDict.rated == false) {
+                noPastSessions.style.display = 'none'
+                buildPastSessionBlock(sessionDict)
+            }
+
+            //Build pending sessions
+            else if (sessionDict.status == 'pending') {
+                noPendingSessions.style.display = 'none'
+                buildSessionBlock(sessionDict, 'pending')
+            }
+
+            //Build upcoming sessions
+            else if (sessionDict.status == 'confirmed' && sessionDict.end > currentTime) {
+                noUpcomingSessions.style.display = 'none'
+                buildSessionBlock(sessionDict, 'confirmed')
+            }
+        })
+    })
+}
 
 
