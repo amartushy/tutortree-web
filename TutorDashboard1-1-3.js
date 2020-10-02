@@ -500,4 +500,118 @@ function getSessions() {
     })
 }
 
+function buildPastSessionBlock(session, sessionID) {
+    var otherUserID = session.student,
+        otherImage,
+        otherName
+    if (otherUserID == globalTutorID) {
+        otherUserID = session.tutor
+    }
+
+    userDB.collection('userTest').doc(otherUserID).get().then(function(doc) {
+        otherImage = doc.data().profileImage
+        otherName = doc.data().name
+
+        var rateSessionBlock = document.createElement('div')
+        var connectionImage = document.createElement('img')
+        var sessionName = document.createElement('div')
+        var rateSessionStars = document.createElement('div')
+        var starOne = document.createElement('div')
+        var starTwo = document.createElement('div')
+        var starThree = document.createElement('div')
+        var starFour = document.createElement('div')
+        var starFive = document.createElement('div')
+        var rateSessionButton = document.createElement('div')
+
+        rateSessionBlock.setAttribute('class', 'rate-session-block')
+        connectionImage.setAttribute('class', 'connection-image')
+        sessionName.setAttribute('class', 'session-name')
+        rateSessionStars.setAttribute('class', 'rate-session-stars')
+        starOne.setAttribute('class', 'connection-star-unfilled')
+        starTwo.setAttribute('class', 'connection-star-unfilled')
+        starThree.setAttribute('class', 'connection-star-unfilled')
+        starFour.setAttribute('class', 'connection-star-unfilled')
+        starFive.setAttribute('class', 'connection-star-unfilled')
+        rateSessionButton.setAttribute('class', 'rate-session-button')
+
+        pastSessionsArea.appendChild(rateSessionBlock)
+        rateSessionBlock.appendChild(connectionImage)
+        rateSessionBlock.appendChild(sessionName)
+        rateSessionBlock.appendChild(rateSessionStars)
+        rateSessionStars.appendChild(starOne)
+        rateSessionStars.appendChild(starTwo)
+        rateSessionStars.appendChild(starThree)
+        rateSessionStars.appendChild(starFour)
+        rateSessionStars.appendChild(starFive)
+        rateSessionBlock.appendChild(rateSessionButton)
+
+        connectionImage.src = otherImage
+        sessionName.innerHTML = otherName
+        starOne.innerHTML = ''
+        starTwo.innerHTML = ''
+        starThree.innerHTML = ''
+        starFour.innerHTML = ''
+        starFive.innerHTML = ''
+        rateSessionButton.innerHTML = 'Confirm Rating'
+
+        var rating = 0
+        starOne.addEventListener('mouseover', function() {
+            rating = 1
+            rateSessionButton.style.display = 'block'
+            starOne.setAttribute('class', 'connection-star-filled')
+            starTwo.setAttribute('class', 'connection-star-unfilled')
+            starThree.setAttribute('class', 'connection-star-unfilled')
+            starFour.setAttribute('class', 'connection-star-unfilled')
+            starFive.setAttribute('class', 'connection-star-unfilled')
+        })
+        starTwo.addEventListener('mouseover', function() {
+            rating = 2
+            rateSessionButton.style.display = 'block'
+            starOne.setAttribute('class', 'connection-star-filled')
+            starTwo.setAttribute('class', 'connection-star-filled')
+            starThree.setAttribute('class', 'connection-star-unfilled')
+            starFour.setAttribute('class', 'connection-star-unfilled')
+            starFive.setAttribute('class', 'connection-star-unfilled')
+        })
+        starThree.addEventListener('mouseover', function() {
+            rating = 3
+            rateSessionButton.style.display = 'block'
+            starOne.setAttribute('class', 'connection-star-filled')
+            starTwo.setAttribute('class', 'connection-star-filled')
+            starThree.setAttribute('class', 'connection-star-filled')
+            starFour.setAttribute('class', 'connection-star-unfilled')
+            starFive.setAttribute('class', 'connection-star-unfilled')
+        })
+        starFour.addEventListener('mouseover', function() {
+            rating = 4
+            rateSessionButton.style.display = 'block'
+            starOne.setAttribute('class', 'connection-star-filled')
+            starTwo.setAttribute('class', 'connection-star-filled')
+            starThree.setAttribute('class', 'connection-star-filled')
+            starFour.setAttribute('class', 'connection-star-filled')
+            starFive.setAttribute('class', 'connection-star-unfilled')
+        })
+        starFive.addEventListener('mouseover', function() {
+            rating = 5
+            rateSessionButton.style.display = 'block'
+            starOne.setAttribute('class', 'connection-star-filled')
+            starTwo.setAttribute('class', 'connection-star-filled')
+            starThree.setAttribute('class', 'connection-star-filled')
+            starFour.setAttribute('class', 'connection-star-filled')
+            starFive.setAttribute('class', 'connection-star-filled')
+        })
+
+        rateSessionButton.style.display = 'none'
+        rateSessionButton.addEventListener('click', function() {
+
+            userDB.collection('userTest').doc(otherUserID).collection('sessions').doc(sessionID)
+                .update({'ratingFromOtherUser' : rating})
+
+            userDB.collection('userTest').doc(globalTutorID).collection('sessions').doc(sessionID)
+                .update({'rated': true})
+
+        })
+    })
+}
+
 
