@@ -54,6 +54,9 @@ var updateProfileBlock = document.getElementById('update-profile-block')
 var updateProfile = document.getElementById('update-profile')
 
 //Upcoming
+var noPastSessions = document.getElementById('no-past-sessions')
+var noPendingSessions = document.getElementById('no-pending-sessions')
+var noUpcomingSessions = document.getElementByID('no-upcoming-sessions')
 var pastSessionsArea = document.getElementById('past-sessions-area')
 var pendingSessionsArea = document.getElementById('pending-sessions-area')
 var upcomingSessionsArea = document.getElementById('upcoming-sessions-area')
