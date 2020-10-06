@@ -238,6 +238,8 @@ function buildSessionBlock(session, sessionID, status) {
 }
 
 function openSessionManagement(session, sessionID, otherImage, otherName) {
+    console.log(session)
+    
     sessionModal.style.display = 'flex'
 
     var otherImageDiv = document.createElement('img')
