@@ -252,7 +252,7 @@ function openSessionManagement(session, sessionID, otherImage, otherName) {
     otherNameModal.innerHTML = otherName
     sessionDateHeader.innerHTML = dateObject[0] + ", " + dateObject[1] + " " + dateObject[2]
     sessionTimeHeader.innerHTML = timeObject[0] + " to " + timeObject[1]
-    receiveText.innerHTML = session.tutorsFee * 0.85
+    receiveText.innerHTML = parseFloat(session.tutorsFee) * 0.85
 
     confirmSessionButton.addEventListener('click', function() {
         confirmSession(session, sessionID)
