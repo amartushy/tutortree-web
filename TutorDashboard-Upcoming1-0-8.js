@@ -9,7 +9,8 @@ var receiveText = document.getElementById('receive-text')
 var declineSessionButton = document.getElementById('decline-session-button')
 var rescheduleSessionButton = document.getElementById('reschedule-session-button')
 var refundSessionButton = document.getElementById('refund-session-button')
-
+var pendingSessionOptions = document.getElementById('pending-session-options')
+var confirmedSessionOptions = document.getElementById('confirmed-session-options')
 
 upcoming.addEventListener('click', function(){
     getSessions()
@@ -210,7 +211,7 @@ function buildSessionBlock(session, sessionID, status) {
         var sessionDate = document.createElement('div')
 
         sessionBlock.setAttribute('class', 'tutor-session-block')
-        connectionImage.setAttribute('class', 'connection-image')
+        connectionImage.setAttribute('class', 'connection-image-modal')
         sessionInfo.setAttribute('class', 'session-info')
         sessionName.setAttribute('class', 'session-name')
         sessionCourseAndStatus.setAttribute('class', 'session-course-and-status')
@@ -244,6 +245,14 @@ function openSessionManagement(session, sessionID, otherImage, otherName) {
     console.log(session)
     
     sessionModal.style.display = 'flex'
+    if (session.status == 'pending') {
+	    pendingSessionOptions.style.display = 'flex'
+	    confirmedSessionOptions.style.display = 'none'
+    }
+    if (session.status == 'confirmed') {
+	    pendingSessionOptions.style.display = 'none'
+	    confirmedSessionOptions.style.display = 'flex'
+    }
 
     var otherImageDiv = document.createElement('img')
     otherImageDiv.setAttribute('class', 'connection-image')
