@@ -438,13 +438,13 @@ function getSessions() {
             //Build pending sessions
             else if (sessionDict.status == 'pending') {
                 noPendingSessions.style.display = 'none'
-                buildSessionBlock(sessionDict, 'pending')
+                buildSessionBlock(sessionDict, doc.id, 'pending')
             }
 
             //Build upcoming sessions
             else if (sessionDict.status == 'confirmed' && sessionDict.end > currentTime) {
                 noUpcomingSessions.style.display = 'none'
-                buildSessionBlock(sessionDict, 'confirmed')
+                buildSessionBlock(sessionDict, doc.id, 'confirmed')
             }
         })
     })
