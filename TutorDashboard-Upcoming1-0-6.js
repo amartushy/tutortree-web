@@ -233,7 +233,10 @@ function buildSessionBlock(session, sessionID, status) {
         sessionStatus.innerHTML = status
         sessionDate.innerHTML = formatSessionDate(start, end)
 
-        sessionBlock.setAttribute('onClick', 'openSessionManagement("' + session + '","' + sessionID + '","' + otherImage + '","' + otherName +'")')
+        sessionBlock.addEventListener('click', function() {
+            openSessionManagement(session, sessionID, otherImage, otherName)
+        })
+        
     })
 }
 
