@@ -402,6 +402,103 @@ async function uploadAndUpdateFirebasePhoto() {
         })
 }
 
+//My Courses___________________________________________________________________________________________________________
+
+myCourses.addEventListener('click', function(){
+    loadMyCourses()
+})
+
+async function loadMyCourses() {
+
+    userDB.collection('schools').doc(coreSchool).get().then(async function(school) {
+        //Set Header
+        coursesSchoolHeader.innerHTML = school.data().title
+
+        //Load Subject
+        await userDB.collection("schools").doc(coreSchool).collection('courses').onSnapshot(function(subject) {
+            while(subjectsAreaCourses.firstChild) {
+                subjectsAreaCourses.removeChild(subjectsAreaCourses.firstChild)
+            }
+            
+            subject.forEach(function(doc) {
+                buildMySubjects(school, doc.id, doc.data())
+            })
+        })
+    })
+}
+
+function buildMySubjects(schoolPath, subjectTitle, courseDict) {
+    var subjectBlock = document.createElement('div')
+    var subjectHeader = document.createElement('h4')
+    var myCoursesBlock = document.createElement('div')
+    
+    subjectBlock.setAttribute('class', 'subject-block')
+    subjectHeader.setAttribute('class', 'subject-header')
+    myCoursesBlock.setAttribute('class', 'my-courses-block')
+
+    subjectsAreaCourses.appendChild(subjectBlock)
+    subjectBlock.appendChild(subjectHeader)
+    subjectBlock.appendChild(myCoursesBlock)
+
+    subjectHeader.innerHTML = subjectTitle
+
+    for (var course in courseDict) {
+        if (courseDict.hasOwnProperty(course)) {
+            var courseBlock = document.createElement('div')
+            courseBlock.setAttribute('class', 'course-block')
+            courseBlock.innerHTML = course
+            myCoursesBlock.appendChild(courseBlock)
+            courseBlock.setAttribute('onClick', 'updateTutorForCourse("' + subjectTitle + '","' + course  + '")')
+
+            for (var tutor in courseDict[course].tutors) {
+                if(tutor == globalTutorID) {
+                    courseBlock.setAttribute('class', 'course-block-selected')
+                }
+            }
+        }
+    }
+}
+
+function updateTutorForCourse(subject, course) {
+    console.log(subject)
+    console.log(course)
+    userDB.collection('schools').doc(coreSchool).collection('courses').doc(subject).get().then(function(doc) {
+        const courseInfo = doc.data()
+
+        var numTutors = courseInfo[course].info.numTutors
+        var isTutor = false
+
+        if (courseInfo[course].tutors != null) {
+        	isTutor = courseInfo[course]["tutors"][globalTutorID] != null
+        }
+
+        if (isTutor) {
+            var tutorPath =  course  + '.tutors.' + globalTutorID 
+            var tutorDict = {}
+            tutorDict[tutorPath] = firebase.firestore.FieldValue.delete()
+            userDB.collection('schools').doc(coreSchool).collection('courses').doc(subject).update( tutorDict )
+
+            numTutors = numTutors - 1
+            var numTutorPath = course + '.info.numTutors' 
+            var numTutorDict = {}
+            numTutorDict[numTutorPath] = numTutors
+            userDB.collection('schools').doc(coreSchool).collection('courses').doc(subject).update( numTutorDict )
+
+        } else {
+            var tutorPath = course + '.tutors.' + globalTutorID 
+            var tutorDict = {}
+            tutorDict[tutorPath] = globalTutorID
+            userDB.collection('schools').doc(coreSchool).collection('courses').doc(subject).update( tutorDict )
+
+            numTutors = numTutors + 1
+            var numTutorPath = course + '.info.numTutors' 
+            var numTutorDict = {}
+            numTutorDict[numTutorPath] = numTutors
+            userDB.collection('schools').doc(coreSchool).collection('courses').doc(subject).update( numTutorDict )
+        }
+    })
+}
+
 
 
 
