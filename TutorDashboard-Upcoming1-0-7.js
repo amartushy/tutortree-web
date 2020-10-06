@@ -273,3 +273,188 @@ function openSessionManagement(session, sessionID, otherImage, otherName) {
     })
 }
 
+
+
+function confirmSession(sessionDict, sessionID) {
+    //Update tutor sessions
+    userDB.collection('userTest').doc(sessionDict.tutor).collection('sessions').doc(sessionID).update({'status': "confirmed"})
+
+    //update tutor income
+    var financialsDict = {
+        "checkoutTotal" : sessionDict.checkoutTotal,
+        "end" : sessionDict.end,
+        "isRefunded" : sessionDict.isRefunded,
+        "paid" : sessionDict.paid,
+        "sessionFee" : sessionDict.sessionFee,
+        "start" : sessionDict.start,
+        "student" : sessionDict.student,
+        "tutor" : sessionDict.tutor
+    }
+    userDB.collection('userTest').doc(sessionDict.tutor).collection('income').doc(sessionID).set(financialsDict, {merge: true})
+
+    //update student sessions
+    userDB.collection('userTest').doc(sessionDict.student).collection('sessions').doc(sessionID).update({'status': "confirmed"})
+
+    //update student spending
+    userDB.collection('userTest').doc(sessionDict.student).collection('spending').doc(sessionID).set(financialsDict, {merge: true})
+
+    //update global sessions
+    userDB.collection('globalSessions').doc(sessionID).update({'status': "confirmed"})
+
+    //send notifications
+
+    //update tutor current balance
+    userDB.collection('userTest').doc(sessionDict.tutor).get().then(function(doc) {
+        var currentBalance = doc.data().currentBalance
+        var newCurrentBalance = currentBalance + (sessionDict.tutorsFee * 0.85)
+        
+        userDB.collection('userTest').doc(sessionDict.tutor).update({"currentBalance" : newCurrentBalance})
+    })
+
+    //close modal
+    sessionModal.style.display = 'none'
+}
+
+function declineSession(sessionDict, sessionID) {
+    //Update tutor sessions
+    userDB.collection('userTest').doc(sessionDict.tutor).collection('sessions').doc(sessionID).update({'status': "declined"})
+
+    //update student sessions
+    userDB.collection('userTest').doc(sessionDict.student).collection('sessions').doc(sessionID).update({'status': "declined"})
+
+    //update global sessions
+    userDB.collection('globalSessions').doc(sessionID).update({'status': "declined"})
+    
+    //Refund student OR refund credit
+    if (sessionDict.howPaid == "TutorTree Balance") {
+        userDB.collection('userTest').doc(sessionDict.student).get().then(function(doc) {
+            var currentBalance = doc.data().currentBalance
+            var newCurrentBalance = currentBalance + sessionDict.checkoutTotal
+            userDB.collection('userTest').doc(sessionDict.student).update({"currentBalance" : newCurrentBalance})
+        })
+    } else {
+        console.log("send refund")
+    }
+
+    //send notifications
+
+    //close modal
+    sessionModal.style.display = 'none'
+}
+
+function refundSession(sessionDict, sessionID) {
+    //update tutor sessions
+    userDB.collection('userTest').doc(sessionDict.tutor).collection('sessions').doc(sessionID).update({'status': "cancelled", "isRefunded" : true})
+
+    //update tutor income
+    userDB.collection('userTest').doc(sessionDict.tutor).collection('income').doc(sessionID).update({ "isRefunded" : true })
+
+    //update student sessions
+    userDB.collection('userTest').doc(sessionDict.student).collection('sessions').doc(sessionID).update({'status': "cancelled", "isRefunded" : true})
+
+    //update student spending
+    userDB.collection('userTest').doc(sessionDict.student).collection('spending').doc(sessionID).update({ "isRefunded" : true })    
+
+    //update global sessions
+    userDB.collection('globalSessions').doc(sessionID).update({'status': "cancelled", "isRefunded" : true})
+
+    //decredit tutors current balance
+    userDB.collection('userTest').doc(sessionDict.tutor).get().then(function(doc) {
+        var currentBalance = doc.data().currentBalance
+        var newCurrentBalance = currentBalance - (sessionDict.tutorsFee * 0.85)
+        
+        userDB.collection('userTest').doc(sessionDict.tutor).update({"currentBalance" : newCurrentBalance})
+    })
+
+    //refund student OR refund credit
+    if (sessionDict.howPaid == "TutorTree Balance") {
+        userDB.collection('userTest').doc(sessionDict.student).get().then(function(doc) {
+            var currentBalance = doc.data().currentBalance
+            var newCurrentBalance = currentBalance + sessionDict.checkoutTotal
+            userDB.collection('userTest').doc(sessionDict.student).update({"currentBalance" : newCurrentBalance})
+        })
+    } else {
+        console.log("send refund")
+    }
+
+    //send notifications
+
+    //close modal
+    sessionModal.style.display = 'none'
+}
+
+function getFormattedDate(timeEpoch) {
+    console.log(timeEpoch)
+    var time = parseFloat(timeEpoch)
+    var d = new Date(0);
+    d.setUTCSeconds(time);
+  
+    var dayLong = d.toLocaleDateString("en-US", {weekday: "long"}); 
+    var month = d.toLocaleDateString("en-US", {month: "short"});
+    var dayInt = d.toLocaleDateString("en-US", {day: "numeric"});
+
+    var suffix
+    if (dayInt == 1 || dayInt == 21 ||dayInt == 31) {
+        suffix = "st"
+    } else if( dayInt == 2 || dayInt == 22) {
+        suffix = "nd"
+    } else if (dayInt == 3 || dayInt == 23) {
+        suffix = "rd"
+    } else {
+        suffix = "th"
+    }
+    dayWithSuffix = dayInt + suffix
+    var dateObject = [dayLong, month, dayWithSuffix]
+    return (dateObject)
+}
+
+function getFormattedTime(startEpoch, endEpoch) {
+    console.log(startEpoch)
+    var start = parseFloat(startEpoch)
+    var end = parseFloat(endEpoch)
+    var startTime = new Date(start*1000)
+    var endTime = new Date(end*1000)
+
+    var startHour = startTime.getHours()
+    var endHour = endTime.getHours()
+    var startAMPM = "am"
+    var endAMPM = "am"
+    if (startHour > 12) {
+        startHour = startHour - 12
+        startAMPM = "pm"
+    }
+    if (endHour > 12) {
+        endHour = endHour - 12
+        endAMPM = "pm"
+    }
+
+    var startMinutes = "00"
+    var endMinutes = "00"
+    if (startTime.getMinutes() >  0) {
+        startMinutes = startTime.getMinutes()
+    }
+    if (endTime.getMinutes() > 0) {
+        endMinutes = endTime.getMinutes()
+    }
+    startString = startHour + ":" + startMinutes + startAMPM
+    endString = endHour + ":" + endMinutes + endAMPM
+
+    var timeObject = [startString, endString]
+    return(timeObject)
+}
+
+function formatSessionDate(startTimeEpoch, endTimeEpoch) {
+    var startTime = new Date(startTimeEpoch*1000)
+        var endTime = new Date(endTimeEpoch*1000)
+        var startDayandHour = startTime.toLocaleDateString("en-US", {weekday:'long', hour: 'numeric', minute:'numeric'})
+	    var getEndMinutes = endTime.getMinutes()
+	    var endMinutes = "00"
+	    if (getEndMinutes > 0) {
+		    endMinutes = getEndMinutes
+	    }
+        var endHour = ((endTime.getHours() + 24) % 12 || 12) +":"+ endMinutes  
+        var returnString = startDayandHour + " until " + endHour
+
+        return(returnString)
+}
+
