@@ -237,7 +237,7 @@ function buildSessionBlock(session, sessionID, status) {
     })
 }
 
-function openSessionManagement(session, otherImage, otherName) {
+function openSessionManagement(session, sessionID, otherImage, otherName) {
     sessionModal.style.display = 'flex'
 
     var otherImageDiv = document.createElement('img')
