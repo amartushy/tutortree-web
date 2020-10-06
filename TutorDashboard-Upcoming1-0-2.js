@@ -246,7 +246,7 @@ function openSessionManagement(session, otherImage, otherName) {
     otherImageModal.removeChild(otherImageModal.firstChild)
     otherImageModal.appendChild(otherImageDiv)
 
-    var dateObject = getFormattedDate()
+    var dateObject = getFormattedDate(session.start)
     var timeObject = getFormattedTime(session.start, session.end)
 
     otherNameModal.innerHTML = otherName
