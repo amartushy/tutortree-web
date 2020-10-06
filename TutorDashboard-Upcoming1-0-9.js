@@ -211,7 +211,7 @@ function buildSessionBlock(session, sessionID, status) {
         var sessionDate = document.createElement('div')
 
         sessionBlock.setAttribute('class', 'tutor-session-block')
-        connectionImage.setAttribute('class', 'connection-image-modal')
+        connectionImage.setAttribute('class', 'connection-image')
         sessionInfo.setAttribute('class', 'session-info')
         sessionName.setAttribute('class', 'session-name')
         sessionCourseAndStatus.setAttribute('class', 'session-course-and-status')
@@ -255,7 +255,7 @@ function openSessionManagement(session, sessionID, otherImage, otherName) {
     }
 
     var otherImageDiv = document.createElement('img')
-    otherImageDiv.setAttribute('class', 'connection-image')
+    otherImageDiv.setAttribute('class', 'connection-image-modal')
     otherImageDiv.src = otherImage
     otherImageModal.removeChild(otherImageModal.firstChild)
     otherImageModal.appendChild(otherImageDiv)
