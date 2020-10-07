@@ -499,6 +499,117 @@ function updateTutorForCourse(subject, course) {
     })
 }
 
+//Availability Functions____________________________________________________________________________________________
+var updateAvailabilityButton = document.getElementById('update-availability-button')
+var mondayArray,
+    tuesdayArray,
+    wednesdayArray,
+    thursdayArray,
+    fridayArray,
+    saturdayArray,
+    sundayArray
+var availabilityArray
+var dayOptions = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+var timeOptions = ["6:00am", "6:30am", "7:00am", "7:30am", "8:00am","8:30am", "9:00am", "9:30am", "10:00am", "10:30am",
+                    "11:00am", "11:30am", "12:00pm", "12:30pm", "1:00pm", "1:30pm", "2:00pm", "2:30pm", "3:00pm", "3:30pm", 
+                    "4:00pm", "4:30pm", "5:00pm", "5:30pm", "6:00pm", "6:30pm", "7:00pm", "7:30pm", "8:00pm", "8:30pm", 
+                    "9:00pm", "9:30pm", "10:00pm", "10:30pm", "11:00pm", "11:30pm", "12:00am"]
+
+availability.addEventListener('click', function(){
+    updateAvailabilityButton.style.display = 'none'
+
+    loadAvailability()
+})
+
+function loadAvailability() {
+
+    userDB.collection('userTest').doc(globalTutorID).get().then(function(doc) {
+        var availability = doc.data().availability
+        
+        mondayArray = twosComplement(availability.Monday).split("")
+        tuesdayArray = twosComplement(availability.Tuesday).split("")
+        wednesdayArray = twosComplement(availability.Wednesday).split("")
+        thursdayArray = twosComplement(availability.Thursday).split("")
+        fridayArray = twosComplement(availability.Friday).split("")
+        saturdayArray = twosComplement(availability.Saturday).split("")
+        sundayArray = twosComplement(availability.Sunday).split("")
+
+        availabilityArray = [mondayArray, tuesdayArray, wednesdayArray, thursdayArray, fridayArray, saturdayArray, sundayArray]
+        loadButtons()
+    })
+}
+
+function loadButtons() {
+
+    for( day = 0; day < 7; day ++) {
+        
+        var dayObject = document.getElementById(dayOptions[day]+ '-timeslots')
+
+        while(dayObject.firstChild) {
+            dayObject.removeChild(dayObject.firstChild)
+        }
+        
+        for ( time = 0; time < 36; time ++ ) {
+            var timeSlot = document.createElement('div')
+            timeSlot.innerHTML = timeOptions[time]
+            dayObject.appendChild(timeSlot)
+            timeSlot.setAttribute('onclick', 'flipAvailability("'+ day + '","' + time + '")')
+            if (availabilityArray[day][time] == "1") {
+                timeSlot.setAttribute('class', 'available')
+            } else {
+                timeSlot.setAttribute('class', 'unavailable')
+            }
+        }
+    }
+}
+
+function flipAvailability(day, time) {
+    updateAvailabilityButton.style.display = 'flex'
+
+    if(availabilityArray[day][time] == "1") { 
+        availabilityArray[day][time] = "0"
+    } else if (availabilityArray[day][time] == "0") {
+        availabilityArray[day][time] = "1"
+    }
+    
+    loadButtons()
+}
+
+updateAvailabilityButton.addEventListener('click', function() {
+    var decimalAvailabilityArray = []
+
+    for( i = 0; i < 7; i++ ) {
+        var binaryString = '0000000000000000' + availabilityArray[i].join('')
+        const decimalAvailability = parseInt( binaryString, 2)
+        var updateDayPath = 'availability.' + dayOptions[i]
+        var updateDay = {}
+        updateDay[updateDayPath] = decimalAvailability
+        userDB.collection('userTest').doc(globalTutorID).update(updateDay)
+    }
+    updateAvailabilityButton.style.display = 'none'
+})
+
+function twosComplement(value) {
+    let binaryStr;
+    
+    if (value >= 0) {
+      let twosComp = value.toString(2);
+      binaryStr = padAndChop(twosComp, '0', (64 || twosComp.length));
+    } else {
+      binaryStr = (Math.pow(2, 64) + value).toString(2);
+      
+      if (Number(binaryStr) < 0) {
+        return undefined
+      }
+    }
+    
+    return binaryStr.slice(16,64)
+}
+
+function padAndChop(str, padChar, length) {
+    return (Array(length).fill(padChar).join('') + str).slice(length * -1);
+}
+
 
 
 
