@@ -393,13 +393,13 @@ function buildApplicantBlock(ID, count, name, email, date, school, status, first
 	var applicantTutorReject = document.createElement('div')
 	applicantTutorReject.setAttribute('class', 'admin-tutor-reject')
 	applicantTutorReject.setAttribute('onClick', 'updateApplicantStatus("rejected","' + ID + '","' + first + '","' + email + '")')
-	applicantTutorReject.innerHTML = 'user-times'
+	applicantTutorReject.innerHTML = 'times-square'
 	applicantActions.appendChild(applicantTutorReject)
 
 	var applicantTutorWaitlist = document.createElement('div')
 	applicantTutorWaitlist.setAttribute('class', 'admin-tutor-waitlist')
 	applicantTutorWaitlist.setAttribute('onClick', 'updateApplicantStatus("waitlisted","' + ID + '","' + first +'","' + email +'")')
-	applicantTutorWaitlist.innerHTML = 'hourglass-half'
+	applicantTutorWaitlist.innerHTML = 'recycle'
 	applicantActions.appendChild(applicantTutorWaitlist)
 
 	var applicantTutorDelete = document.createElement('div')
