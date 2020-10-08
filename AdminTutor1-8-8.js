@@ -393,7 +393,7 @@ function buildApplicantBlock(ID, count, name, email, date, school, status, first
 	var applicantTutorReject = document.createElement('div')
 	applicantTutorReject.setAttribute('class', 'admin-tutor-reject')
 	applicantTutorReject.setAttribute('onClick', 'updateApplicantStatus("rejected","' + ID + '","' + first + '","' + email + '")')
-	applicantTutorReject.innerHTML = 'times-square'
+	applicantTutorReject.innerHTML = ''
 	applicantActions.appendChild(applicantTutorReject)
 
 	var applicantTutorWaitlist = document.createElement('div')
