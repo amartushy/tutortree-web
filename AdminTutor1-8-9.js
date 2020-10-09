@@ -720,6 +720,7 @@ function showTutorModal(ID) {
 		}
 		//Display header transcript and faculty buttons
 		if (didTranscript) {
+			console.log(doc.data().transcriptFile)
 			var transcriptButton = document.createElement('div')
 			transcriptButton.innerHTML = 'file-alt'
 			transcriptButton.setAttribute('class', 'tutor-transcript')
