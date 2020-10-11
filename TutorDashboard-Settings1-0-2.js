@@ -192,7 +192,8 @@ transactionsButton.addEventListener('click', function() {
 
 withdrawButton.addEventListener('click', function() {
     withdrawModal.style.display = 'flex'
-
+    document.getElementById('withdraw-balance').innerHTML = '$' + amount
+    
     var venmoWithdrawField = document.getElementById('venmo-withdraw-field'),
         venmoWithdrawButton = document.getElementById('venmo-withdraw-button'),
         emailWithdrawField = document.getElementById('email-withdraw-field'),
@@ -211,7 +212,7 @@ withdrawButton.addEventListener('click', function() {
 
             userDB.collection("Withdrawals").add( withdrawalDict ).then(function(doc) {
                 var title = "New Withdrawal Request: " + doc.id
-                var message = tutorsName + " has submitted a withdrawal request for $" + amount +". Their venmo username is:" + venmoWithdrawField.value + ", account ID is: " + globalTutorID
+                var message = tutorsName + " has submitted a withdrawal request for $" + amount +". Their venmo username is: " + venmoWithdrawField.value + ", account ID is: " + globalTutorID
                 sendEmailTo('support@tutortree.com', title, message)
 
                 withdrawModal.style.display = 'none'
@@ -236,7 +237,7 @@ withdrawButton.addEventListener('click', function() {
 
             userDB.collection("Withdrawals").add( withdrawalDict ).then(function(doc) {
                 var title = "New Withdrawal Request: " + doc.id
-                var message = tutorsName + " has submitted a withdrawal request for $" + amount +". Their email is:" + emailWithdrawField.value + ", account ID is: " + globalTutorID
+                var message = tutorsName + " has submitted a withdrawal request for $" + amount +". Their email is: " + emailWithdrawField.value + ", account ID is: " + globalTutorID
                 sendEmailTo('support@tutortree.com', title, message)
 
                 withdrawModal.style.display = 'none'
