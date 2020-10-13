@@ -1,3 +1,4 @@
+
 var priceText = document.getElementById('price-text')
 var priceMinus = document.getElementById('price-minus')
 var pricePlus = document.getElementById('price-plus')
@@ -21,6 +22,7 @@ var contactUsButton = document.getElementById('contact-us-button')
 //Modals
 var financialsModal = document.getElementById('financials-modal')
 var withdrawModal = document.getElementById('withdraw-modal')
+var contactModal = document.getElementById('contact-modal')
 
 
 var isEmailOn
@@ -191,9 +193,8 @@ transactionsButton.addEventListener('click', function() {
 
 
 withdrawButton.addEventListener('click', function() {
-    withdrawModal.style.display = 'flex'
-    document.getElementById('withdraw-balance').innerHTML = '$' + amount
-    
+    withdrawModal.style.display = 'block'
+
     var venmoWithdrawField = document.getElementById('venmo-withdraw-field'),
         venmoWithdrawButton = document.getElementById('venmo-withdraw-button'),
         emailWithdrawField = document.getElementById('email-withdraw-field'),
@@ -212,7 +213,7 @@ withdrawButton.addEventListener('click', function() {
 
             userDB.collection("Withdrawals").add( withdrawalDict ).then(function(doc) {
                 var title = "New Withdrawal Request: " + doc.id
-                var message = tutorsName + " has submitted a withdrawal request for $" + amount +". Their venmo username is: " + venmoWithdrawField.value + ", account ID is: " + globalTutorID
+                var message = tutorsName + " has submitted a withdrawal request for $" + amount +". Their venmo username is:" + venmoWithdrawField.value + ", account ID is: " + globalTutorID
                 sendEmailTo('support@tutortree.com', title, message)
 
                 withdrawModal.style.display = 'none'
@@ -237,7 +238,7 @@ withdrawButton.addEventListener('click', function() {
 
             userDB.collection("Withdrawals").add( withdrawalDict ).then(function(doc) {
                 var title = "New Withdrawal Request: " + doc.id
-                var message = tutorsName + " has submitted a withdrawal request for $" + amount +". Their email is: " + emailWithdrawField.value + ", account ID is: " + globalTutorID
+                var message = tutorsName + " has submitted a withdrawal request for $" + amount +". Their email is:" + emailWithdrawField.value + ", account ID is: " + globalTutorID
                 sendEmailTo('support@tutortree.com', title, message)
 
                 withdrawModal.style.display = 'none'
@@ -249,3 +250,63 @@ withdrawButton.addEventListener('click', function() {
         }
     })
 })
+
+contactUsButton.addEventListener('click', function() {
+    contactModal.style.display = 'flex'
+
+    var happyOption = document.getElementById('happy-option'),
+        unhappyOption = document.getElementById('unhappy-option'),
+        contactEmail = document.getElementById('contact-email'),
+        contactMessage = document.getElementById('contact-message'),
+        contactButton = document.getElementById('contact-button')
+
+    var supportType,
+        email,
+        message
+
+    happyOption.addEventListener('click', function() {
+        happyOption.setAttribute('class', 'happy-selected')
+        unhappyOption.setAttribute('class', 'unhappy-unselected')
+
+        supportType = 'Happy Support Ticket'
+    })
+
+    unhappyOption.addEventListener('click', function() {
+        happyOption.setAttribute('class', 'happy-unselected')
+        unhappyOption.setAttribute('class', 'unhappy-selected')
+
+        supportType = 'Opposite of Happy Support Ticket'
+    })
+
+    contactButton.addEventListener('click', function() {
+        email = contactEmail.value
+        message = contactMessage.value
+        sendSupportEmail(supportType, message, email)
+    })
+})
+
+function sendSupportEmail(supportType, messageValue, preferredEmail) {
+    console.log(supportType)
+    console.log(messageValue)
+    console.log(preferredEmail)
+    if(supportType != undefined) {
+        if (preferredEmail != "") {
+            if(messageValue != "") {
+
+                var title = supportType
+                var message = "Name: " + tutorsName + "Email: " + preferredEmail + " DatabaseID: " + " Message: " + messageValue
+                sendEmailTo('support@tutortree.com', title, message)
+                alert("Thanks for reaching out to us! We'll be in touch shortly")
+                
+                contactModal.style.display = 'none'
+
+            } else {
+                alert("Please enter how we can help you")
+            }
+        } else {
+            alert("Please enter your preferred email")
+        }
+    } else {
+        alert("Please select the type of support ticket")
+    }
+}
