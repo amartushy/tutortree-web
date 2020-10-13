@@ -194,7 +194,7 @@ function buildFeaturedTutor(featuredID) {
     featuredTutorRatingBlock.appendChild(featuredTutorStar)
     featuredTutorRatingBlock.appendChild(featuredTutorRating)
 
-    userDB.collection('userTest').doc(featuredID).get().then(function(doc) {
+    userDB.collection('userTest').doc(featuredID).get().then(async function(doc) {
         var name = doc.data().name 
         var image = doc.data().profileImage 
 
@@ -203,7 +203,7 @@ function buildFeaturedTutor(featuredID) {
         featuredTutorImage.src = image
 
         //TODO
-        featuredTutorRating.innerHTML = getRatingForUser(featuredID)
+        featuredTutorRating.innerHTML = await getRatingForUser(featuredID)
 
     })
 }
