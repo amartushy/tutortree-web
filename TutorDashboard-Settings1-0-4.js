@@ -43,7 +43,7 @@ function loadSettings() {
         maxText.innerHTML = userInfo.maxHPW
         emailField.placeholder = userInfo.email 
         smsField.placeholder = userInfo.phoneNumber
-        currentBalance.innerHTML = '$' + userInfo.currentBalance
+        currentBalance.innerHTML = '$' + parseFloat(userInfo.currentBalance).toFixed(2)
         
         isEmailOn = userInfo.isEmailOn
         isSMSOn = userInfo.isSMSOn
