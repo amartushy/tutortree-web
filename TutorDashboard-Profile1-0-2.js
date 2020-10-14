@@ -151,11 +151,11 @@ function loadSettings() {
     userDB.collection('userTest').doc(globalTutorID).onSnapshot(function(doc) {
         var userInfo = doc.data()
 
-        priceText.innerHTML = userInfo.pricePHH 
+        priceText.innerHTML = userInfo.pricePHH * 2
         maxText.innerHTML = userInfo.maxHPW
         emailField.placeholder = userInfo.email 
         smsField.placeholder = userInfo.phoneNumber
-        hourlyText.innerHTML = '$' + parseFloat(userInfo.currentBalance).toFixed(2)
+        currentBalance.innerHTML = '$' + parseFloat(userInfo.currentBalance).toFixed(2)
         
         isEmailOn = userInfo.isEmailOn
         isSMSOn = userInfo.isSMSOn
