@@ -190,7 +190,9 @@ function updateTutorForCourse(subject, course) {
             var tutorPath =  course  + '.tutors.' + globalTutorID 
             var tutorDict = {}
             tutorDict[tutorPath] = firebase.firestore.FieldValue.delete()
-            userDB.collection('schools').doc(coreSchool).collection('courses').doc(subject).update( tutorDict )
+            userDB.collection('schools').doc(coreSchool).collection('courses').doc(subject).update( tutorDict ).then(function() {
+		    loadProfileCourses()
+	    })
 
             numTutors = numTutors - 1
             var numTutorPath = course + '.info.numTutors' 
@@ -202,7 +204,9 @@ function updateTutorForCourse(subject, course) {
             var tutorPath = course + '.tutors.' + globalTutorID 
             var tutorDict = {}
             tutorDict[tutorPath] = globalTutorID
-            userDB.collection('schools').doc(coreSchool).collection('courses').doc(subject).update( tutorDict )
+            userDB.collection('schools').doc(coreSchool).collection('courses').doc(subject).update( tutorDict ).then(function() {
+		    loadProfileCourses()
+	    })
 
             numTutors = numTutors + 1
             var numTutorPath = course + '.info.numTutors' 
@@ -210,8 +214,6 @@ function updateTutorForCourse(subject, course) {
             numTutorDict[numTutorPath] = numTutors
             userDB.collection('schools').doc(coreSchool).collection('courses').doc(subject).update( numTutorDict )
         }
-    }).then(function() {
-	    loadProfileCourses()
     })
 }
 
