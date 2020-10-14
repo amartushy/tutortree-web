@@ -71,9 +71,11 @@ async function buildConnection(connectionID, studentID, tutorID) {
 
     //Get Sender Type
     var senderType = 'student'
+    var otherID = connection.data().tutor
     await userDB.collection('messages').doc(connectionID).get().then(function(connection) {
         if(connection.data().tutor == globalTutorID) {
             senderType = 'tutor'
+            otherID = connection.data().student
         }
     })
 
@@ -86,8 +88,8 @@ async function buildConnection(connectionID, studentID, tutorID) {
     connectionBlock.addEventListener('click', function() {
         showHeader(studentID)
         showMessages(connectionID, studentID, senderType)
-        replaceMessageFieldListener(connectionID, senderType)
-        sendMessage.setAttribute('onClick', 'sendConnectionMessage("'+ connectionID + '","' + senderType + '")')
+        replaceMessageFieldListener(otherID, connectionID, senderType)
+        sendMessage.setAttribute('onClick', 'sendConnectionMessage("' + otherID + "','" + connectionID + '","' + senderType + '")')
     })
 }
 
@@ -113,7 +115,7 @@ function showHeader(studentID) {
 
 function showMessages(connectionID) {
     messagesRight.style.display = 'flex'
-    
+
     userDB.collection('messages').doc(connectionID).collection('messages').onSnapshot(function(messages) {
         while(messagesArea.firstChild) {
             messagesArea.removeChild(messagesArea.firstChild)
@@ -148,12 +150,12 @@ function replaceMessageFieldListener(connectionId, senderType) {
 	oldMessageField.parentNode.replaceChild(newMessageField, oldMessageField)
 	newMessageField.addEventListener("keydown", function (e) {
     		if (e.keyCode === 13) {
-                sendConnectionMessage(connectionId, senderType)
+                sendConnectionMessage(otherID, connectionId, senderType)
     		}
     	})
 }
 
-function sendConnectionMessage(connectionID, senderType) {
+function sendConnectionMessage(otherID, connectionID, senderType) {
     var today = new Date()
     var timeStamp = (today.getTime() / 1000).toString()
     var updateDict = {
@@ -162,5 +164,29 @@ function sendConnectionMessage(connectionID, senderType) {
         'senderType' : senderType
     }
     userDB.collection('messages').doc(connectionID).collection('messages').doc(timeStamp).set(updateDict)
+    sendMessagingNotifications(otherID, coreName, document.getElementById('message-field').value)
     document.getElementById('message-field').value = ""
+}
+
+
+function sendMessagingNotifications(otherID, currentName, message) {
+
+    userDB.collection('userTest').doc(otherID).get().then(function(doc) {
+        var userData = doc.data()
+
+        var isSMSOn = userData.isEmailOn
+        var isPushOn = userData.isPushOn
+
+        if(isSMSOn) {
+            var phoneNumber = userData.phoneNumber
+            var smsMessage = "New Message From " + currentName + ": " + message
+            sendSMSTo(phoneNumber, smsMessage)
+        }
+
+        if(isPushOn) {
+            var token = userData.pushToken
+            var title = "New Message From " + currentName
+            sendPushTo(token, title, message)
+        }
+    })
 }
