@@ -214,7 +214,7 @@ async function getCountOfSessions(ID) {
         })
     })
 
-    if (rating == 0) {
+    if (sessions == 0) {
         return ('NEW')
     } else {
         return sessions
