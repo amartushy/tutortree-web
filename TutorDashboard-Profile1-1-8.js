@@ -132,6 +132,43 @@ async function uploadAndUpdateFirebasePhoto() {
         })
 }
 
+var profileCoursesArea = document.getElementById('profile-courses-area')
+var noCoursesText = document.getElementById('no-courses-text')
+
+function loadProfileCourses() {
+    if (Object.keys(coursesForTutor).length > 0) {
+        noCoursesText.style.display = 'none'
+    }
+    while(profileCoursesArea.firstChild) {
+        profileCoursesArea.removeChild(profileCoursesArea.firstChild)
+    }
+
+    Object.keys(coursesForTutor).forEach(function(subject) {
+        var subjectBlock = document.createElement('div')
+        var subjectHeader  = document.createElement('h4')
+        var myCoursesBlock = document.createElement('div')
+
+        subjectBlock.setAttribute('class', 'subject-block')
+        subjectHeader.setAttribute('class', 'subject-header')
+        myCoursesBlock.setAttribute('class', 'my-courses-block')
+
+        subjectHeader.innerHTML = subject
+
+        profileCoursesArea.appendChild(subjectBlock)
+        subjectBlock.appendChild(subjectHeader)
+        subjectBlock.appendChild(myCoursesBlock)
+
+        coursesForTutor[subject].forEach( function(course) {
+            var courseBlock = document.createElement('div')
+            courseBlock.setAttribute('class', 'course-block-selected')
+            courseBlock.innerHTML = course
+            myCoursesBlock.appendChild(courseBlock)
+
+            courseBlock.setAttribute('onClick', 'updateTutorForCourse("' + subject + '","' + course  + '")')
+        })
+    })
+}
+
 
 //Settings functions_______________________________________________________________________________________________________
 
