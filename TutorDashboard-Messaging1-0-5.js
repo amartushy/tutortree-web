@@ -142,7 +142,7 @@ function showMessages(connectionID) {
     })
 }
 
-function replaceMessageFieldListener(connectionId, senderType) {
+function replaceMessageFieldListener(otherID, connectionId, senderType) {
     var oldMessageField = document.getElementById("message-field")
 	var newMessageField = oldMessageField.cloneNode(true)
 	oldMessageField.parentNode.replaceChild(newMessageField, oldMessageField)
