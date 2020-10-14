@@ -2,7 +2,7 @@
 var hiddenPhotoUploadButton = document.getElementById('hidden-photo-upload-button')
 var profileImageBlock = document.getElementById('profile-image-block')
 var tutorsProfilePhoto = document.getElementById('tutors-profile-photo')
-var tutorsName = document.getElementById('tutors-name')
+var currentTutorsName = document.getElementById('current-tutors-name')
 var sessionsText = document.getElementById('sessions-text')
 var averageText = document.getElementById('average-text')
 var hourlyText = document.getElementById('hourly-text')
@@ -59,9 +59,7 @@ function loadProfile() {
         tutorsProfilePhoto.addEventListener('click', openPhotoUploadDialog)
 
         profileImageBlock.appendChild(tutorsProfilePhoto)
-	console.log(tutorsName.value)
-	    console.log(tutorData.name)
-        tutorsName.value = tutorData.name
+        tutorsName.placeholder = tutorData.name
         sessionsText.innerHTML = sessionsCount
         averageText.innerHTML = tutorsRating
         tutorsBio.value = tutorData.bio
