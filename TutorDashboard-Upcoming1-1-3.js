@@ -16,6 +16,17 @@ upcoming.addEventListener('click', function(){
     getSessions()
 })
 
+function clearSessionAreas() {
+	while(pastSessionsArea.firstChild) {
+	    pastSessionsArea.removeChild(pastSessionsArea.firstChild)
+	}
+	while(pendingSessionsArea.firstChild) {
+	    pendingSessionsArea.removeChild(pendingSessionsArea.firstChild)
+	}
+	while(upcomingSessionsArea.firstChild) {
+	    upcomingSessionsArea.removeChild(upcomingSessionsArea.firstChild)
+	}	
+}
 function getSessions() {
     var currentTime = (new Date()).getTime() / 1000
 
@@ -169,7 +180,6 @@ function buildPastSessionBlock(session, sessionID) {
 
             userDB.collection('userTest').doc(globalTutorID).collection('sessions').doc(sessionID)
                 .update({'rated': true})
-
         })
     })
 }
@@ -331,7 +341,7 @@ function confirmSession(sessionDict, sessionID) {
 
     //close modal
     sessionModal.style.display = 'none'
-	getSessions()
+	clearSessionAreas()
 }
 
 function declineSession(sessionDict, sessionID) {
@@ -359,7 +369,7 @@ function declineSession(sessionDict, sessionID) {
 
     //close modal
     sessionModal.style.display = 'none'
-	getSessions()
+	clearSessionAreas()
 }
 
 function refundSession(sessionDict, sessionID) {
@@ -401,7 +411,7 @@ function refundSession(sessionDict, sessionID) {
 
     //close modal
     sessionModal.style.display = 'none'
-	getSessions()
+	clearSessionAreas()
 }
 
 function getFormattedDate(timeEpoch) {
