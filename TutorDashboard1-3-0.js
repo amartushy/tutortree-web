@@ -129,6 +129,8 @@ async function loadMyCourses() {
 }
 
 function buildMySubjects(schoolPath, subjectTitle, courseDict) {
+    coursesForTutor = {}
+	
     var subjectBlock = document.createElement('div')
     var subjectHeader = document.createElement('h4')
     var myCoursesBlock = document.createElement('div')
