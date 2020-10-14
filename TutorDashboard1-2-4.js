@@ -16,7 +16,8 @@ var globalTutorID,
     corePricePHH,
     coreProfileImage,
     coreSchool,
-    coreApplicantStatus
+    coreApplicantStatus,
+    coursesForTutor
 
 //Elements__________________________________________________________________________
 
@@ -156,11 +157,13 @@ function buildMySubjects(schoolPath, subjectTitle, courseDict) {
 
             for (var tutor in courseDict[course].tutors) {
                 if(tutor == globalTutorID) {
+			coursesForTutor[subjectTitle].push( course )	
                     courseBlock.setAttribute('class', 'course-block-selected')
                 }
             }
         }
     }
+	console.log(coursesForTutor)
 }
 
 function updateTutorForCourse(subject, course) {
