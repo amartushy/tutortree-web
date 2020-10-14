@@ -82,7 +82,7 @@ function buildFeaturedTutor(featuredID) {
     })
 }
 
-await function showTutorModal(tutorID) {
+async function showTutorModal(tutorID) {
     tutorModal.style.display = 'flex'
 
     var name
