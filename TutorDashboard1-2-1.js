@@ -29,13 +29,6 @@ var myCourses = document.getElementById('tab-courses')
 var availability = document.getElementById('tab-availability')
 var settings = document.getElementById('tab-settings')
 
-home.addEventListener('click', function(){
-    loadHome()
-})
-profile.addEventListener('click', function(){
-    loadProfile()
-})
-
 //Home
 var schoolHeaderHome = document.getElementById('school-header-home')
 var featuredTutorsArea = document.getElementById('featured-tutors-area')
@@ -117,6 +110,9 @@ function loadCoreProperties(ID) {
 }
 
 //Home Functions _____________________________________________________________________________
+home.addEventListener('click', function(){
+    loadHome()
+})
 
 function loadHome() {
     userDB.collection('schools').doc(coreSchool).get().then(function(school) {
