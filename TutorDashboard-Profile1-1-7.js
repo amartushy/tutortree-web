@@ -41,11 +41,12 @@ var modalBalance = document.getElementById('modal-balance')
 //Profile functions_____________________________________________________________________________
 profile.addEventListener('click', function(){
     loadProfile()
+    loadProfileCourses()
     loadSettings()
 })
 
 function loadProfile() {
-		
+	
     userDB.collection('userTest').doc(globalTutorID).get().then(async function(doc) {
         var tutorData = doc.data()
         var tutorsRating = await getRatingForUser(globalTutorID)
