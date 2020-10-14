@@ -313,50 +313,6 @@ async function getCountOfSessions(ID) {
 
 //Profile functions_____________________________________________________________________________
 
-function loadProfile() {
-
-    userDB.collection('userTest').doc(globalTutorID).get().then(async function(doc) {
-        var tutorData = doc.data()
-        var tutorsRating = await getRatingForUser(globalTutorID)
-        var sessionsCount = await getCountOfSessions(globalTutorID)
-
-        //create Photo element because setting src doesn't work :/
-		profileImageBlock.removeChild(profileImageBlock.firstChild)
-        var tutorsProfilePhoto = document.createElement('img') 
-        tutorsProfilePhoto.setAttribute('class', 'upload-image')
-        tutorsProfilePhoto.src = tutorData.profileImage
-        tutorsProfilePhoto.addEventListener('click', openPhotoUploadDialog)
-
-        profileImageBlock.appendChild(tutorsProfilePhoto)
-
-        tutorsName.value = tutorData.name
-        sessionsText.innerHTML = sessionsCount
-        averageText.innerHTML = tutorsRating
-        hourlyText.innerHTML = '$' + tutorData.pricePHH * 2
-        tutorsBio.value = tutorData.bio
-
-        tutorsBio.onfocus = function() {
-            updateProfileBlock.style.display = 'flex'
-        }
-
-        tutorsName.onfocus = function() {
-            updateProfileBlock.style.display = 'flex'
-        }
-
-    })
-
-    updateProfile.addEventListener('click', function() {
-        var newName = tutorsName.value
-        var newBio = tutorsBio.value
-
-        userDB.collection("userTest")
-		.doc(globalTutorID)
-        .update( {"name" : newName,
-                    "bio" : newBio })     
-                    
-    updateProfileBlock.style.display = 'none'
-    })
-}
 
 //Photo Upload
 storageRef = storageService.ref()
