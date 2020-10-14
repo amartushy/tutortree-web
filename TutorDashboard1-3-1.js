@@ -117,6 +117,8 @@ async function loadMyCourses() {
 
         //Load Subject
         await userDB.collection("schools").doc(coreSchool).collection('courses').onSnapshot(function(subject) {
+		coursesForTutor = {}
+		
             while(subjectsAreaCourses.firstChild) {
                 subjectsAreaCourses.removeChild(subjectsAreaCourses.firstChild)
             }
@@ -129,7 +131,6 @@ async function loadMyCourses() {
 }
 
 function buildMySubjects(schoolPath, subjectTitle, courseDict) {
-    coursesForTutor = {}
 	
     var subjectBlock = document.createElement('div')
     var subjectHeader = document.createElement('h4')
