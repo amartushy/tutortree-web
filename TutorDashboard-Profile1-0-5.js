@@ -151,7 +151,7 @@ function loadSettings() {
     userDB.collection('userTest').doc(globalTutorID).onSnapshot(function(doc) {
         var userInfo = doc.data()
 
-        priceText.innerHTML = userInfo.pricePHH * 2
+        priceText.innerHTML = ( parseInt(userInfo.pricePHH) * 2 )
         maxText.innerHTML = userInfo.maxHPW
         emailField.placeholder = userInfo.email 
         smsField.placeholder = userInfo.phoneNumber
