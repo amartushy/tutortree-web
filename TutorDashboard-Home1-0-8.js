@@ -87,7 +87,7 @@ async function showTutorModal(tutorID) {
 
     var name
     var profileImage
-    var bio
+    var bio = "This Tutor has not put a bio yet"
     var average = await getRatingForUser(tutorID)
     var sessions = await getCountOfSessions(tutorID)
 
@@ -96,7 +96,9 @@ async function showTutorModal(tutorID) {
 
         name = tutorData.name
         profileImage = tutorData.profileImage
-        bio = tutorData.bio
+        if (bio != "") {
+            bio = tutorData.bio
+        }
         hourly = tutorData.pricePHH *2
 
         //create Photo element because setting src doesn't work :/
