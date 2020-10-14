@@ -4,6 +4,8 @@ var messagesArea = document.getElementById('messages-area')
 var messageField = document.getElementById('message-field')
 var sendMessage = document.getElementById('send-message')
 var messagesModal = document.getElementById('messages-modal')
+var messagesRight = document.getElementById('messages-right')
+
 
 messages.addEventListener('click', function() {
     loadConnections()
@@ -68,6 +70,14 @@ async function buildConnection(connectionID, studentID, tutorID) {
         })
     })
 
+    //Get Sender Type
+    var senderType = 'student'
+    await userDB.collection('messages').doc(connectionID).get().then(function(connection) {
+        if(connection.data().tutor == globalTutorID) {
+            senderType = 'tutor'
+        }
+    })
+
     connectionsArea.appendChild(connectionBlock)
     connectionBlock.appendChild(connectionImageMessaging)
     connectionBlock.appendChild(connectionInfo)
@@ -76,9 +86,9 @@ async function buildConnection(connectionID, studentID, tutorID) {
 
     connectionBlock.addEventListener('click', function() {
         showHeader(studentID)
-        showMessages(connectionID, studentID)
-        replaceMessageFieldListener(connectionID, tutorID)
-        sendMessage.setAttribute('onClick', 'sendConnectionMessage("'+ connectionID + '","' + tutorID + '")')
+        showMessages(connectionID, studentID, senderType)
+        replaceMessageFieldListener(connectionID, senderType)
+        sendMessage.setAttribute('onClick', 'sendConnectionMessage("'+ connectionID + '","' + senderType + '")')
     })
 }
 
@@ -102,27 +112,29 @@ function showHeader(studentID) {
     })
 }
 
-function showMessages(connectionID, studentID) {
+function showMessages(connectionID) {
+    messagesRight.style.display = 'flex'
+    
     userDB.collection('messages').doc(connectionID).collection('messages').onSnapshot(function(messages) {
         while(messagesArea.firstChild) {
             messagesArea.removeChild(messagesArea.firstChild)
         }
+
         messages.forEach(function(message) {
             var messageData = message.data()
             var content = messageData.message
-            var senderType = messageData.senderType
 
             var messageConnectionBlock = document.createElement('div')
             var messageBlock = document.createElement('div')
             
             messageBlock.innerHTML = content
     
-            if (senderType == 'student') {
-                messageConnectionBlock.setAttribute('class', 'message-connection-block')
-                messageBlock.setAttribute('class', 'message-connection')
-            } else {
+            if (messageData.sender == globalTutorID) {
                 messageConnectionBlock.setAttribute('class', 'message-sender-block')
                 messageBlock.setAttribute('class', 'message-sender')
+            } else {
+                messageConnectionBlock.setAttribute('class', 'message-connection-block')
+                messageBlock.setAttribute('class', 'message-connection')
             }
 
             messagesArea.appendChild(messageConnectionBlock)
@@ -131,25 +143,25 @@ function showMessages(connectionID, studentID) {
     })
 }
 
-function sendConnectionMessage(connectionID, tutorID) {
-    var today = new Date()
-    var timeStamp = (today.getTime() / 1000).toString()
-    var updateDict = {
-        'message' : document.getElementById('message-field').value,
-        'sender' : tutorID,
-        'senderType' : 'tutor'
-    }
-    userDB.collection('messages').doc(connectionID).collection('messages').doc(timeStamp).set(updateDict)
-    document.getElementById('message-field').value = ""
-}
-
-function replaceMessageFieldListener(connectionId, tutorID) {
+function replaceMessageFieldListener(connectionId, senderType) {
     var oldMessageField = document.getElementById("message-field")
 	var newMessageField = oldMessageField.cloneNode(true)
 	oldMessageField.parentNode.replaceChild(newMessageField, oldMessageField)
 	newMessageField.addEventListener("keydown", function (e) {
     		if (e.keyCode === 13) {
-                sendConnectionMessage(connectionId, tutorID)
+                sendConnectionMessage(connectionId, senderType)
     		}
     	})
+}
+
+function sendConnectionMessage(connectionID, senderType) {
+    var today = new Date()
+    var timeStamp = (today.getTime() / 1000).toString()
+    var updateDict = {
+        'message' : document.getElementById('message-field').value,
+        'sender' : globalTutorID,
+        'senderType' : senderType
+    }
+    userDB.collection('messages').doc(connectionID).collection('messages').doc(timeStamp).set(updateDict)
+    document.getElementById('message-field').value = ""
 }
