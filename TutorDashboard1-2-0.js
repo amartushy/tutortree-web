@@ -41,18 +41,6 @@ var schoolHeaderHome = document.getElementById('school-header-home')
 var featuredTutorsArea = document.getElementById('featured-tutors-area')
 var tutorsOnCampus = document.getElementById('tutors-on-campus')
 
-//Profile
-var hiddenPhotoUploadButton = document.getElementById('hidden-photo-upload-button')
-var profileImageBlock = document.getElementById('profile-image-block')
-var tutorsProfilePhoto = document.getElementById('tutors-profile-photo')
-var tutorsName = document.getElementById('tutors-name')
-var sessionsText = document.getElementById('sessions-text')
-var averageText = document.getElementById('average-text')
-var hourlyText = document.getElementById('hourly-text')
-var tutorsBio = document.getElementById('tutors-bio')
-var updateProfileBlock = document.getElementById('update-profile-block')
-var updateProfile = document.getElementById('update-profile')
-
 //Upcoming
 var noPastSessions = document.getElementById('no-past-sessions')
 var noPendingSessions = document.getElementById('no-pending-sessions')
@@ -71,24 +59,6 @@ var sendMessage = document.getElementById('send-message')
 //My Courses
 var coursesSchoolHeader = document.getElementById('courses-school-header')
 var subjectsAreaCourses = document.getElementById('subjects-area-courses')
-
-//Settings
-var priceText = document.getElementById('price-text')
-var priceMinus = document.getElementById('price-minus')
-var pricePlus = document.getElementById('price-plus')
-var maxText = document.getElementById('max-text')
-var maxMinus = document.getElementById('max-minus')
-var maxPlus = document.getElementById('max-plus')
-var emailToggle = document.getElementById('email-toggle')
-var emailField = document.getElementById('email-field')
-var smsToggle = document.getElementById('sms-toggle')
-var smsField = document.getElementById('sms-field')
-var transactionsButton = document.getElementById('transactions-button')
-var depositButton = document.getElementById('deposit-button')
-var withdrawButton = document.getElementById('withdraw-button')
-var signOutButton = document.getElementById('sign-out-button')
-var tosButton = document.getElementById('tos-button')
-var contactUsButton = document.getElementById('contact-us-button')
 
 //Tutor Applicant Sidebar
 var tutorApplicantImage = document.getElementById('tutor-applicant-image')
@@ -114,6 +84,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		 
 		//Check if user is admin, else redirect: TODO
         loadCoreProperties(ID)
+	loadHome()
 	//If user is not logged in return them home
 	} else {
 		location.href = "https://www.tutortree.com"
@@ -310,53 +281,6 @@ async function getCountOfSessions(ID) {
     return sessions
 }
 
-
-//Profile functions_____________________________________________________________________________
-
-
-//Photo Upload
-storageRef = storageService.ref()
-
-function openPhotoUploadDialog() {
-	hiddenPhotoUploadButton.click();
-}
-
-hiddenPhotoUploadButton.addEventListener('change', uploadProfileImage);
-
-var selectedPhotoFile;
-function uploadProfileImage(e) {
-    selectedPhotoFile = e.target.files[0];
-    handlePhotoUpload()
-}
-
-async function handlePhotoUpload() {
-	const uploadTask = await storageRef.child(`images/${selectedPhotoFile.name}`).put(selectedPhotoFile);
-	uploadAndUpdateFirebasePhoto()
-}
-
-//final submit button and update firebase
-async function uploadAndUpdateFirebasePhoto() {
-	var phototFileURL = ""
-	await storageRef.child('/images/'+selectedPhotoFile.name)
-		.getDownloadURL()
-		.then(function(url) { phototFileURL = url.toString() })
-	userDB.collection("userTest")
-		.doc(globalTutorID)
-        .update( {"profileImage" : phototFileURL })
-        .then(function() {
-            userDB.collection('userTest').doc(globalTutorID).get().then(async function(doc) {
-                profileImageBlock.removeChild(profileImageBlock.firstChild)
-                
-                var tutorsProfilePhoto = document.createElement('img') 
-                tutorsProfilePhoto.setAttribute('class', 'upload-image')
-                tutorsProfilePhoto.src = doc.data().profileImage
-                tutorsProfilePhoto.addEventListener('click', function() {
-                    uploadProfileImage()
-                })
-                profileImageBlock.appendChild(tutorsProfilePhoto)
-            })
-        })
-}
 
 //My Courses___________________________________________________________________________________________________________
 
