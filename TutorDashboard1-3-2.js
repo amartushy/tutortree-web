@@ -210,7 +210,8 @@ function updateTutorForCourse(subject, course) {
             numTutorDict[numTutorPath] = numTutors
             userDB.collection('schools').doc(coreSchool).collection('courses').doc(subject).update( numTutorDict )
         }
-	   loadProfileCourses()
+    }).then(function() {
+	    loadProfileCourses()
     })
 }
 
