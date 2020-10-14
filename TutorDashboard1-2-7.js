@@ -75,6 +75,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		//Check if user is admin, else redirect: TODO
         loadCoreProperties(ID)
 	loadHome()
+	loadMyCourses()
 	//If user is not logged in return them home
 	} else {
 		location.href = "https://www.tutortree.com"
@@ -109,10 +110,6 @@ function loadCoreProperties(ID) {
 
 //My Courses___________________________________________________________________________________________________________
 
-myCourses.addEventListener('click', function(){
-    loadMyCourses()
-})
-
 async function loadMyCourses() {
 
     userDB.collection('schools').doc(coreSchool).get().then(async function(school) {
@@ -130,6 +127,48 @@ async function loadMyCourses() {
             })
         })
     })
+}
+
+function buildMySubjects(schoolPath, subjectTitle, courseDict) {
+    var subjectBlock = document.createElement('div')
+    var subjectHeader = document.createElement('h4')
+    var myCoursesBlock = document.createElement('div')
+    
+    subjectBlock.setAttribute('class', 'subject-block')
+    subjectHeader.setAttribute('class', 'subject-header')
+    myCoursesBlock.setAttribute('class', 'my-courses-block')
+
+    subjectsAreaCourses.appendChild(subjectBlock)
+    subjectBlock.appendChild(subjectHeader)
+    subjectBlock.appendChild(myCoursesBlock)
+
+    subjectHeader.innerHTML = subjectTitle
+
+    for (var course in courseDict) {
+        if (courseDict.hasOwnProperty(course)) {
+            var courseBlock = document.createElement('div')
+            courseBlock.setAttribute('class', 'course-block')
+            courseBlock.innerHTML = course
+            myCoursesBlock.appendChild(courseBlock)
+            courseBlock.setAttribute('onClick', 'updateTutorForCourse("' + subjectTitle + '","' + course  + '")')
+
+            for (var tutor in courseDict[course].tutors) {
+                if(tutor == globalTutorID) {
+                    courseBlock.setAttribute('class', 'course-block-selected')
+                    
+                    if ( subjectTitle in coursesForTutor ) {
+                    	var array = coursesForTutor[subjectTitle]
+                      array.push(course)
+                      coursesForTutor[subjectTitle] = array
+                    } else {
+                    	var array = [course]
+                    	coursesForTutor[subjectTitle] = array
+                    }
+                }
+            }
+        }
+    }
+	console.log(coursesForTutor)
 }
 
 
