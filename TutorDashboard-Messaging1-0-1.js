@@ -9,7 +9,6 @@ var messagesRight = document.getElementById('messages-right')
 
 messages.addEventListener('click', function() {
     loadConnections()
-    messagesModal.style.display = 'flex'
 })
 
 
