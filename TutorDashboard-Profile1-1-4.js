@@ -75,12 +75,10 @@ function loadProfile() {
     })
 
     updateProfile.addEventListener('click', function() {
-        var newName = tutorsName.value
         var newBio = tutorsBio.value
 
         userDB.collection("userTest").doc(globalTutorID)
-        .update( {"name" : newName,
-                  "bio" : newBio }).then( function(){
+        .update( {"bio" : newBio }).then( function(){
                     document.getElementById('saved-alert').style.display = 'flex'
                     $("#saved-alert").fadeOut(2000)
                   })
