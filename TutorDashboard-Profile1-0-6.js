@@ -147,38 +147,6 @@ settings.addEventListener('click', function() {
     loadSettings()
 })
 
-function loadSettings() {
-    userDB.collection('userTest').doc(globalTutorID).onSnapshot(function(doc) {
-        var userInfo = doc.data()
-
-        priceText.innerHTML = ( parseInt(userInfo.pricePHH) * 2 )
-        maxText.innerHTML = userInfo.maxHPW
-        emailField.placeholder = userInfo.email 
-        smsField.placeholder = userInfo.phoneNumber
-        currentBalance.innerHTML = '$' + parseFloat(userInfo.currentBalance).toFixed(2)
-        
-        isEmailOn = userInfo.isEmailOn
-        isSMSOn = userInfo.isSMSOn
-        amount = userInfo.currentBalance
-        tutorsName = userInfo.name
-
-        if (isEmailOn) {
-            emailToggle.setAttribute('class', 'toggle-selected')
-            emailField.style.display = 'block'
-        } else {
-            emailToggle.setAttribute('class', 'toggle')
-            emailField.style.display = 'none'
-        }
-
-        if (isSMSOn) {
-            smsToggle.setAttribute('class', 'toggle-selected')
-            smsField.style.display = 'block'
-        } else {
-            smsToggle.setAttribute('class', 'toggle')
-            smsField.style.display = 'none'
-        }
-    }) 
-}
 
 priceMinus.addEventListener('click', function() {
     //Get the Current Price Per Half Hour
