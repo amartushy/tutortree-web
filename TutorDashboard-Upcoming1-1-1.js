@@ -23,18 +23,19 @@ function getSessions() {
         
         //Remove elements on session changes
         while(pastSessionsArea.firstChild) {
-            noPastSessions.style.display = 'block'
             pastSessionsArea.removeChild(pastSessionsArea.firstChild)
         }
         while(pendingSessionsArea.firstChild) {
-            noPendingSessions.style.display = 'block'
             pendingSessionsArea.removeChild(pendingSessionsArea.firstChild)
         }
         while(upcomingSessionsArea.firstChild) {
-            noUpcomingSessions.style.display = 'block'
             upcomingSessionsArea.removeChild(upcomingSessionsArea.firstChild)
         }
-
+	    
+	noPastSessions.style.display = 'block'
+	noPendingSessions.style.display = 'block'
+	noUpcomingSessions.style.display = 'block'
+	    
         sessions.forEach( function(doc) {
             var sessionDict = doc.data()
 
