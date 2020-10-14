@@ -36,7 +36,7 @@ var contactUsButton = document.getElementById('contact-us-button')
 var financialsModal = document.getElementById('financials-modal')
 var withdrawModal = document.getElementById('withdraw-modal')
 var contactModal = document.getElementById('contact-modal')
-
+var modalBalance = document.getElementById('modal-balance')
 
 //Profile functions_____________________________________________________________________________
 profile.addEventListener('click', function(){
@@ -52,7 +52,7 @@ function loadProfile() {
         var sessionsCount = await getCountOfSessions(globalTutorID)
 
         //create Photo element because setting src doesn't work :/
-		profileImageBlock.removeChild(profileImageBlock.firstChild)
+	profileImageBlock.removeChild(profileImageBlock.firstChild)
         var tutorsProfilePhoto = document.createElement('img') 
         tutorsProfilePhoto.setAttribute('class', 'upload-image')
         tutorsProfilePhoto.src = tutorData.profileImage
@@ -148,7 +148,8 @@ function loadSettings() {
         emailField.placeholder = userInfo.email 
         smsField.placeholder = userInfo.phoneNumber
         currentBalance.innerHTML = '$' + parseFloat(userInfo.currentBalance).toFixed(2)
-        
+        modalBalance.innerHTML = '$' + parseFloat(userInfo.currentBalance).toFixed(2)
+	    
         isEmailOn = userInfo.isEmailOn
         isSMSOn = userInfo.isSMSOn
         amount = userInfo.currentBalance
