@@ -174,7 +174,6 @@ function buildPastSessionBlock(session, sessionID) {
 }
 
 function buildSessionBlock(session, sessionID, status) {
-    console.log(session)
     var otherUserID = session.student,
         otherImage,
         otherName,
@@ -235,23 +234,32 @@ function buildSessionBlock(session, sessionID, status) {
         sessionDate.innerHTML = formatSessionDate(start, end)
 
         sessionBlock.addEventListener('click', function() {
-            openSessionManagement(session, sessionID, otherImage, otherName)
+            openSessionManagement(session, sessionID, otherImage, otherName, session.student)
         })
         
     })
 }
 
-function openSessionManagement(session, sessionID, otherImage, otherName) {
-    console.log(session)
+function openSessionManagement(session, sessionID, otherImage, otherName, studentID) {
     
     sessionModal.style.display = 'flex'
     if (session.status == 'pending') {
-	    pendingSessionOptions.style.display = 'flex'
-	    confirmedSessionOptions.style.display = 'none'
+	    if (studentID == globalTutorID) {
+		pendingSessionOptions.style.display = 'none'
+	    	confirmedSessionOptions.style.display = 'none'
+	    } else {
+		pendingSessionOptions.style.display = 'flex'
+	    	confirmedSessionOptions.style.display = 'none' 
+	    }
     }
     if (session.status == 'confirmed') {
-	    pendingSessionOptions.style.display = 'none'
-	    confirmedSessionOptions.style.display = 'flex'
+	    if (studentID == globalTutorID) {
+		pendingSessionOptions.style.display = 'none'
+	    	confirmedSessionOptions.style.display = 'none'
+	    } else {
+		pendingSessionOptions.style.display = 'none'
+	    	confirmedSessionOptions.style.display = 'flex' 
+	    }
     }
 
     var otherImageDiv = document.createElement('img')
