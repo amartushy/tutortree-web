@@ -74,8 +74,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 		 
 		//Check if user is admin, else redirect: TODO
         loadCoreProperties(ID)
-	loadHome()
-	loadMyCourses()
 	//If user is not logged in return them home
 	} else {
 		location.href = "https://www.tutortree.com"
@@ -103,6 +101,7 @@ function loadCoreProperties(ID) {
         coreApplicantStatus = data.tutorApplicantStatus
 
         loadHome()
+	loadMyCourses()
         
     })
 }
