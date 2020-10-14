@@ -294,7 +294,7 @@ transactionsButton.addEventListener('click', function() {
 
 
 withdrawButton.addEventListener('click', function() {
-    withdrawModal.style.display = 'block'
+    withdrawModal.style.display = 'flex'
 
     var venmoWithdrawField = document.getElementById('venmo-withdraw-field'),
         venmoWithdrawButton = document.getElementById('venmo-withdraw-button'),
