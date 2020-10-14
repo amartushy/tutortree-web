@@ -88,8 +88,8 @@ function showTutorModal(tutorID) {
     var name
     var profileImage
     var bio
-    var average = getRatingForUser(tutorID)
-    var sessions = getCountOfSessions(tutorID)
+    var average = await getRatingForUser(tutorID)
+    var sessions = await getCountOfSessions(tutorID)
 
     userDB.collection('userTest').doc(tutorID).get().then(function(doc) {
         tutorData = doc.data()
