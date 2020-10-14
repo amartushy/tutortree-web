@@ -17,7 +17,7 @@ var globalTutorID,
     coreProfileImage,
     coreSchool,
     coreApplicantStatus,
-    coursesForTutor
+    coursesForTutor = {}
 
 //Elements__________________________________________________________________________
 
