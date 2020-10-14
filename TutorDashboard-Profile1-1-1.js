@@ -59,7 +59,7 @@ function loadProfile() {
         tutorsProfilePhoto.addEventListener('click', openPhotoUploadDialog)
 
         profileImageBlock.appendChild(tutorsProfilePhoto)
-        tutorsName.placeholder = tutorData.name
+        currenTutorsName.placeholder = tutorData.name
         sessionsText.innerHTML = sessionsCount
         averageText.innerHTML = tutorsRating
         tutorsBio.value = tutorData.bio
