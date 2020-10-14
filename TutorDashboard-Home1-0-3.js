@@ -5,7 +5,7 @@ var tutorsOnCampus = document.getElementById('tutors-on-campus')
 
 //Tutor Modal Element
 var tutorModal = document.getElementById('tutor-modal')
-var otherImageBlock = document.getElementByID('other-image-block')
+var otherImageBlock = document.getElementById('other-image-block')
 var otherName = document.getElementById('other-name')
 var otherSessionsText = document.getElementById('other-sessions-text')
 var otherAverageText = document.getElementById('other-average-text')
