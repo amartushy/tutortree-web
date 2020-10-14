@@ -4,7 +4,7 @@ var featuredTutorsArea = document.getElementById('featured-tutors-area')
 var tutorsOnCampus = document.getElementById('tutors-on-campus')
 
 //Tutor Modal Element
-var tutorModal = document.getElementsById('tutor-modal')
+var tutorModal = document.getElementById('tutor-modal')
 var otherImageBlock = document.getElementByID('other-image-block')
 var otherName = document.getElementById('other-name')
 var otherSessionsText = document.getElementById('other-sessions-text')
