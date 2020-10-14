@@ -82,7 +82,7 @@ function buildFeaturedTutor(featuredID) {
     })
 }
 
-function showTutorModal(tutorID) {
+await function showTutorModal(tutorID) {
     tutorModal.style.display = 'flex'
 
     var name
