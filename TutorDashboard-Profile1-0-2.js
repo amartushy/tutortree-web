@@ -63,7 +63,6 @@ function loadProfile() {
         tutorsName.value = tutorData.name
         sessionsText.innerHTML = sessionsCount
         averageText.innerHTML = tutorsRating
-        hourlyText.innerHTML = '$' + tutorData.pricePHH * 2
         tutorsBio.value = tutorData.bio
 
         tutorsBio.onfocus = function() {
@@ -156,7 +155,7 @@ function loadSettings() {
         maxText.innerHTML = userInfo.maxHPW
         emailField.placeholder = userInfo.email 
         smsField.placeholder = userInfo.phoneNumber
-        currentBalance.innerHTML = '$' + parseFloat(userInfo.currentBalance).toFixed(2)
+        hourlyText.innerHTML = '$' + parseFloat(userInfo.currentBalance).toFixed(2)
         
         isEmailOn = userInfo.isEmailOn
         isSMSOn = userInfo.isSMSOn
