@@ -143,11 +143,6 @@ var amount
 var tutorsName
 
 
-settings.addEventListener('click', function() {
-    loadSettings()
-})
-
-
 priceMinus.addEventListener('click', function() {
     //Get the Current Price Per Half Hour
     userDB.collection('userTest').doc(globalTutorID).get().then(function(doc) {
