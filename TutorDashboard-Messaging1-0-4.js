@@ -71,11 +71,9 @@ async function buildConnection(connectionID, studentID, tutorID) {
 
     //Get Sender Type
     var senderType = 'student'
-    var otherID = connection.data().tutor
     await userDB.collection('messages').doc(connectionID).get().then(function(connection) {
         if(connection.data().tutor == globalTutorID) {
             senderType = 'tutor'
-            otherID = connection.data().student
         }
     })
 
@@ -88,8 +86,8 @@ async function buildConnection(connectionID, studentID, tutorID) {
     connectionBlock.addEventListener('click', function() {
         showHeader(studentID)
         showMessages(connectionID, studentID, senderType)
-        replaceMessageFieldListener(otherID, connectionID, senderType)
-        sendMessage.setAttribute('onClick', 'sendConnectionMessage("' + otherID + "','" + connectionID + '","' + senderType + '")')
+        replaceMessageFieldListener(studentID, connectionID, senderType)
+        sendMessage.setAttribute('onClick', 'sendConnectionMessage("' + studentID + "','" + connectionID + '","' + senderType + '")')
     })
 }
 
