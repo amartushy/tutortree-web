@@ -59,7 +59,7 @@ function loadProfile() {
         tutorsProfilePhoto.addEventListener('click', openPhotoUploadDialog)
 
         profileImageBlock.appendChild(tutorsProfilePhoto)
-        currenTutorsName.placeholder = tutorData.name
+        currentTutorsName.placeholder = tutorData.name
         sessionsText.innerHTML = sessionsCount
         averageText.innerHTML = tutorsRating
         tutorsBio.value = tutorData.bio
@@ -141,7 +141,36 @@ var isSMSOn
 var amount
 var tutorsName
 
+function loadSettings() {
+    userDB.collection('userTest').doc(globalTutorID).onSnapshot(function(doc) {
+        var userInfo = doc.data()
 
+        priceText.innerHTML = userInfo.pricePHH *2
+        maxText.innerHTML = userInfo.maxHPW
+        emailField.placeholder = userInfo.email 
+        smsField.placeholder = userInfo.phoneNumber
+        currentBalance.innerHTML = '$' + parseFloat(userInfo.currentBalance).toFixed(2)
+        
+        isEmailOn = userInfo.isEmailOn
+        isSMSOn = userInfo.isSMSOn
+        amount = userInfo.currentBalance
+        tutorsName = userInfo.name
+        if (isEmailOn) {
+            emailToggle.setAttribute('class', 'toggle-selected')
+            emailField.style.display = 'block'
+        } else {
+            emailToggle.setAttribute('class', 'toggle')
+            emailField.style.display = 'none'
+        }
+        if (isSMSOn) {
+            smsToggle.setAttribute('class', 'toggle-selected')
+            smsField.style.display = 'block'
+        } else {
+            smsToggle.setAttribute('class', 'toggle')
+            smsField.style.display = 'none'
+        }
+    }) 
+}
 priceMinus.addEventListener('click', function() {
     //Get the Current Price Per Half Hour
     userDB.collection('userTest').doc(globalTutorID).get().then(function(doc) {
