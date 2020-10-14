@@ -172,7 +172,7 @@ function sendMessagingNotifications(otherID, currentName, message) {
     userDB.collection('userTest').doc(otherID).get().then(function(doc) {
         var userData = doc.data()
 
-        var isSMSOn = userData.isEmailOn
+        var isSMSOn = userData.isSMSOn
         var isPushOn = userData.isPushOn
 
         if(isSMSOn) {
