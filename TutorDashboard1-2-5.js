@@ -132,39 +132,6 @@ async function loadMyCourses() {
     })
 }
 
-function buildMySubjects(schoolPath, subjectTitle, courseDict) {
-    var subjectBlock = document.createElement('div')
-    var subjectHeader = document.createElement('h4')
-    var myCoursesBlock = document.createElement('div')
-    
-    subjectBlock.setAttribute('class', 'subject-block')
-    subjectHeader.setAttribute('class', 'subject-header')
-    myCoursesBlock.setAttribute('class', 'my-courses-block')
-
-    subjectsAreaCourses.appendChild(subjectBlock)
-    subjectBlock.appendChild(subjectHeader)
-    subjectBlock.appendChild(myCoursesBlock)
-
-    subjectHeader.innerHTML = subjectTitle
-
-    for (var course in courseDict) {
-        if (courseDict.hasOwnProperty(course)) {
-            var courseBlock = document.createElement('div')
-            courseBlock.setAttribute('class', 'course-block')
-            courseBlock.innerHTML = course
-            myCoursesBlock.appendChild(courseBlock)
-            courseBlock.setAttribute('onClick', 'updateTutorForCourse("' + subjectTitle + '","' + course  + '")')
-
-            for (var tutor in courseDict[course].tutors) {
-                if(tutor == globalTutorID) {
-			coursesForTutor[subjectTitle].push( course )	
-                    courseBlock.setAttribute('class', 'course-block-selected')
-                }
-            }
-        }
-    }
-	console.log(coursesForTutor)
-}
 
 function updateTutorForCourse(subject, course) {
     console.log(subject)
