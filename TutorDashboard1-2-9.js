@@ -167,7 +167,6 @@ function buildMySubjects(schoolPath, subjectTitle, courseDict) {
             }
         }
     }
-	console.log(coursesForTutor)
 }
 
 
@@ -208,6 +207,7 @@ function updateTutorForCourse(subject, course) {
             numTutorDict[numTutorPath] = numTutors
             userDB.collection('schools').doc(coreSchool).collection('courses').doc(subject).update( numTutorDict )
         }
+	   loadProfileCourses()
     })
 }
 
