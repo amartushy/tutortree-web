@@ -331,6 +331,7 @@ function confirmSession(sessionDict, sessionID) {
 
     //close modal
     sessionModal.style.display = 'none'
+	getSessions()
 }
 
 function declineSession(sessionDict, sessionID) {
@@ -358,6 +359,7 @@ function declineSession(sessionDict, sessionID) {
 
     //close modal
     sessionModal.style.display = 'none'
+	getSessions()
 }
 
 function refundSession(sessionDict, sessionID) {
@@ -399,6 +401,7 @@ function refundSession(sessionDict, sessionID) {
 
     //close modal
     sessionModal.style.display = 'none'
+	getSessions()
 }
 
 function getFormattedDate(timeEpoch) {
