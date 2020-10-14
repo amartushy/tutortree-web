@@ -39,6 +39,10 @@ var contactModal = document.getElementById('contact-modal')
 
 
 //Profile functions_____________________________________________________________________________
+profile.addEventListener('click', function(){
+    loadProfile()
+    loadSettings()
+})
 
 function loadProfile() {
 		
