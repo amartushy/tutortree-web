@@ -82,7 +82,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 function loadCoreProperties(ID) {
     globalTutorID = ID
-
+	console.log(globalTutorId)
     userDB.collection('userTest').doc(globalTutorID).onSnapshot(function(doc) {
         var data = doc.data()
 
@@ -100,7 +100,9 @@ function loadCoreProperties(ID) {
         coreSchool = data.school
         coreApplicantStatus = data.tutorApplicantStatus
         
-        
+        if (coreSchool == "Invalid School") {
+            chooseSchoolModal.style.display = 'flex'
+        }
 
         loadHome()
 	    loadMyCourses()
