@@ -66,8 +66,8 @@ var uploadFaculty = document.getElementById('upload-faculty')
 var facultyIncomplete = document.getElementById('faculty-incomplete')
 var facultyComplete = document.getElementById('faculty-complete')
 
-//Initialize elements on page load
 
+//Initialize elements on page load
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		var ID = user.uid
@@ -99,12 +99,72 @@ function loadCoreProperties(ID) {
         coreProfileImage = data.profileImage 
         coreSchool = data.school
         coreApplicantStatus = data.tutorApplicantStatus
+        
+        if (coreSchool = "Invalid School") {
+            chooseSchoolModal.style.display = 'flex'
+        }
 
         loadHome()
-	loadMyCourses()
-        
+	    loadMyCourses()
     })
 }
+
+//Handle if the tutor has not yet selected a school
+var chooseSchoolModal = document.getElementById('choose-school-modal')
+var ucsdButton = document.getElementById('ucsd-button')
+var ucsbButton = document.getElementById('ucsb-button')
+var uscButton = document.getElementById('ucsd-button')
+var oregonstateButton = document.getElementById('ucsd-button')
+var sjsuButton = document.getElementById('ucsd-button')
+var uoregonButton = document.getElementById('ucsd-button')
+var stanfordButton = document.getElementById('ucsd-button')
+var sdsuButton = document.getElementById('ucsd-button')
+var uclaButton = document.getElementById('ucla-button')
+var berkeleyButton = document.getElementById('ucsd-button')
+var pepperdineButton = document.getElementById('ucsd-button')
+
+ucsdButton.addEventListener('click', function() {
+    updateUsersSchool('ucsd')
+})
+ucsbButton.addEventListener('click', function() {
+    updateUsersSchool('ucsb')
+})
+uscButton.addEventListener('click', function() {
+    updateUsersSchool('usc')
+})
+oregonstateButton.addEventListener('click', function() {
+    updateUsersSchool('oregonstate')
+})
+sjsuButton.addEventListener('click', function() {
+    updateUsersSchool('sjsu')
+})
+uoregonButton.addEventListener('click', function() {
+    updateUsersSchool('uoregon')
+})
+stanfordButton.addEventListener('click', function() {
+    updateUsersSchool('stanford')
+})
+sdsuButton.addEventListener('click', function() {
+    updateUsersSchool('sdsu')
+})
+uclaButton.addEventListener('click', function() {
+    updateUsersSchool('ucla')
+})
+berkeleyButton.addEventListener('click', function() {
+    updateUsersSchool('berkeley')
+})
+pepperdineButton.addEventListener('click', function() {
+    updateUsersSchool('pepperdine')
+})
+
+
+function updateUsersSchool(school) {
+    userDB.collection('userTest').doc(globalTutorID).update({'school' : school}).then(function() {
+        loadCoreProperties()
+        chooseSchoolModal.style.display = 'none'
+    })
+}
+
 
 
 //My Courses___________________________________________________________________________________________________________
