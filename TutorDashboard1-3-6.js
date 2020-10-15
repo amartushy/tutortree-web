@@ -82,7 +82,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 function loadCoreProperties(ID) {
     globalTutorID = ID
-	console.log(globalTutorId)
+	console.log(globalTutorID)
     userDB.collection('userTest').doc(globalTutorID).onSnapshot(function(doc) {
         var data = doc.data()
 
