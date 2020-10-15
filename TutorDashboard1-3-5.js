@@ -100,9 +100,7 @@ function loadCoreProperties(ID) {
         coreSchool = data.school
         coreApplicantStatus = data.tutorApplicantStatus
         
-        if (coreSchool = "Invalid School") {
-            chooseSchoolModal.style.display = 'flex'
-        }
+        
 
         loadHome()
 	    loadMyCourses()
