@@ -125,39 +125,25 @@ var uclaButton = document.getElementById('ucla-button')
 var berkeleyButton = document.getElementById('ucsd-button')
 var pepperdineButton = document.getElementById('ucsd-button')
 
-ucsdButton.addEventListener('click', function() {
-    updateUsersSchool('ucsd')
-})
-ucsbButton.addEventListener('click', function() {
-    updateUsersSchool('ucsb')
-})
-uscButton.addEventListener('click', function() {
-    updateUsersSchool('usc')
-})
-oregonstateButton.addEventListener('click', function() {
-    updateUsersSchool('oregonstate')
-})
-sjsuButton.addEventListener('click', function() {
-    updateUsersSchool('sjsu')
-})
-uoregonButton.addEventListener('click', function() {
-    updateUsersSchool('uoregon')
-})
-stanfordButton.addEventListener('click', function() {
-    updateUsersSchool('stanford')
-})
-sdsuButton.addEventListener('click', function() {
-    updateUsersSchool('sdsu')
-})
-uclaButton.addEventListener('click', function() {
-    updateUsersSchool('ucla')
-})
-berkeleyButton.addEventListener('click', function() {
-    updateUsersSchool('berkeley')
-})
-pepperdineButton.addEventListener('click', function() {
-    updateUsersSchool('pepperdine')
-})
+ucsdButton.setAttribute('onClick', 'updateUsersSchool("ucsd")')
+ucsbButton.setAttribute('onClick', 'updateUsersSchool("ucsb")')
+uscButton.setAttribute('onClick', 'updateUsersSchool("usc")')
+oregonstateButton.setAttribute('onClick', 'updateUsersSchool("oregonstate")')
+sjsuButton.setAttribute('onClick', 'updateUsersSchool("sjsu")')
+uoregonButton.setAttribute('onClick', 'updateUsersSchool("uoregon")')
+stanfordButton.setAttribute('onClick', 'updateUsersSchool("stanford")')
+sdsuButton.setAttribute('onClick', 'updateUsersSchool("sdsu")')
+uclaButton.setAttribute('onClick', 'updateUsersSchool("ucla")')
+berkeleyButton.setAttribute('onClick', 'updateUsersSchool("berkeley")')
+pepperdineButton.setAttribute('onClick', 'updateUsersSchool("pepperdine")')
+
+
+function updateUsersSchool(school) {
+    userDB.collection('userTest').doc(globalTutorID).update({'school' : school}).then(function() {
+        loadCoreProperties()
+        chooseSchoolModal.style.display = 'none'
+    })
+}
 
 
 function updateUsersSchool(school) {
