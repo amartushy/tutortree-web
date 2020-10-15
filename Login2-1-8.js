@@ -66,7 +66,7 @@ function signUp(){
 						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
 						mpUserWebsiteLogin(userEmail, doc.data().tutorApplicant)
 					} else if (doc.data().tutorApplicantStatus == "accepted") {
-						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
+						location.href = 'https://www.jointutortree.com/tutor/tutor-dashboard'
 						mpUserWebsiteLogin(userEmail, doc.data().tutorApplicant)
 					} else if (doc.data().isTutor) {
 						location.href = 'https://www.jointutortree.com/tutor/tutor-dashboard'
