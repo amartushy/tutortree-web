@@ -148,7 +148,7 @@ pepperdineButton.setAttribute('onClick', 'updateUsersSchool("pepperdine")')
 
 function updateUsersSchool(school) {
     userDB.collection('userTest').doc(globalTutorID).update({'school' : school}).then(function() {
-        loadCoreProperties()
+        loadCoreProperties(globalTutorID)
         chooseSchoolModal.style.display = 'none'
     })
 }
