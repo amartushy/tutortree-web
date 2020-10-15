@@ -57,7 +57,7 @@ function signUp(){
 						//Tutortree Navigation
 						document.getElementById('tutortree-nav').addEventListener('click', function() {
 							location.href = 'https://www.jointutortree.com/tutor/tutor-dashboard'
-						}
+						})
 						
 					} else if (doc.data().tutorApplicantStatus == "pending") {
 						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
