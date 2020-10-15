@@ -104,7 +104,7 @@ function loadCoreProperties(ID) {
         coreSchool = data.school
         coreApplicantStatus = data.tutorApplicantStatus
         
-        if (isAdmin) {
+        if (coreIsAdmin) {
 	    document.getElementById('change-school-button').style.display = 'block'
         }
 	    
