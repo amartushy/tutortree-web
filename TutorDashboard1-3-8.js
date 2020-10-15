@@ -102,10 +102,12 @@ function loadCoreProperties(ID) {
         
         if (coreSchool == "Invalid School") {
             chooseSchoolModal.style.display = 'flex'
-        }
+        } else {
+		loadHome()
+	    	loadMyCourses()
+	}
 
-        loadHome()
-	    loadMyCourses()
+
     })
 }
 
