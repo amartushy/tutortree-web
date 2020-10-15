@@ -75,7 +75,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		 
 		//Check if user is admin, else redirect: TODO
         loadCoreProperties(ID)
-	dcoument.getElementById('change-school-button').style.display = 'none'
+	document.getElementById('change-school-button').style.display = 'none'
 		
 	//If user is not logged in return them home
 	} else {
@@ -105,7 +105,7 @@ function loadCoreProperties(ID) {
         coreApplicantStatus = data.tutorApplicantStatus
         
         if (isAdmin) {
-	    dcoument.getElementById('change-school-button').style.display = 'block'
+	    document.getElementById('change-school-button').style.display = 'block'
         }
 	    
         if (coreSchool == "Invalid School") {
