@@ -30,18 +30,10 @@ function clearSessionAreas() {
 function getSessions() {
     var currentTime = (new Date()).getTime() / 1000
 
-    userDB.collection('userTest').doc(globalTutorID).collection('sessions').onSnapshot( function(sessions) {
+    userDB.collection('userTest').doc(globalTutorID).collection('sessions').onSnapshot(async function(sessions) {
         
         //Remove elements on session changes
-        while(pastSessionsArea.firstChild) {
-            pastSessionsArea.removeChild(pastSessionsArea.firstChild)
-        }
-        while(pendingSessionsArea.firstChild) {
-            pendingSessionsArea.removeChild(pendingSessionsArea.firstChild)
-        }
-        while(upcomingSessionsArea.firstChild) {
-            upcomingSessionsArea.removeChild(upcomingSessionsArea.firstChild)
-        }
+        await clearSessionAreas()
 	    
 	noPastSessions.style.display = 'block'
 	noPendingSessions.style.display = 'block'
@@ -341,7 +333,6 @@ function confirmSession(sessionDict, sessionID) {
 
     //close modal
     sessionModal.style.display = 'none'
-	clearSessionAreas()
 }
 
 function declineSession(sessionDict, sessionID) {
@@ -369,7 +360,6 @@ function declineSession(sessionDict, sessionID) {
 
     //close modal
     sessionModal.style.display = 'none'
-	clearSessionAreas()
 }
 
 function refundSession(sessionDict, sessionID) {
@@ -411,7 +401,6 @@ function refundSession(sessionDict, sessionID) {
 
     //close modal
     sessionModal.style.display = 'none'
-	clearSessionAreas()
 }
 
 function getFormattedDate(timeEpoch) {
