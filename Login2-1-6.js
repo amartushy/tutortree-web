@@ -33,7 +33,7 @@ function signUp(){
 					if(doc.data().isAdmin) {
 						document.getElementById('admin-nav-panel').style.display = 'flex'
 						document.getElementById('login-section').style.display = 'none'
-						
+						document.getElementById('admin-header').innerHTML = 'Welcome back, ' + doc.data().name + '!'
 						//admin navigation
 						document.getElementById('admin-nav').addEventListener('click', function() {
 							location.href = 'https://www.jointutortree.com/admin'
@@ -54,6 +54,11 @@ function signUp(){
 							location.href = 'https://www.jointutortree.com/ambassador-admin'
 						})
 						
+						//Tutortree Navigation
+						document.getElementById('tutortree-nav').addEventListener('click', function() {
+							location.href = 'https://www.jointutortree.com/tutor/tutor-dashboard'
+						}
+						
 					} else if (doc.data().tutorApplicantStatus == "pending") {
 						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
 						mpUserWebsiteLogin(userEmail, doc.data().tutorApplicant)
@@ -63,6 +68,8 @@ function signUp(){
 					} else if (doc.data().tutorApplicantStatus == "accepted") {
 						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
 						mpUserWebsiteLogin(userEmail, doc.data().tutorApplicant)
+					} else if (doc.data().isTutor) {
+						location.href = 'https://www.jointutortree.com/tutor/tutor-dashboard'
 					}
 				})
 			} else {
