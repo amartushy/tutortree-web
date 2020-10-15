@@ -123,15 +123,15 @@ function loadCoreProperties(ID) {
 var chooseSchoolModal = document.getElementById('choose-school-modal')
 var ucsdButton = document.getElementById('ucsd-button')
 var ucsbButton = document.getElementById('ucsb-button')
-var uscButton = document.getElementById('ucsd-button')
-var oregonstateButton = document.getElementById('ucsd-button')
-var sjsuButton = document.getElementById('ucsd-button')
-var uoregonButton = document.getElementById('ucsd-button')
-var stanfordButton = document.getElementById('ucsd-button')
-var sdsuButton = document.getElementById('ucsd-button')
+var uscButton = document.getElementById('usc-button')
+var oregonstateButton = document.getElementById('oregonstate-button')
+var sjsuButton = document.getElementById('sjsu-button')
+var uoregonButton = document.getElementById('uoregon-button')
+var stanfordButton = document.getElementById('stanford-button')
+var sdsuButton = document.getElementById('sdsu-button')
 var uclaButton = document.getElementById('ucla-button')
-var berkeleyButton = document.getElementById('ucsd-button')
-var pepperdineButton = document.getElementById('ucsd-button')
+var berkeleyButton = document.getElementById('berkeley-button')
+var pepperdineButton = document.getElementById('pepperdine-button')
 
 ucsdButton.setAttribute('onClick', 'updateUsersSchool("ucsd")')
 ucsbButton.setAttribute('onClick', 'updateUsersSchool("ucsb")')
@@ -144,14 +144,6 @@ sdsuButton.setAttribute('onClick', 'updateUsersSchool("sdsu")')
 uclaButton.setAttribute('onClick', 'updateUsersSchool("ucla")')
 berkeleyButton.setAttribute('onClick', 'updateUsersSchool("berkeley")')
 pepperdineButton.setAttribute('onClick', 'updateUsersSchool("pepperdine")')
-
-
-function updateUsersSchool(school) {
-    userDB.collection('userTest').doc(globalTutorID).update({'school' : school}).then(function() {
-        loadCoreProperties()
-        chooseSchoolModal.style.display = 'none'
-    })
-}
 
 
 function updateUsersSchool(school) {
