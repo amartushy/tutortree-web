@@ -10,6 +10,7 @@ var globalTutorID,
     coreIsEmailOn,
     coreIsSMSOn,
     coreisTutor,
+    coreIsAdmin,
     coreMaxHPW,
     coreName,
     corePhone,
@@ -74,6 +75,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 		 
 		//Check if user is admin, else redirect: TODO
         loadCoreProperties(ID)
+	dcoument.getElementById('change-school-button').style.display = 'none'
+		
 	//If user is not logged in return them home
 	} else {
 		location.href = "https://www.tutortree.com"
@@ -92,6 +95,7 @@ function loadCoreProperties(ID) {
         coreIsEmailOn = data.isEmailOn 
         coreIsSMSOn = data.coreIsSMSOn
         coreisTutor = data.isTutor
+	coreIsAdmin = data.isAdmin
         coreMaxHPW = data.maxHPW 
         coreName = data.name 
         corePhone = data.phoneNumber 
@@ -100,6 +104,10 @@ function loadCoreProperties(ID) {
         coreSchool = data.school
         coreApplicantStatus = data.tutorApplicantStatus
         
+        if (isAdmin) {
+	    dcoument.getElementById('change-school-button').style.display = 'block'
+        }
+	    
         if (coreSchool == "Invalid School") {
             chooseSchoolModal.style.display = 'flex'
         } else {
