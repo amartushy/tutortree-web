@@ -12,10 +12,12 @@ firebase.auth().onAuthStateChanged(function(user) {
 	var userDB = firebase.firestore()
 	var userID = user.uid
 	var usersSchool = ""
+	var usersEmail = ''
 	console.log("user is signed in with uid: " + userID)
 
 	userDB.collection("userTest").doc(userID).get().then(function(doc) {
 		usersSchool = doc.data().school
+		usersEmail = doc.data().email
 		document.getElementById("tutor-hiring-status").innerHTML = doc.data().tutorApplicantStatus
 	})
 
@@ -124,7 +126,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 			  	"uploadedTranscript" : true })
 		.then(function() {
 			document.getElementById("transcript-preview-block").style.display = "none"
-			mpTranscriptUpload()
+			mpTranscriptUpload(usersEmail)
 		})
 	}
 	  
@@ -141,7 +143,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 			 	"uploadedFaculty" : true })
 		.then(function() {
 			document.getElementById("faculty-preview-block").style.display = "none"
-			mpFacultyRecUpload()
+			mpFacultyRecUpload(usersEmail)
 		})
 	}	
 
@@ -294,7 +296,7 @@ function scheduleInterview(userID, usersSchool) {
 		//document.getElementById("request-interview-form").style.display = "none"
 		var messageString = applicantsName + ' has opened the calendly window to schedule an interview. Please check your email to confirm this user has actually scheduled. Their email is ' + applicantsEmail + ', their school is ' + applicantsSchool
 		sendEmailTo('mcloftus@jointutortree.com', 'Calendly Window Opened - Look out for an interview', messageString)
-		mpRequestVirtualInterview()
+		mpRequestVirtualInterview(applicantsEmail)
 		
 	/*	
 		if(destinationSchool){
