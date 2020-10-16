@@ -24,8 +24,8 @@ function mpTutorSignupPageViewed(){
 //This funciton executes when a user signs up for a tutor account
 
 
-function mpTutorSignUp(user){
-	mixpanel.identify(user.email);
+function mpTutorSignUpNewUser(user){
+	mixpanel.alias(user.email);
 	
 	//tracks the event of tutor signing up
 	mixpanel.track("Tutor Sign Up", {
@@ -61,7 +61,7 @@ function mpTutorSignUp(user){
 }
 
 function mpExistingTutorSignUp(user){
-	mixpanel.alias(user.email);
+	mixpanel.identify(user.email);
 	
 	//tracks the event of tutor signing up
 	mixpanel.track("Tutor Sign Up", {
