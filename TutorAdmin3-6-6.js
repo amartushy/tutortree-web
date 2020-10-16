@@ -425,6 +425,7 @@ function buildApplicantBlock(applicantID, firstName, lastName, email, school, ti
 }
 
 function interviewCompleted(applicantsID, email, status) {
+	console.log(applicantsID + " this is running")
 	userDB.collection("userTest").doc(applicantsID).collection("tutorApplication").doc("application").update({ "completedInterview" : status})
 		.then(function() {
 			if (status) {
