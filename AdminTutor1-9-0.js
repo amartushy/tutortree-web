@@ -667,7 +667,7 @@ tutorCompletedInterview.addEventListener('click', function() {
 				.doc("application")
 				.update( { "completedInterview" : !didCompleteInterview } )
 					.then(function() {
-						if (didCompleteInterview) {
+						if (!didCompleteInterview) {
 							mpInterviewCompleted(globalApplicantID, tutorEmail)
 						} else {
 							mpReverseInterviewCompleted(globalApplicantID, tutorEmail)
