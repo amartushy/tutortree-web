@@ -433,7 +433,7 @@ function updateApplicantStatus(status, ID, first, email) {
 	} else if (status == 'waitlisted') {
 		sendTutorWaitlistEmail(email, first)
 		
-		mpIsRejectedTutorAppResolution(email)
+		mpIsWaitListedTutorAppResolution(email)
 	}
 	
 	showApplicants()
