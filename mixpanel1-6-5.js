@@ -25,7 +25,7 @@ function mpTutorSignupPageViewed(){
 
 
 function mpTutorSignUp(user){
-	mixpanel.identify();
+	mixpanel.identify(user.email);
 	
 	//tracks the event of tutor signing up
 	mixpanel.track("Tutor Sign Up", {
@@ -99,8 +99,8 @@ function mpExistingTutorSignUp(user){
 
 //This funciton executes when a tutor user clicks the request virtual interview button
 
-function mpRequestVirtualInterview(){
-	mixpanel.identify();
+function mpRequestVirtualInterview(email){
+	mixpanel.identify(email);
 	
 	mixpanel.track("Tutor Interview Requested");
 
@@ -114,8 +114,8 @@ function mpRequestVirtualInterview(){
 
 //This funciton executes when a tutor user uploads a file and clicks "submit transcript" button
 
-function mpTranscriptUpload(){
-	mixpanel.identify();	
+function mpTranscriptUpload(email){
+	mixpanel.identify(email);	
 	
 	mixpanel.track("Submitted Transcript");
 
@@ -129,8 +129,8 @@ function mpTranscriptUpload(){
 
 //This funciton executes when a tutor user uploads their faculty rec and clicks "Submit Faculty Rec" button
 
-function mpFacultyRecUpload(){
-	mixpanel.identify();
+function mpFacultyRecUpload(email){
+	mixpanel.identify(email);
 	
 	mixpanel.track("Submitted Faculty Rec", {
 		"Faculty Rec Submitted by Tutor Prospect": true
