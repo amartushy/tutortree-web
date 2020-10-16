@@ -273,7 +273,7 @@ function mpAmbassadorSignupPageViewed(){
 
 //This funciton executes when a user signs up for an ambassador 
 
-function mpAmbassadorAccountCreated(user){
+function mpAmbassadorAccountCreatedNewUser(user){
 	mixpanel.alias(user.email);
 
 	mixpanel.track("Ambassador Sign Up",{
@@ -303,6 +303,35 @@ function mpAmbassadorAccountCreated(user){
 
 }
 
+function mpAmbassadorAccountCreatedExistingUser(user){
+	mixpanel.identify(user.email);
+
+	mixpanel.track("Ambassador Sign Up",{
+		"School Name": user.school,
+		"How Heard": user.howHeardField
+	});
+	//
+	mixpanel.people.set({
+		"School Name": user.school,
+        	"$first_name": user.firstName,
+        	"$last_name": user.lastName,
+        	"$email": user.email,
+        	"$phone": user.phoneNumber,
+        	"How Heard": user.howHeardField,
+        	"Lives Near Campus": user.livesNearCampus,
+        	"Organization Involvement": user.organizations,
+        	"Favorite Off Campus Location": user.favoriteOffCampus,
+        	"Largest Social Media Following Service": user.socialMediaField,
+        	"Number of Followers at Largerst Social Media Service": user.numberOfFollowers,
+        	"Knows Anyone at TutorTree": user.knowsEmployees,
+        	"Social Handle": user.socialHandle,
+        	"Ambassador User": true,
+        	"Ambassador Hiring Status": "Not yet Interviewed",
+		"Academic Year": user.year,
+		"Major": user.major
+	});
+
+}
 
 //This funciton executes when a user loads the sign up page
 
