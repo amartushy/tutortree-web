@@ -184,7 +184,7 @@ function assignMixpanelSignUp(isExisting) {
 	  }
 
 	if (!isExisting) {
-		mpTutorSignUp(newTutorDict)
+		mpTutorSignUpNewUser(newTutorDict)
 	} else {
 		mpExistingTutorSignUp(newTutorDict)
 	}
