@@ -381,7 +381,8 @@ function createNewUserTutorApplicant(tutorApplicantID) {
 				"yearPoints" : 0
 			}
         }
-
+	var referralCode = tutorFirst.value + appendRandomLetters()
+	
         var appUserInfo = {
                     "agreedTOS" : true,
                     "availability" : {
@@ -407,6 +408,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                     "pricePHH" : 10,
                     "profileImage" : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/images%2FTTLogo-Mint.png?alt=media&token=c8d6559e-7fa8-4fed-81cc-1f09d5da56a5",
                     "pushToken" : "",
+		    "referralCode" : referralCode,
                     "school" : 	tutorSchool.value,
 		                "tutorApplicantStatus" : "pending",
 			"currentBalance" : 0
@@ -424,7 +426,19 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                    location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
               })
           })
-}	
+}
+
+function appendRandomLetters() {
+    var result =''
+    var characters = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'
+    var charactersLength = characters.length
+    
+    for (i = 0; i < 3; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return result
+}
+
 function cleanSchoolName(schoolField){
 
 	var schoolFieldLower = schoolField.toLowerCase()
