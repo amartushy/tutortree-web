@@ -238,7 +238,7 @@ function createNewUserAmbassadorApplicant(ambassadorID) {
 		"socialHandle" : socialHandleField.value,
 		"year" : yearField.value,
 	}
-
+	var referralCode = firstNameField.value + appendRandomLetters()
 	var appUserInfo = {
 		"agreedTOS" : true,
 		"availability" : {
@@ -264,6 +264,7 @@ function createNewUserAmbassadorApplicant(ambassadorID) {
 		"pricePHH" : 10,
 		"profileImage" : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/images%2FTTLogo-Mint.png?alt=media&token=c8d6559e-7fa8-4fed-81cc-1f09d5da56a5",
 		"pushToken" : "",
+		"referralCode" : referralCode,
 		"school" : schoolField.value,
 		"ambassadorApplicationStatus" : "pending",
 		"currentBalance" : 0
@@ -285,6 +286,17 @@ function createNewUserAmbassadorApplicant(ambassadorID) {
               })
 
 	
+}
+
+function appendRandomLetters() {
+    var result =''
+    var characters = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'
+    var charactersLength = characters.length
+    
+    for (i = 0; i < 3; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return result
 }
 
 function createFirestoreAmbassadorApplicant(ambassadorID) {
