@@ -36,7 +36,7 @@ var profileTab = document.getElementById('profile-tab')
 //Profile functions_____________________________________________________________________________
 profileTab.addEventListener('click', function(){
     loadProfile()
-    //loadSettings()
+    loadSettings()
 })
 
 function loadProfile() {
