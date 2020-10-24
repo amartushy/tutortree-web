@@ -146,7 +146,7 @@ function createFirestoreTutorApplicant(tutorApplicantID) {
 }
 function createNewUserTutorApplicant(tutorApplicantID) {
 
-      var cleanSchoolName = cleanSchoolName(schoolField.value)	
+      	var cleanSchoolName = cleanSchoolName(schoolField.value)	
 	
         var newTutorDict = {
               "email" : emailField.value,
@@ -261,8 +261,9 @@ function createNewUserTutorApplicant(tutorApplicantID) {
                     "pricePHH" : 10,
                     "profileImage" : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/images%2FTTLogo-Mint.png?alt=media&token=c8d6559e-7fa8-4fed-81cc-1f09d5da56a5",
                     "pushToken" : "",
+		    "referralCode" : var referralCode = firstNameField.value + appendRandomLetters(),
                     "school" : "Invalid School",
-		                "tutorApplicantStatus" : "pending"
+		    "tutorApplicantStatus" : "pending"
                 }
         
           mpTutorAccountCreated( newTutorDict )
@@ -336,6 +337,17 @@ function cleanSchoolName(schoolField){
 	 	return schoolField
 	}							
 }
+}
+
+function appendRandomLetters() {
+    var result =''
+    var characters = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'
+    var charactersLength = characters.length
+    
+    for (i = 0; i < 3; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return result
 }
                                                                                          
 
