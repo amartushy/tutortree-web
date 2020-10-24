@@ -259,7 +259,7 @@ function createNewUserAmbassadorApplicant(ambassadorID) {
 		"isTutor" : false,
 		"major" : majorField.value,
 		"maxHPW" : 20,
-		"name" : firstNameField.value + " " + lastNameField,
+		"name" : firstNameField.value + " " + lastNameField.value,
 		"phoneNumber" : phoneNumberField.value,
 		"pricePHH" : 10,
 		"profileImage" : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/images%2FTTLogo-Mint.png?alt=media&token=c8d6559e-7fa8-4fed-81cc-1f09d5da56a5",
