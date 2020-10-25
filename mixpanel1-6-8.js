@@ -164,6 +164,8 @@ function mpFacultyRecUploadByTutorCoordinator(email){
 
 function mpInterviewCompleted(applicantsID, email){
 
+	mixpanel.track("Tutor Interview Completed");
+	
 	mixpanel.identify(email);
 	
 	mixpanel.people.set({
@@ -171,9 +173,6 @@ function mpInterviewCompleted(applicantsID, email){
 		"Tutor Application Stage": "Interview Completed",		
 		"Tutor Interview Completed Date": new Date().toISOString()
 	});	
-
-	
-	mixpanel.track("Tutor Interview Completed");
 
 }
 
