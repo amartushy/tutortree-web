@@ -661,6 +661,7 @@ tutorCompletedInterview.addEventListener('click', function() {
 		.then(function(doc) {
 			didCompleteInterview = doc.data().completedInterview
 			tutorEmail = doc.data().email
+			console.log("tutorEmail " + tutorEmail)
 			userDB.collection("userTest")
 				.doc(globalApplicantID)
 				.collection("tutorApplication")
