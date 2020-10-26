@@ -30,7 +30,8 @@ function mpTutorSignUpNewUser(user){
 	//tracks the event of tutor signing up
 	mixpanel.track("Tutor Sign Up", {
 		'How Heard' : user.howHeard,
-		'School Name' : user.school
+		'School Name' : user.school,
+		"Tutor Application Date": new Date().toISOString()
 	})
 	
 	mixpanel.people.set({
