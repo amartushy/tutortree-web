@@ -57,7 +57,8 @@ function mpTutorSignUpNewUser(user){
 		"Tutor Application Date": new Date().toISOString(),
 		"Referral": user.referredBy,
 		"Interest in Tutoring": user.whyTutor,
-		"Groups Involved": user.groups
+		"Groups Involved": user.groups,
+		"Referral Code" : user.referralCode
 	})
 }
 
@@ -93,7 +94,8 @@ function mpExistingTutorSignUp(user){
 		"Tutor Application Date": new Date().toISOString(),
 		"Referral": user.referredBy,
 		"Interest in Tutoring": user.whyTutor,
-		"Groups Involved": user.groups
+		"Groups Involved": user.groups,
+		"Referral Code" : user.referralCode
 	})
 }
 
