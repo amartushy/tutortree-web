@@ -135,7 +135,7 @@ function checkApplicantStatus() {
   })
 }
 
-function assignMixpanelSignUp(isExisting) {
+function assignMixpanelSignUp(isExisting, referralCode) {
 	//Update Mixpanel
 	
 	
@@ -403,7 +403,7 @@ function createNewUserTutorApplicant(tutorApplicantID) {
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("assessment").set(assessmentData)
               userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewData).then(function() {
 		      console.log('called false')
-		      assignMixpanelSignUp(false)
+		      assignMixpanelSignUp(false, referralCode)
                    location.href = "https://www.jointutortree.com/tutor/onboarding-dashboard"
               })
           })
