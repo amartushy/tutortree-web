@@ -1,0 +1,58 @@
+#card {
+    color: #444;
+    display: flex;
+    flex-direction: column;
+    width: 40rem;
+    padding: 0.5em 1.5em 1.5em 1.5em;
+    padding-right: 1.5em;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    margin-top: 4rem;
+    border: 2px solid #444;
+}
+
+#heading {
+    display: flex;
+    margin-bottom: 1em;
+}
+
+#heading img {
+    height: 2em;
+}
+
+#logo {
+    margin-right: 0.25rem;
+}
+
+h1 {
+    font-size: 2.25rem;
+}
+
+.content p {
+    font-size: 1.75rem;
+}
+
+#accept_button {
+    font-size: 1rem;
+    padding: 1em 1.5em 1em 1.5em;
+    margin: 0;
+    margin-top: 0.5em;
+    background: #295A53;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#sender_info {
+    display: flex;
+}
+
+#user_photo {
+    width: 5rem;
+    height: 5rem;
+}
+
+#info {
+    margin-left: 1em;
+}
