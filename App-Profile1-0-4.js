@@ -105,7 +105,7 @@ function loadProfile() {
 
 }
 
-function loadTutorProfile() {
+async function loadTutorProfile() {
     var usersSessions = document.getElementById('users-sessions')
     var usersAverage = document.getElementById('users-average')
 
