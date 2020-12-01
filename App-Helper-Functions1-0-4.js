@@ -72,3 +72,38 @@ function getFormattedDate(timeEpoch) {
     var dateObject = [dayLong, month, dayWithSuffix]
     return (dateObject)
 }
+
+function getFormattedTime(startEpoch, endEpoch) {
+    console.log(startEpoch)
+    var start = parseFloat(startEpoch)
+    var end = parseFloat(endEpoch)
+    var startTime = new Date(start*1000)
+    var endTime = new Date(end*1000)
+
+    var startHour = startTime.getHours()
+    var endHour = endTime.getHours()
+    var startAMPM = "am"
+    var endAMPM = "am"
+    if (startHour > 12) {
+        startHour = startHour - 12
+        startAMPM = "pm"
+    }
+    if (endHour > 12) {
+        endHour = endHour - 12
+        endAMPM = "pm"
+    }
+
+    var startMinutes = "00"
+    var endMinutes = "00"
+    if (startTime.getMinutes() >  0) {
+        startMinutes = startTime.getMinutes()
+    }
+    if (endTime.getMinutes() > 0) {
+        endMinutes = endTime.getMinutes()
+    }
+    startString = startHour + ":" + startMinutes + startAMPM
+    endString = endHour + ":" + endMinutes + endAMPM
+
+    var timeObject = [startString, endString]
+    return(timeObject)
+}
