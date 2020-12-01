@@ -1,5 +1,5 @@
 document.getElementById("tutor-1").addEventListener('click', () => {
-	location.href = "https://parent-tutortree.webflow.io/tutor-profile"
+	location.href = "https://app-tutortree.webflow.io/tutor-profile"
 })
 
 //Global Variables__________________________________________________________________
@@ -25,7 +25,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		
 	//If user is not logged in return them to login screen
 	} else {
-		location.href = "https://parent-tutortree.webflow.io/login"
+		location.href = "https://app-tutortree.webflow.io/login"
 	}
 })
 
