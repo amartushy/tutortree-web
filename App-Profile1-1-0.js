@@ -112,3 +112,52 @@ async function loadTutorProfile() {
     usersAverage.innerHTML = await getRatingForUser(globalUserId)
 }
 
+function loadNotifications() {
+    const usersEmail = document.getElementById('email-field')
+    const usersPhone = document.getElementById('sms-field')
+    const emailToggle = document.getElementById('email-toggle')
+    const smsToggle = document.getElementById('sms-toggle')
+    const smsConfirmation = document.getElementById('sms-confirmation')
+
+    usersEmail.placeholder = coreEmail 
+    usersPhone.placeholder = corePhone 
+
+    if (coreIsEmailOn) {
+        usersEmail.style.display = 'block'
+        emailToggle.setAttribute('class', 'toggle-selected')
+    } else {
+        usersEmail.style.display = 'none'
+        emailToggle.setAttribute('class', 'toggle')
+    }
+
+    if (coreIsSMSOn) {
+        usersPhone.style.display = 'block'
+        smsToggle.setAttribute('class', 'toggle-selected')
+    } else {
+        usersPhone.style.display = 'none'
+        smsToggle.setAttribute('class', 'toggle')
+    }
+
+    emailToggle.addEventListener('click', () => {
+        userDB.collection('userTest').doc(globalUserId).get().then(function(doc) {
+            const isEmailOn = doc.data().isEmailOn 
+            userDB.collection('userTest').doc(globalUserId).update({"isEmailOn" : !isEmailOn})
+        })
+    })
+
+    smsToggle.addEventListener('click', () => {
+        userDB.collection('userTest').doc(globalUserId).get().then(function(doc) {
+            const isSMSOn = doc.data().isSMSOn 
+            userDB.collection('userTest').doc(globalUserId).update({"isSMSOn" : !isSMSOn})
+        })
+    })
+
+    usersPhone.onblur = function() {
+        const newNumber = usersPhone.value  
+        userDB.collection('userTest').doc(globalUserId).update({'phoneNumber' : newNumber}).then( () => {
+            smsConfirmation.style.display = 'flex'
+            $('#sms-confirmation').delay(1500).fadeOut(2000)
+        })
+    }
+}
+
