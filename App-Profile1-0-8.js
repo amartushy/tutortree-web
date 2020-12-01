@@ -46,7 +46,8 @@ function loadCoreProperties(ID) {
 
         loadHeader()
         loadProfile()
-
+	loadNotifications()
+	    
         if (coreIsTutor) {
             loadTutorProfile()
         }
@@ -101,8 +102,6 @@ async function loadProfile() {
     usersSchool.innerHTML = await getSchoolName(coreSchool)
     usersMajor.innerHTML = coreSubject
     
-    //TODO - Notifications
-
 }
 
 async function loadTutorProfile() {
@@ -113,15 +112,3 @@ async function loadTutorProfile() {
     usersAverage.innerHTML = await getRatingForUser(globalUserId)
 }
 
-
-function loadNotifications() {
-    var usersEmail = document.getElementById('users-email')
-    var usersPhone = document.getElementById('users-phone')
-
-    usersEmail.innerHTML = coreEmail 
-    usersPhone.innerHTML = corePhone 
-
-    if (coreIsEmailOn) {
-        usersEmail.style.display = 'block'
-    }
-}
