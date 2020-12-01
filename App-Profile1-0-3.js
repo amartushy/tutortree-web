@@ -105,13 +105,12 @@ function loadProfile() {
 
 }
 
-
 function loadTutorProfile() {
     var usersSessions = document.getElementById('users-sessions')
     var usersAverage = document.getElementById('users-average')
 
-    usersSessions.innerHTML = getCountOfSessions(globalUserId)
-    usersAverage.innerHTML = getRatingForUser(globalUserId)
+    usersSessions.innerHTML = await getCountOfSessions(globalUserId)
+    usersAverage.innerHTML = await getRatingForUser(globalUserId)
 }
 
 
