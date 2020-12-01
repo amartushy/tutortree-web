@@ -74,7 +74,7 @@ function loadHeader() {
 }
 
 
-function loadProfile() {
+async function loadProfile() {
 
     var usersImageBlock = document.getElementById('users-image-block')
     var usersName = document.getElementById('users-name')
@@ -98,7 +98,7 @@ function loadProfile() {
 
     usersName.innerHTML = coreName
     usersBio.innerHTML = coreBio
-    usersSchool.innerHTML = getSchoolName(coreSchool)
+    usersSchool.innerHTML = await getSchoolName(coreSchool)
     usersMajor.innerHTML = coreSubject
     
     //TODO - Notifications
