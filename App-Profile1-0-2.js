@@ -14,9 +14,6 @@ var globalUserId,
     coreSchool,
     coreSubject
 
-
-
-
 //Initialize elements on page load
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
@@ -97,7 +94,7 @@ function loadProfile() {
     var cameraIcon = document.createElement('div')
     cameraIcon.setAttribute('class', 'users-photo-icon')
     cameraIcon.innerHTML = ''
-    usersImageBlock.appendChild(profileText)
+    usersImageBlock.appendChild(cameraIcon)
 
     usersName.innerHTML = coreName
     usersBio.innerHTML = coreBio
