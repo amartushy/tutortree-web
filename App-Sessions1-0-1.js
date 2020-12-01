@@ -58,7 +58,7 @@ function getUpcomingSessions() {
     })
 }
 
-function buildUpcomingSessions(sessions) {
+async function buildUpcomingSessions(sessions) {
     var sortedSessions = sessions.sort(function(a, b) {
         return b[0] - a[0];
     })
@@ -79,7 +79,7 @@ function buildUpcomingSessions(sessions) {
             buildDateHeader(endDateString)
         }
 
-        buildSessionBlock(sessionInfo)
+        await buildSessionBlock(sessionInfo)
     }
 }
 
