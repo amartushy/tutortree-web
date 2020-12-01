@@ -90,18 +90,20 @@ function loadProfile() {
     }
 
     var usersProfileImage = document.createElement('img')
-    usersProfileImage.setAttribute('class', 'header-image')
+    usersProfileImage.setAttribute('class', 'user-profile-image')
     usersProfileImage.src = coreProfileImage
     usersImageBlock.appendChild(usersProfileImage)
 
     var cameraIcon = document.createElement('div')
     cameraIcon.setAttribute('class', 'users-photo-icon')
     cameraIcon.innerHTML = ''
-    profileTab.appendChild(profileText)
+    usersImageBlock.appendChild(profileText)
 
     usersName.innerHTML = coreName
     usersBio.innerHTML = coreBio
-
+    usersSchool.innerHTML = coreSchool
+    usersMajor.innerHTML = coreSubject
+    
     //TODO - Notifications
 
 }
