@@ -98,7 +98,7 @@ function loadProfile() {
 
     usersName.innerHTML = coreName
     usersBio.innerHTML = coreBio
-    usersSchool.innerHTML = coreSchool
+    usersSchool.innerHTML = getSchoolName(coreSchool)
     usersMajor.innerHTML = coreSubject
     
     //TODO - Notifications
