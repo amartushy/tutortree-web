@@ -38,3 +38,13 @@ async function getCountOfSessions(ID) {
         return sessions
     }
 }
+
+async function getSchoolName(school) {
+    var schoolTitle = ''
+
+    await userDB.collection('schools').doc(school).get().then(function(doc) {
+        schoolTitle = doc.data().title 
+    })
+
+    return schoolTitle
+}
