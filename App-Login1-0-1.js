@@ -29,7 +29,7 @@ function signIn(){
 				var userID = user.uid
 				
 				userDB.collection("userTest").doc(userID).get().then(function(doc) {		
-					location.href = 'https://parent-tutortree.webflow.io/'
+					location.href = 'https://app-tutortree.webflow.io/'
 				})
 			} else {
 				console.log("no user logged in")
