@@ -36,7 +36,7 @@ function loadCoreProperties(ID) {
         coreBio = data.bio
         coreEmail = data.email
         coreIsEmailOn = data.isEmailOn 
-        coreIsSMSOn = data.coreIsSMSOn
+        coreIsSMSOn = data.isSMSOn
         coreIsTutor = data.isTutor
         coreName = data.name 
         corePhone = data.phoneNumber 
