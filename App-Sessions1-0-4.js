@@ -52,6 +52,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             var data = doc.data()
 
             loadSessions()
+            upcomingTab.click()
         })
 		
 	//If user is not logged in return them to login screen
