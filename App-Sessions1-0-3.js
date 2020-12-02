@@ -46,7 +46,7 @@ pastTab.addEventListener('click', () => {
 //Load user data and populate sessions
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
-		var globalUserId = user.uid
+		globalUserId = user.uid
 		 
         userDB.collection('userTest').doc(globalUserId).onSnapshot(function(doc) {
             var data = doc.data()
