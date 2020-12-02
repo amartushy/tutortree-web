@@ -131,8 +131,18 @@ async function buildUpcomingSessions(sessions) {
 }
 
 async function buildPendingSessions(sessions) {
+    const pendingBubble = document.getElementById('pending-bubble')
+
     while (pendingSessionsArea.firstChild) {
         pendingSessionsArea.removeChild(pendingSessionsArea.firstChild)
+    }
+
+    if (sessions.length > 0) {
+        pendingBubble.innerHTML = sessions.length
+        pendingBubble.style.display = 'flex'
+
+    } else {
+        pendingBubble.style.display = 'none'
     }
 
     var sortedSessions = sessions.sort(function(a, b) {
