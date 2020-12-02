@@ -96,7 +96,7 @@ function loadSessions() {
 
             buildUpcomingSessions(upcomingSessions)
             buildPendingSessions(pendingSessions)
-            buildPastSession(pastSessions)
+            buildPastSessions(pastSessions)
 
         })
 
@@ -126,7 +126,7 @@ async function buildUpcomingSessions(sessions) {
             buildDateHeader(endDateString, upcomingSessionsArea)
         }
 
-        await buildSessionBlock(sessionInfo)
+        await buildSessionBlock(sessionInfo, upcomingSessionsArea)
     }
 }
 
@@ -153,7 +153,7 @@ async function buildPendingSessions(sessions) {
             buildDateHeader(endDateString, pendingSessionsArea)
         }
 
-        await buildSessionBlock(sessionInfo)
+        await buildSessionBlock(sessionInfo, pendingSessionsArea)
     }
 }
 
@@ -179,7 +179,7 @@ while (pastSessionsArea.firstChild) {
             buildDateHeader(endDateString, pastSessionsArea)
         }
 
-        await buildSessionBlock(sessionInfo)
+        await buildSessionBlock(sessionInfo, pastSessionsArea)
     }
 }
 
