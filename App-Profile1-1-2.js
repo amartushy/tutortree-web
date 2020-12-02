@@ -164,3 +164,133 @@ function loadNotifications() {
     }
 }
 
+//Billing__________________________________________________________________________________________________________________________________
+function loadFinancials() {
+    loadTransactions()
+
+    const currentBalance = document.getElementById('current-balance')
+
+    const depositButton = document.getElementById('deposit-button')
+    const withdrawButton = document.getElementById('withdraw-button')
+    const transactionsButton = document.getElementById('transactions-button')
+
+    const transactionsTab = document.getElementById('transactions-tab')
+    const subscriptionsTab = document.getElementById('subscriptions-tab')
+    const paymentMethodsTab = document.getElementById('payment-methods-tab')
+    
+    const transactionsContent = document.getElementById('transactions-content')
+    
+    const billingPage = document.getElementById('billing')
+    const billingBack = document.getElementById('billing-back')
+
+
+    currentBalance.innerHTML = '$' + parseFloat(coreBalance).toFixed(2)
+
+    transactionsButton.addEventListener('click', () => {
+        billingPage.style.display = 'flex'
+    })
+
+    billingBack.addEventListener('click', () => {
+        billingPage.style.display = 'none'
+    })
+
+    //Tabs
+    transactionsTab.addEventListener('click', () => {
+        transactionsTab.setAttribute('class', 'billing-tab-selected')
+        subscriptionsTab.setAttribute('class', 'billing-tab-unselected')
+        paymentMethodsTab.setAttribute('class', 'billing-tab-unselected')
+
+        transactionsContent.style.display = 'block'
+    })
+
+    subscriptionsTab.addEventListener('click', () => {
+        transactionsTab.setAttribute('class', 'billing-tab-unselected')
+        subscriptionsTab.setAttribute('class', 'billing-tab-selected')
+        paymentMethodsTab.setAttribute('class', 'billing-tab-unselected')
+    })
+
+    paymentMethodsTab.addEventListener('click', () => {
+        transactionsTab.setAttribute('class', 'billing-tab-unselected')
+        subscriptionsTab.setAttribute('class', 'billing-tab-unselected')
+        paymentMethodsTab.setAttribute('class', 'billing-tab-selected')
+    })
+}
+
+
+function loadTransactions() {
+    userDB.collection('userTest').doc(globalUserId).collection('spending').onSnapshot(function(spending) {
+
+        var promises = []
+        var transactionsObject = []
+
+        spending.forEach(function(doc) {
+            const data = doc.data()
+            const date = data.start
+            const id = doc.id
+            const transaction = [date, id, data]
+
+            transactionsObject.push(transaction)
+            promises.push(doc.data())
+        })
+
+        Promise.all(promises).then( () => {
+            buildTransactions(transactionsObject)
+        })
+    })
+}
+
+function buildTransactions(transactions) {
+    document.getElementById('number-results').innerHTML = transactions.length + ' Results'
+
+    const summaryArea = document.getElementById('transaction-summary-area')
+
+    while(summaryArea.firstChild) {
+        summaryArea.removeChild(summaryArea.firstChild)
+    }
+
+    var sortedTransactions = transactions.sort(function(a,b) {
+        return b[0] - a[0]
+    })
+    console.log(sortedTransactions)
+
+    for( var i = 0; i < sortedTransactions.length; i++) {
+        const date = sortedTransactions[i][0]
+        const orderNumber = sortedTransactions[i][1]
+        const amount = sortedTransactions[i][2].checkoutTotal
+    
+        const transactionSummary = document.createElement('div')
+        transactionSummary.setAttribute('class', 'transaction-summary')
+        summaryArea.appendChild(transactionSummary)
+
+        const checkBox = document.createElement('div')
+        checkBox.setAttribute('class', 'check-unselected')
+        checkBox.innerHTML = ''
+        transactionSummary.appendChild(checkBox)
+        
+        const orderNumberDiv = document.createElement('div')
+        orderNumberDiv.setAttribute('class', 'transaction-order-number')
+        orderNumberDiv.innerHTML = orderNumber
+        transactionSummary.appendChild(orderNumberDiv)
+ 
+        const billingDateDiv = document.createElement('div')
+        billingDateDiv.setAttribute('class', 'transaction-billing-date')
+        billingDateDiv.innerHTML = formatTransactionDate(date)
+        transactionSummary.appendChild(billingDateDiv)
+
+        const amountDiv = document.createElement('div')
+        amountDiv.setAttribute('class', 'transaction-amount')
+        amountDiv.innerHTML = '$' + amount
+        transactionSummary.appendChild(amountDiv)
+    }
+}
+
+function formatTransactionDate(date) {
+    const dateObject = new Date(date * 1000)
+    const month = dateObject.getMonth()
+    const day = dateObject.getDate() + 1
+    const year = dateObject.getFullYear()
+
+    const yearString = month + '/' + day + '/' + year
+    return yearString
+}
+
