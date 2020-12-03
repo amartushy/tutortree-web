@@ -1,3 +1,6 @@
+//Global Variables________________________________________________________________________________________
+var globalUserId
+
 var connectionsArea = document.getElementById('connections-area')
 var messagesHeader = document.getElementById('messages-header')
 var messagesArea = document.getElementById('messages-area')
@@ -6,11 +9,18 @@ var sendMessage = document.getElementById('send-message')
 var messagesModal = document.getElementById('messages-modal')
 var messagesRight = document.getElementById('messages-right')
 
-
-messages.addEventListener('click', function() {
-    loadConnections()
+//Initialize elements on page load
+firebase.auth().onAuthStateChanged(function(user) {
+	if (user) {
+		globalUserId = user.uid
+		 
+        loadConnections()
+		
+	//If user is not logged in return them to login screen
+	} else {
+		location.href = "https://parent-tutortree.webflow.io/login"
+	}
 })
-
 
 function loadConnections() {
 
@@ -18,8 +28,9 @@ function loadConnections() {
         while(connectionsArea.firstChild) {
             connectionsArea.removeChild(connectionsArea.firstChild)
         }
+
         connection.forEach(function(doc) {
-            if (doc.data().tutor == globalTutorID) {
+            if (doc.data().tutor == globalUserId) {
                 const connectionData = doc.data()
                 const connectionID = doc.id
                 const studentID = connectionData.student
@@ -72,7 +83,7 @@ async function buildConnection(connectionID, studentID, tutorID) {
     //Get Sender Type
     var senderType = 'student'
     await userDB.collection('messages').doc(connectionID).get().then(function(connection) {
-        if(connection.data().tutor == globalTutorID) {
+        if(connection.data().tutor == globalUserId) {
             senderType = 'tutor'
         }
     })
@@ -128,7 +139,7 @@ function showMessages(connectionID) {
             
             messageBlock.innerHTML = content
     
-            if (messageData.sender == globalTutorID) {
+            if (messageData.sender == globalUserId) {
                 messageConnectionBlock.setAttribute('class', 'message-sender-block')
                 messageBlock.setAttribute('class', 'message-sender')
             } else {
@@ -158,7 +169,7 @@ function sendConnectionMessage(otherID, connectionID, senderType) {
     var timeStamp = (today.getTime() / 1000).toString()
     var updateDict = {
         'message' : document.getElementById('message-field').value,
-        'sender' : globalTutorID,
+        'sender' : globalUserId,
         'senderType' : senderType
     }
     userDB.collection('messages').doc(connectionID).collection('messages').doc(timeStamp).set(updateDict)
