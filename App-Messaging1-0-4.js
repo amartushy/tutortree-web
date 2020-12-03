@@ -1,3 +1,5 @@
+
+
 //Global Variables________________________________________________________________________________________
 var globalUserId,
     coreName 
@@ -105,6 +107,12 @@ async function buildConnection(connectionID, studentID, tutorID) {
     connectionInfo.appendChild(connectionMessage)
 
     connectionBlock.addEventListener('click', function() {
+        var connectionsAreaChildren = connectionsArea.children
+        for (var i = 0; i < connectionsAreaChildren.length; i ++ ) {
+            connectionsAreaChildren[i].setAttribute('class', 'connection-block')
+        }
+        connectionBlock.setAttribute('class', 'connection-block-selected')
+        
         showHeader(studentID)
         showMessages(connectionID, studentID, senderType)
         replaceMessageFieldListener(studentID, connectionID, senderType)
