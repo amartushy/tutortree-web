@@ -1,5 +1,6 @@
 //Global Variables________________________________________________________________________________________
 var globalUserId
+var userDB = firebase.firestore()
 
 var connectionsArea = document.getElementById('connections-area')
 var messagesHeader = document.getElementById('messages-header')
