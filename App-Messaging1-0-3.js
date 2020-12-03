@@ -1,5 +1,7 @@
 //Global Variables________________________________________________________________________________________
-var globalUserId
+var globalUserId,
+    coreName 
+
 var userDB = firebase.firestore()
 
 var connectionsArea = document.getElementById('connections-area')
@@ -13,8 +15,15 @@ var messagesRight = document.getElementById('messages-right')
 //Initialize elements on page load
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
-		globalUserId = user.uid
-		 
+        globalUserId = user.uid
+        
+		userDB.collection('userTest').doc(globalUserId).onSnapshot(function(doc) {
+            var data = doc.data()
+    
+            coreName = data.name 
+    
+        })
+
         loadConnections()
 		
 	//If user is not logged in return them to login screen
