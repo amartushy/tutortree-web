@@ -90,7 +90,7 @@ function getTutorData(tutorID) {
         const data = doc.data()
 
         loadTutorProfile(data, tutorID)
-        //loadButtons(data)
+        loadButtons(data)
         //loadSimilarTutors()
         //loadReviews()
         //loadAvailability(data)
