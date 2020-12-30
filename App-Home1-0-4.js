@@ -127,21 +127,23 @@ async function loadTutorProfile(data, ID) {
     document.getElementById('tutor-profile-hourly').innerHTML = data.pricePHH * 2
 
 }
+
+
 function loadButtons(data) {
     //load favorite button
 
     //load report button
 
     //load message button
-    messageButton.addEventListener('click', () => {
+    document.getElementById('message-button').addEventListener('click', () => {
         openMessageModal(data)
     })
 
     //load book session button
 }
 
+
 function openMessageModal(data) {
-    const messageButton = document.getElementById('message-button')
     const messageModalClose = document.getElementById('message-modal-close')
     const messageModal = document.getElementById('message-modal')
     const messageModalHeader = document.getElementById('message-modal-header')
