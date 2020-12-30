@@ -127,13 +127,32 @@ async function loadTutorProfile(data, ID) {
     document.getElementById('tutor-profile-hourly').innerHTML = data.pricePHH * 2
 
 }
-
 function loadButtons(data) {
     //load favorite button
 
     //load report button
 
     //load message button
+    messageButton.addEventListener('click', () => {
+        openMessageModal(data)
+    })
 
     //load book session button
+}
+
+function openMessageModal(data) {
+    const messageButton = document.getElementById('message-button')
+    const messageModalClose = document.getElementById('message-modal-close')
+    const messageModal = document.getElementById('message-modal')
+    const messageModalHeader = document.getElementById('message-modal-header')
+
+    messageModal.style.display = 'flex'
+    var tutorsName = data.name 
+    const nameArray = tutorsName.split(" ")
+    const firstName = nameArray[0]
+    messageModalHeader.innerHTML = 'Message ' + firstName
+
+    messageModalClose.addEventListener('click', () => {
+        messageModal.style.display = 'none'
+    })
 }
