@@ -146,8 +146,13 @@ function openMessageModal(data, tutorID) {
     const messageModal = document.getElementById('message-modal')
     const messageModalHeader = document.getElementById('message-modal-header')
     const messageSendButton = document.getElementById('send-button')
+    const messageDiv = document.getElementById('message-div')
+    const messageCompletionDiv = document.getElementsById('message-completion-div')
 
     messageModal.style.display = 'flex'
+    messageDiv.style.display = 'flex'
+    messageCompletionDiv.style.display = 'none'
+
     var tutorsName = data.name 
     const nameArray = tutorsName.split(" ")
     const firstName = nameArray[0]
@@ -159,6 +164,8 @@ function openMessageModal(data, tutorID) {
 
     messageSendButton.addEventListener('click', () => {
         updateConnections(data, tutorID)
+        messageDiv.style.display = 'none'
+        messageCompletionDiv.style.display = 'flex'
     })
 }
 
