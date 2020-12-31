@@ -158,13 +158,11 @@ function openMessageModal(data, tutorID) {
     })
 
     messageSendButton.addEventListener('click', () => {
-        sendMessage(data, tutorID)
+        updateConnections(data, tutorID)
     })
 }
 
-function sendMessage(data, tutorID) {
-    const messageField = document.getElementById('message-field')
-    const message = messageField.value 
+function updateConnections(data, tutorID) {
     const connectionID = tutorID + ":" + globalUserId
 
     var messageRef = userDB.collection('messages').doc(connectionID)
@@ -175,7 +173,15 @@ function sendMessage(data, tutorID) {
             sendConnectionMessage(tutorID, connectionID, "student")
         } else {
             //if not, create document and add fields and messages collection
-            console.log("No document")
+            console.log("Document does not exist, creating new one")
+            var updateDict = {
+                "members" : [globalUserId, tutorID],
+                "student" : globalUserId,
+                "tutor" : tutorID
+            }
+            userDB.collection('messages').doc(connectionID).set(updateDict).then(function() {
+                sendConnectionMessage(tutorID, connectionID, "student")
+            })
         }
     }).catch(function(error) {
         console.log("Error getting document:", error);
