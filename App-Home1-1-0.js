@@ -147,7 +147,7 @@ function openMessageModal(data, tutorID) {
     const messageModalHeader = document.getElementById('message-modal-header')
     const messageSendButton = document.getElementById('send-button')
     const messageDiv = document.getElementById('message-div')
-    const messageCompletionDiv = document.getElementsById('message-completion-div')
+    const messageCompletionDiv = document.getElementById('message-completion-div')
 
     messageModal.style.display = 'flex'
     messageDiv.style.display = 'flex'
