@@ -128,7 +128,6 @@ async function loadTutorProfile(data, ID) {
 
 }
 
-
 function loadButtons(data, tutorID) {
     //load favorite button
 
@@ -166,13 +165,14 @@ function openMessageModal(data, tutorID) {
 function sendMessage(data, tutorID) {
     const messageField = document.getElementById('message-field')
     const message = messageField.value 
-    const docID = tutorID + ":" + globalUserId
+    const connectionID = tutorID + ":" + globalUserId
 
-    var messageRef = userDB.collection('messages').doc(docID)
+    var messageRef = userDB.collection('messages').doc(connectionID)
     messageRef.get().then(function(doc) {
         if (doc.exists) {
             //If connection exists then add to messages collection
             console.log("Document Exists:", doc.data())
+            sendConnectionMessage(tutorID, connectionID, "student")
         } else {
             //if not, create document and add fields and messages collection
             console.log("No document")
@@ -180,4 +180,38 @@ function sendMessage(data, tutorID) {
     }).catch(function(error) {
         console.log("Error getting document:", error);
     });
+}
+
+function sendConnectionMessage(otherID, connectionID, senderType) {
+    var today = new Date()
+    var timeStamp = (today.getTime() / 1000).toString()
+    var updateDict = {
+        'message' : document.getElementById('message-field').value,
+        'sender' : globalUserId,
+        'senderType' : senderType
+    }
+    userDB.collection('messages').doc(connectionID).collection('messages').doc(timeStamp).set(updateDict)
+    sendMessagingNotifications(otherID, coreName, document.getElementById('message-field').value)
+    document.getElementById('message-field').value = ""
+}
+
+function sendMessagingNotifications(otherID, currentName, message) {
+    userDB.collection('userTest').doc(otherID).get().then(function(doc) {
+        var userData = doc.data()
+
+        var isSMSOn = userData.isSMSOn
+        var isPushOn = userData.isPushOn
+
+        if(isSMSOn) {
+            var phoneNumber = userData.phoneNumber
+            var smsMessage = "New Message From " + currentName + ": " + message
+            sendSMSTo(phoneNumber, smsMessage)
+        }
+
+        if(isPushOn) {
+            var token = userData.pushToken
+            var title = "New Message From " + currentName
+            sendPushTo(token, title, message)
+        }
+    })
 }
