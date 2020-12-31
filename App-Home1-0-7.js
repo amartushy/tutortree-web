@@ -129,24 +129,24 @@ async function loadTutorProfile(data, ID) {
 }
 
 
-function loadButtons(data) {
+function loadButtons(data, tutorID) {
     //load favorite button
 
     //load report button
 
     //load message button
     document.getElementById('message-button').addEventListener('click', () => {
-        openMessageModal(data)
+        openMessageModal(data, tutorID)
     })
 
     //load book session button
 }
 
-
-function openMessageModal(data) {
+function openMessageModal(data, tutorID) {
     const messageModalClose = document.getElementById('message-modal-close')
     const messageModal = document.getElementById('message-modal')
     const messageModalHeader = document.getElementById('message-modal-header')
+    const messageSendButton = document.getElementById('send-button')
 
     messageModal.style.display = 'flex'
     var tutorsName = data.name 
@@ -157,4 +157,27 @@ function openMessageModal(data) {
     messageModalClose.addEventListener('click', () => {
         messageModal.style.display = 'none'
     })
+
+    messageSendButton.addEventListener('click', () => {
+        sendMessage(data, tutorID)
+    })
+}
+
+function sendMessage(data, tutorID) {
+    const messageField = document.getElementById('message-field')
+    const message = messageField.value 
+    const docID = tutorID + ":" + globalUserId
+
+    var messageRef = userDB.collection('messages').doc(docID)
+    messageRef.get().then(function(doc) {
+        if (doc.exists) {
+            //If connection exists then add to messages collection
+            console.log("Document Exists:", doc.data())
+        } else {
+            //if not, create document and add fields and messages collection
+            console.log("No document")
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
 }
