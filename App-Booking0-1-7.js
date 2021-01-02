@@ -4,6 +4,11 @@ function loadBookingPageFromData(data, tutorID) {
     buildCalendar(tutorsAvailability)
 
     tutorsPricePHH = data.pricePHH
+    course = data.preferences.course 
+    school = data.preferences.school
+    student = globalUserId
+    subject = data.preferences.subject
+    tutor = tutorID 
 
     const checkoutName = document.getElementById('checkout-name')
     const checkoutHourly = document.getElementById('checkout-hourly')
@@ -23,8 +28,8 @@ function loadBookingPageFromData(data, tutorID) {
     bookingImageContainer.appendChild(bookingImage)
 
     checkoutFullName.innerHTML = data.name
-    checkoutSubject.innerHTML = data.preferences.subject 
-    checkoutCourse.innerHTML = data.preferences.course
+    checkoutSubject.innerHTML = subject
+    checkoutCourse.innerHTML = course
     checkoutSessionFee.innerHTML = '$' + sessionFee
 }
 function loadAvailabilities(availabilityData) {
@@ -41,10 +46,26 @@ function loadAvailabilities(availabilityData) {
 var currentDate = getCurrentMonthAndYear()
 var year = currentDate[0]
 var month = currentDate[1]
+var dayVal
 var tutorsAvailability = []
-var tutorsPricePHH = 0.0
+
 var checkoutTotal = 0.0
+var course
+var end //TODO
+var howPaid //TODO
+var isRefunded = false
+var paid = 0
+var rated = false
+var school
 var sessionFee = 3.95
+var sessionLength
+var start //TODO
+var status = 'pending'
+var student
+var subject
+var tutor
+var tutorsFee
+var tutorsPricePHH = 0.0
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
@@ -129,6 +150,7 @@ var availabilityArray = []
 var sessionIndices = []
 
 function daySelected(dayInt, dayOfMonth, daysInMonth) {
+    dayVal = dayOfMonth
     sessionIndices = []
     const checkoutPreTotal = document.getElementById('checkout-pre-total')
     checkoutPreTotal.innerHTML = 0.0
@@ -229,13 +251,31 @@ function timeslotSelected(index) {
     }
 
     checkoutTotal = tutorsPricePHH * sessionIndices.length + sessionFee
+    tutorsFee = tutorsPricePHH * sessionIndices.length
+    sessionLength = sessionIndices.length
+
     const checkoutPreTotal = document.getElementById('checkout-pre-total')
     const checkoutFinalTotal = document.getElementById('checkout-final-total')
     checkoutPreTotal.innerHTML = tutorsPricePHH * sessionIndices.length
     checkoutFinalTotal.innerHTML = '$' + checkoutTotal
+
+    updateStartAndEnd()
 }
 
 //Availability Helper Functions__________________________________________________________________________
+function updateStartAndEnd() {
+    var dateObject = new Date(year, month, dayVal)
+    var epoch = dateObject.getTime() / 1000
+    start = epoch + sessionIndices[0]*1800
+    if (sessionIndices.length>1) {
+        end = epoch + sessionIndices[sessionIndices.length-1]*1800
+    } else {
+        end = epoch + 1800
+    }
+    console.log("start: " +start)
+    console.log("end: " +end)
+}
+
 function formatSessionDate(dayInt, dayOfMonth, month) {
     var suffix
     if (dayOfMonth == 1 || dayOfMonth == 21 ||dayOfMonth == 31) {
