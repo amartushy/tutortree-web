@@ -173,7 +173,7 @@ function timeslotSelected(index) {
             nextTimeslot.setAttribute('class', 'booking-timeslot-option')
         }
 
-    } else if (index < sessionIndices[0] || index > sessionIndices[sessionIndices.length-1]+1 || sessionIndices.includes(index)) {
+    } else if (index < sessionIndices[0] || index > sessionIndices[sessionIndices.length-1]+1 || sessionIndices.includes(parseInt(index))) {
         for(i=0; i<children.length; i++) {
             children[i].setAttribute('class', 'booking-timeslot')
         }
