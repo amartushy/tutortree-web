@@ -266,11 +266,11 @@ function timeslotSelected(index) {
 function updateStartAndEnd() {
     var dateObject = new Date(year, month, dayVal)
     var epoch = dateObject.getTime() / 1000
-    start = epoch + sessionIndices[0]*1800
+    start = epoch + 21600 + sessionIndices[0]*1800
     if (sessionIndices.length>1) {
-        end = epoch + sessionIndices[sessionIndices.length-1]*1800
+        end = epoch + 21600 + sessionIndices[sessionIndices.length-1]*1800
     } else {
-        end = epoch + 1800
+        end = epoch + 21600 + 1800
     }
     console.log("start: " +start)
     console.log("end: " +end)
