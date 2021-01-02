@@ -1,7 +1,7 @@
 function loadBookingPageFromData(data, tutorID) {
-    buildCalendar(tutorsAvailability)
-    buildCalendarNav()
     loadAvailabilities(data.availability)
+    buildCalendarNav()
+    buildCalendar(tutorsAvailability)
 
     tutorsPricePHH = data.pricePHH
 
@@ -32,8 +32,6 @@ function loadAvailabilities(availabilityData) {
     tutorsAvailability.push(availabilityData.Thursday)
     tutorsAvailability.push(availabilityData.Friday)
     tutorsAvailability.push(availabilityData.Saturday)
-        console.log(availabilityData)
-    console.log(availabilityData.Sunday)
 }
 
 var currentDate = getCurrentMonthAndYear()
