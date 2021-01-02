@@ -2,6 +2,8 @@ function loadBookingPageFromData(data, tutorID) {
     buildCalendar(tutorsAvailability)
     buildCalendarNav()
 
+    tutorsPricePHH = data.pricePHH
+    
     const checkoutName = document.getElementById('checkout-name')
     const checkoutHourly = document.getElementById('checkout-hourly')
     const bookingImageContainer = document.getElementById('booking-image-container')
