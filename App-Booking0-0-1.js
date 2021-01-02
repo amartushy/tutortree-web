@@ -1,20 +1,7 @@
-const sessionBookingPage = document.getElementById('session-booking-page')
-const bookSessionButton = document.getElementById('book-session-button')
-const profileBackButton = document.getElementById('profile-back-button')
-
-bookSessionButton.addEventListener('click', () => {
-    console.log('clicked')
-    sessionBookingPage.style.display = 'flex'
-    tutorProfile.style.display = 'none'
-
+function loadBookingPageFromData(data, tutorID) {
     buildCalendar(tutorsAvailability)
     buildCalendarNav()
-})
-
-profileBackButton.addEventListener('click', () => {
-    tutorProfile.style.display = 'flex'
-    sessionBookingPage.style.display = 'none'
-})
+}
 
 var currentDate = getCurrentMonthAndYear()
 var year = currentDate[0]
