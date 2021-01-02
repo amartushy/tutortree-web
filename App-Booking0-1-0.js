@@ -212,7 +212,7 @@ function timeslotSelected(index) {
         sessionTimeText.innerHTML = timeOptions[sessionIndices[0]]+" to "+timeOptions[sessionIndices[0]+1]
     }
 
-    checkoutTotal = tutorsPricePHH * sessionIndices.length + checkoutSessionFee
+    checkoutTotal = tutorsPricePHH * sessionIndices.length + sessionFee
     const checkoutPreTotal = document.getElementById('checkout-pre-total')
     const checkoutFinalTotal = document.getElementById('checkout-final-total')
     checkoutPreTotal.innerHTML = tutorsPricePHH * sessionIndices.length
