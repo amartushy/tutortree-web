@@ -8,6 +8,8 @@ function loadBookingPageFromData(data, tutorID) {
     const checkoutName = document.getElementById('checkout-name')
     const checkoutHourly = document.getElementById('checkout-hourly')
     const bookingImageContainer = document.getElementById('booking-image-container')
+    const checkoutSubject = document.getElementById('checkout-subject')
+    const checkoutCourse = document.getElementById('checkout-course')
     const checkoutFullName = document.getElementById('checkout-full-name')
     const checkoutSessionFee = document.getElementById('checkout-session-fee')
 
@@ -20,7 +22,9 @@ function loadBookingPageFromData(data, tutorID) {
     bookingImage.src = data.profileImage
     bookingImageContainer.appendChild(bookingImage)
 
-    checkoutFullName.innerHTML = data.name 
+    checkoutFullName.innerHTML = data.name
+    checkoutSubject.innerHTML = data.preferences.subject 
+    checkoutCourse.innerHTML = data.preferences.course
     checkoutSessionFee.innerHTML = '$' + sessionFee
 }
 function loadAvailabilities(availabilityData) {
