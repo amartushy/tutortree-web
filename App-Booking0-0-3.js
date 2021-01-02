@@ -7,7 +7,7 @@ function loadBookingPageFromData(data, tutorID) {
     const bookingImageContainer = document.getElementById('booking-image-container')
     const checkoutFullName = document.getElementById('checkout-full-name')
 
-    checkoutName.innerHTML = data.split(" ")[0] + "'s Availability"
+    checkoutName.innerHTML = data.name.split(" ")[0] + "'s Availability"
     checkoutHourly.innerHTML = data.pricePHH * 2
 
     bookingImageContainer.removeChild(bookingImageContainer.firstChild)
