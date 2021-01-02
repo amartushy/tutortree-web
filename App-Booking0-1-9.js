@@ -268,9 +268,9 @@ function updateStartAndEnd() {
     var epoch = dateObject.getTime() / 1000
     start = epoch + 21600 + sessionIndices[0]*1800
     if (sessionIndices.length>1) {
-        end = epoch + 21600 + sessionIndices[sessionIndices.length-1]*1800
+        end = epoch + 21600 + sessionIndices[sessionIndices.length-1]*1800 + 1800
     } else {
-        end = epoch + 21600 + 1800
+        end = start + 1800
     }
     console.log("start: " +start)
     console.log("end: " +end)
