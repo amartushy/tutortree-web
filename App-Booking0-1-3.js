@@ -1,10 +1,10 @@
 function loadBookingPageFromData(data, tutorID) {
     buildCalendar(tutorsAvailability)
     buildCalendarNav()
+    loadAvailabilities(data.availability)
 
     tutorsPricePHH = data.pricePHH
-    console.log(data.availability)
-    console.log(tutorsAvailability)
+
     const checkoutName = document.getElementById('checkout-name')
     const checkoutHourly = document.getElementById('checkout-hourly')
     const bookingImageContainer = document.getElementById('booking-image-container')
@@ -23,11 +23,21 @@ function loadBookingPageFromData(data, tutorID) {
     checkoutFullName.innerHTML = data.name 
     checkoutSessionFee.innerHTML = '$' + sessionFee
 }
+function loadAvailabilities(availabilityData) {
+    tutorsAvailability = []
+    tutorsAvailability.push(availabilityData.Sunday)
+    tutorsAvailability.push(availabilityData.Monday)
+    tutorsAvailability.push(availabilityData.Tuesday)
+    tutorsAvailability.push(availabilityData.Wednesday)
+    tutorsAvailability.push(availabilityData.Thursday)
+    tutorsAvailability.push(availabilityData.Friday)
+    tutorsAvailability.push(availabilityData.Saturday)
+}
 
 var currentDate = getCurrentMonthAndYear()
 var year = currentDate[0]
 var month = currentDate[1]
-var tutorsAvailability = [67104768, 54521856, 51376128, 67104768, 67104768, 67104768, 0]
+var tutorsAvailability = []
 var tutorsPricePHH = 0.0
 var checkoutTotal = 0.0
 var sessionFee = 3.95
