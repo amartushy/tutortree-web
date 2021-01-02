@@ -12,6 +12,7 @@ function loadBookingPageFromData(data, tutorID) {
 
     bookingImageContainer.removeChild(bookingImageContainer.firstChild)
     var bookingImage = document.createElement('img')
+    bookingImage.setAttribute('class', 'booking-profile-image')
     bookingImage.src = data.profileImage
     bookingImageContainer.appendChild(bookingImage)
 
