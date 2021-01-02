@@ -8,6 +8,7 @@ function loadBookingPageFromData(data, tutorID) {
     const checkoutHourly = document.getElementById('checkout-hourly')
     const bookingImageContainer = document.getElementById('booking-image-container')
     const checkoutFullName = document.getElementById('checkout-full-name')
+    const checkoutSessionFee = document.getElementById('checkout-session-fee')
 
     checkoutName.innerHTML = data.name.split(" ")[0] + "'s Availability"
     checkoutHourly.innerHTML = data.pricePHH * 2
@@ -19,6 +20,7 @@ function loadBookingPageFromData(data, tutorID) {
     bookingImageContainer.appendChild(bookingImage)
 
     checkoutFullName.innerHTML = data.name 
+    checkoutSessionFee.innerHTML = '$' + sessionFee
 }
 
 var currentDate = getCurrentMonthAndYear()
@@ -26,6 +28,8 @@ var year = currentDate[0]
 var month = currentDate[1]
 var tutorsAvailability = [67104768, 54521856, 51376128, 67104768, 67104768, 67104768, 0]
 var tutorsPricePHH = 0.0
+var checkoutTotal = 0.0
+var sessionFee = 3.95
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
@@ -208,10 +212,11 @@ function timeslotSelected(index) {
         sessionTimeText.innerHTML = timeOptions[sessionIndices[0]]+" to "+timeOptions[sessionIndices[0]+1]
     }
 
+    checkoutTotal = tutorsPricePHH * sessionIndices.length + checkoutSessionFee
     const checkoutPreTotal = document.getElementById('checkout-pre-total')
     const checkoutFinalTotal = document.getElementById('checkout-final-total')
     checkoutPreTotal.innerHTML = tutorsPricePHH * sessionIndices.length
-    checkoutFinalTotal.innerHTML = tutorsPricePHH * sessionIndices.length
+    checkoutFinalTotal.innerHTML = '$' + checkoutTotal
 }
 
 //Availability Helper Functions__________________________________________________________________________
