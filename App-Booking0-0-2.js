@@ -1,12 +1,28 @@
 function loadBookingPageFromData(data, tutorID) {
     buildCalendar(tutorsAvailability)
     buildCalendarNav()
+
+    const checkoutName = document.getElementById('checkout-name')
+    const checkoutHourly = document.getElementById('checkout-hourly')
+    const bookingImageContainer = document.getElementById('booking-image-container')
+    const checkoutFullName = document.getElementById('checkout-full-name')
+
+    checkoutName.innerHTML = data.split(" ")[0] + "'s Availability"
+    checkoutHourly.innerHTML = data.pricePHH * 2
+
+    bookingImageContainer.removeChild(bookingImageContainer.firstChild)
+    var bookingImage = document.createElement('img')
+    bookingImage.src = data.profileImage
+    bookingImageContainer.appendChild(bookingImage)
+
+    checkoutFullName.innerHTML = data.name 
 }
 
 var currentDate = getCurrentMonthAndYear()
 var year = currentDate[0]
 var month = currentDate[1]
 var tutorsAvailability = [67104768, 54521856, 51376128, 67104768, 67104768, 67104768, 0]
+var tutorsPricePHH = 0.0
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
@@ -188,6 +204,11 @@ function timeslotSelected(index) {
     } else {
         sessionTimeText.innerHTML = timeOptions[sessionIndices[0]]+" to "+timeOptions[sessionIndices[0]+1]
     }
+
+    const checkoutPreTotal = document.getElementById('checkout-pre-total')
+    const checkoutFinalTotal = document.getElementById('checkout-final-total')
+    checkoutPreTotal.innerHTML = tutorsPricePHH * sessionIndices.length+1
+    checkoutFinalTotal.innerHTML = tutorsPricePHH * sessionIndices.length+1
 }
 
 //Availability Helper Functions__________________________________________________________________________
