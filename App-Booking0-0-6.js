@@ -3,7 +3,7 @@ function loadBookingPageFromData(data, tutorID) {
     buildCalendarNav()
 
     tutorsPricePHH = data.pricePHH
-    
+
     const checkoutName = document.getElementById('checkout-name')
     const checkoutHourly = document.getElementById('checkout-hourly')
     const bookingImageContainer = document.getElementById('booking-image-container')
@@ -210,8 +210,8 @@ function timeslotSelected(index) {
 
     const checkoutPreTotal = document.getElementById('checkout-pre-total')
     const checkoutFinalTotal = document.getElementById('checkout-final-total')
-    checkoutPreTotal.innerHTML = tutorsPricePHH * sessionIndices.length+1
-    checkoutFinalTotal.innerHTML = tutorsPricePHH * sessionIndices.length+1
+    checkoutPreTotal.innerHTML = tutorsPricePHH * sessionIndices.length
+    checkoutFinalTotal.innerHTML = tutorsPricePHH * sessionIndices.length
 }
 
 //Availability Helper Functions__________________________________________________________________________
