@@ -114,8 +114,9 @@ var availabilityArray = []
 var sessionIndices = []
 
 function daySelected(dayInt, dayOfMonth, daysInMonth) {
-    //Reset timeslots array
     sessionIndices = []
+    const checkoutPreTotal = document.getElementById('checkout-pre-total')
+    checkoutPreTotal.innerHTML = 0.0
     //Change CSS
     const sessionDateHeader = document.getElementById('session-date-header')
     sessionDateHeader.innerHTML = formatSessionDate(dayInt, dayOfMonth, month)
