@@ -357,6 +357,22 @@ function loadButtons(data, tutorID) {
     })
 
     //load book session button
+    const sessionBookingPage = document.getElementById('session-booking-page')
+    const bookSessionButton = document.getElementById('book-session-button')
+    const profileBackButton = document.getElementById('profile-back-button')
+
+    bookSessionButton.addEventListener('click', () => {
+    	sessionBookingPage.style.display = 'flex'
+    	tutorProfile.style.display = 'none'
+	
+	loadBookingPageFromData(data, tutorID)
+    })
+
+    profileBackButton.addEventListener('click', () => {
+    	tutorProfile.style.display = 'flex'
+    	sessionBookingPage.style.display = 'none'
+    })
+	
 }
 
 function openMessageModal(data, tutorID) {
