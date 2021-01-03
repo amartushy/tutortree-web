@@ -6,7 +6,6 @@ function loadBookingPageFromData(data, tutorID) {
     tutorsPricePHH = data.pricePHH
     course = data.preferences.course 
     school = data.preferences.school
-    student = globalUserId
     subject = data.preferences.subject
     tutor = tutorID 
     currentBalance = parseFloat(coreBalance).toFixed(2)
@@ -33,7 +32,7 @@ function loadBookingPageFromData(data, tutorID) {
     checkoutSubject.innerHTML = subject
     checkoutCourse.innerHTML = course
     checkoutSessionFee.innerHTML = '$' + sessionFee
-    checkoutBalance.innerHTML = '$' + coreBalance
+    checkoutBalance.innerHTML = '$' + parseFloat(coreBalance).toFixed(2)
 }
 function loadAvailabilities(availabilityData) {
     tutorsAvailability = []
@@ -50,16 +49,8 @@ function loadAvailabilities(availabilityData) {
 var checkoutTotal = 0.0
 var course
 var end
-var howPaid //TODO
-var isRefunded = false
-var paid = 0
-var rated = false
 var school
-var sessionFee = 3.95
-var sessionLength
 var start
-var status = 'pending'
-var student
 var subject
 var tutor
 var tutorsFee
