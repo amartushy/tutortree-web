@@ -50,6 +50,7 @@ var checkoutTotal = 0.0
 var course
 var end
 var school
+var sessionFee = 3.95
 var start
 var subject
 var tutor
