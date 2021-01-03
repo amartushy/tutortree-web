@@ -9,6 +9,7 @@ function loadBookingPageFromData(data, tutorID) {
     student = globalUserId
     subject = data.preferences.subject
     tutor = tutorID 
+    currentBalance = coreBalance
 
     const checkoutName = document.getElementById('checkout-name')
     const checkoutHourly = document.getElementById('checkout-hourly')
@@ -43,15 +44,10 @@ function loadAvailabilities(availabilityData) {
     tutorsAvailability.push(availabilityData.Saturday)
 }
 
-var currentDate = getCurrentMonthAndYear()
-var year = currentDate[0]
-var month = currentDate[1]
-var dayVal
-var tutorsAvailability = []
-
+//Checkout variables
 var checkoutTotal = 0.0
 var course
-var end //TODO
+var end
 var howPaid //TODO
 var isRefunded = false
 var paid = 0
@@ -59,13 +55,20 @@ var rated = false
 var school
 var sessionFee = 3.95
 var sessionLength
-var start //TODO
+var start
 var status = 'pending'
 var student
 var subject
 var tutor
 var tutorsFee
+
+var currentDate = getCurrentMonthAndYear()
+var year = currentDate[0]
+var month = currentDate[1]
+var dayVal
+var tutorsAvailability = []
 var tutorsPricePHH = 0.0
+var currentBalance
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
@@ -272,8 +275,6 @@ function updateStartAndEnd() {
     } else {
         end = start + 1800
     }
-    console.log("start: " +start)
-    console.log("end: " +end)
 }
 
 function formatSessionDate(dayInt, dayOfMonth, month) {
