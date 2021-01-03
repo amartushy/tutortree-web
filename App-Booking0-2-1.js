@@ -18,6 +18,7 @@ function loadBookingPageFromData(data, tutorID) {
     const checkoutCourse = document.getElementById('checkout-course')
     const checkoutFullName = document.getElementById('checkout-full-name')
     const checkoutSessionFee = document.getElementById('checkout-session-fee')
+    const checkoutBalance = document.getElementById('checkout-balance')
 
     checkoutName.innerHTML = data.name.split(" ")[0] + "'s Availability"
     checkoutHourly.innerHTML = data.pricePHH * 2
@@ -32,6 +33,7 @@ function loadBookingPageFromData(data, tutorID) {
     checkoutSubject.innerHTML = subject
     checkoutCourse.innerHTML = course
     checkoutSessionFee.innerHTML = '$' + sessionFee
+    checkoutBalance.innerHTML = '$' + coreBalance
 }
 function loadAvailabilities(availabilityData) {
     tutorsAvailability = []
@@ -253,16 +255,8 @@ function timeslotSelected(index) {
         sessionTimeText.innerHTML = timeOptions[sessionIndices[0]]+" to "+timeOptions[sessionIndices[0]+1]
     }
 
-    checkoutTotal = tutorsPricePHH * sessionIndices.length + sessionFee
-    tutorsFee = tutorsPricePHH * sessionIndices.length
-    sessionLength = sessionIndices.length
-
-    const checkoutPreTotal = document.getElementById('checkout-pre-total')
-    const checkoutFinalTotal = document.getElementById('checkout-final-total')
-    checkoutPreTotal.innerHTML = tutorsPricePHH * sessionIndices.length
-    checkoutFinalTotal.innerHTML = '$' + checkoutTotal
-
     updateStartAndEnd()
+    updateCheckout()
 }
 
 //Availability Helper Functions__________________________________________________________________________
