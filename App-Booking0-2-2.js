@@ -9,7 +9,7 @@ function loadBookingPageFromData(data, tutorID) {
     student = globalUserId
     subject = data.preferences.subject
     tutor = tutorID 
-    currentBalance = coreBalance
+    currentBalance = parseFloat(coreBalance).toFixed(2)
 
     const checkoutName = document.getElementById('checkout-name')
     const checkoutHourly = document.getElementById('checkout-hourly')
@@ -257,69 +257,4 @@ function timeslotSelected(index) {
 
     updateStartAndEnd()
     updateCheckout()
-}
-
-//Availability Helper Functions__________________________________________________________________________
-function updateStartAndEnd() {
-    var dateObject = new Date(year, month, dayVal)
-    var epoch = dateObject.getTime() / 1000
-    start = epoch + 21600 + sessionIndices[0]*1800
-    if (sessionIndices.length>1) {
-        end = epoch + 21600 + sessionIndices[sessionIndices.length-1]*1800 + 1800
-    } else {
-        end = start + 1800
-    }
-}
-
-function formatSessionDate(dayInt, dayOfMonth, month) {
-    var suffix
-    if (dayOfMonth == 1 || dayOfMonth == 21 ||dayOfMonth == 31) {
-        suffix = "st"
-    } else if( dayOfMonth == 2 || dayOfMonth == 22) {
-        suffix = "nd"
-    } else if (dayOfMonth == 3 || dayOfMonth == 23) {
-        suffix = "rd"
-    } else {
-        suffix = "th"
-    }
-    
-    const sessionString = days[dayInt] + ", " + months[month] + " " + dayOfMonth + suffix
-    return sessionString
-}
-
-function getCurrentMonthAndYear() {
-    var currentDate = new Date()
-    var currentMonth = currentDate.getMonth()
-    var currentYear = currentDate.getFullYear()
-    return [currentYear, currentMonth]
-}
-
-function getDaysInMonth(year, month) {
-    return new Date(year, month, 0).getDate()
-}
-
-function firstDayOfMonth(year, month) {
-    var firstDate = new Date(year, month, 1)
-    return firstDate.getDay()
-}
-
-function twosComplement(value) {
-    let binaryStr;
-    
-    if (value >= 0) {
-      let twosComp = value.toString(2);
-      binaryStr = padAndChop(twosComp, '0', (64 || twosComp.length));
-    } else {
-      binaryStr = (Math.pow(2, 64) + value).toString(2);
-      
-      if (Number(binaryStr) < 0) {
-        return undefined
-      }
-    }
-    
-    return binaryStr.slice(16,64)
-}
-
-function padAndChop(str, padChar, length) {
-    return (Array(length).fill(padChar).join('') + str).slice(length * -1);
 }
