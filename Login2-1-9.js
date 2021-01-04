@@ -36,40 +36,40 @@ function signUp(){
 						document.getElementById('admin-header').innerHTML = 'Welcome back, ' + doc.data().name + '!'
 						//admin navigation
 						document.getElementById('admin-nav').addEventListener('click', function() {
-							location.href = 'https://www.jointutortree.com/admin'
+							location.href = 'https://www.tutortree.com/admin'
 						})
 
 						//tutor navigation
 						document.getElementById('applicants-nav').addEventListener('click', function() {
-							location.href = 'https://www.jointutortree.com/tutor/admin-tutor'
+							location.href = 'https://www.tutortree.com/tutor/admin-tutor'
 						})
 
 						//metrics navigation
 						document.getElementById('metrics-nav').addEventListener('click', function() {
-							location.href = 'https://www.jointutortree.com/metrics'
+							location.href = 'https://www.tutortree.com/metrics'
 						})
 						
 						//ambassador navigation
 						document.getElementById('ambassador-nav').addEventListener('click', function() {
-							location.href = 'https://www.jointutortree.com/ambassador-admin'
+							location.href = 'https://www.tutortree.com/ambassador-admin'
 						})
 						
 						//Tutortree Navigation
 						document.getElementById('tutortree-nav').addEventListener('click', function() {
-							location.href = 'https://www.jointutortree.com/tutor/tutor-dashboard'
+							location.href = 'https://www.tutortree.com/tutor/tutor-dashboard'
 						})
 						
 					} else if (doc.data().tutorApplicantStatus == "pending") {
-						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
+						location.href = 'https://www.tutortree.com/tutor/onboarding-dashboard'
 						mpUserWebsiteLogin(userEmail, doc.data().tutorApplicant)
 					} else if (doc.data().tutorApplicantStatus == "rejected") {
-						location.href = 'https://www.jointutortree.com/tutor/onboarding-dashboard'
+						location.href = 'https://www.tutortree.com/tutor/onboarding-dashboard'
 						mpUserWebsiteLogin(userEmail, doc.data().tutorApplicant)
 					} else if (doc.data().tutorApplicantStatus == "accepted") {
-						location.href = 'https://www.jointutortree.com/tutor/tutor-dashboard'
+						location.href = 'https://www.tutortree.com/tutor/tutor-dashboard'
 						mpUserWebsiteLogin(userEmail, doc.data().tutorApplicant)
 					} else if (doc.data().isTutor) {
-						location.href = 'https://www.jointutortree.com/tutor/tutor-dashboard'
+						location.href = 'https://www.tutortree.com/tutor/tutor-dashboard'
 					}
 				})
 			} else {
