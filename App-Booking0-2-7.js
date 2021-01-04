@@ -1,8 +1,9 @@
 function loadBookingPageFromData(data, tutorID) {
+    setInitialState()
+    setNavigation()
     loadAvailabilities(data.availability)
     buildCalendarNav()
     buildCalendar(tutorsAvailability)
-    setNavigation()
     
     tutorsPricePHH = data.pricePHH
     course = data.preferences.course 
