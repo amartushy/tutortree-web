@@ -378,3 +378,251 @@ function twosComplement(value) {
 function padAndChop(str, padChar, length) {
     return (Array(length).fill(padChar).join('') + str).slice(length * -1);
 }
+
+
+//Checkout Functions______________________________________________________________________________
+function updateCheckout() {
+    checkoutTotal = tutorsPricePHH * sessionIndices.length + sessionFee
+    tutorsFee = tutorsPricePHH * sessionIndices.length
+
+    const checkoutPreTotal = document.getElementById('checkout-pre-total')
+    const checkoutFinalTotal = document.getElementById('checkout-final-total')
+    checkoutPreTotal.innerHTML = tutorsPricePHH * sessionIndices.length
+    checkoutFinalTotal.innerHTML = '$' + checkoutTotal
+
+    var currentTotal = document.getElementById('current-total')
+    var newBalance = document.getElementById('new-balance')
+
+    currentTotal.innerHTML = '$' + checkoutTotal
+    if(currentBalance>checkoutTotal) {
+        newBalance.innerHTML = '$' + parseFloat(currentBalance - checkoutTotal).toFixed(2)
+    }
+}
+
+const checkoutWithCard = document.getElementById('checkout-with-card')
+const checkoutWithBalance = document.getElementById('checkout-with-balance')
+
+checkoutWithBalance.addEventListener('click', () => {
+    if(currentBalance>=checkoutTotal) {
+        var newBalance = coreBalance - checkoutTotal
+        userDB.collection('userTest').doc(globalUserId).update({'currentBalance' : newBalance}).then(function(doc) {
+            var transactionID = createTransactionID()
+            console.log("Transaction ID: " + transactionID)
+            setProcessingInitialState()
+            createSession('TutorTree Balance', transactionID)
+        })
+    } else {
+        showErrorMessage("You don't have enough funds in your TutorTree account.")
+    }
+})
+
+function createSession(howPaid, transactionID) {
+    var checkoutDict = {
+        'checkoutTotal' : checkoutTotal,
+        'course' : course,
+        'end' : end,
+        'howPaid' : howPaid,
+        'isRefunded' : false,
+        'paid' : 0,
+        'rated' : false,
+        'school' : school,
+        'sessionFee' : 3.95,
+        'sessionLength' : sessionIndices.length * 30,
+        'start' : start,
+        'status' : 'pending',
+        'student' : globalUserId,
+        'subject' : subject,
+        'tutor' : tutor,
+        'tutorsFee' : tutorsFee
+    }
+
+    var promises = []
+    var studentPromise = userDB.collection('userTest').doc(globalUserId).collection('sessions').doc(transactionID).set(checkoutDict).then(function() {
+        console.log("Student doc written");
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    var tutorPromise = userDB.collection('userTest').doc(tutor).collection('sessions').doc(transactionID).set(checkoutDict).then(function() {
+        console.log("Tutor doc written");
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    var globalPromise = userDB.collection('globalSessions').doc(transactionID).set(checkoutDict).then(function() {
+        console.log("Global doc written");
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    var notificationPromise = userDB.collection('userTest').doc(tutor).get().then(function(doc) {
+        var sessionDate = document.getElementById('session-date-header').innerHTML
+        var sessionTime = document.getElementById('session-time-text').innerHTML
+        var tutorData = doc.data()
+        var isPushOn = tutorData.isPushOn
+        var phoneNumber = tutorData.phoneNumber
+        var message = coreName+" booked a session with you for "+sessionDate+" from "+sessionTime+". This session is awaiting your confirmation."
+
+        sendSMSTo(phoneNumber, message)
+        var adminMessage = coreName+" booked a session on the website for "+sessionDate
+        sendSMSTo('4582108156', adminMessage)
+
+        if(isPushOn) {
+            var token = tutorData.pushToken
+            var title = "New Booking Request"
+            sendPushTo(token, title, message)
+        }
+        console.log("Notifications Sent")
+    })
+
+    var connectionID = tutor+":"+globalUserId
+    var connectionPromise = userDB.collection('messages').doc(connectionID).get().then(function(doc) {
+        if(doc.exists) {
+            console.log("Connection already exists, done writing")
+        } else {
+            var updateDict = {
+                "members" : [globalUserId, tutor],
+                "student" : globalUserId,
+                "tutor" : tutor
+            }
+            userDB.collection('messages').doc(connectionID).set(updateDict).then(function(doc) {
+                console.log("Connection didn't exist, done creating")
+            })
+        }
+    })
+    promises.push(studentPromise, tutorPromise, globalPromise, notificationPromise, connectionPromise)
+
+    Promise.all(promises).then(results => {
+        console.log('All documents written successfully')
+        sendReceiptTo(transactionID, checkoutTotal, coreEmail)
+        $("#processing-text").hide(() => {
+            $('#confirmation-text').fadeIn()
+            $('#confirmation-check').fadeIn()
+        })
+    })
+}
+
+
+braintree.client.create({
+    authorization: 'production_yks4fjkg_j3thkst7k9j6mkvc'
+    }, function (clientErr, clientInstance) {
+    if (clientErr) {
+        console.error(clientErr);
+        return;
+    }
+
+    // This example shows Hosted Fields, but you can also use this
+    // client instance to create additional components here, such as
+    // PayPal or Data Collector.
+
+    braintree.hostedFields.create({
+        client: clientInstance,
+        styles: {
+            'input': {
+                'font-size': '14px'
+            },
+            'input.invalid': {
+                'color': 'red'
+            },
+            'input.valid': {
+                'color': 'green'
+            }
+        },
+        fields: {
+            number: {
+                selector: '#card-number',
+                placeholder: '4111 1111 1111 1111'
+            },
+            cvv: {
+                selector: '#cvv',
+                placeholder: '123'
+            },
+            expirationDate: {
+                selector: '#expiration-date',
+                placeholder: '10/2022'
+            }
+        }
+    }, function (hostedFieldsErr, hostedFieldsInstance) {
+        if (hostedFieldsErr) {
+            console.error(hostedFieldsErr);
+            return;
+        }
+
+        var checkoutWithCard = document.getElementById('checkout-with-card')
+
+        checkoutWithCard.addEventListener('click', function (event) {
+            event.preventDefault();
+            setProcessingInitialState()
+
+            hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+                if (tokenizeErr) {
+                    console.error(tokenizeErr);
+                    processingErrorResetScreens()
+                    showErrorMessage("Something went wrong. Please try again")
+                return;
+                }
+                var nonce = payload.nonce
+                var amount = checkoutTotal
+                setProcessingInitialState()
+                checkoutWithNonceAndAmount(nonce, amount, "Credit Card")
+            });
+        }, false);
+    })
+})
+
+async function checkoutWithNonceAndAmount(nonce, amount, howPaid) {
+    var xhttp = new XMLHttpRequest();
+    var herokuURL = "https://tutortree2.herokuapp.com/checkoutWithNonceAndAmount/"+nonce+"/"+amount
+            
+    xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == XMLHttpRequest.DONE) {
+                    var response = xhttp.responseText
+                    console.log(response)
+                    if(response == 'Declined') {
+                        processingErrorResetScreens()
+                        showErrorMessage('Your payment method was declined.')
+                    } else {
+                        createSession(howPaid, response)
+                    }
+            }
+    }
+    xhttp.open("GET", herokuURL, true);
+    xhttp.send();
+
+    return(xhttp.response)
+}
+
+function showErrorMessage(message) {
+    var errorMessageDiv = document.getElementById('error-message')
+    errorMessageDiv.innerHTML = message
+
+    $('#error-message').fadeIn().delay(5000).fadeOut("slow")
+}
+
+function createTransactionID(){
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < 8; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+function setProcessingInitialState() {
+    $("#checkout-screen").hide( () => {
+        $("#processing-screen").show()
+        $("#processing-text").show()
+        $("#confirmation-text").hide()
+        $("#confirmation-check").hide()
+    })
+}
+
+function processingErrorResetScreens() {
+    $("#processing-screen").show( () => {
+        $("#checkout-screen").hide()
+        $("#processing-text").show()
+        $("#confirmation-text").hide()
+        $("#confirmation-check").hide()
+    })
+}
