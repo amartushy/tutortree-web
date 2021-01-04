@@ -129,3 +129,10 @@ function sendEmailTo(email, title, message) {
 		xhttp.open("GET", herokuURL, true);
 		xhttp.send();
 }
+function sendReceiptTo(transactionID, amount, email) {
+    var xhttp = new XMLHttpRequest();
+    var herokuURL = "https://tutortree2.herokuapp.com/sendReceiptTo/"+transactionID+"/"+amount+"/"+email
+    console.log(herokuURL)
+    xhttp.open("GET", herokuURL, true);
+    xhttp.send();
+}  
