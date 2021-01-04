@@ -1,3 +1,25 @@
+//Globals
+var checkoutTotal = 0.0
+var course
+var end
+var school
+var sessionFee = 3.95
+var start
+var subject
+var tutor
+var tutorsFee
+
+var currentDate = getCurrentMonthAndYear()
+var year = currentDate[0]
+var month = currentDate[1]
+var dayVal
+var tutorsAvailability = []
+var tutorsPricePHH = 0.0
+var currentBalance
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+
 function loadBookingPageFromData(data, tutorID) {
     setInitialState()
     setNavigation()
@@ -36,6 +58,65 @@ function loadBookingPageFromData(data, tutorID) {
     checkoutSessionFee.innerHTML = '$' + sessionFee
     checkoutBalance.innerHTML = '$' + parseFloat(coreBalance).toFixed(2)
 }
+
+function setInitialState() {
+    var sessionDateHeader = document.getElementById('session-date-header')
+    var sessionTimeText = document.getElementById('session-time-text')
+    var checkoutContinue = document.getElementById('checkout-continue')
+    var timeslotsContainer = document.getElementById('timeslots-container')
+
+    sessionDateHeader.innerHTML = 'Select a Date'
+    sessionTimeText.innerHTML = 'Select a Time'
+
+    while(timeslotsContainer.firstChild) {
+        timeslotsContainer.removeChild(timeslotsContainer.firstChild)
+    }
+    var noDateSelectedText = document.createElement('div')
+    noDateSelectedText.setAttribute('class', 'no-date-selected-text')
+    noDateSelectedText.innerHTML = "Select a date to see available times"
+    timeslotsContainer.appendChild(noDateSelectedText)
+}
+
+function setNavigation() {
+    const sessionBookingPage = document.getElementById('session-booking-page')
+    const tutorProfile = document.getElementById('tutor-profile')
+    const availabilityScreen = document.getElementById('availability-screen')
+    const checkoutScreen = document.getElementById('checkout-screen')
+    const processingScreen = document.getElementById('processing-screen')
+
+    const profileBackButton = document.getElementById('profile-back-button')
+    const checkoutContinue = document.getElementById('checkout-continue')
+    const availabilityBack = document.getElementById('availability-back')
+    const processingHome = document.getElementById('processing-home')
+
+    availabilityScreen.style.display = 'block'
+    checkoutScreen.style.display = 'none'
+    processingScreen.style.display = 'none'
+
+    
+    checkoutContinue.addEventListener('click', () => {
+        $('#availability-screen').fadeOut(400, function(){
+            $('#checkout-screen').fadeIn()
+        })
+    })
+
+    availabilityBack.addEventListener('click', () => {
+        $('#checkout-screen').fadeOut(400, function(){
+            $('#availability-screen').fadeIn()
+        })
+    })
+
+    profileBackButton.addEventListener('click', () => {
+        sessionBookingPage.style.display = 'none'
+        tutorProfile.style.display = 'flex'
+    })
+
+    processingHome.addEventListener('click', () => {
+        $('#session-booking-page').fadeOut()
+        tutorProfile.style.display = 'none'
+    })
+}
+
 function loadAvailabilities(availabilityData) {
     tutorsAvailability = []
     tutorsAvailability.push(availabilityData.Sunday)
@@ -47,26 +128,6 @@ function loadAvailabilities(availabilityData) {
     tutorsAvailability.push(availabilityData.Saturday)
 }
 
-//Checkout variables
-var checkoutTotal = 0.0
-var course
-var end
-var school
-var sessionFee = 3.95
-var start
-var subject
-var tutor
-var tutorsFee
-
-var currentDate = getCurrentMonthAndYear()
-var year = currentDate[0]
-var month = currentDate[1]
-var dayVal
-var tutorsAvailability = []
-var tutorsPricePHH = 0.0
-var currentBalance
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 function buildCalendar(availability) {
     var calendarHeader = document.getElementById('calendar-header')
