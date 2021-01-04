@@ -125,14 +125,12 @@ function sendPushTo(token, title, message) {
 function sendEmailTo(email, title, message) {
 		var xhttp = new XMLHttpRequest();
     var herokuURL = "https://tutortree2.herokuapp.com/sendEmailTo/"+email+"/"+title+"/"+message
-    console.log(herokuURL)
 		xhttp.open("GET", herokuURL, true);
 		xhttp.send();
 }
 function sendReceiptTo(transactionID, amount, email) {
     var xhttp = new XMLHttpRequest();
     var herokuURL = "https://tutortree2.herokuapp.com/sendReceiptTo/"+transactionID+"/"+amount+"/"+email
-    console.log(herokuURL)
     xhttp.open("GET", herokuURL, true);
     xhttp.send();
 }  
