@@ -155,7 +155,6 @@ function loadSessions() {
         })
 
         Promise.all(promises).then(results => {
-
             buildUpcomingSessions(upcomingSessions)
             buildPendingSessions(pendingSessions)
             buildPastSessions(pastSessions)
@@ -435,7 +434,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
         sessionHeader.innerHTML = data.name
         createSessionInfoText(data.email, sessionInfoEmailContainer)
         createSessionInfoText(data.phoneNumber, sessionInfoPhoneNumberContainer)
-
+        console.log(otherId)
         confirmSessionButton.addEventListener('click', () => {
             confirmSession(sessionID, sessionInfo, studentName, studentPhoto)
         })
