@@ -76,15 +76,15 @@ function loadSessions() {
             var sessionDict = doc.data()
 
             if (sessionDict.status == 'confirmed' && sessionDict.end > currentTime) {
-                var session = [sessionDict.start, sessionDict]
+                var session = [sessionDict.start, doc.id, sessionDict]
                 upcomingSessions.push(session)
 
             } else if (sessionDict.status == 'pending') {
-                const session = [sessionDict.start, sessionDict]
+                const session = [sessionDict.start, doc.id, sessionDict]
                 pendingSessions.push(session)
 
             } else {
-                const session = [sessionDict.start, sessionDict]
+                const session = [sessionDict.start, doc.id, sessionDict]
                 pastSessions.push(session)
             }
 
@@ -114,7 +114,8 @@ async function buildUpcomingSessions(sessions) {
 
     var sessionDate = ''
     for(var i = 0; i < sortedSessions.length; i++) {
-        const sessionInfo = sortedSessions[i][1]
+        const sessionID = sortedSessions[i][1]
+        const sessionInfo = sortedSessions[i][2]
         const endEpoch = sessionInfo.end
         const endDateObject = getFormattedDate(endEpoch)
         const endDateString = endDateObject[0] + ', ' + endDateObject[1] + ' ' + endDateObject[2]
@@ -126,7 +127,7 @@ async function buildUpcomingSessions(sessions) {
             buildDateHeader(endDateString, upcomingSessionsArea)
         }
 
-        await buildSessionBlock(sessionInfo, upcomingSessionsArea)
+        await buildSessionBlock(sessionID, sessionInfo, upcomingSessionsArea)
     }
 }
 
@@ -151,7 +152,8 @@ async function buildPendingSessions(sessions) {
 
     var sessionDate = ''
     for(var i = 0; i < sortedSessions.length; i++) {
-        const sessionInfo = sortedSessions[i][1]
+        const sessionID = sortedSessions[i][1]
+        const sessionInfo = sortedSessions[i][2]
         const endEpoch = sessionInfo.end
         const endDateObject = getFormattedDate(endEpoch)
         const endDateString = endDateObject[0] + ', ' + endDateObject[1] + ' ' + endDateObject[2]
@@ -163,7 +165,7 @@ async function buildPendingSessions(sessions) {
             buildDateHeader(endDateString, pendingSessionsArea)
         }
 
-        await buildSessionBlock(sessionInfo, pendingSessionsArea)
+        await buildSessionBlock(sessionID, sessionInfo, pendingSessionsArea)
     }
 }
 
@@ -177,7 +179,8 @@ while (pastSessionsArea.firstChild) {
 
     var sessionDate = ''
     for(var i = 0; i < sortedSessions.length; i++) {
-        const sessionInfo = sortedSessions[i][1]
+        const sessionID = sortedSessions[i][1]
+        const sessionInfo = sortedSessions[i][2]
         const endEpoch = sessionInfo.end
         const endDateObject = getFormattedDate(endEpoch)
         const endDateString = endDateObject[0] + ', ' + endDateObject[1] + ' ' + endDateObject[2]
@@ -189,7 +192,7 @@ while (pastSessionsArea.firstChild) {
             buildDateHeader(endDateString, pastSessionsArea)
         }
 
-        await buildSessionBlock(sessionInfo, pastSessionsArea)
+        await buildSessionBlock(sessionID, sessionInfo, pastSessionsArea)
     }
 }
 
