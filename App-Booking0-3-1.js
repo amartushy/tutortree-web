@@ -1,3 +1,5 @@
+
+
 //Globals
 var checkoutTotal = 0.0
 var course
@@ -443,12 +445,6 @@ function createSession(howPaid, transactionID) {
         console.error("Error writing document: ", error);
     });
 
-    var spendingPromise = userDB.collection('userTest').doc(globalUserId).collection('spending').doc(transactionID).set(checkoutDict).then(function() {
-        console.log("Spending doc written");
-    }).catch(function(error) {
-        console.error("Error writing document: ", error);
-    });
-
     var tutorPromise = userDB.collection('userTest').doc(tutor).collection('sessions').doc(transactionID).set(checkoutDict).then(function() {
         console.log("Tutor doc written");
     }).catch(function(error) {
@@ -496,7 +492,7 @@ function createSession(howPaid, transactionID) {
             })
         }
     })
-    promises.push(studentPromise, spendingPromise, tutorPromise, globalPromise, notificationPromise, connectionPromise)
+    promises.push(studentPromise, tutorPromise, globalPromise, notificationPromise, connectionPromise)
 
     Promise.all(promises).then(results => {
         console.log('All documents written successfully')
