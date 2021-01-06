@@ -259,6 +259,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
 
     var sessionsChevron = document.createElement('div')
     sessionsChevron.setAttribute('class', 'sessions-chevron')
+    sessionsChevron.setAttribute('id', 'session-chevron-' + sessionID)
     sessionsChevron.innerHTML = ""
     detailsDiv.appendChild(sessionsChevron)
 
@@ -383,6 +384,20 @@ function toggleSessionBlockBottom(sessionID) {
     } else {
         element.style.display = 'flex'
     }
+
+    rotateChevron(sessionID)
+}
+
+function rotateChevron(sessionID) {
+    var chevronID = 'session-chevron-' + sessionID
+    var chevron = document.getElementById(chevronID)
+
+    if (chevron.classList.contains('sessions-chevron')) {
+        chevron.setAttribute('class', 'sessions-chevron-down')
+    } else {
+        chevron.setAttribute('class', 'sessions-chevron')
+    }
+
 }
 
 function createSessionInfoHeader(text, DOMElement) {
