@@ -48,8 +48,8 @@ function loadCoreProperties(ID) {
 	
         loadHeader()
         loadProfile()
-	loadNotifications()
-	loadFinancials()
+	    loadNotifications()
+	    loadFinancials()
 	    
         if (coreIsTutor) {
             loadTutorProfile()
@@ -186,6 +186,9 @@ function loadFinancials() {
 
     currentBalance.innerHTML = '$' + parseFloat(coreBalance).toFixed(2)
 
+    depositButton.addEventListener('click', () => {
+        loadDeposit()
+    })
     transactionsButton.addEventListener('click', () => {
         billingPage.style.display = 'flex'
     })
