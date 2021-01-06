@@ -344,6 +344,9 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
             confirmSessionButton.setAttribute('class', 'confirm-session')
             confirmSessionButton.innerHTML = 'Confirm'
             sessionBlockBottomLeft.appendChild(confirmSessionButton)
+            confirmSessionButton.addEventListener('click', () => {
+                confirmSession(sessionID, sessionInfo)
+            })
 
             var rescheduleSessionButton = document.createElement('div')
             rescheduleSessionButton.setAttribute('class', 'reschedule-session')
@@ -434,10 +437,6 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
         sessionHeader.innerHTML = data.name
         createSessionInfoText(data.email, sessionInfoEmailContainer)
         createSessionInfoText(data.phoneNumber, sessionInfoPhoneNumberContainer)
-        console.log(otherId)
-        confirmSessionButton.addEventListener('click', () => {
-            confirmSession(sessionID, sessionInfo, studentName, studentPhoto)
-        })
     })
 }
 
