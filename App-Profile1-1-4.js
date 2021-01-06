@@ -297,3 +297,233 @@ function formatTransactionDate(date) {
     return yearString
 }
 
+
+//Deposit Functions____________________________________________________________________________________
+
+var depositTotal
+function loadDeposit() {
+    depositNavigation()
+    setInitialDepositState()
+
+    depositTotal = 0
+    var depositAmountField = document.getElementById('deposit-amount-field')
+    var depositTotalText = document.getElementById('deposit-total-text') 
+    var accountEmailField = document.getElementById('account-email')
+
+    depositAmountField.placeholder = '$0.00'
+    depositTotalText.innerHTML = '$' + depositTotal
+    accountEmailField.innerHTML = coreEmail
+    
+    depositAmountField.onblur = () => {
+        depositTotal = depositAmountField.value 
+        depositTotalText.innerHTML = '$' + depositTotal
+    }
+    depositAmountField.addEventListener("keydown", function (e) {
+        if (e.keyCode === 13) {
+            $('#deposit-amount-field').blur()
+            depositTotal = depositAmountField.value 
+            depositTotalText.innerHTML = '$' + depositTotal
+            depositAmountField.placeholder = '$' + depositTotal
+            depositAmountField.value = ''
+        }
+    })
+}
+
+Webflow.push(function() {
+    // Disable webflows submission onkeydown 13 (enter)
+    $('#amount-form').submit(function() {
+      return false
+    })
+})
+
+function depositNavigation() {
+    const profileBackButton = document.getElementById('profile-back-button')
+    const checkoutWithCard = document.getElementById('checkout-with-card')
+    const checkoutComplete = document.getElementById('checkout-complete')
+
+    profileBackButton.addEventListener('click', () => {
+        $('#deposit-page').fadeOut()
+    })
+
+    checkoutWithCard.addEventListener('click', () => {
+        setProcessingInitialState()
+    })
+
+    checkoutComplete.addEventListener('click', () => {
+        $('#deposit-page').fadeOut()
+    })
+}
+
+function setInitialDepositState() {
+    $("#processing-screen").hide()
+    $("#processing-text").show()
+    $("#confirmation-text").hide()
+    $("#confirmation-check").hide()
+    const depositPage = document.getElementById('deposit-page')
+    depositPage.style.display = 'flex'
+
+    $('#checkout-screen').fadeIn(400)
+}
+
+braintree.client.create({
+    authorization: 'production_yks4fjkg_j3thkst7k9j6mkvc'
+    }, function (clientErr, clientInstance) {
+    if (clientErr) {
+        console.error(clientErr);
+        return;
+    }
+
+    // This example shows Hosted Fields, but you can also use this
+    // client instance to create additional components here, such as
+    // PayPal or Data Collector.
+
+    braintree.hostedFields.create({
+        client: clientInstance,
+        styles: {
+            'input': {
+                'font-size': '14px'
+            },
+            'input.invalid': {
+                'color': 'red'
+            },
+            'input.valid': {
+                'color': 'green'
+            }
+        },
+        fields: {
+            number: {
+                selector: '#card-number',
+                placeholder: '4111 1111 1111 1111'
+            },
+            cvv: {
+                selector: '#cvv',
+                placeholder: '123'
+            },
+            expirationDate: {
+                selector: '#expiration-date',
+                placeholder: '10/2022'
+            }
+        }
+    }, function (hostedFieldsErr, hostedFieldsInstance) {
+        if (hostedFieldsErr) {
+            console.error(hostedFieldsErr);
+            return;
+        }
+
+        var checkoutWithCard = document.getElementById('checkout-with-card')
+
+        checkoutWithCard.addEventListener('click', function (event) {
+            event.preventDefault();
+            setProcessingInitialState()
+
+            hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+                if (tokenizeErr) {
+                    console.error(tokenizeErr);
+                    processingErrorResetScreens()
+                    showErrorMessage("Something went wrong. Please try again")
+                return;
+                }
+                var nonce = payload.nonce
+                var amount = depositTotal
+                setProcessingInitialState()
+                checkoutWithNonceAndAmount(nonce, amount, "Credit Card")
+            });
+        }, false);
+    })
+})
+
+async function checkoutWithNonceAndAmount(nonce, amount, howPaid) {
+    var xhttp = new XMLHttpRequest();
+    var herokuURL = "https://tutortree2.herokuapp.com/checkoutWithNonceAndAmount/"+nonce+"/"+amount
+            
+    xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == XMLHttpRequest.DONE) {
+                    var response = xhttp.responseText
+                    console.log(response)
+                    if(response == 'Declined') {
+                        processingErrorResetScreens()
+                        showErrorMessage('Your payment method was declined.')
+                    } else {
+                        createDeposit(howPaid, response)
+                    }
+            }
+    }
+    xhttp.open("GET", herokuURL, true);
+    xhttp.send();
+
+    return(xhttp.response)
+}
+
+function createDeposit(howPaid, transactionID) {
+    var currentDateTime = new Date() / 1000
+    var dateObject = getFormattedDate(currentDateTime)
+    const dateCreated = dateObject[0] + ', ' + dateObject[1] + ' ' + dateObject[2]
+
+    var depositDict = {
+        'user' : globalUserId,
+        'accountEmail' : coreEmail,
+        'amount' : depositTotal,
+        'date' : dateCreated,
+        'dateEpoch' : currentDateTime,
+        'howPaid' : howPaid
+    }
+    console.log(depositDict)
+
+    var promises = []
+    var depositPromise = userDB.collection('deposits').doc(transactionID).set(depositDict).then(function(){
+        console.log("Global deposits written")
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    var userPromise = userDB.collection('userTest').doc(globalUserId).collection('deposits').doc(transactionID).set(depositDict).then(function(){
+        console.log("User deposits written")
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+    
+    var balancePromise = userDB.collection('userTest').doc(globalUserId).update({
+        'currentBalance' : coreBalance + parseFloat(depositTotal)
+    }).then(function() {
+        console.log('Balance updated')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    promises.push(depositPromise, userPromise, balancePromise)
+
+    Promise.all(promises).then( () => {
+        console.log("All documents written successfully")
+        sendReceiptTo(transactionID, depositTotal, coreEmail)
+        $("#processing-text").hide(() => {
+            $('#confirmation-text').fadeIn()
+            $('#confirmation-check').fadeIn()
+        })
+    })
+}
+
+function showErrorMessage(message) {
+    var errorMessageDiv = document.getElementById('error-message')
+    errorMessageDiv.innerHTML = message
+
+    $('#error-message').fadeIn().delay(5000).fadeOut("slow")
+}
+
+function setProcessingInitialState() {
+    $("#checkout-screen").hide( () => {
+        $("#processing-screen").show()
+        $("#processing-text").show()
+        $("#confirmation-text").hide()
+        $("#confirmation-check").hide()
+    })
+}
+
+function processingErrorResetScreens() {
+    $("#processing-screen").show( () => {
+        $("#checkout-screen").hide()
+        $("#processing-text").show()
+        $("#confirmation-text").hide()
+        $("#confirmation-check").hide()
+    })
+}
+
