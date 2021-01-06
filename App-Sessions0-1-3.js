@@ -2,6 +2,7 @@
 var userDB = firebase.firestore()
 
 var globalUserId,
+    coreBalance,
     coreEmail,
     coreIsEmailOn,
     coreIsSMSOn,
@@ -29,7 +30,8 @@ function loadCoreProperties(ID) {
 	console.log(globalUserId)
     userDB.collection('userTest').doc(globalUserId).onSnapshot(function(doc) {
         var data = doc.data()
-
+	
+	coreBalance = data.currentBalance
         coreEmail = data.email
         coreIsEmailOn = data.isEmailOn 
         coreIsSMSOn = data.coreIsSMSOn
