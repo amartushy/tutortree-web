@@ -343,10 +343,6 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
         if(sessionInfo.status == 'pending') {
             var confirmSessionButton = document.createElement('div')
             confirmSessionButton.setAttribute('class', 'confirm-session')
-            //confirmSessionButton.setAttribute('onClick', 'confirmSession("'+sessionID+'","'+sessionInfo+'")')
-            confirmSessionButton.addEventListener('click', () => {
-                confirmSession(sessionID, sessionInfo)
-            })
             confirmSessionButton.innerHTML = 'Confirm'
             sessionBlockBottomLeft.appendChild(confirmSessionButton)
 
@@ -433,9 +429,16 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
 
     await userDB.collection('userTest').doc(otherId).get().then(function(doc) {
         var data = doc.data()
+        var studentName = data.name
+        var studentPhoto = data.profileImage
+
         sessionHeader.innerHTML = data.name
         createSessionInfoText(data.email, sessionInfoEmailContainer)
         createSessionInfoText(data.phoneNumber, sessionInfoPhoneNumberContainer)
+
+        confirmSessionButton.addEventListener('click', () => {
+            confirmSession(sessionID, sessionInfo, studentName, studentPhoto)
+        })
     })
 }
 
