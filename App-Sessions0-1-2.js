@@ -62,6 +62,7 @@ function loadHeader() {
     profileTab.appendChild(profileText)
 }
 
+
 //Tabs
 const upcomingTab = document.getElementById('upcoming-tab')
 const pendingTab = document.getElementById('pending-tab')
@@ -340,7 +341,10 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
         if(sessionInfo.status == 'pending') {
             var confirmSessionButton = document.createElement('div')
             confirmSessionButton.setAttribute('class', 'confirm-session')
-            confirmSessionButton.setAttribute('onClick', 'confirmSession("'+sessionID+'","'+sessionInfo+'")')
+            //confirmSessionButton.setAttribute('onClick', 'confirmSession("'+sessionID+'","'+sessionInfo+'")')
+            confirmSessionButton.addEventListener('click', () => {
+                confirmSession(sessionID, sessionInfo)
+            })
             confirmSessionButton.innerHTML = 'Confirm'
             sessionBlockBottomLeft.appendChild(confirmSessionButton)
 
@@ -431,7 +435,6 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
         createSessionInfoText(data.email, sessionInfoEmailContainer)
         createSessionInfoText(data.phoneNumber, sessionInfoPhoneNumberContainer)
     })
-
 }
 
 function toggleSessionBlockBottom(sessionID) {
