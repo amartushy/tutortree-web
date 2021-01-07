@@ -487,3 +487,169 @@ function createSessionInfoText(text, DOMElement) {
     sessionInfoText.innerHTML = text
     DOMElement.appendChild(sessionInfoText)
 }
+
+
+//Session Management_________________________________________________________________________________
+const sessionsManagementPage = document.getElementById('sessions-management-page')
+const sessionsBack = document.getElementById('sessions-back')
+const completionBack = document.getElementById('completion-back')
+
+sessionsBack.addEventListener('click', () => {
+    sessionsManagementPage.style.display = 'none'
+})
+completionBack.addEventListener('click', () => {
+    sessionsManagementPage.style.display = 'none'
+})
+
+const confirmSessionScreen = document.getElementById('confirm-session-screen')
+const rescheduleSessionScreen = document.getElementById('reschedule-session-screen')
+const declineSessionScreen = document.getElementById('decline-session-screen')
+const completionScreen = document.getElementById('completion-screen')
+
+function confirmSession(sessionID, sessionInfo) {
+    window.scrollTo(0, 0);
+    console.log(sessionID)
+    userDB.collection('userTest').doc(sessionInfo.student).get().then(function(doc) {
+        var data = doc.data()
+        var studentName = data.name
+        var studentPhoto = data.profileImage
+
+        var studentImageContainer = document.getElementById('student-image-container')
+        studentImageContainer.removeChild(studentImageContainer.firstChild)
+
+        var studentImage = document.createElement('img')
+        studentImage.setAttribute('class', 'student-profile-image')
+        studentImage.src = studentPhoto 
+        studentImageContainer.appendChild(studentImage)
+
+        var studentNameHeader = document.getElementById('student-name')
+        studentNameHeader.innerHTML = studentName
+
+    })
+
+    sessionsManagementPage.style.display = 'flex'
+    confirmSessionScreen.style.display = 'flex'
+    rescheduleSessionScreen.style.display = 'none'
+    declineSessionScreen.style.display = 'none'
+    completionScreen.style.display = 'none'
+    $("#processing-text").show()
+    $('#confirmation-text').hide()
+    $('#confirmation-check').hide()
+
+    const sessionDate = document.getElementById('session-date')
+    const sessionTime = document.getElementById('session-time')
+    const sessionSubject = document.getElementById('session-subject')
+    const sessionCourse = document.getElementById('session-course')
+    const sessionTotal = document.getElementById('session-total')
+
+    var dateObject = getFormattedDate(sessionInfo.start)
+    var dateString = dateObject[0]+', '+dateObject[1]+' '+dateObject[2]
+    sessionDate.innerHTML = dateString 
+
+    var timeObject = getFormattedTime(sessionInfo.start, sessionInfo.end)
+    var timeString = timeObject[0]+' to '+timeObject[1]
+    sessionTime.innerHTML = timeString
+
+    sessionSubject.innerHTML = sessionInfo.subject 
+    sessionCourse.innerHTML = sessionInfo.course 
+    
+    var amountForTutor = parseFloat(sessionInfo.tutorsFee) * 0.85
+    sessionTotal.innerHTML = '$' + amountForTutor.toFixed(2)
+
+    var confirmSession = document.getElementById('confirm-session')
+    var confirmSessionClone = confirmSession.cloneNode(true)
+    confirmSession.parentNode.replaceChild(confirmSessionClone, confirmSession)
+    confirmSessionClone.addEventListener('click', () => {
+        $('#confirm-session-screen').fadeOut(400, () => {
+            $('#completion-screen').fadeIn()
+            processConfirmation(sessionID, sessionInfo, dateString)
+        })
+    })
+}
+
+function processConfirmation(sessionID, sessionInfo, sessionDate) {
+    sessionInfo['status'] = 'confirmed'
+    var depositTotal = parseFloat(sessionInfo.tutorsFee) * 0.85
+    var promises = []
+
+    var incomePromise = userDB.collection('userTest').doc(sessionInfo.tutor).collection('income').doc(sessionID).set(sessionInfo).then(function() {
+        console.log('Income doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    var spendingPromise = userDB.collection('userTest').doc(sessionInfo.student).collection('spending').doc(sessionID).set(sessionInfo).then(function() {
+        console.log('Spending doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    var studentPromise = userDB.collection('userTest').doc(sessionInfo.student).collection('sessions').doc(sessionID).update({'status' : 'confirmed'}).then( ()=> {
+        console.log('Student doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    var tutorPromise = userDB.collection('userTest').doc(sessionInfo.tutor).collection('sessions').doc(sessionID).update({'status' : 'confirmed'}).then( ()=> {
+        console.log('Tutor doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    var globalPromise = userDB.collection('globalSessions').doc(sessionID).update({'status' : 'confirmed'}).then( ()=> {
+        console.log('Global doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    var balancePromise = userDB.collection('userTest').doc(globalUserId).update({
+        'currentBalance' : coreBalance + parseFloat(depositTotal)
+    }).then(function() {
+        console.log('Balance updated')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    var notificationPromise = userDB.collection('userTest').doc(sessionInfo.student).get().then(function(doc) {
+        var userData = doc.data()
+
+        var isSMSOn = userData.isSMSOn
+        var isPushOn = userData.isPushOn
+        var isEmailOn = userData.isEmailOn
+
+        if(isSMSOn) {
+            var phoneNumber = userData.phoneNumber
+            var smsMessage = coreName + ' has confirmed your session on ' + sessionDate 
+            sendSMSTo(phoneNumber, smsMessage)
+        }
+
+        if(isPushOn) {
+            var token = userData.pushToken
+            var pushTitle = "Session Confirmed"
+            var pushMessage = coreName + ' has confirmed your session on ' + sessionDate 
+            sendPushTo(token, pushTitle, pushMessage)
+        }
+
+        if(isEmailOn) {
+            var email = userData.email 
+            var emailTitle = 'Session Confirmed'
+            var emailMessage = coreName + ' has confirmed your session on ' + sessionDate 
+            sendEmailTo(email, emailTitle, emailMessage)
+        }
+
+        console.log('Notifications sent')
+    })
+
+    promises.push(incomePromise, spendingPromise, studentPromise, tutorPromise, globalPromise, balancePromise, notificationPromise)
+
+    Promise.all(promises).then(() => {
+        console.log('All documents written')
+        isNewEvents = false
+        loadSessions()
+        $("#processing-text").hide(() => {
+            $('#confirmation-text').fadeIn()
+            $('#confirmation-check').fadeIn()
+        })
+    })
+
+}
