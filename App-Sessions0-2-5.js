@@ -721,7 +721,7 @@ function buildCalendarNav() {
     var calendarForward = document.getElementById('calendar-forward')
     var calendarForwardClone = calendarForward.cloneNode(true)
     calendarForward.parentNode.replaceChild(calendarForwardClone, calendarForward)
-    calendcalendarForwardClonearForward.addEventListener('click', () => {
+    calendarForwardClone.addEventListener('click', () => {
         if (month==11) {
             year++
             month = 0
