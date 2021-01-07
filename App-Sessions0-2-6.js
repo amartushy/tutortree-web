@@ -493,7 +493,7 @@ function createSessionInfoText(text, DOMElement) {
 }
 
 
-//Session Management_________________________________________________________________________________
+//Session Confirmation_________________________________________________________________________________
 const sessionsManagementPage = document.getElementById('sessions-management-page')
 const sessionsBack = document.getElementById('sessions-back')
 const completionBack = document.getElementById('completion-back')
@@ -657,7 +657,9 @@ function processConfirmation(sessionID, sessionInfo, sessionDate) {
     })
 
 }
-//Reschedule Functions
+
+
+//Reschedule Functions_______________________________________________________________________________________________
 var currentDate = getCurrentMonthAndYear()
 var year = currentDate[0]
 var month = currentDate[1]
@@ -957,20 +959,144 @@ function padAndChop(str, padChar, length) {
 }
 
 
-
-
-//Cancel Session_______________________________________________________________________________________________________________________________
-function cancelSession(sessionID, sessionInfo) {
+function rescheduleSession(sessionID, sessionInfo) {
+    console.log(sessionID)
+    var rescheduleDepositText = document.getElementById('reschedule-deposit-text')
     sessionsManagementPage.style.display = 'flex'
     confirmSessionScreen.style.display = 'none'
-    rescheduleSessionScreen.style.display = 'none'
-    declineSessionScreen.style.display = 'flex'
+    rescheduleSessionScreen.style.display = 'block'
+    declineSessionScreen.style.display = 'none'
     completionScreen.style.display = 'none'
+    rescheduleDepositText.style.display = 'none'
 
-    const declineSession = document.getElementById('decline-session')
-    declineSession.addEventListener('click', () => {
-        $('#decline-session-screen').fadeOut(400, () => {
+    if(sessionInfo.status == 'pending') {
+        var depositTotal = parseFloat(sessionInfo.tutorsFee) * 0.85
+        rescheduleDepositText.style.display = 'flex'
+        rescheduleDepositText.innerHTML = 'Rescheduling this session will confirm it and credit your account with $'+ parseFloat(depositTotal).toFixed(2)
+    }
+
+    setInitialState()
+    buildCalendarNav()
+    buildCalendar(fullAvailability)
+
+    var rescheduleSession = document.getElementById('reschedule-session')
+    var rescheduleSessionClone = rescheduleSession.cloneNode(true)
+    rescheduleSession.parentNode.replaceChild(rescheduleSessionClone, rescheduleSession)
+    rescheduleSessionClone.addEventListener('click', () => {
+        $('#reschedule-session-screen').fadeOut(400, () => {
             $('#completion-screen').fadeIn()
+        })
+        processReschedule(sessionID, sessionInfo)
+    })
+}
+
+function processReschedule(sessionID, sessionInfo) {
+    var sessionDate = document.getElementById('session-date-header').innerHTML
+    var sessionTime = document.getElementById('session-time-text').innerHTML
+    var promises = []
+
+    //store previous status
+    var previousStatus = sessionInfo.status
+    var depositTotal = parseFloat(sessionInfo.tutorsFee) * 0.85
+
+    //update sessionInfo with new start, end, and status as confirmed
+    sessionInfo['start'] = start
+    sessionInfo['end'] = end
+    sessionInfo['status'] = 'confirmed' 
+
+    //if session is pending:
+    if(previousStatus == 'pending') {
+        var balancePromise = userDB.collection('userTest').doc(globalUserId).update({
+            'currentBalance' : coreBalance + parseFloat(depositTotal)
+        }).then(function() {
+            console.log('Balance updated')
+        }).catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+
+        var incomePromise = userDB.collection('userTest').doc(sessionInfo.tutor).collection('income').doc(sessionID).set(sessionInfo).then(function() {
+            console.log('Income doc written')
+        }).catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+    
+        var spendingPromise = userDB.collection('userTest').doc(sessionInfo.student).collection('spending').doc(sessionID).set(sessionInfo).then(function() {
+            console.log('Spending doc written')
+        }).catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+        promises.push(balancePromise, incomePromise, spendingPromise)
+    }
+
+    //update student sessions
+    var studentPromise = userDB.collection('userTest').doc(sessionInfo.student).collection('sessions').doc(sessionID).update(
+        {'status' : 'confirmed', 'start' : start,'end' : end }).then( ()=> {
+        console.log('Student doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    //update tutor sessions
+    var tutorPromise = userDB.collection('userTest').doc(sessionInfo.tutor).collection('sessions').doc(sessionID).update(
+        {'status' : 'confirmed', 'start' : start,'end' : end }).then( ()=> {
+        console.log('Tutor doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    //update global sessions
+    var globalPromise = userDB.collection('globalSessions').doc(sessionID).update(
+        {'status' : 'confirmed', 'start' : start,'end' : end }).then( ()=> {
+        console.log('Global doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    //notify student of new time
+    var notificationPromise = userDB.collection('userTest').doc(sessionInfo.student).get().then(function(doc) {
+        var userData = doc.data()
+
+        var isSMSOn = userData.isSMSOn
+        var isPushOn = userData.isPushOn
+        var isEmailOn = userData.isEmailOn
+
+        if(isSMSOn) {
+            var phoneNumber = userData.phoneNumber
+            var smsMessage = coreName + ' has rescheduled your session to ' + sessionDate+' from '+sessionTime
+            sendSMSTo(phoneNumber, smsMessage)
+        }
+
+        if(isPushOn) {
+            var token = userData.pushToken
+            var pushTitle = "Session Confirmed"
+            var pushMessage = coreName + ' has rescheduled your session to ' + sessionDate+' from '+sessionTime
+            sendPushTo(token, pushTitle, pushMessage)
+        }
+
+        if(isEmailOn) {
+            var email = userData.email 
+            var emailTitle = 'Session Confirmed'
+            var emailMessage = coreName + ' has rescheduled your session to ' + sessionDate+' from '+sessionTime
+            sendEmailTo(email, emailTitle, emailMessage)
+        }
+
+        console.log('Notifications sent')
+    })
+
+    promises.push(studentPromise, tutorPromise, globalPromise, notificationPromise)
+
+    Promise.all(promises).then(() => {
+        console.log('All documents written')
+        isNewEvents = false
+        loadSessions()
+        $("#processing-text").hide(() => {
+            if(previousStatus == 'pending'){
+                document.getElementById('finished-text').innerHTML = 'This session has been rescheduled and your account has been credited'
+            } else {
+                document.getElementById('finished-text').innerHTML = 'This session has been successfully rescheduled and the student has been notified'
+            }
+            $('#confirmation-text').fadeIn()
+            $('#confirmation-check').fadeIn()
         })
     })
 }
