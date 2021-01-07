@@ -127,15 +127,6 @@ function loadSessions() {
     var currentTime = (new Date()).getTime() / 1000
 
     userDB.collection('userTest').doc(globalUserId).collection('sessions').onSnapshot( function(sessions) {
-        while (upcomingSessionsArea.firstChild) {
-            upcomingSessionsArea.removeChild(upcomingSessionsArea.firstChild)
-        }
-        while (pendingSessionsArea.firstChild) {
-            pendingSessionsArea.removeChild(pendingSessionsArea.firstChild)
-        }
-        while (pastSessionsArea.firstChild) {
-            pastSessionsArea.removeChild(pastSessionsArea.firstChild)
-        }
 
         var promises = []
         var upcomingSessions = []
@@ -166,9 +157,7 @@ function loadSessions() {
             buildUpcomingSessions(upcomingSessions)
             buildPendingSessions(pendingSessions)
             buildPastSessions(pastSessions)
-
         })
-
     })
 }
 
