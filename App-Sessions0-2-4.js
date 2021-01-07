@@ -693,10 +693,22 @@ function setInitialState() {
 }
 
 function buildCalendarNav() {
+
+    var confirmSession = document.getElementById('confirm-session')
+    var confirmSessionClone = confirmSession.cloneNode(true)
+    confirmSession.parentNode.replaceChild(confirmSessionClone, confirmSession)
+    confirmSessionClone.addEventListener('click', () => {
+        $('#confirm-session-screen').fadeOut(400, () => {
+            $('#completion-screen').fadeIn()
+            processConfirmation(sessionID, sessionInfo, dateString)
+        })
+    })
+
+
     var calendarBack = document.getElementById('calendar-back')
-    var calendarForward = document.getElementById('calendar-forward')
-    
-    calendarBack.addEventListener('click', () => {
+    var calendarBackClone = calendarBack.cloneNode(true)
+    calendarBack.parentNode.replaceChild(calendarBackClone, calendarBack)
+    calendarBackClone.addEventListener('click', () => {
         if (month==0) {
             year--
             month = 11
@@ -706,7 +718,10 @@ function buildCalendarNav() {
         buildCalendar(fullAvailability)
     })
 
-    calendarForward.addEventListener('click', () => {
+    var calendarForward = document.getElementById('calendar-forward')
+    var calendarForwardClone = calendarForward.cloneNode(true)
+    calendarForward.parentNode.replaceChild(calendarForwardClone, calendarForward)
+    calendcalendarForwardClonearForward.addEventListener('click', () => {
         if (month==11) {
             year++
             month = 0
