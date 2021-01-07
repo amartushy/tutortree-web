@@ -134,3 +134,9 @@ function sendReceiptTo(transactionID, amount, email) {
     xhttp.open("GET", herokuURL, true);
     xhttp.send();
 }  
+function sendRefund(ID) {
+		var xhttp = new XMLHttpRequest();
+    var herokuURL = "https://tutortree2.herokuapp.com/refund/"+ID
+		xhttp.open("GET", herokuURL, true);
+		xhttp.send();
+}
