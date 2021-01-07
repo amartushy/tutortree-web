@@ -123,10 +123,22 @@ firebase.auth().onAuthStateChanged(function(user) {
 	}
 })
 
+var isNewEvents = false
 function loadSessions() {
+    var loadNewEvents = document.getElementById('load-new-events')
+    loadNewEvents.style.display = 'none'
+    
     var currentTime = (new Date()).getTime() / 1000
 
     userDB.collection('userTest').doc(globalUserId).collection('sessions').onSnapshot( function(sessions) {
+        if(isNewEvents) {
+            var loadNewEvents = document.getElementById('load-new-events')
+            loadNewEvents.style.display = 'flex'
+            loadNewEvents.addEventListener('click', () => {
+                loadSessions()
+            })
+        }
+        isNewEvents = true
 
         var promises = []
         var upcomingSessions = []
