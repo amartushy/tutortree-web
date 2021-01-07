@@ -382,7 +382,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     
             var cancelSessionButton = document.createElement('div')
             cancelSessionButton.setAttribute('class', 'cancel-session')
-            cancelSessionButton.setAttribute('onClick', 'declineSession("'+sessionID+'","'+sessionInfo+'")')
+            cancelSessionButton.setAttribute('onClick', 'cancelSession("'+sessionID+'","'+sessionInfo+'")')
             cancelSessionButton.innerHTML = "Can't make it?"
             sessionBlockBottomLeft.appendChild(cancelSessionButton)
         }
@@ -507,7 +507,7 @@ completionBack.addEventListener('click', () => {
 
 const confirmSessionScreen = document.getElementById('confirm-session-screen')
 const rescheduleSessionScreen = document.getElementById('reschedule-session-screen')
-const declineSessionScreen = document.getElementById('decline-session-screen')
+const cancelSessionScreen = document.getElementById('cancel-session-screen')
 const completionScreen = document.getElementById('completion-screen')
 
 function confirmSession(sessionID, sessionInfo) {
@@ -534,7 +534,7 @@ function confirmSession(sessionID, sessionInfo) {
     sessionsManagementPage.style.display = 'flex'
     confirmSessionScreen.style.display = 'flex'
     rescheduleSessionScreen.style.display = 'none'
-    declineSessionScreen.style.display = 'none'
+    cancelSessionScreen.style.display = 'none'
     completionScreen.style.display = 'none'
     $("#processing-text").show()
     $('#confirmation-text').hide()
@@ -965,7 +965,7 @@ function rescheduleSession(sessionID, sessionInfo) {
     sessionsManagementPage.style.display = 'flex'
     confirmSessionScreen.style.display = 'none'
     rescheduleSessionScreen.style.display = 'block'
-    declineSessionScreen.style.display = 'none'
+    cancelSessionScreen.style.display = 'none'
     completionScreen.style.display = 'none'
     rescheduleDepositText.style.display = 'none'
 
