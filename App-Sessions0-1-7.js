@@ -124,10 +124,18 @@ firebase.auth().onAuthStateChanged(function(user) {
 })
 
 function loadSessions() {
-
     var currentTime = (new Date()).getTime() / 1000
 
     userDB.collection('userTest').doc(globalUserId).collection('sessions').onSnapshot( function(sessions) {
+        while (upcomingSessionsArea.firstChild) {
+            upcomingSessionsArea.removeChild(upcomingSessionsArea.firstChild)
+        }
+        while (pendingSessionsArea.firstChild) {
+            pendingSessionsArea.removeChild(pendingSessionsArea.firstChild)
+        }
+        while (pastSessionsArea.firstChild) {
+            pastSessionsArea.removeChild(pastSessionsArea.firstChild)
+        }
 
         var promises = []
         var upcomingSessions = []
@@ -227,8 +235,8 @@ async function buildPendingSessions(sessions) {
 }
 
 async function buildPastSessions(sessions) {
-while (pastSessionsArea.firstChild) {
-    pastSessionsArea.removeChild(pastSessionsArea.firstChild)
+    while (pastSessionsArea.firstChild) {
+        pastSessionsArea.removeChild(pastSessionsArea.firstChild)
     }
     var sortedSessions = sessions.sort(function(a, b) {
         return b[0] - a[0];
@@ -253,7 +261,6 @@ while (pastSessionsArea.firstChild) {
 
 
 function buildDateHeader(endDateString, DOMElement) {
-
     var sessionDateHeader = document.createElement('div')
     sessionDateHeader.setAttribute('class', 'session-date-header')
 
