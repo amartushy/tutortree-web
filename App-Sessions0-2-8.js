@@ -367,7 +367,9 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     
             var cancelSessionButton = document.createElement('div')
             cancelSessionButton.setAttribute('class', 'cancel-session')
-            cancelSessionButton.setAttribute('onClick', 'cancelSession("'+sessionID+'","'+sessionInfo+'")')
+            cancelSessionButton.addEventListener('click', () => {
+                cancelSession(sessionID, sessionInfo)
+            })
             cancelSessionButton.innerHTML = "Can't make it?"
             sessionBlockBottomLeft.appendChild(cancelSessionButton)
             
@@ -382,7 +384,9 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     
             var cancelSessionButton = document.createElement('div')
             cancelSessionButton.setAttribute('class', 'cancel-session')
-            cancelSessionButton.setAttribute('onClick', 'cancelSession("'+sessionID+'","'+sessionInfo+'")')
+            cancelSessionButton.addEventListener('click', () => {
+                cancelSession(sessionID, sessionInfo)
+            })
             cancelSessionButton.innerHTML = "Can't make it?"
             sessionBlockBottomLeft.appendChild(cancelSessionButton)
         }
