@@ -527,3 +527,176 @@ function processingErrorResetScreens() {
     })
 }
 
+//Withdrawal Functions_____________________________________________________________________________________________________________________________
+const withdrawalButton = document.getElementById('withdrawal-button')
+
+const withdrawalPage = document.getElementById('withdrawal-page')
+const withdrawalBackButton = document.getElementById('withdrawal-back-button')
+const payoutOptions = document.getElementById('payout-options')
+const payoutSelectionScreen = document.getElementById('payout-selection-screen')
+const payoutFields = document.getElementById('payout-fields')
+
+const paypalButton = document.getElementById('paypal-button')
+const zelleButton = document.getElementById('zelle-button')
+const venmoButton = document.getElementById('venmo-button')
+
+var withdrawalBalance = document.getElementById('withdrawal-balance')
+const paypalWithdrawalDiv = document.getElementById('paypal-withdrawal-div')
+const zelleWithdrawalDiv = document.getElementById('zelle-withdrawal-div')
+const venmoWithdrawalDiv = document.getElementById('venmo-withdrawal-div')
+
+const paypalField = document.getElementById('paypal-field')
+const zelleField = document.getElementById('zelle-field')
+const venmoField = document.getElementById('venmo-field')
+
+const confirmPaypal = document.getElementById('confirm-paypal')
+const confirmZelle = document.getElementById('confirm-zelle')
+const confirmVenmo = document.getElementById('confirm-venmo')
+
+const withdrawalProcessingScreen = document.getElementById('withdrawal-processing-screen')
+const withdrawalConfirmationText = document.getElementById('w-confirmation-text')
+const withdrawalConfirmationCheck = document.getElementById('w-confirmation-check')
+const withdrawalProcessingText = document.getElementById('w-processing-text')
+const withdrawalCompleteButton = document.getElementById('withdrawal-complete')
+
+withdrawalButton.addEventListener('click', () => {
+    loadWithdrawalInitialState()
+})
+
+withdrawalBackButton.addEventListener('click', () => {
+    withdrawalPage.style.display = 'none'
+})
+
+paypalButton.addEventListener('click', () => {
+    paypalButton.setAttribute('class', 'payout-option-div-selected')
+    zelleButton.setAttribute('class', 'payout-option-div')
+    venmoButton.setAttribute('class', 'payout-option-div')
+
+    $('#payout-fields').fadeIn()
+    paypalWithdrawalDiv.style.display = 'block'
+    zelleWithdrawalDiv.style.display = 'none'
+    venmoWithdrawalDiv.style.display = 'none'
+})
+
+zelleButton.addEventListener('click', () => {
+    paypalButton.setAttribute('class', 'payout-option-div')
+    zelleButton.setAttribute('class', 'payout-option-div-selected')
+    venmoButton.setAttribute('class', 'payout-option-div')
+
+    $('#payout-fields').fadeIn()
+    paypalWithdrawalDiv.style.display = 'none'
+    zelleWithdrawalDiv.style.display = 'block'
+    venmoWithdrawalDiv.style.display = 'none'
+})
+
+venmoButton.addEventListener('click', () => {
+    paypalButton.setAttribute('class', 'payout-option-div')
+    zelleButton.setAttribute('class', 'payout-option-div')
+    venmoButton.setAttribute('class', 'payout-option-div-selected')
+
+    $('#payout-fields').fadeIn()
+    paypalWithdrawalDiv.style.display = 'none'
+    zelleWithdrawalDiv.style.display = 'none'
+    venmoWithdrawalDiv.style.display = 'block'
+})
+
+confirmPaypal.addEventListener('click', () => {
+    $('#payout-selection-screen').fadeOut(400, () => {
+        $('#withdrawal-processing-screen').fadeIn()
+
+        withdrawalConfirmationText.style.display = 'none'
+        withdrawalConfirmationCheck.style.display = 'none'
+        withdrawalProcessingText.style.display = 'flex'
+        withdrawFunds('paypal')
+    })
+})
+
+confirmZelle.addEventListener('click', () => {
+    $('#payout-selection-screen').fadeOut(400, () => {
+        $('#withdrawal-processing-screen').fadeIn()
+        
+        withdrawalConfirmationText.style.display = 'none'
+        withdrawalConfirmationCheck.style.display = 'none'
+        withdrawalProcessingText.style.display = 'flex'
+        withdrawFunds('zelle')
+    })
+})
+
+confirmVenmo.addEventListener('click', () => {
+    $('#payout-selection-screen').fadeOut(400, () => {
+        $('#withdrawal-processing-screen').fadeIn()
+        
+        withdrawalConfirmationText.style.display = 'none'
+        withdrawalConfirmationCheck.style.display = 'none'
+        withdrawalProcessingText.style.display = 'flex'
+        withdrawFunds('venmo')
+    })
+})
+
+withdrawalCompleteButton.addEventListener('click', () => {
+    withdrawalPage.style.display = 'none'
+})
+
+function loadWithdrawalInitialState() {
+    paypalButton.setAttribute('class', 'payout-option-div')
+    zelleButton.setAttribute('class', 'payout-option-div')
+    venmoButton.setAttribute('class', 'payout-option-div')
+
+    withdrawalPage.style.display = 'flex'
+    payoutSelectionScreen.style.display = 'flex'
+    payoutOptions.style.display = 'block'
+    payoutFields.style.display = 'none'
+
+    withdrawalBalance.innerHTML = parseFloat(coreBalance).toFixed(2)
+
+    withdrawalProcessingScreen.style.display = 'none'
+    withdrawalConfirmationText.style.display = 'none'
+    withdrawalConfirmationCheck.style.display = 'none'
+    withdrawalProcessingText.style.display = 'flex'
+
+}
+
+function withdrawFunds( howWithdraw) {
+    var withdrawAmount = coreBalance
+    var withdrawUsername
+
+    if(howWithdraw == 'paypal') {
+        withdrawUsername = paypalField.value 
+
+    } else if(howWithdraw == 'zelle') {
+        withdrawUsername = zelleField.value 
+
+    } else if(howWithdraw == 'venmo') {
+
+        withdrawUsername = venmoField.value 
+    }
+
+    var title = 'New Withdrawal Request'
+    var smsMessage = coreName + ' has submitted a withdrawal request for $' + withdrawAmount + ' via ' + howWithdraw
+    var message = coreName +' has submitted a new withdrawal request for: $' + withdrawAmount 
+                + '\n Withdrawal Method: ' + howWithdraw
+                + '\n Withdrawal Username: ' + withdrawUsername 
+                + '\n Email: ' + coreEmail
+                + '\n Name: ' + coreName
+                + '\n UserID: ' + globalUserId
+                + '\n Phone Number: ' + corePhone
+
+    sendEmailTo('support@tutortree.com', title, message)
+    sendSMSTo('4582108156', smsMessage)
+
+    userDB.collection('userTest').doc(globalUserId).update( {'currentBalance' : 0 }).then( () => {
+        loadCompletedState()
+    })
+}
+
+function loadCompletedState() {
+    payoutSelectionScreen.style.display = 'none'
+
+    withdrawalProcessingScreen.style.display = 'flex'
+    $("#w-processing-text").hide(() => {
+
+        $('#w-confirmation-text').fadeIn()
+        $('#w-confirmation-check').fadeIn()
+    })
+}
+
