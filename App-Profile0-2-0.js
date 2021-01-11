@@ -799,6 +799,7 @@ function loadTutorElements() {
     coursesScreen.style.display = 'flex'
 
     loadExperience()
+    loadAvailability()
 }
 
 //Photo Upload
