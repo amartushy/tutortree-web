@@ -9,6 +9,7 @@ var globalUserId,
     coreIsEmailOn,
     coreIsSMSOn,
     coreIsTutor,
+    coreMaxHours,
     coreName,
     corePhone,
     coreProfileImage,
@@ -53,6 +54,7 @@ function loadCoreProperties(ID) {
 	    loadFinancials()
 	    
         if (coreIsTutor) {
+	    coreMaxHours = data.maxHPW
 	    corePricePHH = data.pricePHH
             loadTutorProfile()
         }
