@@ -3,6 +3,7 @@ var userDB = firebase.firestore()
 
 //Core properties all users have
 var globalUserId,
+    coreAvailability,
     coreBio,
     coreBalance,
     coreEmail,
@@ -54,6 +55,7 @@ function loadCoreProperties(ID) {
 	    loadFinancials()
 	    
         if (coreIsTutor) {
+   	    coreAvailability = data.availability
 	    coreMaxHours = data.maxHPW
 	    corePricePHH = data.pricePHH
             loadTutorProfile()
