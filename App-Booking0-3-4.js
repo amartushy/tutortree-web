@@ -375,26 +375,6 @@ function firstDayOfMonth(year, month) {
     return firstDate.getDay()
 }
 
-function twosComplement(value) {
-    let binaryStr;
-    
-    if (value >= 0) {
-      let twosComp = value.toString(2);
-      binaryStr = padAndChop(twosComp, '0', (64 || twosComp.length));
-    } else {
-      binaryStr = (Math.pow(2, 64) + value).toString(2);
-      
-      if (Number(binaryStr) < 0) {
-        return undefined
-      }
-    }
-    
-    return binaryStr.slice(16,64)
-}
-
-function padAndChop(str, padChar, length) {
-    return (Array(length).fill(padChar).join('') + str).slice(length * -1);
-}
 
 
 //Checkout Functions______________________________________________________________________________
