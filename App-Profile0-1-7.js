@@ -713,28 +713,6 @@ var editBioField = document.getElementById('edit-bio-field')
 var saveNameButton = document.getElementById('save-name-button')
 var saveBioButton = document.getElementById('save-bio-button')
 
-var availabilityScreen = document.getElementById('availability-screen')
-var reduceRateButton = document.getElementById('reduce-rate-button')
-var editRateAmount = document.getElementById('edit-rate-amount')
-var increaseRateButton = document.getElementById('increase-rate-button')
-var reduceHoursButton = document.getElementById('reduce-hours-button')
-var editHoursAmount = document.getElementById('edit-hours-amount')
-var increaseHoursButton = document.getElementById('increase-hours-button')
-var sundayTimeArea = document.getElementById('sunday-time-area')
-var mondayTimeArea = document.getElementById('monday-time-area')
-var tuesdayTimeArea = document.getElementById('tuesday-time-area')
-var wednesdayTimeArea = document.getElementById('wednesday-time-area')
-var thursdayTimeArea = document.getElementById('thursday-time-area')
-var fridayTimeArea = document.getElementById('friday-time-area')
-var saturdayTimeArea = document.getElementById('saturday-time-area')
-var addSundayTime = document.getElementById('add-sunday-time')
-var addMondayTime = document.getElementById('add-monday-time')
-var addTuesdayTime = document.getElementById('add-tuesday-time')
-var addWednesdayTime = document.getElementById('add-wednesday-time')
-var addThursdayTime = document.getElementById('add-thursday-time')
-var addFridayTime = document.getElementById('add-friday-time')
-var addSaturdayTime = document.getElementById('add-saturday-time')
-
 var coursesScreen = document.getElementById('courses-screen')
 var schoolHeader = document.getElementById('school-header')
 var changeSchoolButton = document.getElementById('change-school-button')
@@ -869,5 +847,118 @@ async function uploadAndUpdateFirebasePhoto() {
                 editImageBlock.appendChild(newIcon)
             })
         })
+}
+
+
+//Experience Screen__________________________________________________________________________
+var experienceScreen = document.getElementById('experience-screen')
+var editMajorField = document.getElementById('edit-major-field')
+var saveMajorButton = document.getElementById('save-major-button')
+var experienceContainer = document.getElementById('experience-container')
+var addExperienceButton = document.getElementById('add-experience-button')
+var addExperienceContainer = document.getElementById('add-experience-container')
+var addExperienceTitle = document.getElementById('add-experience-title')
+var addExperienceDescription = document.getElementById('add-experience-description')
+var cancelExperienceButton = document.getElementById('cancel-experience-button')
+var confirmExperienceButton = document.getElementById('confirm-experience-button')
+
+editMajorField.onfocus = function() {
+    $('#save-major-button').fadeIn()
+}
+
+saveMajorButton.addEventListener('click', () => {
+    userDB.collection('userTest').doc(globalUserId).update({
+        'major' : editMajorField.value
+    }).then(() => {
+        $('#save-major-button').fadeOut()
+    })
+})
+
+function loadExperience() {
+    while(experienceContainer.firstChild) {
+        experienceContainer.removeChild(experienceContainer.firstChild)
+    }
+    addExperienceContainer.style.display = 'none'
+
+    userDB.collection('userTest').doc(globalUserId).get().then(function(doc) {
+        var experienceData = doc.data().experience 
+
+        for(var experience in experienceData) {
+            if ( experienceData.hasOwnProperty(experience) ){
+                var title = experienceData[experience].title
+                var description = experienceData[experience].description
+                buildExperienceBlock(experience, title, description)
+            }
+        }
+    })
+}
+
+function buildExperienceBlock(ID, title, description) {
+    var experienceDiv = document.createElement('div')
+    experienceDiv.setAttribute('class', 'experience-div')
+    experienceContainer.appendChild(experienceDiv)
+    
+    var experienceHeaderDiv = document.createElement('div')
+    experienceHeaderDiv.setAttribute('class', 'experience-header-div')
+    experienceDiv.appendChild(experienceHeaderDiv)
+
+    var experienceTitle = document.createElement('div')
+    experienceTitle.setAttribute('class', 'experience-title')
+    experienceTitle.innerHTML = title
+    experienceHeaderDiv.appendChild(experienceTitle)
+
+    var experienceMinus = document.createElement('div')
+    experienceMinus.setAttribute('class', 'experience-minus')
+    experienceMinus.innerHTML = ''
+    experienceHeaderDiv.appendChild(experienceMinus)
+    experienceMinus.addEventListener('click', () => {
+        var experiencePath = 'experience.' + ID
+        var deletedExperience = {}
+        deletedExperience[experiencePath] = firebase.firestore.FieldValue.delete()
+
+        userDB.collection('userTest').doc(globalUserId).update( deletedExperience ).then(function() {
+            loadExperience()
+        })
+    })
+
+    var experienceText = document.createElement('div')
+    experienceText.setAttribute('class', 'experience-text')
+    experienceText.innerHTML = description
+    experienceDiv.appendChild(experienceText)
+    
+}
+
+addExperienceButton.addEventListener('click', () => {
+    $('#add-experience-container').fadeIn()
+})
+
+confirmExperienceButton.addEventListener('click', () => {
+    addNewExperience()
+})
+
+cancelExperienceButton.addEventListener('click', () => {
+    addExperienceTitle.value = ''
+    addExperienceTitle.placeholder = 'Title'
+    addExperienceDescription.value = ''
+    addExperienceDescription.placeholder = 'Description'
+    $('#add-experience-container').fadeOut()
+})
+
+function addNewExperience() {
+    var title = addExperienceTitle.value
+    var description = addExperienceDescription.value 
+    var randomID = createTransactionID()
+    var experiencePath = 'experience.' + randomID
+    var newExperience = {}
+    newExperience[experiencePath] = {'title' : title, 'description' : description}
+
+    userDB.collection('userTest').doc(globalUserId).update(newExperience).then( () => {
+        addExperienceTitle.value = ''
+        addExperienceTitle.placeholder = 'Title'
+        addExperienceDescription.value = ''
+        addExperienceDescription.placeholder = 'Description'
+
+        $('#add-experience-container').fadeOut()
+    })
 }
 
