@@ -700,3 +700,174 @@ function loadCompletedState() {
     })
 }
 
+
+//Edit Profile____________________________________________________________________________________________________________________
+var editProfileButton = document.getElementById('edit-profile-button')
+var editProfilePage = document.getElementById('edit-profile-page')
+var editProfileBack = document.getElementById('edit-profile-back')
+
+var aboutScreen = document.getElementById('about-screen')
+var editImageBlock = document.getElementById('edit-image-block')
+var editNameField = document.getElementById('edit-name-field')
+var editBioField = document.getElementById('edit-bio-field')
+var saveNameButton = document.getElementById('save-name-button')
+var saveBioButton = document.getElementById('save-bio-button')
+
+var availabilityScreen = document.getElementById('availability-screen')
+var reduceRateButton = document.getElementById('reduce-rate-button')
+var editRateAmount = document.getElementById('edit-rate-amount')
+var increaseRateButton = document.getElementById('increase-rate-button')
+var reduceHoursButton = document.getElementById('reduce-hours-button')
+var editHoursAmount = document.getElementById('edit-hours-amount')
+var increaseHoursButton = document.getElementById('increase-hours-button')
+var sundayTimeArea = document.getElementById('sunday-time-area')
+var mondayTimeArea = document.getElementById('monday-time-area')
+var tuesdayTimeArea = document.getElementById('tuesday-time-area')
+var wednesdayTimeArea = document.getElementById('wednesday-time-area')
+var thursdayTimeArea = document.getElementById('thursday-time-area')
+var fridayTimeArea = document.getElementById('friday-time-area')
+var saturdayTimeArea = document.getElementById('saturday-time-area')
+var addSundayTime = document.getElementById('add-sunday-time')
+var addMondayTime = document.getElementById('add-monday-time')
+var addTuesdayTime = document.getElementById('add-tuesday-time')
+var addWednesdayTime = document.getElementById('add-wednesday-time')
+var addThursdayTime = document.getElementById('add-thursday-time')
+var addFridayTime = document.getElementById('add-friday-time')
+var addSaturdayTime = document.getElementById('add-saturday-time')
+
+var coursesScreen = document.getElementById('courses-screen')
+var schoolHeader = document.getElementById('school-header')
+var changeSchoolButton = document.getElementById('change-school-button')
+var coursesSchoolContainer = document.getElementById('courses-school-container')
+var coursesContainer = document.getElementById('courses-container')
+
+
+editProfileButton.addEventListener('click', () => {
+    editProfilePage.style.display = 'flex'
+
+    loadUserElements()
+    if(coreIsTutor) {
+        loadTutorElements()
+    }
+})
+
+editProfileBack.addEventListener('click', () => {
+    editProfilePage.style.display = 'none'
+})
+
+editNameField.onfocus = function() {
+    $('#save-name-button').fadeIn()
+}
+
+editBioField.onfocus = function() {
+    $('#save-bio-button').fadeIn()
+}
+
+saveNameButton.addEventListener('click', () => {
+    userDB.collection('userTest').doc(globalUserId).update({
+        'name' : editNameField.value
+    }).then(() => {
+        $('#save-name-button').fadeOut()
+    })
+})
+
+saveBioButton.addEventListener('click', () => {
+    userDB.collection('userTest').doc(globalUserId).update({
+        'bio' : editBioField.value
+    }).then(() => {
+        $('#save-bio-button').fadeOut()
+    })
+})
+
+function loadUserElements() {
+    aboutScreen.style.display = 'flex'
+    saveNameButton.style.display = 'none'
+    saveBioButton.style.display = 'none'
+    experienceScreen.style.display = 'none'
+    saveMajorButton.style.display = 'none'
+    availabilityScreen.style.display = 'none'
+    coursesScreen.style.display = 'none'
+
+    editNameField.value = coreName
+    editBioField.value = coreBio
+    editMajorField.value = coreSubject
+
+    //Create Photo 
+    editImageBlock.removeChild(editImageBlock.firstChild)
+    editImageBlock.removeChild(editImageBlock.firstChild)
+
+    var newImage = document.createElement('img')
+    newImage.setAttribute('class', 'edit-profile-image')
+    newImage.src = coreProfileImage
+    editImageBlock.appendChild(newImage)
+    newImage.addEventListener('click', function() {
+        openPhotoUploadDialog()
+    })
+
+    var newIcon = document.createElement('div')
+    newIcon.setAttribute('class', 'edit-photo-icon')
+    newIcon.innerHTML = ''
+    editImageBlock.appendChild(newIcon)
+}
+
+function loadTutorElements() {
+    aboutScreen.style.display = 'flex'
+    experienceScreen.style.display = 'flex'
+    availabilityScreen.style.display = 'flex'
+    coursesScreen.style.display = 'flex'
+
+    loadExperience()
+}
+
+//Photo Upload
+var storageRef = firebase.storage().ref();
+var hiddenPhotoUploadButton = document.getElementById('hidden-photo-upload-button')
+
+function openPhotoUploadDialog() {
+	hiddenPhotoUploadButton.click();
+}
+
+hiddenPhotoUploadButton.addEventListener('change', uploadProfileImage);
+
+var selectedPhotoFile;
+function uploadProfileImage(e) {
+    selectedPhotoFile = e.target.files[0];
+    handlePhotoUpload()
+}
+
+async function handlePhotoUpload() {
+	const uploadTask = await storageRef.child(`images/${selectedPhotoFile.name}`).put(selectedPhotoFile);
+	uploadAndUpdateFirebasePhoto()
+}
+
+//final submit button and update firebase
+async function uploadAndUpdateFirebasePhoto() {
+	var phototFileURL = ""
+	await storageRef.child('/images/'+selectedPhotoFile.name)
+		.getDownloadURL()
+		.then(function(url) { phototFileURL = url.toString() })
+	userDB.collection("userTest")
+		.doc(globalUserId)
+        .update( {"profileImage" : phototFileURL })
+        .then(function() {
+            userDB.collection('userTest').doc(globalUserId).get().then(async function(doc) {
+                //Create Photo 
+                editImageBlock.removeChild(editImageBlock.firstChild)
+                editImageBlock.removeChild(editImageBlock.firstChild)
+
+                var newImage = document.createElement('img')
+                newImage.setAttribute('class', 'edit-profile-image')
+                newImage.src = doc.data().profileImage
+                editImageBlock.appendChild(newImage)
+                newImage.addEventListener('click', function() {
+                    openPhotoUploadDialog()
+                })
+
+                var newIcon = document.createElement('div')
+                newIcon.setAttribute('class', 'edit-photo-icon')
+                newIcon.innerHTML = ''
+                editImageBlock.appendChild(newIcon)
+            })
+        })
+}
+
