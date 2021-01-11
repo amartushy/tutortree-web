@@ -12,6 +12,7 @@ var globalUserId,
     coreName,
     corePhone,
     coreProfileImage,
+    corePricePHH,
     coreSchool,
     coreSubject
 
@@ -52,6 +53,7 @@ function loadCoreProperties(ID) {
 	    loadFinancials()
 	    
         if (coreIsTutor) {
+	    corePricePHH = data.pricePHH
             loadTutorProfile()
         }
     })
