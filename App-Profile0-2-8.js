@@ -706,6 +706,8 @@ function loadCompletedState() {
     })
 }
 
+
+//Edit Profile Page_______________________________________________________________________________________________________________________
 var editProfileButton = document.getElementById('edit-profile-button')
 var editProfilePage = document.getElementById('edit-profile-page')
 var editProfileBack = document.getElementById('edit-profile-back')
@@ -1139,3 +1141,159 @@ var endTimeDropdown = document.getElementById('end-time-dropdown')
 endTimeDropdown.addEventListener('click', () => {
     $('end-options-container').fadeIn()
 })
+
+
+var startOptionsContainer = document.getElementById('start-options-container')
+var endOptionsContainer = document.getElementById('end-options-container')
+var startTimeText = document.getElementById('start-time-text')
+var endTimeText = document.getElementById('end-time-text')
+
+function openAddNewAvailability(day) {
+    while(startOptionsContainer.firstChild) {
+        startOptionsContainer.removeChild(startOptionsContainer.firstChild)
+    }
+    while(endOptionsContainer.firstChild) {
+        endOptionsContainer.removeChild(endOptionsContainer.firstChild)
+    }
+    startTimeText.innerHTML = 'Time..'
+    endTimeText.innerHTML = 'Time...'
+
+    var endTimeOption = document.createElement('div')
+    endTimeOption.innerHTML = 'Select Start Time'
+    endOptionsContainer.appendChild(endTimeOption)
+    endTimeOption.setAttribute('class', 'time-option-top')
+
+    $('#add-new-availability').fadeIn()
+    var addAvailabilityHeader = document.getElementById('add-availability-header')
+    addAvailabilityHeader.innerHTML = 'Add Availability For ' + day
+
+    for(i=0; i<timeOptions.length; i++) {
+        var startTimeOption = document.createElement('div')
+        startTimeOption.innerHTML = timeOptions[i]
+        startOptionsContainer.appendChild(startTimeOption)
+        startTimeOption.setAttribute('onClick', 'updateStartAndEndTimes(true, "' + i + '")')
+
+        if(i==0) {
+            startTimeOption.setAttribute('class', 'time-option-top')
+        } else if( i==timeOptions.length) {
+            startTimeOption.setAttribute('class', 'time-option-bottom')
+        } else {
+            startTimeOption.setAttribute('class', 'time-option')
+        }
+    }
+}
+
+var availabilityDayIndex
+var availabilityStartIndex
+var availabilityEndIndex
+var isEveryDay
+function updateStartAndEndTimes(isStart, index) {
+
+    if(isStart) {
+        availabilityStartIndex = index
+        startTimeText.innerHTML = timeOptions[index]
+        $('start-options-container').fadeOut()
+        loadEndTimes(index)
+    } else {
+        availabilityEndIndex = index
+        endTimeText.innerHTML = timeOptions[index]
+        $('end-options-container').fadeOut()
+    }
+}
+
+function loadEndTimes(startIndex) {
+    var nextIndex = parseInt(startIndex) + 1
+    while(endOptionsContainer.firstChild) {
+        endOptionsContainer.removeChild(endOptionsContainer.firstChild)
+    }
+
+    for(i=nextIndex; i<timeOptions.length; i++) {
+        var endTimeOption = document.createElement('div')
+        endTimeOption.innerHTML = timeOptions[i]
+        endOptionsContainer.appendChild(endTimeOption)
+        endTimeOption.setAttribute('onClick', 'updateStartAndEndTimes(false, "' + i + '")')
+
+        if(i==0) {
+            endTimeOption.setAttribute('class', 'time-option-top')
+        } else if( i==timeOptions.length) {
+            endTimeOption.setAttribute('class', 'time-option-bottom')
+        } else {
+            endTimeOption.setAttribute('class', 'time-option')
+        }
+    }
+}
+
+var everydayToggle = document.getElementById('everyday-toggle')
+var cancelNewAvailability = document.getElementById('cancel-new-availability')
+var confirmNewAvailability = document.getElementById('confirm-new-availability')
+var dayArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']  
+
+everydayToggle.addEventListener('click', () => {
+    if(isEveryDay == false) {
+        isEveryDay = true
+        everydayToggle.setAttribute('class', 'toggle-selected')
+    } else {
+        isEveryDay = false
+        everydayToggle.setAttribute('class', 'toggle')
+    }
+})
+cancelNewAvailability.addEventListener('click', () => {
+    $('#add-new-availability').fadeOut()
+})
+
+confirmNewAvailability.addEventListener('click', () => {
+    console.log(availabilityDayIndex)
+    console.log(availabilityStartIndex)
+    console.log(availabilityEndIndex)
+    console.log('Everyday: ' + isEveryDay)
+    if (!isEveryDay) {
+        updateAvailability(availabilityDayIndex, availabilityStartIndex, availabilityEndIndex, false)
+    } else {
+        updateEveryday(availabilityStartIndex, availabilityEndIndex)
+    }
+})
+
+
+function updateAvailability(dayIndex, startIndex, endIndex, isRemoving) {
+    var availabilityArray = twosComplement(availability[dayIndex]).split("")
+
+    for ( i = startIndex; i < endIndex; i++) {
+        if(isRemoving) {
+            availabilityArray[i] = "0"
+        } else {
+            availabilityArray[i] = "1"
+        }
+    }
+    var binaryString = '0000000000000000' + availabilityArray.join('')
+    const decimalAvailability = parseInt( binaryString, 2)
+    var availabilityPath = 'availability.' + dayArray[dayIndex]
+    var updateDay = {}
+    updateDay[availabilityPath] = decimalAvailability
+    userDB.collection('userTest').doc(globalUserId).update(updateDay).then(() => {
+        $('#add-new-availability').fadeOut()
+        loadAvailability()
+    })
+}
+
+function updateEveryday(startIndex, endIndex) {
+    var updateDict = {}
+
+    for (i = 0; i < 7; i++) {
+        var availabilityArray = twosComplement(availability[i]).split("")
+        for ( j = startIndex; j < endIndex; j++) {
+            availabilityArray[j] = "1"
+        }
+        var binaryString = '0000000000000000' + availabilityArray.join('')
+        updateDict[dayArray[i]] = parseInt( binaryString, 2)
+    }
+
+    var finalDict = {}
+    finalDict['availability'] = updateDict
+    userDB.collection('userTest').doc(globalUserId).update(finalDict).then(() => {
+        $('#add-new-availability').fadeOut()
+        loadAvailability()
+    })
+}
+
+
+
