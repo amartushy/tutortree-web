@@ -1086,7 +1086,7 @@ function buildTimeSlot(startIndex, endIndex, day) {
     var timeSlotMinus = document.createElement('div')
     timeSlotMinus.setAttribute('class', 'timeslot-minus')
     timeSlotMinus.innerHTML = ''
-    timeSlotMinus.setAttribute('onClick', 'removeAvailability("'+day+'","'+startIndex+'","'+endIndex+'")')
+    timeSlotMinus.setAttribute('onClick', 'updateAvailability("'+day+'","'+startIndex+'","'+endIndex+'","'+true+'")')
     availabilityTimeDiv.appendChild(timeSlotMinus)
 
     var availabilityTime = document.createElement('div')
