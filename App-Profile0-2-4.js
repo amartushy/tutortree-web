@@ -706,7 +706,7 @@ function loadCompletedState() {
     })
 }
 
-
+//Edit Profile Page________________________________________________________________________________________________________________________
 var editProfileButton = document.getElementById('edit-profile-button')
 var editProfilePage = document.getElementById('edit-profile-page')
 var editProfileBack = document.getElementById('edit-profile-back')
@@ -1008,4 +1008,131 @@ increaseHoursButton.addEventListener('click', () => {
     }).then(function() {
         editHoursAmount.innerHTML = coreMaxHours
     })
+})
+
+var availability = []
+var timeOptions = ["6:00am", "6:30am", "7:00am", "7:30am", "8:00am","8:30am", "9:00am", "9:30am", "10:00am", "10:30am",
+                    "11:00am", "11:30am", "12:00pm", "12:30pm", "1:00pm", "1:30pm", "2:00pm", "2:30pm", "3:00pm", "3:30pm", 
+                    "4:00pm", "4:30pm", "5:00pm", "5:30pm", "6:00pm", "6:30pm", "7:00pm", "7:30pm", "8:00pm", "8:30pm", 
+                    "9:00pm", "9:30pm", "10:00pm", "10:30pm", "11:00pm", "11:30pm", "12:00am", "12:30am"]
+var dayIDs = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']   
+
+function loadAvailability() {
+    editRateAmount.innerHTML = parseFloat(corePricePHH).toFixed(2)
+    editHoursAmount.innerHTML = coreMaxHours
+
+    addNewAvailability.style.display = 'none'
+    isEveryDay = false
+    everydayToggle.setAttribute('class', 'toggle')
+
+    availability = []
+    availability.push(coreAvailability.Sunday)
+    availability.push(coreAvailability.Monday)
+    availability.push(coreAvailability.Tuesday)
+    availability.push(coreAvailability.Wednesday)
+    availability.push(coreAvailability.Thursday)
+    availability.push(coreAvailability.Friday)
+    availability.push(coreAvailability.Saturday)
+    loadTimes()
+}
+
+function loadTimes() {
+
+    //loop through each day in the day array
+    for ( i =  0; i < availability.length; i++) {
+        var dayID = dayIDs[i] + '-time-area'
+        var dayContainer = document.getElementById(dayID)
+        while(dayContainer.firstChild) {
+            dayContainer.removeChild(dayContainer.firstChild)
+        }
+
+        var timesForDayArray = twosComplement(availability[i]).split("")
+
+        //Loop through all 48 values in the day 
+        for( j = 0; j < timesForDayArray.length; j++) {
+
+            //Found first available timeslot
+            if(timesForDayArray[j] == 1) {
+                var startTime = timeOptions[j]
+                var endTime = timeOptions[j+1]
+
+                //Loop through subsequent values until an endtime is found
+                for( k = j; k < timesForDayArray.length; k++ ) {
+                    if(timesForDayArray[k] == 0) {
+                        buildTimeSlot(startTime, endTime, i)
+                        j = k
+                        break
+
+                    } else {
+                        var endTime = timeOptions[k+1]
+                    }
+                }
+            }
+        }
+    }
+}
+
+function buildTimeSlot(startTime, endTime, day) {
+    var dayID = dayIDs[day] + '-time-area'
+    var timeString = startTime + ' - ' + endTime
+
+    var dayContainer = document.getElementById(dayID)
+    var availabilityTimeDiv = document.createElement('div')
+    availabilityTimeDiv.setAttribute('class', 'availability-time-div')
+    dayContainer.appendChild(availabilityTimeDiv)
+
+    var timeSlotMinus = document.createElement('div')
+    timeSlotMinus.setAttribute('class', 'timeslot-minus')
+    timeSlotMinus.innerHTML = ''
+    availabilityTimeDiv.appendChild(timeSlotMinus)
+
+    var availabilityTime = document.createElement('div')
+    availabilityTime.setAttribute('class', 'availability-time')
+    availabilityTime.innerHTML = timeString 
+    availabilityTimeDiv.appendChild(availabilityTime)
+}
+
+var addSundayTime = document.getElementById('add-sunday-time')
+var addMondayTime = document.getElementById('add-monday-time')
+var addTuesdayTime = document.getElementById('add-tuesday-time')
+var addWednesdayTime = document.getElementById('add-wednesday-time')
+var addThursdayTime = document.getElementById('add-thursday-time')
+var addFridayTime = document.getElementById('add-friday-time')
+var addSaturdayTime = document.getElementById('add-saturday-time')
+addSundayTime.addEventListener('click', () => {
+    availabilityDayIndex = 0
+    openAddNewAvailability('Sunday')
+})
+addMondayTime.addEventListener('click', () => {
+    availabilityDayIndex = 1
+    openAddNewAvailability('Monday')
+})
+addTuesdayTime.addEventListener('click', () => {
+    availabilityDayIndex = 2
+    openAddNewAvailability('Tuesday')
+})
+addWednesdayTime.addEventListener('click', () => {
+    availabilityDayIndex = 3
+    openAddNewAvailability('Wednesday')
+})
+addThursdayTime.addEventListener('click', () => {
+    availabilityDayIndex = 4
+    openAddNewAvailability('Thursday')
+})
+addFridayTime.addEventListener('click', () => {
+    availabilityDayIndex = 5
+    openAddNewAvailability('Friday')
+})
+addSaturdayTime.addEventListener('click', () => {
+    availabilityDayIndex = 6
+    openAddNewAvailability('Saturday')
+})
+
+var startTimeDropdown = document.getElementById('start-time-dropdown')
+startTimeDropdown.addEventListener('click', () => {
+    $('start-options-container').fadeIn()
+})
+var endTimeDropdown = document.getElementById('end-time-dropdown')
+endTimeDropdown.addEventListener('click', () => {
+    $('end-options-container').fadeIn()
 })
