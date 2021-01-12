@@ -802,6 +802,7 @@ function loadTutorElements() {
 
     loadExperience()
     loadAvailability()
+    loadUsersSchools()
 }
 
 //Photo Upload
