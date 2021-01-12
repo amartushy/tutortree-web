@@ -706,7 +706,6 @@ function loadCompletedState() {
     })
 }
 
-//Edit Profile Page________________________________________________________________________________________________________________________
 var editProfileButton = document.getElementById('edit-profile-button')
 var editProfilePage = document.getElementById('edit-profile-page')
 var editProfileBack = document.getElementById('edit-profile-back')
@@ -1053,18 +1052,18 @@ function loadTimes() {
 
             //Found first available timeslot
             if(timesForDayArray[j] == 1) {
-                var startTime = timeOptions[j]
-                var endTime = timeOptions[j+1]
+                var startIndex = j
+                var endIndex = j+1 
 
                 //Loop through subsequent values until an endtime is found
                 for( k = j; k < timesForDayArray.length; k++ ) {
                     if(timesForDayArray[k] == 0) {
-                        buildTimeSlot(startTime, endTime, i)
+                        buildTimeSlot(startIndex, endIndex, i)
                         j = k
                         break
 
                     } else {
-                        var endTime = timeOptions[k+1]
+                        endIndex = k+1
                     }
                 }
             }
@@ -1072,7 +1071,10 @@ function loadTimes() {
     }
 }
 
-function buildTimeSlot(startTime, endTime, day) {
+function buildTimeSlot(startIndex, endIndex, day) {
+    var startTime = timeOptions[startIndex]
+    var endTime = timeOptions[endIndex]
+
     var dayID = dayIDs[day] + '-time-area'
     var timeString = startTime + ' - ' + endTime
 
