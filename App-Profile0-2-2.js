@@ -969,3 +969,305 @@ function addNewExperience() {
     })
 }
 
+var editProfileButton = document.getElementById('edit-profile-button')
+var editProfilePage = document.getElementById('edit-profile-page')
+var editProfileBack = document.getElementById('edit-profile-back')
+
+var aboutScreen = document.getElementById('about-screen')
+var editImageBlock = document.getElementById('edit-image-block')
+var editNameField = document.getElementById('edit-name-field')
+var editBioField = document.getElementById('edit-bio-field')
+var saveNameButton = document.getElementById('save-name-button')
+var saveBioButton = document.getElementById('save-bio-button')
+
+var coursesScreen = document.getElementById('courses-screen')
+var schoolHeader = document.getElementById('school-header')
+var changeSchoolButton = document.getElementById('change-school-button')
+var coursesSchoolContainer = document.getElementById('courses-school-container')
+var coursesContainer = document.getElementById('courses-container')
+
+
+editProfileButton.addEventListener('click', () => {
+    editProfilePage.style.display = 'flex'
+
+    loadUserElements()
+    if(coreIsTutor) {
+        loadTutorElements()
+    }
+})
+
+editProfileBack.addEventListener('click', () => {
+    editProfilePage.style.display = 'none'
+})
+
+editNameField.onfocus = function() {
+    $('#save-name-button').fadeIn()
+}
+
+editBioField.onfocus = function() {
+    $('#save-bio-button').fadeIn()
+}
+
+saveNameButton.addEventListener('click', () => {
+    userDB.collection('userTest').doc(globalUserId).update({
+        'name' : editNameField.value
+    }).then(() => {
+        $('#save-name-button').fadeOut()
+    })
+})
+
+saveBioButton.addEventListener('click', () => {
+    userDB.collection('userTest').doc(globalUserId).update({
+        'bio' : editBioField.value
+    }).then(() => {
+        $('#save-bio-button').fadeOut()
+    })
+})
+
+function loadUserElements() {
+    aboutScreen.style.display = 'flex'
+    saveNameButton.style.display = 'none'
+    saveBioButton.style.display = 'none'
+    experienceScreen.style.display = 'none'
+    saveMajorButton.style.display = 'none'
+    availabilityScreen.style.display = 'none'
+    coursesScreen.style.display = 'none'
+
+    editNameField.value = coreName
+    editBioField.value = coreBio
+    editMajorField.value = coreSubject
+
+    //Create Photo 
+    editImageBlock.removeChild(editImageBlock.firstChild)
+    editImageBlock.removeChild(editImageBlock.firstChild)
+
+    var newImage = document.createElement('img')
+    newImage.setAttribute('class', 'edit-profile-image')
+    newImage.src = coreProfileImage
+    editImageBlock.appendChild(newImage)
+    newImage.addEventListener('click', function() {
+        openPhotoUploadDialog()
+    })
+
+    var newIcon = document.createElement('div')
+    newIcon.setAttribute('class', 'edit-photo-icon')
+    newIcon.innerHTML = ''
+    editImageBlock.appendChild(newIcon)
+}
+
+function loadTutorElements() {
+    aboutScreen.style.display = 'flex'
+    experienceScreen.style.display = 'flex'
+    availabilityScreen.style.display = 'flex'
+    coursesScreen.style.display = 'flex'
+
+    loadExperience()
+    loadAvailability()
+}
+
+//Photo Upload
+var storageRef = firebase.storage().ref();
+var hiddenPhotoUploadButton = document.getElementById('hidden-photo-upload-button')
+
+function openPhotoUploadDialog() {
+	hiddenPhotoUploadButton.click();
+}
+
+hiddenPhotoUploadButton.addEventListener('change', uploadProfileImage);
+
+var selectedPhotoFile;
+function uploadProfileImage(e) {
+    selectedPhotoFile = e.target.files[0];
+    handlePhotoUpload()
+}
+
+async function handlePhotoUpload() {
+	const uploadTask = await storageRef.child(`images/${selectedPhotoFile.name}`).put(selectedPhotoFile);
+	uploadAndUpdateFirebasePhoto()
+}
+
+//final submit button and update firebase
+async function uploadAndUpdateFirebasePhoto() {
+	var phototFileURL = ""
+	await storageRef.child('/images/'+selectedPhotoFile.name)
+		.getDownloadURL()
+		.then(function(url) { phototFileURL = url.toString() })
+	userDB.collection("userTest")
+		.doc(globalUserId)
+        .update( {"profileImage" : phototFileURL })
+        .then(function() {
+            userDB.collection('userTest').doc(globalUserId).get().then(async function(doc) {
+                //Create Photo 
+                editImageBlock.removeChild(editImageBlock.firstChild)
+                editImageBlock.removeChild(editImageBlock.firstChild)
+
+                var newImage = document.createElement('img')
+                newImage.setAttribute('class', 'edit-profile-image')
+                newImage.src = doc.data().profileImage
+                editImageBlock.appendChild(newImage)
+                newImage.addEventListener('click', function() {
+                    openPhotoUploadDialog()
+                })
+
+                var newIcon = document.createElement('div')
+                newIcon.setAttribute('class', 'edit-photo-icon')
+                newIcon.innerHTML = ''
+                editImageBlock.appendChild(newIcon)
+            })
+        })
+}
+
+
+//Experience Screen__________________________________________________________________________
+var experienceScreen = document.getElementById('experience-screen')
+var editMajorField = document.getElementById('edit-major-field')
+var saveMajorButton = document.getElementById('save-major-button')
+var experienceContainer = document.getElementById('experience-container')
+var addExperienceButton = document.getElementById('add-experience-button')
+var addExperienceContainer = document.getElementById('add-experience-container')
+var addExperienceTitle = document.getElementById('add-experience-title')
+var addExperienceDescription = document.getElementById('add-experience-description')
+var cancelExperienceButton = document.getElementById('cancel-experience-button')
+var confirmExperienceButton = document.getElementById('confirm-experience-button')
+
+editMajorField.onfocus = function() {
+    $('#save-major-button').fadeIn()
+}
+
+saveMajorButton.addEventListener('click', () => {
+    userDB.collection('userTest').doc(globalUserId).update({
+        'major' : editMajorField.value
+    }).then(() => {
+        $('#save-major-button').fadeOut()
+    })
+})
+
+function loadExperience() {
+    while(experienceContainer.firstChild) {
+        experienceContainer.removeChild(experienceContainer.firstChild)
+    }
+    addExperienceContainer.style.display = 'none'
+
+    userDB.collection('userTest').doc(globalUserId).get().then(function(doc) {
+        var experienceData = doc.data().experience 
+
+        for(var experience in experienceData) {
+            if ( experienceData.hasOwnProperty(experience) ){
+                var title = experienceData[experience].title
+                var description = experienceData[experience].description
+                buildExperienceBlock(experience, title, description)
+            }
+        }
+    })
+}
+
+function buildExperienceBlock(ID, title, description) {
+    var experienceDiv = document.createElement('div')
+    experienceDiv.setAttribute('class', 'experience-div')
+    experienceContainer.appendChild(experienceDiv)
+    
+    var experienceHeaderDiv = document.createElement('div')
+    experienceHeaderDiv.setAttribute('class', 'experience-header-div')
+    experienceDiv.appendChild(experienceHeaderDiv)
+
+    var experienceTitle = document.createElement('div')
+    experienceTitle.setAttribute('class', 'experience-title')
+    experienceTitle.innerHTML = title
+    experienceHeaderDiv.appendChild(experienceTitle)
+
+    var experienceMinus = document.createElement('div')
+    experienceMinus.setAttribute('class', 'experience-minus')
+    experienceMinus.innerHTML = ''
+    experienceHeaderDiv.appendChild(experienceMinus)
+    experienceMinus.addEventListener('click', () => {
+        var experiencePath = 'experience.' + ID
+        var deletedExperience = {}
+        deletedExperience[experiencePath] = firebase.firestore.FieldValue.delete()
+
+        userDB.collection('userTest').doc(globalUserId).update( deletedExperience ).then(function() {
+            loadExperience()
+        })
+    })
+
+    var experienceText = document.createElement('div')
+    experienceText.setAttribute('class', 'experience-text')
+    experienceText.innerHTML = description
+    experienceDiv.appendChild(experienceText)
+    
+}
+
+addExperienceButton.addEventListener('click', () => {
+    $('#add-experience-container').fadeIn()
+})
+
+confirmExperienceButton.addEventListener('click', () => {
+    addNewExperience()
+})
+
+cancelExperienceButton.addEventListener('click', () => {
+    addExperienceTitle.value = ''
+    addExperienceTitle.placeholder = 'Title'
+    addExperienceDescription.value = ''
+    addExperienceDescription.placeholder = 'Description'
+    $('#add-experience-container').fadeOut()
+})
+
+function addNewExperience() {
+    var title = addExperienceTitle.value
+    var description = addExperienceDescription.value 
+    var randomID = createTransactionID()
+    var experiencePath = 'experience.' + randomID
+    var newExperience = {}
+    newExperience[experiencePath] = {'title' : title, 'description' : description}
+
+    userDB.collection('userTest').doc(globalUserId).update(newExperience).then( () => {
+        addExperienceTitle.value = ''
+        addExperienceTitle.placeholder = 'Title'
+        addExperienceDescription.value = ''
+        addExperienceDescription.placeholder = 'Description'
+
+        $('#add-experience-container').fadeOut()
+    })
+}
+
+//Availability Screen____________________________________________________________________________
+var availabilityScreen = document.getElementById('availability-screen')
+var addNewAvailability = document.getElementById('add-new-availability')
+var reduceRateButton = document.getElementById('reduce-rate-button')
+var increaseRateButton = document.getElementById('increase-rate-button')
+var editRateAmount = document.getElementById('edit-rate-amount')
+var reduceHoursButton = document.getElementById('reduce-hours-button')
+var increaseHoursButton = document.getElementById('increase-hours-button')
+var editHoursAmount = document.getElementById('edit-hours-amount')
+
+reduceRateButton.addEventListener('click', () => {
+    userDB.collection('userTest').doc(globalUserId).update({
+        'pricePHH' : firebase.firestore.FieldValue.increment(-0.50)
+    }).then(function() {
+        editRateAmount.innerHTML = parseFloat(corePricePHH).toFixed(2)
+    })
+})
+
+increaseRateButton.addEventListener('click', () => {
+    userDB.collection('userTest').doc(globalUserId).update({
+        'pricePHH' : firebase.firestore.FieldValue.increment(0.50)
+    }).then(function() {
+        editRateAmount.innerHTML = parseFloat(corePricePHH).toFixed(2)
+    })
+})
+
+reduceHoursButton.addEventListener('click', () => {
+    userDB.collection('userTest').doc(globalUserId).update({
+        'maxHPW' : firebase.firestore.FieldValue.increment(-1)
+    }).then(function() {
+        editHoursAmount.innerHTML = coreMaxHours
+    })
+})
+
+increaseHoursButton.addEventListener('click', () => {
+    userDB.collection('userTest').doc(globalUserId).update({
+        'maxHPW' : firebase.firestore.FieldValue.increment(1)
+    }).then(function() {
+        editHoursAmount.innerHTML = coreMaxHours
+    })
+})
