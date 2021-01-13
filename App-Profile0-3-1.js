@@ -1327,5 +1327,55 @@ function loadUsersSchools() {
     })
 }
 
+function buildSchool(school, schoolData) {
+    var collegeContainer = document.createElement('div')
+    collegeContainer.setAttribute('class', 'college-container')
+    collegesArea.appendChild(collegeContainer)
 
+    var schoolBlock = document.createElement('div')
+    schoolBlock.setAttribute('class', 'school-block')
+    schoolBlock.addEventListener('click', () => {
+        var courseContainer = document.getElementById(`courses-container-${school}`)
+        if(courseContainer.style.display == 'none') {
+            $(`#courses-container-${school}`).fadeIn()
+        } else {
+            $(`#courses-container-${school}`).fadeOut()
+        }
+    })
+    collegeContainer.appendChild(schoolBlock)
 
+    var schoolHeader = document.createElement('div')
+    schoolHeader.setAttribute('class', 'school-header')
+    schoolBlock.appendChild(schoolHeader)
+
+    var schoolHeaderLogoContainer = document.createElement('div')
+    schoolHeaderLogoContainer.setAttribute('class', 'school-header-logo-container')
+    schoolHeader.appendChild(schoolHeaderLogoContainer)
+
+    var schoolHeaderLogo = document.createElement('img')
+    schoolHeaderLogo.setAttribute('class', 'school-header-logo')
+    schoolHeaderLogo.src = schoolData.icon 
+    schoolHeaderLogoContainer.appendChild(schoolHeaderLogo)
+
+    var schoolHeaderText = document.createElement('div')
+    schoolHeaderText.setAttribute('class', 'school-header-text')
+    schoolHeaderText.innerHTML = schoolData.title
+    schoolHeaderLogoContainer.appendChild(schoolHeaderText)
+
+    var schoolChevron = document.createElement('div')
+    schoolChevron.setAttribute('class', 'school-chevron')
+    schoolChevron.innerHTML = ''
+    schoolHeader.appendChild(schoolChevron)
+
+    var coursesContainer = document.createElement('div')
+    coursesContainer.setAttribute('class', 'courses-container')
+    coursesContainer.setAttribute('id', `courses-container-${school}`)
+    collegeContainer.appendChild(coursesContainer)
+    coursesContainer.style.display = 'none'
+
+    userDB.collection("schools").doc(school).collection('courses').onSnapshot(function(subject) {
+        subject.forEach(function(doc) {
+            buildSubjectBlock(school, doc.id, doc.data())
+        })
+    })
+}
