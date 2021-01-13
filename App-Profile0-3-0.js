@@ -1298,3 +1298,34 @@ function updateEveryday(startIndex, endIndex) {
 
 
 
+
+
+
+//Course Screen__________________________________________________________________________________________________________________________
+var middleSchoolBlock = document.getElementById('middle-school-block')
+var highSchoolBlock = document.getElementById('high-school-block')
+var addCollegeButton = document.getElementById('add-college-button')
+var collegesArea = document.getElementById('colleges-area')
+
+function loadUsersSchools() {
+    while(collegesArea.firstChild) {
+        collegesArea.removeChild(collegesArea.firstChild)
+    }
+    loadNewSchools()
+
+    userDB.collection('userTest').doc(globalUserId).get().then(function(doc) {
+        var schoolData = doc.data().schoolPreferences
+
+        for (var schoolID in schoolData) {
+            if(schoolData.hasOwnProperty(schoolID)) {
+
+                userDB.collection('schools').doc(schoolID).get().then(function(school) {
+                    buildSchool(school.id, school.data())
+                })
+            }
+        }
+    })
+}
+
+
+
