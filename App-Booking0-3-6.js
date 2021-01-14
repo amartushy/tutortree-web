@@ -181,17 +181,6 @@ function buildCalendar(availability) {
 
 function buildCalendarNav() {
 
-    var confirmSession = document.getElementById('confirm-session')
-    var confirmSessionClone = confirmSession.cloneNode(true)
-    confirmSession.parentNode.replaceChild(confirmSessionClone, confirmSession)
-    confirmSessionClone.addEventListener('click', () => {
-        $('#confirm-session-screen').fadeOut(400, () => {
-            $('#completion-screen').fadeIn()
-            processConfirmation(sessionID, sessionInfo, dateString)
-        })
-    })
-
-
     var calendarBack = document.getElementById('calendar-back')
     var calendarBackClone = calendarBack.cloneNode(true)
     calendarBack.parentNode.replaceChild(calendarBackClone, calendarBack)
