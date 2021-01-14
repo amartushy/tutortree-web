@@ -458,3 +458,102 @@ function sendMessagingNotifications(otherID, currentName, message) {
         }
     })
 }
+
+
+//Reviews
+var writeReviewButton = document.getElementById('write-review-button')
+var writeReviewDiv = document.getElementById('write-review-div')
+writeReviewButton.addEventListener('click', () => {
+    $('#write-review-div').fadeIn()
+})
+
+var rating = 0
+
+var starOne = document.getElementById('star-1')
+starOne.addEventListener('mouseover', () => {
+    updateStars(1)
+})
+var starTwo = document.getElementById('star-2')
+starTwo.addEventListener('mouseover', () => {
+    updateStars(2)
+})
+var starThree = document.getElementById('star-3')
+starThree.addEventListener('mouseover', () => {
+    updateStars(3)
+})
+var starFour = document.getElementById('star-4')
+starFour.addEventListener('mouseover', () => {
+    updateStars(4)
+})
+var starFive = document.getElementById('star-5')
+starFive.addEventListener('mouseover', () => {
+    updateStars(5)
+})
+
+function updateStars(index) {
+    for( i = 1; i <= 5; i++) {
+        if( i <= index) {
+            document.getElementById(`star-${i}`).setAttribute('class', 'review-star-selected')
+            rating = i
+            console.log(rating)
+        } else{ 
+            document.getElementById(`star-${i}`).setAttribute('class', 'review-star-unselected')
+        }
+    }
+}
+
+var writeReviewHeader = document.getElementById('write-review-header')
+let reviewScreen = document.getElementById('review-screen')
+function setReviewInitialState(tutorData, tutorID) {
+    for( i = 1; i <= 5; i++) {
+        document.getElementById(`star-${i}`).setAttribute('class', 'review-star-unselected')
+    }
+
+    let confirmationScreen = document.getElementById('review-confirmation-screen')
+    writeReviewDiv.style.display = 'none'
+    confirmationScreen.style.display = 'none'
+    reviewScreen.style.display = 'flex'
+
+    writeReviewHeader.innerHTML = `Leave a review for ${tutorData.name}`
+
+    var submitReviewButton = document.getElementById('submit-review-button')
+    submitReviewButtonClone = submitReviewButton.cloneNode(true)
+    submitReviewButton.parentNode.replaceChild(submitReviewButtonClone, submitReviewButton)
+    submitReviewButtonClone.addEventListener('click', () => {
+        submitReview(tutorData, tutorID)
+    })
+}
+
+function loadReviews(tutorData, tutorID) {
+    setReviewInitialState(tutorData, tutorID)
+}
+
+function submitReview(tutorData, tutorID) {
+    let currentDate = new Date()
+    let currentDateInt = currentDate / 1000
+    let dateObject = getFormattedDate(currentDateInt)
+    let month = currentDate.getMonth()
+    let year = currentDate.getFullYear()
+    let dateString = months[month] + ' ' +dateObject[2] + ', ' + year
+    var reviewDict = {
+        'reviewer' : globalUserId,
+        'date' : currentDateInt,
+        'dateString' : dateString,
+        'rating' : rating,
+        'review' : document.getElementById('write-review-text').value,
+        'reviewerName' : coreName
+    }
+
+
+    let randomID = createTransactionID()
+    userDB.collection('userTest').doc(tutorID).collection('reviews').doc(randomID).set(reviewDict).then(() => {
+        var tutorsName = tutorData.name 
+        const nameArray = tutorsName.split(" ")
+        const firstName = nameArray[0]
+        var reviewConfirmationText = document.getElementById('review-confirmation-text')
+        reviewConfirmationText.innerHTML = `Thanks for reviewing ${firstName}`
+        reviewScreen.style.display = 'none'
+
+        $('#review-confirmation-screen').fadeIn().delay(5000).fadeOut("slow")
+    })
+}
