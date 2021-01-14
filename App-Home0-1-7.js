@@ -94,7 +94,7 @@ function getTutorData(tutorID) {
         loadTutorProfile(data, tutorID)
         loadButtons(data, tutorID)
         //loadSimilarTutors()
-        //loadReviews()
+        loadReviews(data, tutorID)
         //loadAvailability(data)
     })
 }
