@@ -121,6 +121,7 @@ async function loadTutorProfile() {
     usersAverage.innerHTML = await getRatingForUser(globalUserId)
 	
 	loadProfileExperience()
+	loadProfileAvailability()
 }
 
 function loadNotifications() {
