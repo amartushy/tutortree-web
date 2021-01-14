@@ -1297,10 +1297,6 @@ function updateEveryday(startIndex, endIndex) {
 }
 
 
-
-
-
-
 //Course Screen__________________________________________________________________________________________________________________________
 var middleSchoolBlock = document.getElementById('middle-school-block')
 var highSchoolBlock = document.getElementById('high-school-block')
@@ -1379,6 +1375,7 @@ function buildSchool(school, schoolData) {
         })
     })
 }
+
 
 function buildSubjectBlock(school, subject, courseDict) {
     var subjectID = subject.replace(/\s+/g, '');
