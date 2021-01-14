@@ -331,51 +331,6 @@ function timeslotSelected(index) {
     updateCheckout()
 }
 
-//Availability Helper Functions__________________________________________________________________________
-function updateStartAndEnd() {
-    var dateObject = new Date(year, month, dayVal)
-    var epoch = dateObject.getTime() / 1000
-    start = epoch + 21600 + sessionIndices[0]*1800
-    if (sessionIndices.length>1) {
-        end = epoch + 21600 + sessionIndices[sessionIndices.length-1]*1800 + 1800
-    } else {
-        end = start + 1800
-    }
-}
-
-function formatSessionDate(dayInt, dayOfMonth, month) {
-    var suffix
-    if (dayOfMonth == 1 || dayOfMonth == 21 ||dayOfMonth == 31) {
-        suffix = "st"
-    } else if( dayOfMonth == 2 || dayOfMonth == 22) {
-        suffix = "nd"
-    } else if (dayOfMonth == 3 || dayOfMonth == 23) {
-        suffix = "rd"
-    } else {
-        suffix = "th"
-    }
-    
-    const sessionString = days[dayInt] + ", " + months[month] + " " + dayOfMonth + suffix
-    return sessionString
-}
-
-function getCurrentMonthAndYear() {
-    var currentDate = new Date()
-    var currentMonth = currentDate.getMonth()
-    var currentYear = currentDate.getFullYear()
-    return [currentYear, currentMonth]
-}
-
-function getDaysInMonth(year, month) {
-    return new Date(year, month, 0).getDate()
-}
-
-function firstDayOfMonth(year, month) {
-    var firstDate = new Date(year, month, 1)
-    return firstDate.getDay()
-}
-
-
 
 //Checkout Functions______________________________________________________________________________
 function updateCheckout() {
