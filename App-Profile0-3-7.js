@@ -122,6 +122,7 @@ async function loadTutorProfile() {
 	
 	loadProfileExperience()
 	loadProfileAvailability()
+	loadProfileReviews()
 }
 //Tab Navigation
 var tab1 = document.getElementById('tab-1')
