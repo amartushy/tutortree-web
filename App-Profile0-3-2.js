@@ -1379,3 +1379,225 @@ function buildSchool(school, schoolData) {
         })
     })
 }
+
+function buildSubjectBlock(school, subject, courseDict) {
+    var subjectID = subject.replace(/\s+/g, '');
+
+    var courseContainer = document.getElementById(`courses-container-${school}`)
+
+    var courseDiv = document.createElement('div')
+    courseDiv.setAttribute('class', 'course-div')
+    courseContainer.appendChild(courseDiv)
+
+    var courseHeader = document.createElement('div')
+    courseHeader.setAttribute('class', 'course-header')
+    courseHeader.addEventListener('click', () => {
+        var courseContainer = document.getElementById(`course-container-${subjectID}`)
+        if(courseContainer.style.display == 'none') {
+            $(`#course-container-${subjectID}`).fadeIn()
+        } else {
+            $(`#course-container-${subjectID}`).fadeOut()
+        }
+        
+    })
+    courseDiv.appendChild(courseHeader)
+
+    var courseHeaderText = document.createElement('div')
+    courseHeaderText.setAttribute('class', 'course-header-text')
+    courseHeaderText.innerHTML = subject
+    courseHeader.appendChild(courseHeaderText)
+
+    var courseChevron = document.createElement('div')
+    courseChevron.setAttribute('class', 'course-chevron')
+    courseChevron.innerHTML = ''
+    courseHeader.appendChild(courseChevron)
+
+    var courseBlockContainer = document.createElement('course-block-container')
+    courseBlockContainer.setAttribute('class', 'course-block-container')
+    courseBlockContainer.setAttribute('id', `course-container-${subjectID}`)
+    courseBlockContainer.style.display = 'none'
+    courseDiv.appendChild(courseBlockContainer)
+
+    for ( var course in courseDict ) {
+        if (courseDict.hasOwnProperty(course)) {
+            var courseBlock = document.createElement('div')
+            courseBlock.setAttribute('class', 'course-block')
+            courseBlock.setAttribute('id', `${school}-${subject}-${course}`)
+            courseBlock.setAttribute('onClick', 'updateTutorForCourse("' +school+ '","'+ subject + '","' + course  + '")')
+            for(var tutor in courseDict[course].tutors) {
+                if (tutor == globalUserId) {
+                    courseBlock.setAttribute('class', 'course-block-selected')
+                    courseBlockContainer.style.display = 'flex'
+                }
+            }
+            courseBlock.innerHTML = course 
+            courseBlockContainer.appendChild(courseBlock)
+        }
+    }
+}
+
+function updateTutorForCourse(school, subject, course) {
+    console.log(school)
+    console.log(subject)
+    console.log(course)
+    userDB.collection('schools').doc(school).collection('courses').doc(subject).get().then(function(doc) {
+        const courseInfo = doc.data()
+
+        var isTutor = false
+
+        if (courseInfo[course].tutors != null) {
+        	isTutor = courseInfo[course]["tutors"][globalUserId] != null
+        }
+
+        if (isTutor) {
+            var tutorPath =  course  + '.tutors.' + globalUserId 
+            var tutorDict = {}
+            tutorDict[tutorPath] = firebase.firestore.FieldValue.delete()
+            userDB.collection('schools').doc(school).collection('courses').doc(subject).update( tutorDict ).then(function() {
+                var courseBlock = document.getElementById(`${school}-${subject}-${course}`)
+                courseBlock.setAttribute('class', 'course-block')
+	        })
+
+            var numTutorPath = course + '.info.numTutors' 
+            var numTutorDict = {}
+            numTutorDict[numTutorPath] = firebase.firestore.FieldValue.increment(-1)
+            userDB.collection('schools').doc(school).collection('courses').doc(subject).update( numTutorDict )
+
+        } else {
+            var tutorPath = course + '.tutors.' + globalUserId 
+            var tutorDict = {}
+            tutorDict[tutorPath] = globalUserId
+            userDB.collection('schools').doc(school).collection('courses').doc(subject).update( tutorDict ).then(function() {
+		        var courseBlock = document.getElementById(`${school}-${subject}-${course}`)
+                courseBlock.setAttribute('class', 'course-block-selected')
+	        })
+
+            var numTutorPath = course + '.info.numTutors' 
+            var numTutorDict = {}
+            numTutorDict[numTutorPath] = firebase.firestore.FieldValue.increment(1)
+            userDB.collection('schools').doc(school).collection('courses').doc(subject).update( numTutorDict )
+        }
+    })
+}
+
+var allSchoolsArea = document.getElementById('all-schools-area')
+var allSchoolsContainer = document.getElementById('all-schools-container')
+var addSchoolButton = document.getElementById('add-school-button')
+var allSchoolIDs = []
+
+var addSchoolBlock = document.getElementById('add-school-block')
+addSchoolBlock.addEventListener('click', () => {
+    $('#all-schools-area').fadeIn()
+})
+
+//Request School
+var requestSchoolButton = document.getElementById('request-school-button')
+var addSchoolContainer = document.getElementById('add-school-container')
+var requestConfirmation = document.getElementById('request-confirmation')
+var addSchoolName = document.getElementById('add-school-name')
+var addSchoolCourses = document.getElementById('add-school-courses')
+var addSchoolToggle = document.getElementById('add-school-toggle')
+var addSchoolCancel = document.getElementById('add-school-cancel')
+var addSchoolSubmit = document.getElementById('add-school-submit')
+var isNotify
+
+requestSchoolButton.addEventListener('click', () => {
+    $('#add-school-container').fadeIn()
+})
+addSchoolCancel.addEventListener('click', () => {
+    $('#add-school-container').fadeOut()
+})
+addSchoolToggle.addEventListener('click', () => {
+    if(isNotify == false) {
+        isNotify = true
+        addSchoolToggle.setAttribute('class', 'toggle-selected')
+    } else {
+        isNotify = false
+        addSchoolToggle.setAttribute('class', 'toggle')
+    }
+})
+
+addSchoolSubmit.addEventListener('click', () => {
+    var schoolName = addSchoolName.value 
+    var courses = addSchoolCourses.value
+    
+    if(schoolName == '') {
+        showErrorMessage("Please enter the school's name")
+    } else if (courses == '') {
+        showErrorMessage("Please enter what courses you'd like to tutor")
+    } else {
+        var message = 'School Name: ' + schoolName + ', Courses Message: ' + courses + ' Tutor Info: ' + coreName +', '+coreEmail+', notify: '+isNotify
+        sendEmailTo('support@tutortree.com', 'New School Request', message)
+        $('#add-school-container').fadeOut(200, () => {
+            $('#request-confirmation').fadeIn().delay(5000).fadeOut("slow")
+        })
+    }
+})
+
+//Load Additional Schools
+var selectedSchool
+var selectedSchoolTitle
+function loadNewSchools() {
+    isNotify = false
+    while(allSchoolsContainer.firstChild) {
+        allSchoolsContainer.removeChild(allSchoolsContainer.firstChild)
+    }
+
+    //Set initial states
+    addSchoolContainer.style.display = 'none'
+    requestConfirmation.style.display = 'none'
+    addSchoolToggle.setAttribute('class', 'toggle')
+    allSchoolsArea.style.display = 'none'
+    addSchoolButton.style.display = 'none'
+
+    userDB.collection("schools").get().then(function(schools) {
+        schools.forEach(function(doc) {
+            allSchoolIDs.push(doc.id)
+            var schoolData = doc.data()
+
+            var coursesSchoolButton = document.createElement('div')
+            coursesSchoolButton.setAttribute('class', 'courses-school-button')
+            coursesSchoolButton.setAttribute('id', `courses-school-button-${doc.id}`)
+            coursesSchoolButton.addEventListener('click', () => {
+                addSchoolButton.innerHTML = 'Add ' + schoolData.title 
+                selectedSchool = doc.id
+                selectedSchoolTitle = schoolData.title
+                updateSchoolClasses(doc.id)
+                $('#add-school-button').fadeIn()
+            })
+            allSchoolsContainer.appendChild(coursesSchoolButton)
+
+            var coursesSchoolImage = document.createElement('img')
+            coursesSchoolImage.setAttribute('class', 'courses-school-image')
+            coursesSchoolImage.src = schoolData.icon 
+            coursesSchoolButton.appendChild(coursesSchoolImage)
+
+            var coursesSchoolText = document.createElement('div')
+            coursesSchoolText.setAttribute('class', 'courses-school-text')
+            coursesSchoolText.innerHTML = schoolData.title 
+            coursesSchoolButton.appendChild(coursesSchoolText)
+        })
+    })
+}
+
+addSchoolButton.addEventListener('click', () => {
+    var schoolDict = {}
+    var schoolPath = 'schoolPreferences.' + selectedSchool
+    schoolDict[schoolPath] = selectedSchoolTitle
+    userDB.collection('userTest').doc(globalUserId).update(schoolDict).then( () => {
+        loadUsersSchools()
+    })
+})
+
+function updateSchoolClasses(school) {
+    allSchoolIDs.forEach(function(id) {
+        console.log(id)
+        var targetElement = document.getElementById(`courses-school-button-${id}`)
+
+        if(id == school) {
+            targetElement.setAttribute('class', 'courses-school-button-selected')
+        } else {
+            targetElement.setAttribute('class', 'courses-school-button')
+        }
+    })
+}
