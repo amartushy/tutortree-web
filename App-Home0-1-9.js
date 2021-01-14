@@ -551,7 +551,7 @@ function submitReview(tutorData, tutorID) {
         const nameArray = tutorsName.split(" ")
         const firstName = nameArray[0]
         var reviewConfirmationText = document.getElementById('review-confirmation-text')
-        reviewConfirmationText.innerHTML = `Thanks for reviewing ${firstName}`
+        reviewConfirmationText.innerHTML = `Thanks for reviewing ${firstName}!`
         reviewScreen.style.display = 'none'
 
         $('#review-confirmation-screen').fadeIn().delay(5000).fadeOut("slow")
