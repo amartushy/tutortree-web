@@ -179,6 +179,7 @@ function buildCalendar(availability) {
     }
 }
 
+
 function buildCalendarNav() {
 
     var calendarBack = document.getElementById('calendar-back')
@@ -191,7 +192,7 @@ function buildCalendarNav() {
         } else {
             month--
         }
-        buildCalendar(fullAvailability)
+        buildCalendar(tutorsAvailability)
     })
 
     var calendarForward = document.getElementById('calendar-forward')
@@ -204,7 +205,7 @@ function buildCalendarNav() {
         } else {
             month++
         }
-        buildCalendar(fullAvailability)
+        buildCalendar(tutorsAvailability)
     })
 }
 
