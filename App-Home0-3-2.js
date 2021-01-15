@@ -417,28 +417,6 @@ function buildTutorPreview(tutorID, tutorData) {
     tutorPreviewInfoDiv.appendChild(tutorPreviewSchool)
 }
 
-
-function pinTutor(tutorID, isPinned) {
-    let pinDict = {}
-    let pinPath = 'pinnedTutors.' + tutorID
-    pinDict[pinPath] = (isPinned ? 'inactive' : 'active')
-
-    if(isPinned) {
-        userDB.collection('userTest').doc(globalUserId).update(pinDict).then( () => {
-            loadPinnedTutors()
-            pinTutorButton.setAttribute('class', 'pin-tutor')
-            pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${false})`)
-        })
-
-    } else {
-        userDB.collection('userTest').doc(globalUserId).update(pinDict).then( () => {
-            loadPinnedTutors()
-            pinTutorButton.setAttribute('class', 'pin-tutor-active')
-            pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${true})`)
-        })
-    }
-}
-
 function loadPinnedTutors() {
     while(pinnedTutorsArea.firstChild) {
         pinnedTutorsArea.removeChild(pinnedTutorsArea.firstChild)
@@ -611,6 +589,52 @@ function pinTutor(tutorID, isPinned) {
             loadPinnedTutors()
             pinTutorButton.setAttribute('class', 'pin-tutor-active')
             pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${true})`)
+        })
+    }
+}
+
+let likeTutorButton = document.getElementById('like-tutor-button')
+function loadisTutorLiked(tutorID) {
+    console.log(coreLikedTutors)
+    if(coreLikedTutors != null) { 
+        for (const [id, status] of Object.entries(coreLikedTutors)) {
+            //User has previously liked this tutor but deactivated them
+            if(id == tutorID && status == 'inactive') {
+                likeTutorButton.setAttribute('class', 'pin-tutor')
+                likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${false})`)
+
+            //User has this tutor liked currently
+            } else {
+                likeTutorButton.setAttribute('class', 'pin-tutor-active')
+                likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${true})`)
+            }
+        } 
+
+    //User has never liked a tutor before
+    } else {
+        likeTutorButton.setAttribute('class', 'pin-tutor')
+        likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${false})`)
+    }
+}
+
+
+function likeTutor(tutorID, isLiked) {
+    let likeDict = {}
+    let likePath = 'likedTutors.' + tutorID
+    likeDict[likePath] = (isLiked ? 'inactive' : 'active')
+
+    if(isLiked) {
+        userDB.collection('userTest').doc(globalUserId).update(likeDict).then( () => {
+            updateTutorsLikes(tutorID, false)
+            likeTutorButton.setAttribute('class', 'pin-tutor')
+            likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${false})`)
+        })
+
+    } else {
+        userDB.collection('userTest').doc(globalUserId).update(likeDict).then( () => {
+            updateTutorsLikes(tutorID, true)
+            likeTutorButton.setAttribute('class', 'pin-tutor-active')
+            likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${true})`)
         })
     }
 }
