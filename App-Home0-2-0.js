@@ -1,7 +1,3 @@
-document.getElementById("tutor-1").addEventListener('click', () => {
-	location.href = "https://app-tutortree.webflow.io/tutor-profile"
-})
-
 //Global Variables__________________________________________________________________
 var userDB = firebase.firestore()
 
@@ -37,7 +33,7 @@ function loadCoreProperties(ID) {
         var data = doc.data()
 
         coreBio = data.bio
-	coreBalance = data.currentBalance    
+	    coreBalance = data.currentBalance    
         coreEmail = data.email
         coreIsEmailOn = data.isEmailOn 
         coreIsSMSOn = data.coreIsSMSOn
@@ -47,7 +43,7 @@ function loadCoreProperties(ID) {
         coreProfileImage = data.profileImage 
 
         loadHeader()
-
+        loadHomePage()
     })
 }
 
@@ -100,216 +96,8 @@ function getTutorData(tutorID) {
 }
 
 
-//Filtering
-//Filter variables
-var gradeLevel,
-    attendingSchool,
-    subject,
-    course
+//Home Page___________________________________________________________________________________________________________________
 
-//Text displays
-var tutorFilterText = document.getElementById('tutor-filter-text')
-var attendingFilterText = document.getElementById('attending-filter-text')
-var subjectFilterText = document.getElementById('subject-filter-text')
-var courseFilterText = document.getElementById('course-filter-text')
-
-//Grade level options
-var middleSchoolOption = document.getElementById('middle-school-option')
-var highSchoolOption = document.getElementById('high-school-option')
-var collegeOption = document.getElementById('college-option')
-
-collegeOption.addEventListener('click', () => {
-    tutorFilterText.innerHTML = 'College'
-    gradeLevel = 'college'
-
-    loadAttendingOptions()
-})
-
-function loadAttendingOptions() {
-    
-    var schoolNames = []
-
-    userDB.collection('schools').get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            const schoolData = doc.data()
-            const schoolPath = doc.id
-            schoolNames.push([schoolPath, schoolData])
-
-        })
-
-        buildAttendingOptions(schoolNames)
-    })
-
-}
-
-function buildAttendingOptions(schoolArray) {
-    var attendingOptionsContainer = document.getElementById('attending-options-container')
-
-    while (attendingOptionsContainer.firstChild) {
-        attendingOptionsContainer.removeChild(attendingOptionsContainer.firstChild)
-    }
-    var schoolTitles = []
-    schoolArray.forEach(function(school) {
-        const schoolData = school[1]
-        schoolTitles.push(schoolData.title)
-    })
-
-    for( i = 0; i < schoolTitles.length; i++) {
-        var schoolOption = document.createElement('div')
-        if (i == 0) {
-            schoolOption.setAttribute('class', 'filter-option-top')
-        } else if (i == schoolTitles.length - 1) {
-            schoolOption.setAttribute('class', 'filter-option-bottom')
-        } else {
-            schoolOption.setAttribute('class', 'filter-option')
-        }
-        
-        schoolTitle = schoolTitles[i]
-        schoolOption.innerHTML = schoolTitles[i]
-        schoolPath = schoolArray[i][0]
-        schoolOption.setAttribute('onClick', 'loadSubjectsForSchool("' + schoolPath + '","' + schoolTitle + '")')
-        attendingOptionsContainer.appendChild(schoolOption)
-    }
-}
-
-function loadSubjectsForSchool(schoolPath, schoolTitle) {
-    attendingSchool = schoolPath
-    attendingFilterText.innerHTML = schoolTitle
-
-    var subjectsForSchool = []
-
-    userDB.collection('schools').doc(schoolPath).collection('courses').get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            subjectsForSchool.push(doc.id) 
-        })
-
-        buildSubjectOptions(subjectsForSchool)
-    })
-}
-
-function buildSubjectOptions(subjectOptions) {
-    var subjectOptionsContainer = document.getElementById('subject-options-container')
-
-    while (subjectOptionsContainer.firstChild) {
-        subjectOptionsContainer.removeChild(subjectOptionsContainer.firstChild)
-    }
-
-    for (i = 0; i < subjectOptions.length; i ++ ) {
-        var subjectOption = document.createElement('div')
-
-        if (i == 0) {
-            subjectOption.setAttribute('class', 'filter-option-top')
-        } else if (i == subjectOptions.length - 1) {
-            subjectOption.setAttribute('class', 'filter-option-bottom')
-        } else {
-            subjectOption.setAttribute('class', 'filter-option')
-        }
-
-        const subjectTitle = subjectOptions[i]
-        subjectOption.innerHTML = subjectTitle
-        subjectOption.setAttribute('onClick', 'loadCoursesForSubject("' + subjectTitle + '")')
-        subjectOptionsContainer.appendChild(subjectOption)
-    }
-}
-
-function loadCoursesForSubject(subjectTitle) {
-
-    subject = subjectTitle
-    subjectFilterText.innerHTML = subjectTitle
-
-    var coursesForSubject = []
-
-    userDB.collection('schools').doc(attendingSchool).collection('courses').doc(subjectTitle).get().then(function(doc) {
-        
-        const courseDict = doc.data()
-
-        for (var course in courseDict) {
-            if ( courseDict.hasOwnProperty(course) ) {
-                var tutorsForCourse = []
-                for (var tutor in courseDict[course].tutors) {
-                    tutorsForCourse.push(tutor)
-                }
-                coursesForSubject.push([course, tutorsForCourse])
-            }
-        }
-
-        buildCourseOptions(coursesForSubject)
-    })
-}
-
-function buildCourseOptions(courseOptions) {
-    console.log(courseOptions)
-    var courseOptionsContainer = document.getElementById('course-options-container')
-
-    while (courseOptionsContainer.firstChild) {
-        courseOptionsContainer.removeChild(courseOptionsContainer.firstChild)
-    }
-
-    for (i = 0; i < courseOptions.length; i ++ ) {
-        var courseOption = document.createElement('div')
-
-        if (i == 0) {
-            courseOption.setAttribute('class', 'filter-option-top')
-        } else if (i == courseOptions.length - 1) {
-            courseOption.setAttribute('class', 'filter-option-bottom')
-        } else {
-            courseOption.setAttribute('class', 'filter-option')
-        }
-
-        const courseTitle = courseOptions[i][0]
-        courseOption.innerHTML = courseTitle
-        const tutorsForCourse = courseOptions[i][1]
-        courseOption.setAttribute('onClick', 'loadTutorsForCourse("' + courseTitle + '","' + tutorsForCourse + '")')
-        courseOptionsContainer.appendChild(courseOption)
-    }
-}
-
-function loadTutorsForCourse(courseTitle, tutorsForCourse) {
-    var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
-
-    while (tutorPreviewsContainer.firstChild) {
-        tutorPreviewsContainer.removeChild(tutorPreviewsContainer.firstChild)
-    }
-    
-    var tutorsArray = tutorsForCourse.split(",")
-
-    courseFilterText.innerHTML = courseTitle
-    tutorsArray.forEach(function(tutor) {
-
-        userDB.collection('userTest').doc(tutor).get().then(function(doc) {
-            const tutorData = doc.data()
-
-            buildTutorPreview(tutor, tutorData)
-        })
-    })
-}
-
-function buildTutorPreview(tutorID, tutorData) {
-    var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
-
-    const tutorPreviewDiv = document.createElement('div')
-    tutorPreviewDiv.setAttribute('class', 'tutor-preview-div')
-    tutorPreviewsContainer.appendChild(tutorPreviewDiv)
-
-    const tutorPreviewImage = document.createElement('img')
-    tutorPreviewImage.setAttribute('class', 'tutor-preview-image')
-    tutorPreviewImage.src = tutorData.profileImage
-    tutorPreviewDiv.appendChild(tutorPreviewImage)
-
-    const tutorPreviewInfoDiv = document.createElement('div')
-    tutorPreviewInfoDiv.setAttribute('class', 'tutor-preview-info-div')
-    tutorPreviewDiv.appendChild(tutorPreviewInfoDiv)
-
-    const tutorPreviewName = document.createElement('div')
-    tutorPreviewName.setAttribute('class', 'tutor-preview-name')
-    tutorPreviewName.innerHTML = tutorData.name 
-    tutorPreviewInfoDiv.appendChild(tutorPreviewName)
-
-    const tutorPreviewSchool = document.createElement('div')
-    tutorPreviewSchool.setAttribute('class', 'tutor-preview-school')
-    tutorPreviewSchool.innerHTML = tutorData.school 
-    tutorPreviewInfoDiv.appendChild(tutorPreviewSchool)
-}
 
 
 
