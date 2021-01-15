@@ -98,24 +98,20 @@ function getTutorData(tutorID) {
 
 //Home Page___________________________________________________________________________________________________________________
 
-function loadTutorsForCourse(courseTitle, tutorsForCourse) {
+function loadTutors(tutorsForCourse) {
     var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
 
     while (tutorPreviewsContainer.firstChild) {
         tutorPreviewsContainer.removeChild(tutorPreviewsContainer.firstChild)
     }
     
-    var tutorsArray = tutorsForCourse.split(",")
-
-    courseFilterText.innerHTML = courseTitle
-    tutorsArray.forEach(function(tutor) {
-
-        userDB.collection('userTest').doc(tutor).get().then(function(doc) {
+    for (const [tutorID, value] of Object.entries(tutorsForCourse)) {
+        userDB.collection('userTest').doc(tutorID).get().then(function(doc) {
             const tutorData = doc.data()
 
-            buildTutorPreview(tutor, tutorData)
+            buildTutorPreview(tutorID, tutorData)
         })
-    })
+    }
 }
 
 function buildTutorPreview(tutorID, tutorData) {
