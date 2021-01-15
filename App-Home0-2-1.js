@@ -98,7 +98,52 @@ function getTutorData(tutorID) {
 
 //Home Page___________________________________________________________________________________________________________________
 
+function loadTutorsForCourse(courseTitle, tutorsForCourse) {
+    var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
 
+    while (tutorPreviewsContainer.firstChild) {
+        tutorPreviewsContainer.removeChild(tutorPreviewsContainer.firstChild)
+    }
+    
+    var tutorsArray = tutorsForCourse.split(",")
+
+    courseFilterText.innerHTML = courseTitle
+    tutorsArray.forEach(function(tutor) {
+
+        userDB.collection('userTest').doc(tutor).get().then(function(doc) {
+            const tutorData = doc.data()
+
+            buildTutorPreview(tutor, tutorData)
+        })
+    })
+}
+
+function buildTutorPreview(tutorID, tutorData) {
+    var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
+
+    const tutorPreviewDiv = document.createElement('div')
+    tutorPreviewDiv.setAttribute('class', 'tutor-preview-div')
+    tutorPreviewsContainer.appendChild(tutorPreviewDiv)
+
+    const tutorPreviewImage = document.createElement('img')
+    tutorPreviewImage.setAttribute('class', 'tutor-preview-image')
+    tutorPreviewImage.src = tutorData.profileImage
+    tutorPreviewDiv.appendChild(tutorPreviewImage)
+
+    const tutorPreviewInfoDiv = document.createElement('div')
+    tutorPreviewInfoDiv.setAttribute('class', 'tutor-preview-info-div')
+    tutorPreviewDiv.appendChild(tutorPreviewInfoDiv)
+
+    const tutorPreviewName = document.createElement('div')
+    tutorPreviewName.setAttribute('class', 'tutor-preview-name')
+    tutorPreviewName.innerHTML = tutorData.name 
+    tutorPreviewInfoDiv.appendChild(tutorPreviewName)
+
+    const tutorPreviewSchool = document.createElement('div')
+    tutorPreviewSchool.setAttribute('class', 'tutor-preview-school')
+    tutorPreviewSchool.innerHTML = tutorData.school 
+    tutorPreviewInfoDiv.appendChild(tutorPreviewSchool)
+}
 
 
 //Profile____________________________________________________________________________________________________________________________________________________
