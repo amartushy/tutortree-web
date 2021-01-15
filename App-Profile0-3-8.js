@@ -1226,7 +1226,7 @@ function addNewExperience() {
     })
 }
 
-//Availability Screen____________________________________________________________________________
+//Availability Screen___________________________________________________________________________________________________________________________
 var availabilityScreen = document.getElementById('availability-screen')
 var addNewAvailability = document.getElementById('add-new-availability')
 var reduceRateButton = document.getElementById('reduce-rate-button')
@@ -1597,7 +1597,7 @@ function buildSchool(school, schoolData) {
     collegeContainer.appendChild(schoolBlock)
 
     var schoolHeader = document.createElement('div')
-    schoolHeader.setAttribute('class', 'school-header')
+    schoolHeader.setAttribute('class', 'filter-header')
     schoolBlock.appendChild(schoolHeader)
 
     var schoolHeaderLogoContainer = document.createElement('div')
@@ -1615,7 +1615,7 @@ function buildSchool(school, schoolData) {
     schoolHeaderLogoContainer.appendChild(schoolHeaderText)
 
     var schoolChevron = document.createElement('div')
-    schoolChevron.setAttribute('class', 'school-chevron')
+    schoolChevron.setAttribute('class', 'filter-chevron')
     schoolChevron.innerHTML = ''
     schoolHeader.appendChild(schoolChevron)
 
