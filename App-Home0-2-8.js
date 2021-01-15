@@ -118,7 +118,7 @@ function loadHomePage() {
     homeProfileName.innerHTML = `Hi, ${getFirstName(coreName)}!`
 
     loadFilters()
-    //buildPinnedTutors()
+    loadPinnedTutors()
 }
 
 
