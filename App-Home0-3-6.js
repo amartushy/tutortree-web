@@ -12,6 +12,7 @@ var globalUserId,
     coreName,
     corePhone,
     corePinnedTutors,
+    corePreferences,
     coreProfileImage
 
 
@@ -35,7 +36,7 @@ function loadCoreProperties(ID) {
         var data = doc.data()
 
         coreBio = data.bio
-	    coreBalance = data.currentBalance    
+	coreBalance = data.currentBalance    
         coreEmail = data.email
         coreIsEmailOn = data.isEmailOn 
         coreIsSMSOn = data.coreIsSMSOn
@@ -44,6 +45,7 @@ function loadCoreProperties(ID) {
         coreName = data.name 
         corePhone = data.phoneNumber 
 	corePinnedTutors = data.pinnedTutors
+	corePreferences = data.preferences
         coreProfileImage = data.profileImage 
 
         loadHeader()
