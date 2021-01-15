@@ -40,6 +40,7 @@ function loadCoreProperties(ID) {
         coreisTutor = data.isTutor
         coreName = data.name 
         corePhone = data.phoneNumber 
+	corePinnedTutors = data.pinnedTutors,
         coreProfileImage = data.profileImage 
 
         loadHeader()
