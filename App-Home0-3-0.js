@@ -544,6 +544,9 @@ function loadButtons(data, tutorID) {
     //load pin tutor button
     loadisTutorPinned(tutorID)
     
+    //load like button
+    loadisTutorLiked(tutorID)
+
     //load report button
 
     //load message button
