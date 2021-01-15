@@ -104,6 +104,46 @@ function getTutorData(tutorID) {
 
 
 
+let headerSchool = document.getElementById('header-school')
+let headerNumTutors = document.getElementById('header-num-tutors')
+let headerNumCourses = document.getElementById('header-num-courses')
+let headerCoursesWith = document.getElementById('header-courses-with')
+function updateHomeHeader(schoolPath) {
+    var tutorsArray = []
+    var countOfTutors = 0
+    var coursesCount = 0
+    var coursesWithTutors = 0
+    var schoolTitle
+    userDB.collection('schools').doc(schoolPath).get().then(function(doc) {
+        schoolTitle = doc.data().title
+        headerSchool.innerHTML = schoolTitle
+
+        userDB.collection("schools").doc(schoolPath).collection('courses').onSnapshot(function(subjects) {
+            subjects.forEach(function(subject) {
+                var courseDict = subject.data()
+                for ( var course in courseDict ) {
+                    if (courseDict.hasOwnProperty(course)) {
+                        coursesCount += 1
+                        if( courseDict[course].info.numTutors != 0) {
+                            coursesWithTutors += 1
+                        }
+                        for (var tutor in courseDict[course].tutors) {
+                            if (!tutorsArray.includes(tutor)) {
+                                tutorsArray.push(tutor)
+                            }
+                        }
+                    }
+                }
+            })
+            countOfTutors = tutorsArray.length
+            headerNumTutors.innerHTML =  countOfTutors +' Tutors'
+            headerNumCourses.innerHTML = coursesCount + ' Courses'
+            headerCoursesWith.innerHTML = coursesWithTutors + ' Courses With Tutors' 
+            $('#home-header').fadeIn()
+        })
+    })
+}
+
 //Grade Filters
 let gradeFilterBlock = document.getElementById('grade-filter-block')
 let gradeFilterArea = document.getElementById('grade-filter-area')
@@ -200,6 +240,7 @@ function buildSchoolOption(schoolPath, schoolData) {
     schoolOption.addEventListener('click', () => {
         $('#school-filter-area').fadeOut()
         schoolFilterText.innerHTML = schoolData.title 
+        updateHomeHeader(schoolPath)
         resetFilters(grade, schoolPath, 'none', 'none')
         loadSubjectOptions(schoolPath)
     })
