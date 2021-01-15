@@ -102,52 +102,7 @@ function getTutorData(tutorID) {
 }
 
 
-//Home Page___________________________________________________________________________________________________________________
-let homeProfileBlock = document.getElementById('home-profile-block')
-let homeProfileImageContainer = document.getElementById('home-profile-image-container')
-let homeProfileName = document.getElementById('home-profile-name')
 
-let tutorsHomeHeader = document.getElementById('tutors-home-header')
-let tutorsHomeSubheader = document.getElementById('tutors-home-subheader')
-
-let pinnedTutorsArea = document.getElementById('pinned-tutors-area')
-
-function loadHomePage() {
-    homeProfileImageContainer.removeChild(homeProfileImageContainer.firstChild)
-
-    let homeProfileImage = document.createElement('img')
-    homeProfileImage.setAttribute('class', 'home-profile-image')
-    homeProfileImage.src = coreProfileImage
-    homeProfileImageContainer.appendChild(homeProfileImage)
-
-    homeProfileName.innerHTML = `Hi, ${getFirstName(coreName)}!`
-
-    loadFilters()
-    loadPinnedTutors()
-}
-
-
-//Filtering
-var grade,
-    school,
-    subject,
-    course
-
-function loadFilters() {
-    gradeFilterArea.style.display = 'none'
-    schoolFilterArea.style.display = 'none'
-    subjectFilterArea.style.display = 'none'
-    courseFilterArea.style.display = 'none'
-
-    gradeFilterText.innerHTML = 'Grade Level..'
-    schoolFilterText.innerHTML = 'School..'
-    subjectFilterText.innerHTML = 'Subject..'
-    courseFilterText.innerHTML = 'Course..'
-
-    tutorsHomeSubheader.style.display = 'none'
-
-    buildGradeOptions()
-}
 
 //Grade Filters
 let gradeFilterBlock = document.getElementById('grade-filter-block')
