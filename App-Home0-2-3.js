@@ -143,7 +143,279 @@ function buildTutorPreview(tutorID, tutorData) {
 
 
 //Profile____________________________________________________________________________________________________________________________________________________
+let homeProfileBlock = document.getElementById('home-profile-block')
+let homeProfileImageContainer = document.getElementById('home-profile-image-container')
+let homeProfileName = document.getElementById('home-profile-name')
 
+let tutorsHomeHeader = document.getElementById('tutors-home-header')
+let tutorsHomeSubheader = document.getElementById('tutors-home-subheader')
+
+let pinnedTutorsArea = document.getElementById('pinned-tutors-area')
+
+function loadHomePage() {
+    homeProfileImageContainer.removeChild(homeProfileImageContainer.firstChild)
+
+    let homeProfileImage = document.createElement('img')
+    homeProfileImage.setAttribute('class', 'home-profile-image')
+    homeProfileImage.src = coreProfileImage
+    homeProfileImageContainer.appendChild(homeProfileImage)
+
+    homeProfileName.innerHTML = `Hi, ${getFirstName(coreName)}!`
+
+    loadFilters()
+    //buildPinnedTutors()
+}
+
+
+//Filtering
+var grade,
+    school,
+    subject,
+    course
+
+function loadFilters() {
+    gradeFilterArea.style.display = 'none'
+    schoolFilterArea.style.display = 'none'
+    subjectFilterArea.style.display = 'none'
+    courseFilterArea.style.display = 'none'
+
+    gradeFilterText.innerHTML = 'Grade Level..'
+    schoolFilterText.innerHTML = 'School..'
+    subjectFilterText.innerHTML = 'Subject..'
+    courseFilterText.innerHTML = 'Course..'
+
+    tutorsHomeSubheader.style.display = 'none'
+
+    buildGradeOptions()
+}
+
+//Grade Filters
+
+let gradeFilterBlock = document.getElementById('grade-filter-block')
+let gradeFilterArea = document.getElementById('grade-filter-area')
+let gradeFilterText = document.getElementById('grade-filter-text')
+let gradeFilterChevron = document.getElementById('grade-filter-chevron')
+
+gradeFilterBlock.addEventListener('click', () => {
+    if(gradeFilterArea.style.display == 'none') {
+        $('#grade-filter-area').fadeIn(() => {
+            gradeFilterChevron.setAttribute('class', 'filter-chevron-down')
+        })
+    } else {
+        $('#grade-filter-area').fadeOut(() => {
+            gradeFilterChevron.setAttribute('class', 'filter-chevron')
+        })
+    }
+})
+
+function buildGradeOptions() {
+    while(gradeFilterArea.firstChild) {
+        gradeFilterArea.removeChild(gradeFilterArea.firstChild)
+    }
+
+    let middleSchoolButton = document.createElement('div')
+    middleSchoolButton.setAttribute('class', 'home-filter-option')
+    middleSchoolButton.innerHTML = 'Middle School'
+    gradeFilterArea.appendChild(middleSchoolButton)
+    middleSchoolButton.addEventListener('click', () => {
+        grade = 'middle school'
+        gradeFilterText.innerHTML = 'Middle School'
+        buildSchoolOptions()
+    })
+
+    let highSchoolButton = document.createElement('div')
+    highSchoolButton.setAttribute('class', 'home-filter-option')
+    highSchoolButton.innerHTML = 'High School'
+    gradeFilterArea.appendChild(highSchoolButton)
+    highSchoolButton.addEventListener('click', () => {
+        grade = 'high school'
+        gradeFilterText.innerHTML = 'High School'
+        buildSchoolOptions()
+    })
+
+    let collegeButton = document.createElement('div')
+    collegeButton.setAttribute('class', 'home-filter-option')
+    collegeButton.innerHTML = 'College'
+    gradeFilterArea.appendChild(collegeButton)
+    collegeButton.addEventListener('click', () => {
+        $('#grade-filter-area').fadeOut()
+        gradeFilterText.innerHTML = 'College'
+        resetFilters('college', 'none', 'none', 'none')
+        loadSchoolOptions()
+    })
+}
+
+//School Filters
+let schoolFilterBlock = document.getElementById('school-filter-block')
+let schoolFilterArea = document.getElementById('school-filter-area')
+let schoolFilterText = document.getElementById('school-filter-text')
+let schoolFilterChevron = document.getElementById('school-filter-chevron')
+
+schoolFilterBlock.addEventListener('click', () => {
+    if(schoolFilterArea.style.display == 'none') {
+        $('#school-filter-area').fadeIn(() => {
+            schoolFilterChevron.setAttribute('class', 'filter-chevron-down')
+        })
+    } else {
+        $('#school-filter-area').fadeOut(() => {
+            schoolFilterChevron.setAttribute('class', 'filter-chevron-down')
+        })
+    }
+})
+
+function loadSchoolOptions() {
+    while(schoolFilterArea.firstChild) {
+        schoolFilterArea.removeChild(schoolFilterArea.firstChild)
+    }
+
+    userDB.collection('schools').get().then(function(schools) {
+        schools.forEach(function(doc) {
+            const schoolData = doc.data()
+            const schoolPath = doc.id
+            buildSchoolOption(schoolPath, schoolData)
+        })
+    })
+}
+
+function buildSchoolOption(schoolPath, schoolData) {
+    let schoolOption = document.createElement('div')
+    schoolOption.setAttribute('class', 'home-filter-option')
+    schoolOption.innerHTML = schoolData.title 
+    schoolFilterArea.appendChild(schoolOption)
+
+    schoolOption.addEventListener('click', () => {
+        $('#school-filter-area').fadeOut()
+        schoolFilterText.innerHTML = schoolData.title 
+        resetFilters(grade, schoolPath, 'none', 'none')
+        loadSubjectOptions(schoolPath)
+    })
+}
+
+//Subject Options
+let subjectFilterBlock = document.getElementById('subject-filter-block')
+let subjectFilterArea = document.getElementById('subject-filter-area')
+let subjectFilterText = document.getElementById('subject-filter-text')
+let subjectFilterChevron = document.getElementById('subject-filter-chevron')
+
+subjectFilterBlock.addEventListener('click', () => {
+    if(subjectFilterArea.style.display == 'none') {
+        $('#subject-filter-area').fadeIn( () => {
+            subjectFilterChevron.setAttribute('class', 'filter-chevron-down')
+        })
+    } else {
+        $('#subject-filter-area').fadeOut(() => {
+            subjectFilterChevron.setAttribute('class', 'filter-chevron-down')
+        })
+    }
+})
+
+function loadSubjectOptions() {
+    while(subjectFilterArea.firstChild) {
+        subjectFilterArea.removeChild(subjectFilterArea.firstChild)
+    }
+
+    userDB.collection('schools').doc(school).collection('courses').get().then(function(subjects) {
+        subjects.forEach(function(subject) {
+            buildSubjectOption(subject.id, subject.data())
+        })
+    })
+}
+
+function buildSubjectOption(subjectTitle, subjectData) {
+    let subjectOption = document.createElement('div')
+    subjectOption.setAttribute('class', 'home-filter-option')
+    subjectOption.innerHTML = subjectTitle
+    subjectFilterArea.appendChild(subjectOption)
+
+    subjectOption.addEventListener('click', () => {
+        $('#subject-filter-area').fadeOut()
+        subjectFilterText.innerHTML = subjectTitle
+        resetFilters(grade, school, subjectTitle, 'none')
+        loadCourseOptions(subjectTitle, subjectData)
+    })
+}
+
+//Course Options
+let courseFilterBlock = document.getElementById('course-filter-block')
+let courseFilterArea = document.getElementById('course-filter-area')
+let courseFilterText = document.getElementById('course-filter-text')
+let courseFilterChevron = document.getElementById('course-filter-chevron')
+
+courseFilterBlock.addEventListener('click', () => {
+    if(courseFilterArea.style.display == 'none') {
+        $('#course-filter-area').fadeIn( () => {
+            courseFilterChevron.setAttribute('class', 'filter-chevron-down')
+        })
+    } else {
+        $('#course-filter-area').fadeOut( () => {
+            courseFilterChevron.setAttribute('class', 'filter-chevron-down')
+        })
+    }
+})
+
+function loadCourseOptions(schoolPath, subjectData) {
+    while(courseFilterArea.firstChild) {
+        courseFilterArea.removeChild(courseFilterArea.firstChild)
+    }
+
+    for (const [courseName, courseInfo] of Object.entries(subjectData)) {
+        buildCourseOption(courseName, courseInfo)
+    }
+}
+
+function buildCourseOption(courseName, courseInfo) {
+    let courseOption = document.createElement('div')
+    courseOption.setAttribute('class', 'home-filter-option')
+    courseOption.innerHTML = courseName
+    courseFilterArea.appendChild(courseOption)
+
+    courseOption.addEventListener('click', () => {
+        $('#course-filter-area').fadeOut()
+        $('#tutors-home-subheader').fadeIn()
+        tutorsHomeSubheader.innerHTML = `All tutors for ${courseName}`
+        courseFilterText.innerHTML = courseName
+        resetFilters(grade, school, subject, courseName)
+        loadTutors(courseInfo.tutors)
+    })
+}
+
+function resetFilters(gradeChange, schoolChange, subjectChange, courseChange) {
+    grade = gradeChange
+    school = schoolChange
+    subject = subjectChange
+    course = courseChange
+
+    if(schoolChange == 'none') {
+        while(schoolFilterArea.firstChild) {
+            schoolFilterArea.removeChild(schoolFilterArea.firstChild)
+        }
+        while(subjectFilterArea.firstChild) {
+            subjectFilterArea.removeChild(subjectFilterArea.firstChild)
+        }
+        while(courseFilterArea.firstChild) {
+            courseFilterArea.removeChild(courseFilterArea.firstChild)
+        }
+        schoolFilterText.innerHTML = 'School..'
+        subjectFilterText.innerHTML = 'Subject..'
+        courseFilterText.innerHTML = 'Course..'
+
+    } else if(subjectChange == 'none') {
+        while(subjectFilterArea.firstChild) {
+            subjectFilterArea.removeChild(subjectFilterArea.firstChild)
+        }
+        while(courseFilterArea.firstChild) {
+            courseFilterArea.removeChild(courseFilterArea.firstChild)
+        }
+        subjectFilterText.innerHTML = 'Subject..'
+        courseFilterText.innerHTML = 'Course..'
+
+    } else if (courseChange == 'none') {
+        while(courseFilterArea.firstChild) {
+            courseFilterArea.removeChild(courseFilterArea.firstChild)
+        }
+        courseFilterText.innerHTML = 'Course..'
+    }
+}
 
 
 async function loadTutorProfile(data, ID) {
