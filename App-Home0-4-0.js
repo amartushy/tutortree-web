@@ -334,43 +334,7 @@ function buildCourseOption(courseName, courseInfo) {
     })
 }
 
-function resetFilters(gradeChange, schoolChange, subjectChange, courseChange) {
-    grade = gradeChange
-    school = schoolChange
-    subject = subjectChange
-    course = courseChange
 
-    if(schoolChange == 'none') {
-        while(schoolFilterArea.firstChild) {
-            schoolFilterArea.removeChild(schoolFilterArea.firstChild)
-        }
-        while(subjectFilterArea.firstChild) {
-            subjectFilterArea.removeChild(subjectFilterArea.firstChild)
-        }
-        while(courseFilterArea.firstChild) {
-            courseFilterArea.removeChild(courseFilterArea.firstChild)
-        }
-        schoolFilterText.innerHTML = 'School..'
-        subjectFilterText.innerHTML = 'Subject..'
-        courseFilterText.innerHTML = 'Course..'
-
-    } else if(subjectChange == 'none') {
-        while(subjectFilterArea.firstChild) {
-            subjectFilterArea.removeChild(subjectFilterArea.firstChild)
-        }
-        while(courseFilterArea.firstChild) {
-            courseFilterArea.removeChild(courseFilterArea.firstChild)
-        }
-        subjectFilterText.innerHTML = 'Subject..'
-        courseFilterText.innerHTML = 'Course..'
-
-    } else if (courseChange == 'none') {
-        while(courseFilterArea.firstChild) {
-            courseFilterArea.removeChild(courseFilterArea.firstChild)
-        }
-        courseFilterText.innerHTML = 'Course..'
-    }
-}
 function loadTutors(tutorsForCourse) {
     var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
 
