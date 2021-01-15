@@ -150,7 +150,6 @@ function loadFilters() {
 }
 
 //Grade Filters
-
 let gradeFilterBlock = document.getElementById('grade-filter-block')
 let gradeFilterArea = document.getElementById('grade-filter-area')
 let gradeFilterText = document.getElementById('grade-filter-text')
@@ -291,7 +290,7 @@ function buildSubjectOption(subjectTitle, subjectData) {
         $('#subject-filter-area').fadeOut()
         subjectFilterText.innerHTML = subjectTitle
         resetFilters(grade, school, subjectTitle, 'none')
-        loadCourseOptions(subjectTitle, subjectData)
+        loadCourseOptions(subjectData)
     })
 }
 
@@ -313,7 +312,7 @@ courseFilterBlock.addEventListener('click', () => {
     }
 })
 
-function loadCourseOptions(schoolPath, subjectData) {
+function loadCourseOptions(subjectData) {
     while(courseFilterArea.firstChild) {
         courseFilterArea.removeChild(courseFilterArea.firstChild)
     }
