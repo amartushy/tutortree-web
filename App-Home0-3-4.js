@@ -647,7 +647,7 @@ function updateTutorsLikes(tutorID, isIncrementing, likedBy) {
         likeDict[likePath] = 'active'
         userDB.collection('userTest').doc(tutorID).update({
             'numLikes' : firebase.firestore.FieldValue.increment(1),
-            likedDict
+            likeDict
         })
     } else {
         likeDict[likePath] = 'inactive'
