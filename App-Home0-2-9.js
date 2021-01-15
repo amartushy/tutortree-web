@@ -415,6 +415,98 @@ function buildTutorPreview(tutorID, tutorData) {
 }
 
 
+function pinTutor(tutorID, isPinned) {
+    let pinDict = {}
+    let pinPath = 'pinnedTutors.' + tutorID
+    pinDict[pinPath] = (isPinned ? 'inactive' : 'active')
+
+    if(isPinned) {
+        userDB.collection('userTest').doc(globalUserId).update(pinDict).then( () => {
+            loadPinnedTutors()
+            pinTutorButton.setAttribute('class', 'pin-tutor')
+            pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${false})`)
+        })
+
+    } else {
+        userDB.collection('userTest').doc(globalUserId).update(pinDict).then( () => {
+            loadPinnedTutors()
+            pinTutorButton.setAttribute('class', 'pin-tutor-active')
+            pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${true})`)
+        })
+    }
+}
+
+function loadPinnedTutors() {
+    while(pinnedTutorsArea.firstChild) {
+        pinnedTutorsArea.removeChild(pinnedTutorsArea.firstChild)
+    }
+    if(corePinnedTutors != null) { 
+        for (const [id, status] of Object.entries(corePinnedTutors)) {
+            if(status != 'inactive') {
+                userDB.collection('userTest').doc(id).get().then(function(doc) {
+                    let tutorID = id
+                    let tutorData = doc.data()
+                    buildPinnedTutorBlock(tutorID, tutorData)
+                })
+            }
+        } 
+
+    } else {
+        //User has never pinned a tutor before
+    }
+}
+
+function buildPinnedTutorBlock(tutorID, tutorData) {
+    let pinnedTutorBlock = document.createElement('div')
+    pinnedTutorBlock.setAttribute('class', 'pinned-tutor-block')
+    pinnedTutorsArea.appendChild(pinnedTutorBlock)
+    
+    let pinnedTutorHeader = document.createElement('div')
+    pinnedTutorHeader.setAttribute('class', 'pinned-tutor-header')
+    pinnedTutorBlock.appendChild(pinnedTutorHeader)
+
+    let pinnedTutorImage = document.createElement('img')
+    pinnedTutorImage.setAttribute('class', 'pinned-tutor-image')
+    pinnedTutorImage.src = tutorData.profileImage
+    pinnedTutorHeader.appendChild(pinnedTutorImage)
+
+    let pinnedTutorInfo = document.createElement('div')
+    pinnedTutorInfo.setAttribute('class', 'pinned-tutor-info')
+    pinnedTutorHeader.appendChild(pinnedTutorInfo)
+
+    let pinnedTutorName = document.createElement('div')
+    pinnedTutorName.setAttribute('class', 'pinned-tutor-name')
+    pinnedTutorName.innerHTML = tutorData.name
+    pinnedTutorInfo.appendChild(pinnedTutorName)
+
+    let pinnedTutorSchool = document.createElement('div')
+    pinnedTutorSchool.setAttribute('class', 'pinned-tutor-school')
+    pinnedTutorSchool.innerHTML = tutorData.school 
+    pinnedTutorInfo.appendChild(pinnedTutorSchool)
+
+    let pinnedButtonsDiv = document.createElement('div')
+    pinnedButtonsDiv.setAttribute('class', 'pinned-buttons-div')
+    pinnedTutorBlock.appendChild(pinnedButtonsDiv)
+
+    let pinnedProfileButton = document.createElement('div')
+    pinnedProfileButton.setAttribute('class', 'pinned-profile-button')
+    pinnedProfileButton.addEventListener('click', () => {
+        getTutorData(tutorID)
+    })
+    pinnedProfileButton.innerHTML = 'Go to Profile'
+    pinnedButtonsDiv.appendChild(pinnedProfileButton)
+
+    let pinnedBookButton = document.createElement('div')
+    pinnedBookButton.setAttribute('class', 'pinned-book-button')
+    pinnedBookButton.addEventListener('click', () => {
+        document.getElementById('session-booking-page').style.display = 'flex'
+        loadBookingPageFromData(tutorData, tutorID)
+    })
+    pinnedBookButton.innerHTML = 'Book Session'
+    pinnedButtonsDiv.appendChild(pinnedBookButton)
+}
+
+
 //Profile____________________________________________________________________________________________________________________________________________________
 
 async function loadTutorProfile(data, ID) {
