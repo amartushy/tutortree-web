@@ -641,20 +641,25 @@ function likeTutor(tutorID, isLiked) {
 
 function updateTutorsLikes(tutorID, isIncrementing, likedBy) {
     //decrementing if false:
-    let likeDict = {}
-    let likePath = 'likedBy.' + likedBy
+    var user = likedBy
+    var userDict = {}
+
     if(isIncrementing) {
-        likeDict[likePath] = 'active'
-        userDB.collection('userTest').doc(tutorID).update({
-            'numLikes' : firebase.firestore.FieldValue.increment(1),
-            likeDict
-        })
+        userDict[user] = 'active'
+        var updateDict = {
+            'numLikes' : firebase.firestore.FieldValue.increment(1)
+        }
+        updateDict['likedBy'] = userDict
+
+        userDB.collection('userTest').doc(tutorID).update(updateDict)
     } else {
-        likeDict[likePath] = 'inactive'
-        userDB.collection('userTest').doc(tutorID).update({
-            'numLikes' : firebase.firestore.FieldValue.increment(-1),
-            likeDict
-        })
+        userDict[user] = 'inactive'
+        var updateDict = {
+            'numLikes' : firebase.firestore.FieldValue.increment(-1)
+        }
+        updateDict['likedBy'] = userDict
+
+        userDB.collection('userTest').doc(tutorID).update(updateDict)
     }
 }
 
