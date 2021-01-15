@@ -97,52 +97,6 @@ function getTutorData(tutorID) {
 
 
 //Home Page___________________________________________________________________________________________________________________
-
-function loadTutors(tutorsForCourse) {
-    var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
-
-    while (tutorPreviewsContainer.firstChild) {
-        tutorPreviewsContainer.removeChild(tutorPreviewsContainer.firstChild)
-    }
-    
-    for (const [tutorID, value] of Object.entries(tutorsForCourse)) {
-        userDB.collection('userTest').doc(tutorID).get().then(function(doc) {
-            const tutorData = doc.data()
-
-            buildTutorPreview(tutorID, tutorData)
-        })
-    }
-}
-
-function buildTutorPreview(tutorID, tutorData) {
-    var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
-
-    const tutorPreviewDiv = document.createElement('div')
-    tutorPreviewDiv.setAttribute('class', 'tutor-preview-div')
-    tutorPreviewsContainer.appendChild(tutorPreviewDiv)
-
-    const tutorPreviewImage = document.createElement('img')
-    tutorPreviewImage.setAttribute('class', 'tutor-preview-image')
-    tutorPreviewImage.src = tutorData.profileImage
-    tutorPreviewDiv.appendChild(tutorPreviewImage)
-
-    const tutorPreviewInfoDiv = document.createElement('div')
-    tutorPreviewInfoDiv.setAttribute('class', 'tutor-preview-info-div')
-    tutorPreviewDiv.appendChild(tutorPreviewInfoDiv)
-
-    const tutorPreviewName = document.createElement('div')
-    tutorPreviewName.setAttribute('class', 'tutor-preview-name')
-    tutorPreviewName.innerHTML = tutorData.name 
-    tutorPreviewInfoDiv.appendChild(tutorPreviewName)
-
-    const tutorPreviewSchool = document.createElement('div')
-    tutorPreviewSchool.setAttribute('class', 'tutor-preview-school')
-    tutorPreviewSchool.innerHTML = tutorData.school 
-    tutorPreviewInfoDiv.appendChild(tutorPreviewSchool)
-}
-
-
-//Profile____________________________________________________________________________________________________________________________________________________
 let homeProfileBlock = document.getElementById('home-profile-block')
 let homeProfileImageContainer = document.getElementById('home-profile-image-container')
 let homeProfileName = document.getElementById('home-profile-name')
@@ -416,7 +370,51 @@ function resetFilters(gradeChange, schoolChange, subjectChange, courseChange) {
         courseFilterText.innerHTML = 'Course..'
     }
 }
+function loadTutors(tutorsForCourse) {
+    var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
 
+    while (tutorPreviewsContainer.firstChild) {
+        tutorPreviewsContainer.removeChild(tutorPreviewsContainer.firstChild)
+    }
+    
+    for (const [tutorID, value] of Object.entries(tutorsForCourse)) {
+        userDB.collection('userTest').doc(tutorID).get().then(function(doc) {
+            const tutorData = doc.data()
+
+            buildTutorPreview(tutorID, tutorData)
+        })
+    }
+}
+
+function buildTutorPreview(tutorID, tutorData) {
+    var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
+
+    const tutorPreviewDiv = document.createElement('div')
+    tutorPreviewDiv.setAttribute('class', 'tutor-preview-div')
+    tutorPreviewsContainer.appendChild(tutorPreviewDiv)
+
+    const tutorPreviewImage = document.createElement('img')
+    tutorPreviewImage.setAttribute('class', 'tutor-preview-image')
+    tutorPreviewImage.src = tutorData.profileImage
+    tutorPreviewDiv.appendChild(tutorPreviewImage)
+
+    const tutorPreviewInfoDiv = document.createElement('div')
+    tutorPreviewInfoDiv.setAttribute('class', 'tutor-preview-info-div')
+    tutorPreviewDiv.appendChild(tutorPreviewInfoDiv)
+
+    const tutorPreviewName = document.createElement('div')
+    tutorPreviewName.setAttribute('class', 'tutor-preview-name')
+    tutorPreviewName.innerHTML = tutorData.name 
+    tutorPreviewInfoDiv.appendChild(tutorPreviewName)
+
+    const tutorPreviewSchool = document.createElement('div')
+    tutorPreviewSchool.setAttribute('class', 'tutor-preview-school')
+    tutorPreviewSchool.innerHTML = tutorData.school 
+    tutorPreviewInfoDiv.appendChild(tutorPreviewSchool)
+}
+
+
+//Profile____________________________________________________________________________________________________________________________________________________
 
 async function loadTutorProfile(data, ID) {
     //Load image
@@ -449,28 +447,8 @@ async function loadTutorProfile(data, ID) {
 
 }
 
-function loadButtons(data, tutorID) {
-    //load favorite button
+//LoadButtons____________________________________________________________________________________________________________________________
 
-    //load report button
-
-    //load message button
-    document.getElementById('message-button').addEventListener('click', () => {
-        openMessageModal(data, tutorID)
-    })
-
-    //load book session button
-    const sessionBookingPage = document.getElementById('session-booking-page')
-    const bookSessionButton = document.getElementById('book-session-button')
-
-    bookSessionButton.addEventListener('click', () => {
-    	sessionBookingPage.style.display = 'flex'
-    	tutorProfile.style.display = 'none'
-	
-	loadBookingPageFromData(data, tutorID)
-    })
-	
-}
 
 function openMessageModal(data, tutorID) {
     const messageModalClose = document.getElementById('message-modal-close')
