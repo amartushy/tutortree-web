@@ -625,16 +625,35 @@ function likeTutor(tutorID, isLiked) {
 
     if(isLiked) {
         userDB.collection('userTest').doc(globalUserId).update(likeDict).then( () => {
-            updateTutorsLikes(tutorID, false)
+            updateTutorsLikes(tutorID, false, globalUserId)
             likeTutorButton.setAttribute('class', 'pin-tutor')
             likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${false})`)
         })
 
     } else {
         userDB.collection('userTest').doc(globalUserId).update(likeDict).then( () => {
-            updateTutorsLikes(tutorID, true)
+            updateTutorsLikes(tutorID, true, globalUserId)
             likeTutorButton.setAttribute('class', 'pin-tutor-active')
             likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${true})`)
+        })
+    }
+}
+
+function updateTutorsLikes(tutorID, isIncrementing, likedBy) {
+    //decrementing if false:
+    let likeDict = {}
+    let likePath = 'likedBy.' + likedBy
+    if(isIncrementing) {
+        likeDict[likePath] = 'active'
+        userDB.collection('userTest').doc(tutorID).update({
+            'numLikes' : firebase.firestore.FieldValue.increment(1),
+            likedDict
+        })
+    } else {
+        likeDict[likePath] = 'inactive'
+        userDB.collection('userTest').doc(tutorID).update({
+            'numLikes' : firebase.firestore.FieldValue.increment(-1),
+            likeDict
         })
     }
 }
