@@ -8,8 +8,10 @@ var globalUserId,
     coreIsEmailOn,
     coreIsSMSOn,
     coreisTutor,
+    coreLikedTutors,
     coreName,
     corePhone,
+    corePinnedTutors,
     coreProfileImage
 
 
@@ -38,9 +40,10 @@ function loadCoreProperties(ID) {
         coreIsEmailOn = data.isEmailOn 
         coreIsSMSOn = data.coreIsSMSOn
         coreisTutor = data.isTutor
+	coreLikedTutors = data.likedTutors
         coreName = data.name 
         corePhone = data.phoneNumber 
-	corePinnedTutors = data.pinnedTutors,
+	corePinnedTutors = data.pinnedTutors
         coreProfileImage = data.profileImage 
 
         loadHeader()
