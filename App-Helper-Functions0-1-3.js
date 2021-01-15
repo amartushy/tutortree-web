@@ -192,6 +192,12 @@ function firstDayOfMonth(year, month) {
     return firstDate.getDay()
 }
 
+function getFirstName(fullName) {
+    let nameArray = fullName.split(" ")
+    let firstName = nameArray[0]
+    return firstName
+}
+
 
 //NOTIFICATIONS PUSH FUNCTIONS
 function sendSMSTo(number, message) {
