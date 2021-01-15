@@ -448,8 +448,74 @@ async function loadTutorProfile(data, ID) {
 
 }
 
-//LoadButtons____________________________________________________________________________________________________________________________
+function loadButtons(data, tutorID) {
+    //load pin tutor button
+    loadisTutorPinned(tutorID)
+    
+    //load report button
 
+    //load message button
+    document.getElementById('message-button').addEventListener('click', () => {
+        openMessageModal(data, tutorID)
+    })
+
+    //load book session button
+    const sessionBookingPage = document.getElementById('session-booking-page')
+    const bookSessionButton = document.getElementById('book-session-button')
+
+    bookSessionButton.addEventListener('click', () => {
+    	sessionBookingPage.style.display = 'flex'
+    	tutorProfile.style.display = 'none'
+	
+	loadBookingPageFromData(data, tutorID)
+    })
+}
+
+let pinTutorButton = document.getElementById('pin-tutor')
+function loadisTutorPinned(tutorID) {
+    console.log(corePinnedTutors)
+    if(corePinnedTutors != null) { 
+        for (const [id, status] of Object.entries(corePinnedTutors)) {
+            console.log('pinned id', id)
+            //User has previously pinned this tutor but deactivated them
+            if(id == tutorID && status == 'inactive') {
+                pinTutorButton.setAttribute('class', 'pin-tutor')
+                pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${false})`)
+
+            //User has this tutor pinned currently
+            } else {
+                pinTutorButton.setAttribute('class', 'pin-tutor-active')
+                pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${true})`)
+            }
+        } 
+
+    //User has never pinned a tutor before
+    } else {
+        pinTutorButton.setAttribute('class', 'pin-tutor')
+        pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${false})`)
+    }
+}
+
+function pinTutor(tutorID, isPinned) {
+    let pinDict = {}
+    let pinPath = 'pinnedTutors.' + tutorID
+    pinDict[pinPath] = (isPinned ? 'inactive' : 'active')
+
+    if(isPinned) {
+        userDB.collection('userTest').doc(globalUserId).update(pinDict).then( () => {
+            loadPinnedTutors()
+            pinTutorButton.setAttribute('class', 'pin-tutor')
+            pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${false})`)
+        })
+
+    } else {
+        userDB.collection('userTest').doc(globalUserId).update(pinDict).then( () => {
+            loadPinnedTutors()
+            pinTutorButton.setAttribute('class', 'pin-tutor-active')
+            pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${true})`)
+        })
+    }
+}
 
 function openMessageModal(data, tutorID) {
     const messageModalClose = document.getElementById('message-modal-close')
