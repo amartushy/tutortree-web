@@ -787,15 +787,14 @@ function loadisTutorPinned(tutorID) {
     if(corePinnedTutors != null) { 
         for (const [id, status] of Object.entries(corePinnedTutors)) {
             console.log('pinned id', id)
-            //User has previously pinned this tutor but deactivated them
-            if(id == tutorID && status == 'inactive') {
-                pinTutorButton.setAttribute('class', 'pin-tutor')
-                pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${false})`)
-
             //User has this tutor pinned currently
-            } else {
+            if ( id == tutorID && status == 'active') {
                 pinTutorButton.setAttribute('class', 'pin-tutor-active')
                 pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${true})`)
+            //User has never pinned tutor before and does not have them pinned currently
+            } else {
+                pinTutorButton.setAttribute('class', 'pin-tutor')
+                pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${false})`)
             }
         } 
 
@@ -832,15 +831,13 @@ function loadisTutorLiked(tutorID) {
     console.log(coreLikedTutors)
     if(coreLikedTutors != null) { 
         for (const [id, status] of Object.entries(coreLikedTutors)) {
-            //User has previously liked this tutor but deactivated them
-            if(id == tutorID && status == 'inactive') {
-                likeTutorButton.setAttribute('class', 'pin-tutor')
-                likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${false})`)
-
             //User has this tutor liked currently
-            } else {
+            if(id == tutorID && status == 'active') {
                 likeTutorButton.setAttribute('class', 'pin-tutor-active')
                 likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${true})`)
+            } else {
+                likeTutorButton.setAttribute('class', 'pin-tutor')
+                likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${false})`)
             }
         } 
 
