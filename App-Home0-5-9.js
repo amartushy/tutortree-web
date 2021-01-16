@@ -806,9 +806,6 @@ function loadButtons(data, tutorID) {
     let messageButton = document.getElementById('message-button')
     messageButton.innerHTML = `Message ${getFirstName(data.name)}`
     messageButton.setAttribute('onClick', 'openMessageModal("'+data+'","'+tutorID+'")')
-    document.getElementById('message-button').addEventListener('click', () => {
-        openMessageModal(data, tutorID)
-    })
 
     //load book session button
     const sessionBookingPage = document.getElementById('session-booking-page')
@@ -952,16 +949,15 @@ function openMessageModal(data, tutorID) {
     messageDiv.style.display = 'flex'
     messageCompletionDiv.style.display = 'none'
 
-    var tutorsName = data.name 
-    const nameArray = tutorsName.split(" ")
-    const firstName = nameArray[0]
-    messageModalHeader.innerHTML = 'Message ' + firstName
+    messageModalHeader.innerHTML = 'Message ' + getFirstName(data.name)
 
     messageModalClose.addEventListener('click', () => {
         messageModal.style.display = 'none'
     })
 
-    messageSendButton.addEventListener('click', () => {
+    var messageSendButtonClone = messageSendButton.cloneNode(true)
+    messageSendButton.parentNode.replaceChild(messageSendButtonClone, messageSendButton)
+    messageSendButtonClone.addEventListener('click', () => {
         updateConnections(data, tutorID)
         messageDiv.style.display = 'none'
         messageCompletionDiv.style.display = 'flex'
