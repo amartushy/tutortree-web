@@ -152,47 +152,10 @@ function loadFilters() {
 
     buildGradeOptions()
 }
+//Load Filter from preferences
 
-function loadFiltersFromPreferences() {
-    gradeFilterArea.style.display = 'none'
-    schoolFilterArea.style.display = 'none'
-    subjectFilterArea.style.display = 'none'
-    courseFilterArea.style.display = 'none'
-    
-    grade = corePreferences.grade
-    school = corePreferences.school 
-    subject = corePreferences.subject 
-    course = corePreferences.course 
 
-    gradeFilterText.innerHTML = grade
-    schoolFilterText.innerHTML = school
-    subjectFilterText.innerHTML = subject
-    courseFilterText.innerHTML = course
 
-    buildGradeOptions()
-    loadSchoolOptions()
-
-    if(school != 'none' ) {
-        updateHomeHeader(school)
-        loadSubjectOptions() 
-
-        if(subject != 'none' ) {
-            userDB.collection('schools').doc(school).collection('courses').doc(subject).get().then(function(courses) {
-                let courseData = courses.data()
-                loadCourseOptions(courseData)
-
-                if(course != 'none') {
-                    if( courseData[course].hasOwnProperty('tutors') ) {
-                        let tutorData = courseData[course].tutors
-                        loadTutors(tutorData)
-                    } else {
-                        $('#tutor-request-container').fadeIn()
-                    }
-                }
-            })
-        }
-    }
-}
 
 let headerSchool = document.getElementById('header-school')
 let headerNumTutors = document.getElementById('header-num-tutors')
@@ -509,7 +472,6 @@ function resetFilters(gradeChange, schoolChange, subjectChange, courseChange) {
         userDB.collection('userTest').doc(globalUserId).update(updateDict)
     }
 }
-
 
 
 
