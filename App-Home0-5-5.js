@@ -830,6 +830,9 @@ function loadisTutorPinned(tutorID) {
             if ( id == tutorID && status == 'active') {
                 pinTutorButton.setAttribute('class', 'pin-tutor-active')
                 pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${true})`)
+                //exit loop as the tutor has been matched
+                break
+                
             //User has never pinned tutor before and does not have them pinned currently
             } else {
                 pinTutorButton.setAttribute('class', 'pin-tutor')
@@ -874,6 +877,8 @@ function loadisTutorLiked(tutorID) {
             if(id == tutorID && status == 'active') {
                 likeTutorButton.setAttribute('class', 'pin-tutor-active')
                 likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${true})`)
+                //exit loop as the tutor has been matched
+                break
             } else {
                 likeTutorButton.setAttribute('class', 'pin-tutor')
                 likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${false})`)
