@@ -100,9 +100,93 @@ function getTutorData(tutorID) {
         //loadAvailability(data)
     })
 }
+//Home Page___________________________________________________________________________________________________________________
+let homeProfileBlock = document.getElementById('home-profile-block')
+let homeProfileImageContainer = document.getElementById('home-profile-image-container')
+let homeProfileName = document.getElementById('home-profile-name')
+
+let tutorsHomeHeader = document.getElementById('tutors-home-header')
+let tutorsHomeSubheader = document.getElementById('tutors-home-subheader')
+
+let pinnedTutorsArea = document.getElementById('pinned-tutors-area')
+
+function loadHomePage() {
+    homeProfileImageContainer.removeChild(homeProfileImageContainer.firstChild)
+
+    let homeProfileImage = document.createElement('img')
+    homeProfileImage.setAttribute('class', 'home-profile-image')
+    homeProfileImage.src = coreProfileImage
+    homeProfileImageContainer.appendChild(homeProfileImage)
+
+    homeProfileName.innerHTML = `Hi ${getFirstName(coreName)}!`
+
+    if (corePreferences != null) {
+        loadFiltersFromPreferences()
+    } else {
+        loadFilters()
+    }
+    loadPinnedTutors()
+}
 
 
+//Filtering
+var grade,
+    school,
+    subject,
+    course
 
+function loadFilters() {
+    gradeFilterArea.style.display = 'none'
+    schoolFilterArea.style.display = 'none'
+    subjectFilterArea.style.display = 'none'
+    courseFilterArea.style.display = 'none'
+
+    gradeFilterText.innerHTML = 'Grade Level..'
+    schoolFilterText.innerHTML = 'School..'
+    subjectFilterText.innerHTML = 'Subject..'
+    courseFilterText.innerHTML = 'Course..'
+
+    tutorsHomeSubheader.style.display = 'none'
+
+    buildGradeOptions()
+}
+
+function loadFiltersFromPreferences() {
+    gradeFilterArea.style.display = 'none'
+    schoolFilterArea.style.display = 'none'
+    subjectFilterArea.style.display = 'none'
+    courseFilterArea.style.display = 'none'
+    
+    grade = corePreferences.grade
+    school = corePreferences.school 
+    subject = corePreferences.subject 
+    course = corePreferences.course 
+
+    gradeFilterText.innerHTML = grade
+    schoolFilterText.innerHTML = school
+    subjectFilterText.innerHTML = subject
+    courseFilterText.innerHTML = course
+
+    buildGradeOptions()
+    loadSchoolOptions()
+
+    if(school != 'none' ) {
+        updateHomeHeader(school)
+        loadSubjectOptions() 
+
+        if(subject != 'none' ) {
+            userDB.collection('schools').doc(school).collection('courses').doc(subject).get().then(function(courses) {
+                let courseData = courses.data()
+                loadCourseOptions(courseData)
+
+                if(course != 'none') {
+                    let tutorData = courseData[course].tutors
+                    loadTutors(tutorData)
+                }
+            })
+        }
+    }
+}
 
 let headerSchool = document.getElementById('header-school')
 let headerNumTutors = document.getElementById('header-num-tutors')
@@ -194,7 +278,7 @@ function buildGradeOptions() {
     collegeButton.addEventListener('click', () => {
         $('#grade-filter-area').fadeOut()
         gradeFilterText.innerHTML = 'College'
-        resetFilters('college', 'none', 'none', 'none')
+        resetFilters('College', 'none', 'none', 'none')
         loadSchoolOptions()
     })
 }
@@ -334,119 +418,89 @@ function buildCourseOption(courseName, courseInfo) {
     })
 }
 
+function resetFilters(gradeChange, schoolChange, subjectChange, courseChange) {
+    console.log(grade, school, subject, course)
+    grade = gradeChange
+    school = schoolChange
+    subject = subjectChange
+    course = courseChange
 
-function loadTutors(tutorsForCourse) {
-    var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
+    gradeFilterText.innerHTML = gradeChange
+    let updateDict = {}
+    if(schoolChange == 'none') {
+        while(schoolFilterArea.firstChild) {
+            schoolFilterArea.removeChild(schoolFilterArea.firstChild)
+        }
+        while(subjectFilterArea.firstChild) {
+            subjectFilterArea.removeChild(subjectFilterArea.firstChild)
+        }
+        while(courseFilterArea.firstChild) {
+            courseFilterArea.removeChild(courseFilterArea.firstChild)
+        }
+        schoolFilterText.innerHTML = 'School..'
+        subjectFilterText.innerHTML = 'Subject..'
+        courseFilterText.innerHTML = 'Course..'
 
-    while (tutorPreviewsContainer.firstChild) {
-        tutorPreviewsContainer.removeChild(tutorPreviewsContainer.firstChild)
-    }
-    
-    for (const [tutorID, value] of Object.entries(tutorsForCourse)) {
-        userDB.collection('userTest').doc(tutorID).get().then(function(doc) {
-            const tutorData = doc.data()
+        let updatePath = 'preferences'
+        let preferencesDict = {
+            'grade' : gradeChange,
+            'school' : 'none',
+            'subject' : 'none',
+            'course' : 'none'
+        }
+        updateDict[updatePath] = preferencesDict
+        userDB.collection('userTest').doc(globalUserId).update(updateDict)
+        
+    } else if(subjectChange == 'none') {
+        while(subjectFilterArea.firstChild) {
+            subjectFilterArea.removeChild(subjectFilterArea.firstChild)
+        }
+        while(courseFilterArea.firstChild) {
+            courseFilterArea.removeChild(courseFilterArea.firstChild)
+        }
+        subjectFilterText.innerHTML = 'Subject..'
+        courseFilterText.innerHTML = 'Course..'
 
-            buildTutorPreview(tutorID, tutorData)
-        })
-    }
-}
+        let updatePath = 'preferences'
+        let preferencesDict = {
+            'grade' : gradeChange,
+            'school' : schoolChange,
+            'subject' : 'none',
+            'course' : 'none'
+        }
+        updateDict[updatePath] = preferencesDict
+        userDB.collection('userTest').doc(globalUserId).update(updateDict)
 
-function buildTutorPreview(tutorID, tutorData) {
-    var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
+    } else if (courseChange == 'none') {
+        while(courseFilterArea.firstChild) {
+            courseFilterArea.removeChild(courseFilterArea.firstChild)
+        }
+        courseFilterText.innerHTML = 'Course..'
 
-    const tutorPreviewDiv = document.createElement('div')
-    tutorPreviewDiv.setAttribute('class', 'tutor-preview-div')
-    tutorPreviewsContainer.appendChild(tutorPreviewDiv)
-
-    const tutorPreviewImage = document.createElement('img')
-    tutorPreviewImage.setAttribute('class', 'tutor-preview-image')
-    tutorPreviewImage.src = tutorData.profileImage
-    tutorPreviewDiv.appendChild(tutorPreviewImage)
-
-    const tutorPreviewInfoDiv = document.createElement('div')
-    tutorPreviewInfoDiv.setAttribute('class', 'tutor-preview-info-div')
-    tutorPreviewDiv.appendChild(tutorPreviewInfoDiv)
-
-    const tutorPreviewName = document.createElement('div')
-    tutorPreviewName.setAttribute('class', 'tutor-preview-name')
-    tutorPreviewName.innerHTML = tutorData.name 
-    tutorPreviewInfoDiv.appendChild(tutorPreviewName)
-
-    const tutorPreviewSchool = document.createElement('div')
-    tutorPreviewSchool.setAttribute('class', 'tutor-preview-school')
-    tutorPreviewSchool.innerHTML = tutorData.school 
-    tutorPreviewInfoDiv.appendChild(tutorPreviewSchool)
-}
-
-function loadPinnedTutors() {
-    while(pinnedTutorsArea.firstChild) {
-        pinnedTutorsArea.removeChild(pinnedTutorsArea.firstChild)
-    }
-    if(corePinnedTutors != null) { 
-        for (const [id, status] of Object.entries(corePinnedTutors)) {
-            if(status != 'inactive') {
-                userDB.collection('userTest').doc(id).get().then(function(doc) {
-                    let tutorID = id
-                    let tutorData = doc.data()
-                    buildPinnedTutorBlock(tutorID, tutorData)
-                })
-            }
-        } 
-
+        let updatePath = 'preferences'
+        let preferencesDict = {
+            'grade' : gradeChange,
+            'school' : schoolChange,
+            'subject' : subjectChange,
+            'course' : 'none'
+        }
+        updateDict[updatePath] = preferencesDict
+        userDB.collection('userTest').doc(globalUserId).update(updateDict)
     } else {
-        //User has never pinned a tutor before
+        let updatePath = 'preferences'
+        let preferencesDict = {
+            'grade' : gradeChange,
+            'school' : schoolChange,
+            'subject' : subjectChange,
+            'course' : courseChange
+        }
+        updateDict[updatePath] = preferencesDict
+        userDB.collection('userTest').doc(globalUserId).update(updateDict)
     }
 }
 
-function buildPinnedTutorBlock(tutorID, tutorData) {
-    let pinnedTutorBlock = document.createElement('div')
-    pinnedTutorBlock.setAttribute('class', 'pinned-tutor-block')
-    pinnedTutorsArea.appendChild(pinnedTutorBlock)
-    
-    let pinnedTutorHeader = document.createElement('div')
-    pinnedTutorHeader.setAttribute('class', 'pinned-tutor-header')
-    pinnedTutorBlock.appendChild(pinnedTutorHeader)
 
-    let pinnedTutorImage = document.createElement('img')
-    pinnedTutorImage.setAttribute('class', 'pinned-tutor-image')
-    pinnedTutorImage.src = tutorData.profileImage
-    pinnedTutorHeader.appendChild(pinnedTutorImage)
 
-    let pinnedTutorInfo = document.createElement('div')
-    pinnedTutorInfo.setAttribute('class', 'pinned-tutor-info')
-    pinnedTutorHeader.appendChild(pinnedTutorInfo)
-
-    let pinnedTutorName = document.createElement('div')
-    pinnedTutorName.setAttribute('class', 'pinned-tutor-name')
-    pinnedTutorName.innerHTML = tutorData.name
-    pinnedTutorInfo.appendChild(pinnedTutorName)
-
-    let pinnedTutorSchool = document.createElement('div')
-    pinnedTutorSchool.setAttribute('class', 'pinned-tutor-school')
-    pinnedTutorSchool.innerHTML = tutorData.school 
-    pinnedTutorInfo.appendChild(pinnedTutorSchool)
-
-    let pinnedButtonsDiv = document.createElement('div')
-    pinnedButtonsDiv.setAttribute('class', 'pinned-buttons-div')
-    pinnedTutorBlock.appendChild(pinnedButtonsDiv)
-
-    let pinnedProfileButton = document.createElement('div')
-    pinnedProfileButton.setAttribute('class', 'pinned-profile-button')
-    pinnedProfileButton.addEventListener('click', () => {
-        getTutorData(tutorID)
-    })
-    pinnedProfileButton.innerHTML = 'Go to Profile'
-    pinnedButtonsDiv.appendChild(pinnedProfileButton)
-
-    let pinnedBookButton = document.createElement('div')
-    pinnedBookButton.setAttribute('class', 'pinned-book-button')
-    pinnedBookButton.addEventListener('click', () => {
-        document.getElementById('session-booking-page').style.display = 'flex'
-        loadBookingPageFromData(tutorData, tutorID)
-    })
-    pinnedBookButton.innerHTML = 'Book Session'
-    pinnedButtonsDiv.appendChild(pinnedBookButton)
-}
 
 
 //Profile____________________________________________________________________________________________________________________________________________________
