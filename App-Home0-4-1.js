@@ -136,9 +136,9 @@ function updateHomeHeader(schoolPath) {
                 }
             })
             countOfTutors = tutorsArray.length
-            headerNumTutors.innerHTML =  countOfTutors +' Tutors'
-            headerNumCourses.innerHTML = coursesCount + ' Courses'
-            headerCoursesWith.innerHTML = coursesWithTutors + ' Courses With Tutors' 
+            headerNumTutors.innerHTML =  countOfTutors 
+            headerNumCourses.innerHTML = coursesCount 
+            headerCoursesWith.innerHTML = coursesWithTutors 
             $('#home-header').fadeIn()
         })
     })
