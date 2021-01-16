@@ -130,6 +130,47 @@ function loadHomePage() {
     loadPinnedTutors()
 }
 
+function loadFiltersFromPreferences() {
+    gradeFilterArea.style.display = 'none'
+    schoolFilterArea.style.display = 'none'
+    subjectFilterArea.style.display = 'none'
+    courseFilterArea.style.display = 'none'
+    
+    grade = corePreferences.grade
+    school = corePreferences.school 
+    subject = corePreferences.subject 
+    course = corePreferences.course 
+
+    gradeFilterText.innerHTML = grade
+    schoolFilterText.innerHTML = school
+    subjectFilterText.innerHTML = subject
+    courseFilterText.innerHTML = course
+
+    buildGradeOptions()
+    loadSchoolOptions()
+
+    if(school != 'none' ) {
+        updateHomeHeader(school)
+        loadSubjectOptions() 
+
+        if(subject != 'none' ) {
+            userDB.collection('schools').doc(school).collection('courses').doc(subject).get().then(function(courses) {
+                let courseData = courses.data()
+                loadCourseOptions(courseData)
+
+                if(course != 'none') {
+                    if( courseData[course].hasOwnProperty('tutors') && Object.keys(courseData[course].tutors).length > 0) {
+                        let tutorData = courseData[course].tutors
+                        loadTutors(tutorData)
+                    } else {
+                        loadTutorRequestForm()
+                    }
+                }
+            })
+        }
+    }
+}
+
 
 //Filtering
 var grade,
@@ -473,7 +514,208 @@ function resetFilters(gradeChange, schoolChange, subjectChange, courseChange) {
     }
 }
 
+var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
+function loadTutors(tutorsForCourse) {
+    tutorRequestContainer.style.display = 'none'
 
+    while (tutorPreviewsContainer.firstChild) {
+        tutorPreviewsContainer.removeChild(tutorPreviewsContainer.firstChild)
+    }
+    
+    for (const [tutorID, value] of Object.entries(tutorsForCourse)) {
+        userDB.collection('userTest').doc(tutorID).get().then(function(doc) {
+            const tutorData = doc.data()
+
+            buildTutorPreview(tutorID, tutorData)
+        })
+    }
+}
+
+function buildTutorPreview(tutorID, tutorData) {
+    var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
+
+    const tutorPreviewDiv = document.createElement('div')
+    tutorPreviewDiv.setAttribute('class', 'tutor-preview-div')
+    tutorPreviewsContainer.appendChild(tutorPreviewDiv)
+
+    const tutorPreviewImage = document.createElement('img')
+    tutorPreviewImage.setAttribute('class', 'tutor-preview-image')
+    tutorPreviewImage.src = tutorData.profileImage
+    tutorPreviewDiv.appendChild(tutorPreviewImage)
+
+    const tutorPreviewInfoDiv = document.createElement('div')
+    tutorPreviewInfoDiv.setAttribute('class', 'tutor-preview-info-div')
+    tutorPreviewDiv.appendChild(tutorPreviewInfoDiv)
+
+    const tutorPreviewName = document.createElement('div')
+    tutorPreviewName.setAttribute('class', 'tutor-preview-name')
+    tutorPreviewName.innerHTML = tutorData.name 
+    tutorPreviewInfoDiv.appendChild(tutorPreviewName)
+
+    const tutorPreviewSchool = document.createElement('div')
+    tutorPreviewSchool.setAttribute('class', 'tutor-preview-school')
+    tutorPreviewSchool.innerHTML = tutorData.school 
+    tutorPreviewInfoDiv.appendChild(tutorPreviewSchool)
+}
+
+
+
+let noPinnedTutorsDiv = document.getElementById('no-pinned-tutors-div')
+function loadPinnedTutors() {
+    noPinnedTutorsDiv.style.display = 'none'
+
+    while(pinnedTutorsArea.firstChild) {
+        pinnedTutorsArea.removeChild(pinnedTutorsArea.firstChild)
+    }
+    let hasPinnedTutors = false
+    if(corePinnedTutors != null) { 
+        for (const [id, status] of Object.entries(corePinnedTutors)) {
+            if(status != 'inactive') {
+                hasPinnedTutors = true
+
+                userDB.collection('userTest').doc(id).get().then(function(doc) {
+                    
+                    let tutorID = id
+                    let tutorData = doc.data()
+                    buildPinnedTutorBlock(tutorID, tutorData)
+                })
+            }
+        }
+        
+        if (!hasPinnedTutors) {
+            noPinnedTutorsDiv.style.display = 'flex'
+        }
+
+    } else {
+        //User has never pinned a tutor before
+        noPinnedTutorsDiv.style.display = 'flex'
+    }
+}
+
+function buildPinnedTutorBlock(tutorID, tutorData) {
+    let pinnedTutorBlock = document.createElement('div')
+    pinnedTutorBlock.setAttribute('class', 'pinned-tutor-block')
+    pinnedTutorsArea.appendChild(pinnedTutorBlock)
+    
+    let pinnedTutorHeader = document.createElement('div')
+    pinnedTutorHeader.setAttribute('class', 'pinned-tutor-header')
+    pinnedTutorBlock.appendChild(pinnedTutorHeader)
+
+    let pinnedTutorImage = document.createElement('img')
+    pinnedTutorImage.setAttribute('class', 'pinned-tutor-image')
+    pinnedTutorImage.src = tutorData.profileImage
+    pinnedTutorHeader.appendChild(pinnedTutorImage)
+
+    let pinnedTutorInfo = document.createElement('div')
+    pinnedTutorInfo.setAttribute('class', 'pinned-tutor-info')
+    pinnedTutorHeader.appendChild(pinnedTutorInfo)
+
+    let pinnedTutorName = document.createElement('div')
+    pinnedTutorName.setAttribute('class', 'pinned-tutor-name')
+    pinnedTutorName.innerHTML = tutorData.name
+    pinnedTutorInfo.appendChild(pinnedTutorName)
+
+    let pinnedTutorSchool = document.createElement('div')
+    pinnedTutorSchool.setAttribute('class', 'pinned-tutor-school')
+    pinnedTutorSchool.innerHTML = tutorData.school 
+    pinnedTutorInfo.appendChild(pinnedTutorSchool)
+
+    let pinnedButtonsDiv = document.createElement('div')
+    pinnedButtonsDiv.setAttribute('class', 'pinned-buttons-div')
+    pinnedTutorBlock.appendChild(pinnedButtonsDiv)
+
+    let pinnedProfileButton = document.createElement('div')
+    pinnedProfileButton.setAttribute('class', 'pinned-profile-button')
+    pinnedProfileButton.addEventListener('click', () => {
+        getTutorData(tutorID)
+    })
+    pinnedProfileButton.innerHTML = 'Go to Profile'
+    pinnedButtonsDiv.appendChild(pinnedProfileButton)
+
+    let pinnedBookButton = document.createElement('div')
+    pinnedBookButton.setAttribute('class', 'pinned-book-button')
+    pinnedBookButton.addEventListener('click', () => {
+        document.getElementById('session-booking-page').style.display = 'flex'
+        loadBookingPageFromData(tutorData, tutorID)
+    })
+    pinnedBookButton.innerHTML = 'Book Session'
+    pinnedButtonsDiv.appendChild(pinnedBookButton)
+}
+
+
+//Tutor Request 
+let tutorRequestContainer = document.getElementById('tutor-request-container')
+tutorRequestContainer.style.display = 'none'
+let tutorRequestForm = document.getElementById('tutor-request-form')
+let tutorRequestConfirmation = document.getElementById('tutor-request-confirmation')
+let closeTutorRequest = document.getElementById('close-tutor-request')
+
+let tutorRequestSchool = document.getElementById('tutor-request-school')
+let tutorRequestSubject = document.getElementById('tutor-request-subject')
+let tutorRequestCourse = document.getElementById('tutor-request-course')
+let tutorRequestAdditional = document.getElementById('tutor-request-additional')
+let tutorRequestToggle = document.getElementById('tutor-request-toggle')
+let submitTutorRequest = document.getElementById('submit-tutor-request')
+
+var wantsToBeNotified = false
+tutorRequestToggle.setAttribute('class', 'toggle')
+tutorRequestToggle.addEventListener('click', () => {
+    if(wantsToBeNotified == false) {
+        wantsToBeNotified = true
+        tutorRequestToggle.setAttribute('class', 'toggle-selected')
+    } else {
+        wantsToBeNotified = false
+        tutorRequestToggle.setAttribute('class', 'toggle')
+    }
+})
+
+submitTutorRequest.addEventListener('click', () => {
+    let title = 'New Tutor Request'
+    let schoolVal = tutorRequestSchool.value
+    let subjectVal = tutorRequestSubject.value
+    let courseVal = tutorRequestCourse.value
+
+    let notificationString = wantsToBeNotified ? `They would like to be notified. Their ID is ${globalUserId}, email is ${coreEmail}` : 'They do not want to be notified.'
+    var message = `${coreName} has requested a tutor for ${schoolVal}, ${subjectVal}, ${courseVal}. `
+    let finalString = message + notificationString + ` Additional notes: ${tutorRequestAdditional.value}`
+    console.log(finalString)
+
+    sendEmailTo('support@tutortree.com', title, finalString)
+
+    tutorRequestForm.style.display = 'none'
+    $('#tutor-request-confirmation').fadeIn()
+})
+
+closeTutorRequest.addEventListener('click', () => {
+    $('#tutor-request-container').fadeOut()
+})
+
+async function loadTutorRequestForm() {
+    while (tutorPreviewsContainer.firstChild) {
+        tutorPreviewsContainer.removeChild(tutorPreviewsContainer.firstChild)
+    }
+
+    console.log('No tutors')
+    $('#tutor-request-container').fadeIn()
+    tutorRequestForm.style.display = 'flex'
+    tutorRequestConfirmation.style.display = 'none'
+
+    tutorRequestSchool.value = await getSchoolFromPath(school)
+    tutorRequestSubject.value = subject 
+    tutorRequestCourse.value = course
+    tutorRequestAdditional.value = ''
+}
+
+
+
+async function getSchoolFromPath(schoolPath) {
+    let fullSchoolName 
+    await userDB.collection('schools').doc(schoolPath).get().then(function(doc) {
+        fullSchoolName = doc.data().title
+    })
+
+    return fullSchoolName
+}
 
 //Profile____________________________________________________________________________________________________________________________________________________
 
