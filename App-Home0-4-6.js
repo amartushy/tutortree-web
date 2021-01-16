@@ -536,6 +536,7 @@ function buildTutorPreview(tutorID, tutorData) {
 
     const tutorPreviewDiv = document.createElement('div')
     tutorPreviewDiv.setAttribute('class', 'tutor-preview-div')
+    tutorPreviewDiv.setAttribute('onClick', `getTutorData${tutorID}`)
     tutorPreviewsContainer.appendChild(tutorPreviewDiv)
 
     const tutorPreviewImage = document.createElement('img')
