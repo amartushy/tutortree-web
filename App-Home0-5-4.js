@@ -97,7 +97,7 @@ function getTutorData(tutorID) {
         loadTutorProfile(data, tutorID)
         loadButtons(data, tutorID)
         //loadSimilarTutors()
-	loadProfileExperience(data)
+	loadProfileExperience(data, tutorID)
         loadReviews(data, tutorID)
         //loadAvailability(data)
     })
@@ -1020,19 +1020,18 @@ function sendMessagingNotifications(otherID, currentName, message) {
         }
     })
 }
-
 //Experience
 var profileNoExperience = document.getElementById('profile-no-experience')
 var profileExperienceContainer = document.getElementById('profile-experience-container')
 
-function loadProfileExperience(tutorData) {
+function loadProfileExperience(tutorData, tutorID) {
     while(profileExperienceContainer.firstChild) {
         profileExperienceContainer.removeChild(profileExperienceContainer.firstChild)
     }
     profileNoExperience.innerHTML = `${getFirstName(tutorData.name)} hasn't added any experience yet`
     profileNoExperience.style.display = 'block'
 
-    userDB.collection('userTest').doc(globalUserId).get().then(function(doc) {
+    userDB.collection('userTest').doc(tutorID).get().then(function(doc) {
         var experienceData = doc.data().experience 
 
         for(var experience in experienceData) {
