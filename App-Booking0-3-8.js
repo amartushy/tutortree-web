@@ -2,12 +2,12 @@
 
 //Globals
 var checkoutTotal = 0.0
-var course
+var courseVal
 var end
-var school
+var schoolVal
 var sessionFee = 3.95
 var start
-var subject
+var subjectVal
 var tutor
 var tutorsFee
 
@@ -30,9 +30,9 @@ function loadBookingPageFromData(data, tutorID) {
     buildCalendar(tutorsAvailability)
     
     tutorsPricePHH = data.pricePHH
-    course = data.preferences.course 
-    school = data.preferences.school
-    subject = data.preferences.subject
+    courseVal = corePreferences.course
+    schoolVal = corePreferences.school
+    subjectVal = corePreferences.subject
     tutor = tutorID 
     currentBalance = parseFloat(coreBalance).toFixed(2)
 
@@ -55,8 +55,8 @@ function loadBookingPageFromData(data, tutorID) {
     bookingImageContainer.appendChild(bookingImage)
 
     checkoutFullName.innerHTML = data.name
-    checkoutSubject.innerHTML = subject
-    checkoutCourse.innerHTML = course
+    checkoutSubject.innerHTML = subjectVal
+    checkoutCourse.innerHTML = courseVal
     checkoutSessionFee.innerHTML = '$' + sessionFee
     checkoutBalance.innerHTML = '$' + parseFloat(coreBalance).toFixed(2)
 }
@@ -361,19 +361,19 @@ checkoutWithBalance.addEventListener('click', () => {
 function createSession(howPaid, transactionID) {
     var checkoutDict = {
         'checkoutTotal' : checkoutTotal,
-        'course' : course,
+        'course' : courseVal,
         'end' : end,
         'howPaid' : howPaid,
         'isRefunded' : false,
         'paid' : 0,
         'rated' : false,
-        'school' : school,
+        'school' : schoolVal,
         'sessionFee' : 3.95,
         'sessionLength' : sessionIndices.length * 30,
         'start' : start,
         'status' : 'pending',
         'student' : globalUserId,
-        'subject' : subject,
+        'subject' : subjectVal,
         'tutor' : tutor,
         'tutorsFee' : tutorsFee
     }
