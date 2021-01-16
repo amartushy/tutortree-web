@@ -100,6 +100,8 @@ function getTutorData(tutorID) {
         //loadAvailability(data)
     })
 }
+
+
 //Home Page___________________________________________________________________________________________________________________
 let homeProfileBlock = document.getElementById('home-profile-block')
 let homeProfileImageContainer = document.getElementById('home-profile-image-container')
@@ -180,8 +182,12 @@ function loadFiltersFromPreferences() {
                 loadCourseOptions(courseData)
 
                 if(course != 'none') {
-                    let tutorData = courseData[course].tutors
-                    loadTutors(tutorData)
+                    if( courseData[course].hasOwnProperty('tutors') ) {
+                        let tutorData = courseData[course].tutors
+                        loadTutors(tutorData)
+                    } else {
+                        $('#tutor-request-container').fadeIn()
+                    }
                 }
             })
         }
@@ -414,7 +420,12 @@ function buildCourseOption(courseName, courseInfo) {
         tutorsHomeSubheader.innerHTML = `All tutors for ${courseName}`
         courseFilterText.innerHTML = courseName
         resetFilters(grade, school, subject, courseName)
-        loadTutors(courseInfo.tutors)
+
+        if( courseInfo.hasOwnProperty('tutors') ) {
+            loadTutors(courseInfo.tutors)
+        } else {
+            $('#tutor-request-container').fadeIn()
+        }
     })
 }
 
@@ -498,7 +509,6 @@ function resetFilters(gradeChange, schoolChange, subjectChange, courseChange) {
         userDB.collection('userTest').doc(globalUserId).update(updateDict)
     }
 }
-
 
 
 
