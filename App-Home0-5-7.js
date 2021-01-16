@@ -804,7 +804,7 @@ function loadButtons(data, tutorID) {
 
     //load message button
     let messageButton = document.getElementById('message-button')
-    messageButton.innerHTML = `Message ${getFirstName(tutorData.name)}`
+    messageButton.innerHTML = `Message ${getFirstName(data.name)}`
     messageButton.setAttribute('onClick', 'openMessageModal("'+data+'","'+tutorID+'")')
     document.getElementById('message-button').addEventListener('click', () => {
         openMessageModal(data, tutorID)
