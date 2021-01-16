@@ -792,7 +792,6 @@ function changeTabClasses(id) {
     }
 }
 
-
 function loadButtons(data, tutorID) {
     //load pin tutor button
     loadisTutorPinned(tutorID)
@@ -804,8 +803,12 @@ function loadButtons(data, tutorID) {
 
     //load message button
     let messageButton = document.getElementById('message-button')
-    messageButton.innerHTML = `Message ${getFirstName(data.name)}`
-    messageButton.setAttribute('onClick', 'openMessageModal("'+data+'","'+tutorID+'")')
+    var messageButtonClone = messageButton.cloneNode(true)
+    messageButton.parentNode.replaceChild(messageButtonClone, messageButton)
+    messageButtonClone.innerHTML = `Message ${getFirstName(data.name)}`
+    messageButtonClone.addEventListener('click', () => {
+        openMessageModal(data, tutorID)
+    })
 
     //load book session button
     const sessionBookingPage = document.getElementById('session-booking-page')
