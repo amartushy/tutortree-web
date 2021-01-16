@@ -530,12 +530,14 @@ function loadTutors(tutorsForCourse) {
         })
     }
 }
+
+
 function buildTutorPreview(tutorID, tutorData) {
     var tutorPreviewsContainer = document.getElementById('tutor-previews-container')
 
     const tutorPreviewDiv = document.createElement('div')
     tutorPreviewDiv.setAttribute('class', 'tutor-preview-div')
-    tutorPreviewDiv.setAttribute('onClick', `getTutorData(${tutorID})`)
+    tutorPreviewDiv.setAttribute('onClick', `getTutorData("${tutorID}")`)
     tutorPreviewsContainer.appendChild(tutorPreviewDiv)
 
     const tutorPreviewImage = document.createElement('img')
