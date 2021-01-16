@@ -97,6 +97,7 @@ function getTutorData(tutorID) {
         loadTutorProfile(data, tutorID)
         loadButtons(data, tutorID)
         //loadSimilarTutors()
+	loadProfileExperience(data)
         loadReviews(data, tutorID)
         //loadAvailability(data)
     })
@@ -1024,10 +1025,11 @@ function sendMessagingNotifications(otherID, currentName, message) {
 var profileNoExperience = document.getElementById('profile-no-experience')
 var profileExperienceContainer = document.getElementById('profile-experience-container')
 
-function loadProfileExperience() {
+function loadProfileExperience(tutorData) {
     while(profileExperienceContainer.firstChild) {
         profileExperienceContainer.removeChild(profileExperienceContainer.firstChild)
     }
+    profileNoExperience.innerHTML = `${getFirstName(tutorData.name)} hasn't added any experience yet`
     profileNoExperience.style.display = 'block'
 
     userDB.collection('userTest').doc(globalUserId).get().then(function(doc) {
@@ -1111,6 +1113,7 @@ function updateStars(index) {
 var writeReviewHeader = document.getElementById('write-review-header')
 let reviewScreen = document.getElementById('review-screen')
 function setReviewInitialState(tutorData, tutorID) {
+    noReviewsText.innerHTML = `${getFirstName(tutorData.name)} doesn't have any reviews yet`
     noReviewsText.style.display = 'none'
 
     for( i = 1; i <= 5; i++) {
