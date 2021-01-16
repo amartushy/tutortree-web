@@ -84,6 +84,7 @@ const homeBack = document.getElementById('home-back')
 
 homeBack.addEventListener('click', () => {
     tutorProfile.style.display = 'none'
+    $(#'home-page').fadeIn()
 })
 
 function getTutorData(tutorID) {
