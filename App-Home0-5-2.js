@@ -755,6 +755,44 @@ async function loadTutorProfile(data, ID) {
 
 }
 
+
+//Tab Navigation
+var tab1 = document.getElementById('tab-1')
+tab1.addEventListener('click', () => {
+    changeTabClasses(1)
+    $("html, body").animate({ scrollTop: $("#bio-section").offset().top }, 500);
+})
+
+var tab2 = document.getElementById('tab-2')
+tab2.addEventListener('click', () => {
+    changeTabClasses(2)
+    $("html, body").animate({ scrollTop: $("#experience-section").offset().top }, 500);
+})
+
+var tab3 = document.getElementById('tab-3')
+tab3.addEventListener('click', () => {
+    changeTabClasses(3)
+    $("html, body").animate({ scrollTop: $("#reviews-section").offset().top }, 500);
+})
+
+var tab4 = document.getElementById('tab-4')
+tab4.addEventListener('click', () => {
+    changeTabClasses(4)
+    $("html, body").animate({ scrollTop: $("#availability-section").offset().top }, 500);
+})
+
+function changeTabClasses(id) {
+    for ( i = 1; i < 5; i++ ) {
+        if( id == i) {
+            document.getElementById(`tab-${i}`).setAttribute('class', 'profile-tab-selected')
+        } else {
+            document.getElementById(`tab-${i}`).setAttribute('class', 'profile-tab-unselected')
+        }
+    }
+}
+
+
+
 function loadButtons(data, tutorID) {
     //load pin tutor button
     loadisTutorPinned(tutorID)
@@ -982,6 +1020,51 @@ function sendMessagingNotifications(otherID, currentName, message) {
     })
 }
 
+//Experience
+var profileNoExperience = document.getElementById('profile-no-experience')
+var profileExperienceContainer = document.getElementById('profile-experience-container')
+
+function loadProfileExperience() {
+    while(profileExperienceContainer.firstChild) {
+        profileExperienceContainer.removeChild(profileExperienceContainer.firstChild)
+    }
+    profileNoExperience.style.display = 'block'
+
+    userDB.collection('userTest').doc(globalUserId).get().then(function(doc) {
+        var experienceData = doc.data().experience 
+
+        for(var experience in experienceData) {
+            if ( experienceData.hasOwnProperty(experience) ){
+                profileNoExperience.style.display = 'none'
+
+                var title = experienceData[experience].title
+                var description = experienceData[experience].description
+                buildProfileExperienceBlock(title, description)
+            }
+        }
+    })
+}
+
+function buildProfileExperienceBlock(title, description) {
+    var experienceDiv = document.createElement('div')
+    experienceDiv.setAttribute('class', 'experience-div')
+    profileExperienceContainer.appendChild(experienceDiv)
+
+    var experienceHeaderDiv = document.createElement('div')
+    experienceHeaderDiv.setAttribute('class', 'experience-header-div')
+    experienceDiv.appendChild(experienceHeaderDiv)
+
+    var experienceTitle = document.createElement('div')
+    experienceTitle.setAttribute('class', 'experience-title-profile')
+    experienceTitle.innerHTML = title
+    experienceHeaderDiv.appendChild(experienceTitle)
+
+    var experienceText = document.createElement('div')
+    experienceText.setAttribute('class', 'experience-text-profile')
+    experienceText.innerHTML = description
+    experienceDiv.appendChild(experienceText)
+}
+
 
 //Reviews
 var writeReviewButton = document.getElementById('write-review-button')
@@ -1028,6 +1111,8 @@ function updateStars(index) {
 var writeReviewHeader = document.getElementById('write-review-header')
 let reviewScreen = document.getElementById('review-screen')
 function setReviewInitialState(tutorData, tutorID) {
+    noReviewsText.style.display = 'none'
+
     for( i = 1; i <= 5; i++) {
         document.getElementById(`star-${i}`).setAttribute('class', 'review-star-unselected')
     }
@@ -1045,10 +1130,6 @@ function setReviewInitialState(tutorData, tutorID) {
     submitReviewButtonClone.addEventListener('click', () => {
         submitReview(tutorData, tutorID)
     })
-}
-
-function loadReviews(tutorData, tutorID) {
-    setReviewInitialState(tutorData, tutorID)
 }
 
 function submitReview(tutorData, tutorID) {
@@ -1079,4 +1160,79 @@ function submitReview(tutorData, tutorID) {
 
         $('#review-confirmation-screen').fadeIn().delay(5000).fadeOut("slow")
     })
+}
+
+
+let allReviewsArea = document.getElementById('all-reviews-area')
+let noReviewsText = document.getElementById('no-reviews-text')
+
+
+function loadReviews(tutorData, tutorID) {
+    setReviewInitialState(tutorData, tutorID)
+
+    while(allReviewsArea.firstChild) {
+        allReviewsArea.removeChild(allReviewsArea.firstChild)
+    }
+
+    userDB.collection('userTest').doc(tutorID).collection('reviews').get().then(function(reviews) {
+        if( reviews.size > 0) {
+            reviews.forEach(function(review) {
+                let reviewData = review.data()
+    
+                userDB.collection('userTest').doc(reviewData.reviewer).get().then(function(doc) {
+                    let reviewersImage = doc.data().profileImage
+                    buildReviewBlock(reviewData, reviewersImage)
+                })
+            })
+        } else {
+            noReviewsText.style.display = 'block'
+        }
+    })
+
+
+}
+
+function buildReviewBlock(data, image) {
+    let reviewContainer = document.createElement('div')
+    reviewContainer.setAttribute('class', 'review-container')
+    allReviewsArea.append(reviewContainer)
+    
+    let reviewHeader = document.createElement('div')
+    reviewHeader.setAttribute('class', 'review-header')
+    reviewContainer.append(reviewHeader)
+
+    let reviewImage = document.createElement('img')
+    reviewImage.setAttribute('class', 'review-image')
+    reviewImage.src = image
+    reviewHeader.append(reviewImage)
+
+    let reviewInfo = document.createElement('div')
+    reviewInfo.setAttribute('class', 'review-info')
+    reviewHeader.append(reviewInfo)
+
+    let reviewName = document.createElement('div')
+    reviewName.setAttribute('class', 'review-name')
+    reviewName.innerHTML = data.reviewerName
+    reviewInfo.append(reviewName)
+
+    let reviewInfoLower = document.createElement('div')
+    reviewInfoLower.setAttribute('class', 'review-info-lower')
+    reviewInfo.append(reviewInfoLower)
+
+    let numStars = parseInt(data.rating)
+    for( i = 0; i < numStars; i++) {
+        let reviewStar = document.createElement('div')
+        reviewStar.setAttribute('class', 'review-star')
+        reviewStar.innerHTML = ''
+        reviewInfoLower.append(reviewStar)
+    }
+    let reviewDate = document.createElement('div')
+    reviewDate.setAttribute('class', 'review-date')
+    reviewDate.innerHTML = data.dateString
+    reviewInfoLower.append(reviewDate)
+
+    let reviewText = document.createElement('div')
+    reviewText.setAttribute('class', 'review-text')
+    reviewText.innerHTML = data.review
+    reviewContainer.append(reviewText)
 }
