@@ -205,6 +205,76 @@ function buildProfileExperienceBlock(title, description) {
     experienceDiv.appendChild(experienceText)
 }
 
+let allReviewsArea = document.getElementById('all-reviews-area')
+let noReviewsText = document.getElementById('no-reviews-text')
+
+function loadProfileReviews() {
+    while(allReviewsArea.firstChild) {
+        allReviewsArea.removeChild(allReviewsArea.firstChild)
+    }
+    noReviewsText.style.display = 'none'
+
+    userDB.collection('userTest').doc(globalUserId).collection('reviews').get().then(function(reviews) {
+        if( reviews.size > 0) {
+            reviews.forEach(function(review) {
+                let reviewData = review.data()
+    
+                userDB.collection('userTest').doc(reviewData.reviewer).get().then(function(doc) {
+                    let reviewersImage = doc.data().profileImage
+                    buildReviewBlock(reviewData, reviewersImage)
+                })
+            })
+        } else {
+            noReviewsText.style.display = 'block'
+        }
+    })
+}
+
+function buildReviewBlock(data, image) {
+    let reviewContainer = document.createElement('div')
+    reviewContainer.setAttribute('class', 'review-container')
+    allReviewsArea.append(reviewContainer)
+    
+    let reviewHeader = document.createElement('div')
+    reviewHeader.setAttribute('class', 'review-header')
+    reviewContainer.append(reviewHeader)
+
+    let reviewImage = document.createElement('img')
+    reviewImage.setAttribute('class', 'review-image')
+    reviewImage.src = image
+    reviewHeader.append(reviewImage)
+
+    let reviewInfo = document.createElement('div')
+    reviewInfo.setAttribute('class', 'review-info')
+    reviewHeader.append(reviewInfo)
+
+    let reviewName = document.createElement('div')
+    reviewName.setAttribute('class', 'review-name')
+    reviewName.innerHTML = data.reviewerName
+    reviewInfo.append(reviewName)
+
+    let reviewInfoLower = document.createElement('div')
+    reviewInfoLower.setAttribute('class', 'review-info-lower')
+    reviewInfo.append(reviewInfoLower)
+
+    let numStars = parseInt(data.rating)
+    for( i = 0; i < numStars; i++) {
+        let reviewStar = document.createElement('div')
+        reviewStar.setAttribute('class', 'review-star')
+        reviewStar.innerHTML = ''
+        reviewInfoLower.append(reviewStar)
+    }
+    let reviewDate = document.createElement('div')
+    reviewDate.setAttribute('class', 'review-date')
+    reviewDate.innerHTML = data.dateString
+    reviewInfoLower.append(reviewDate)
+
+    let reviewText = document.createElement('div')
+    reviewText.setAttribute('class', 'review-text')
+    reviewText.innerHTML = data.review
+    reviewContainer.append(reviewText)
+}
+
 
 //Availability
 
