@@ -115,6 +115,7 @@ async function buildConnection(connectionID, studentID, tutorID) {
         
         showHeader(studentID)
         showMessages(connectionID, studentID, senderType)
+	buildMessagesProfile(studentID)
         replaceMessageFieldListener(studentID, connectionID, senderType)
         sendMessage.setAttribute('onClick', 'sendConnectionMessage("' + studentID + "','" + connectionID + '","' + senderType + '")')
     })
