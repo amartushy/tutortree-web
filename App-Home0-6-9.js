@@ -1246,6 +1246,7 @@ function buildReviewBlock(data, image) {
 }
 
 
+//Availability
 
 function loadProfileAvailability(tutorID, tutorData) {
     
@@ -1266,6 +1267,7 @@ function loadCheckoutFromProfile(tutorData, tutorID) {
     tutor = tutorID 
     currentBalance = parseFloat(coreBalance).toFixed(2)
 
+    let profileCheckoutName = document.getElementById('profile-checkout-name')
     const checkoutHourly = document.getElementById('profile-checkout-hourly')
     const bookingImageContainer = document.getElementById('booking-image-container')
     const checkoutSubject = document.getElementById('checkout-subject')
@@ -1274,6 +1276,7 @@ function loadCheckoutFromProfile(tutorData, tutorID) {
     const checkoutSessionFee = document.getElementById('checkout-session-fee')
     const checkoutBalance = document.getElementById('checkout-balance')
 
+    profileCheckoutName.innerHTML = getFirstName(tutorData.name) + "'s Availability"
     checkoutHourly.innerHTML = tutorData.pricePHH * 2
 
     bookingImageContainer.removeChild(bookingImageContainer.firstChild)
@@ -1337,4 +1340,187 @@ function buildProfileCalendarNav() {
         }
         buildProfileCalendar(tutorsAvailability)
     })
+}
+
+
+//Update here______________________________________________________________________________________
+function buildProfileCalendar(availability) {
+    var calendarHeader = document.getElementById('profile-calendar-header')
+    calendarHeader.innerHTML = months[month] + " " + year
+
+    var dayRowContainer = document.getElementById('profile-day-row-container')
+    while(dayRowContainer.firstChild) {
+        dayRowContainer.removeChild(dayRowContainer.firstChild)
+    }
+    var daysInMonth = getDaysInMonth(year, month+1)
+    var firstDay = firstDayOfMonth(year, month)
+    var counter = 0
+    var dayCounter = 1
+    for(i=0; i<6; i++) {
+        var dayRow = document.createElement('div')
+        dayRow.setAttribute('class', 'day-row')
+        dayRowContainer.appendChild(dayRow)
+
+        for(j=0; j<7; j++) {
+            var dayDiv = document.createElement('div')
+            if( counter >= firstDay && dayCounter <= daysInMonth){
+                dayDiv.setAttribute('class', 'day-div')
+                dayDiv.setAttribute('id', 'profile-dayDiv-' + dayCounter)
+                dayRow.appendChild(dayDiv)
+
+                var dayNumber = document.createElement('div')
+                dayNumber.setAttribute('class', 'day-number')
+                dayNumber.innerHTML = dayCounter
+                dayDiv.appendChild(dayNumber)
+    
+                var dayCircle = document.createElement('div')
+                if(availability[j] > 0) {
+                    dayCircle.setAttribute('class', 'availability-circle')
+                    dayDiv.setAttribute('onClick', 'profileDaySelected("'+j+'","'+dayCounter+'","'+daysInMonth+'")')
+                } else {
+                    dayCircle.setAttribute('class', 'availability-circle-clear')
+                }
+                dayDiv.appendChild(dayCircle)
+                dayCounter++
+            } else {
+                dayDiv.setAttribute('class', 'day-div-empty')
+                dayRow.appendChild(dayDiv)
+            }
+
+            counter++
+        }
+    }
+}
+
+function profileDaySelected(dayInt, dayOfMonth, daysInMonth) {
+    dayVal = dayOfMonth
+    sessionIndices = []
+    const checkoutPreTotal = document.getElementById('profile-checkout-pre-total')
+    checkoutPreTotal.innerHTML = 0.0
+    //Change CSS
+    const sessionDateHeader = document.getElementById('profile-session-date-header')
+    sessionDateHeader.innerHTML = formatSessionDate(dayInt, dayOfMonth, month)
+    const sessionTimeText = document.getElementById('profile-session-time-text')
+    sessionTimeText.innerHTML = 'Select a Time'
+
+    const selectedDay = document.getElementById('profile-dayDiv-' + dayOfMonth)
+    selectedDay.setAttribute('class', 'day-div-selected')
+    selectedDay.childNodes[0].setAttribute('class', 'day-number-selected')
+    selectedDay.childNodes[1].setAttribute('class', 'availability-circle-selected')
+
+    for(i=1; i<=daysInMonth; i++) {
+        if(i!=dayOfMonth) {
+            var dayDiv = document.getElementById('profile-dayDiv-' + i)
+            dayDiv.setAttribute('class', 'day-div')
+            var divChildren = dayDiv.childNodes
+            divChildren[0].setAttribute('class', 'day-number')
+            if(divChildren[1].classList.contains('availability-circle-selected')) {
+                divChildren[1].setAttribute('class', 'availability-circle')
+            }
+        }
+    }
+
+    //Show Availability
+    availabilityArray = twosComplement(tutorsAvailability[dayInt]).split("")
+    loadProfileTimeslots()
+}
+
+function loadProfileTimeslots() {
+    const timeslotsContainer = document.getElementById('profile-timeslots-container')
+    while(timeslotsContainer.firstChild) {
+        timeslotsContainer.removeChild(timeslotsContainer.firstChild)
+    }
+
+    for(i=0; i<availabilityArray.length; i++) {
+        if(availabilityArray[i] == 1) {
+            var bookingTimeslot = document.createElement('div')
+            bookingTimeslot.setAttribute('class', 'booking-timeslot')
+            bookingTimeslot.setAttribute('onClick', 'profileTimeslotSelected("'+i+'")')
+            bookingTimeslot.setAttribute('id', 'profile-timeslot-'+i)
+            timeslotsContainer.appendChild(bookingTimeslot)
+            bookingTimeslot.innerHTML = timeOptions[i]
+        }
+    }
+}
+
+
+
+function profileTimeslotSelected(index) {
+    const timeslotsContainer = document.getElementById('profile-timeslots-container')
+    const previousIndex = parseInt(index)-1
+    const nextIndex = parseInt(index)+1
+    var children = timeslotsContainer.childNodes
+
+    if(sessionIndices.length == 0) {
+        sessionIndices.push(parseInt(index))
+        sessionIndices.sort()
+        var timeslot = document.getElementById('profile-timeslot-'+index)
+        timeslot.setAttribute('class', 'booking-timeslot-selected')
+
+        if(availabilityArray[nextIndex]==1) {
+            var nextTimeslot = document.getElementById('profile-timeslot-'+nextIndex)
+            nextTimeslot.setAttribute('class', 'booking-timeslot-option')
+        }
+
+    } else if (index < sessionIndices[0] || index > sessionIndices[sessionIndices.length-1]+1 || sessionIndices.includes(parseInt(index))) {
+        for(i=0; i<children.length; i++) {
+            children[i].setAttribute('class', 'booking-timeslot')
+        }
+        sessionIndices = []
+        sessionIndices.push(parseInt(index))
+        sessionIndices.sort()
+        var timeslot = document.getElementById('profile-timeslot-'+index)
+        timeslot.setAttribute('class', 'booking-timeslot-selected')
+
+        if(availabilityArray[nextIndex]==1) {
+            var nextTimeslot = document.getElementById('profile-timeslot-'+nextIndex)
+            nextTimeslot.setAttribute('class', 'booking-timeslot-option')
+        }
+    }  else if (availabilityArray[index]==1) {
+        sessionIndices.push(parseInt(index))
+        sessionIndices.sort()
+        var timeslot = document.getElementById('profile-timeslot-'+index)
+        timeslot.setAttribute('class', 'booking-timeslot-selected')
+
+        if(availabilityArray[nextIndex]==1) {
+            var nextTimeslot = document.getElementById('profile-timeslot-'+nextIndex)
+            nextTimeslot.setAttribute('class', 'booking-timeslot-option')
+        }
+    }
+
+    var sessionTimeText = document.getElementById('profile-session-time-text')
+    if (sessionIndices.length>1) {
+        var lastSessionIndex = sessionIndices[sessionIndices.length-1]+1
+        console.log(lastSessionIndex)
+        sessionTimeText.innerHTML = timeOptions[sessionIndices[0]]+" to "+timeOptions[lastSessionIndex]
+    } else {
+        sessionTimeText.innerHTML = timeOptions[sessionIndices[0]]+" to "+timeOptions[sessionIndices[0]+1]
+    }
+
+    updateStartAndEnd()
+    updateProfileCheckout()
+}
+
+function updateProfileCheckout() {
+    checkoutTotal = tutorsPricePHH * sessionIndices.length + sessionFee
+    tutorsFee = tutorsPricePHH * sessionIndices.length
+
+    const checkoutPreTotal = document.getElementById('profile-checkout-pre-total')
+    const profileCheckoutPreTotal = document.getElementById('profile-checkout-pre-total')
+    const checkoutFinalTotal = document.getElementById('checkout-final-total')
+    checkoutPreTotal.innerHTML = tutorsPricePHH * sessionIndices.length
+    checkoutFinalTotal.innerHTML = '$' + checkoutTotal
+    
+    let profileCheckoutContinue = document.getElementById('profile-checkout-continue')
+    if(profileCheckoutContinue.style.display == 'none') {
+        $('#profile-checkout-continue').fadeIn()
+    }
+
+    var currentTotal = document.getElementById('current-total')
+    var newBalance = document.getElementById('new-balance')
+
+    currentTotal.innerHTML = '$' + checkoutTotal
+    if(currentBalance>checkoutTotal) {
+        newBalance.innerHTML = '$' + parseFloat(currentBalance - checkoutTotal).toFixed(2)
+    }
 }
