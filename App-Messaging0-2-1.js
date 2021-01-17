@@ -1,4 +1,3 @@
-
 //Global Variables__________________________________________________________________
 var userDB = firebase.firestore()
 
@@ -28,12 +27,7 @@ var messagesRight = document.getElementById('messages-right')
 //Initialize elements on page load
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
-        
-		userDB.collection('userTest').doc(globalUserId).onSnapshot(function(doc) {
-    
-            loadCoreProperties(user.id)
-    
-        })
+        loadCoreProperties(user.id)
 		
 	//If user is not logged in return them to login screen
 	} else {
