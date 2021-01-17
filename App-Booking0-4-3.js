@@ -112,7 +112,9 @@ function setNavigation(isFromProfile) {
         $('#checkout-screen').fadeIn()
     })
 
-    availabilityBack.addEventListener('click', () => {
+    availabilityBackClone = availabilityBack.cloneNode(true)
+    availabilityBack.parentNode.replaceChild(availabilityBackClone, availabilityBack)
+    availabilityBackClone.addEventListener('click', () => {
         if(isFromProfile) {
             sessionBookingPage.style.display = 'none'
             tutorProfile.style.display = 'flex'
