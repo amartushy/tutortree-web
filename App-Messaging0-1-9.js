@@ -275,7 +275,7 @@ async function buildMessagesProfile(userID, userData) {
 
             messagesPage.style.display = 'none'
             tutorProfilePage.style.display = 'flex'
-            loadTutorProfile(userData, userId)
+            loadTutorProfile(userData, userID)
         })
 
         bookSessionButtonClone = bookSessionButton.cloneNode(true)
