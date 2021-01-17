@@ -24,7 +24,7 @@ const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
 
 function loadBookingPageFromData(data, tutorID) {
     setInitialState()
-    setNavigation()
+    setNavigation(false)
     loadAvailabilities(data.availability)
     buildCalendarNav()
     buildCalendar(tutorsAvailability)
@@ -79,7 +79,8 @@ function setInitialState() {
     timeslotsContainer.appendChild(noDateSelectedText)
 }
 
-function setNavigation() {
+
+function setNavigation(isFromProfile) {
     const sessionBookingPage = document.getElementById('session-booking-page')
     const tutorProfile = document.getElementById('tutor-profile')
     const availabilityScreen = document.getElementById('availability-screen')
@@ -88,6 +89,7 @@ function setNavigation() {
 
     const profileBackButton = document.getElementById('profile-back-button')
     const checkoutContinue = document.getElementById('checkout-continue')
+    const profileCheckoutContinue = document.getElementById('profile-checkout-continue')
     const availabilityBack = document.getElementById('availability-back')
     const processingHome = document.getElementById('processing-home')
 
@@ -102,10 +104,21 @@ function setNavigation() {
         })
     })
 
+    profileCheckoutContinue.addEventListener('click', () => {
+        availabilityScreen.style.display = 'none'
+        sessionBookingPage.style.display = 'flex'
+        $('#checkout-screen').fadeIn()
+    })
+
     availabilityBack.addEventListener('click', () => {
-        $('#checkout-screen').fadeOut(400, function(){
-            $('#availability-screen').fadeIn()
-        })
+        if(isFromProfile) {
+            sessionBookingPage.style.display = 'none'
+            $("html, body").animate({ scrollTop: $("#availability-section").offset().top }, 500);
+        } else {
+            $('#checkout-screen').fadeOut(400, function(){
+                $('#availability-screen').fadeIn()
+            })
+        }
     })
 
     profileBackButton.addEventListener('click', () => {
