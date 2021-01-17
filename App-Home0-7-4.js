@@ -88,17 +88,14 @@ function loadHomeNavigation() {
 
 function getTutorData(tutorID) {
     tutorProfile.style.display = 'flex'
-
+	let homePage = document.getElementById('home-page')
+	homePage.style.display = 'none'
 
     userDB.collection('userTest').doc(tutorID).get().then(function(doc) {
         const data = doc.data()
 
         loadTutorProfile(data, tutorID)
-        loadButtons(data, tutorID)
-        //loadSimilarTutors()
-	loadProfileExperience(data, tutorID)
-        loadReviews(data, tutorID)
-        loadProfileAvailability(tutorID, data)
+
     })
 }
 
