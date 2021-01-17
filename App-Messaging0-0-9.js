@@ -225,3 +225,171 @@ function sendMessagingNotifications(otherID, currentName, message) {
         }
     })
 }
+
+
+
+async function buildMessagesProfile(userID, userData) {
+
+    let isTutor = userData.isTutor 
+
+    let messagesProfileImageContainer = document.getElementById('messages-profile-image-container')
+    messagesProfileImageContainer.removeChild(messagesProfileImageContainer.firstChild)
+    let newImage = document.createElement('img')
+    newImage.setAttribute('class', 'messages-profile-image')
+    newImage.src = userData.profileImage
+    messagesProfileImageContainer.appendChild(newImage)
+
+    let messagesProfileName = document.getElementById('messages-profile-name')
+    messagesProfileName.innerHTML = userData.name 
+
+    let profileButton = document.getElementById('profile-button')
+    profileButton.setAttribute('onClick', 'loadUsersProfile("' + userID + '","' + userData + '")')
+
+    //Tutor Elements
+    let likeTutorButton = document.getElementById('like-tutor-button')
+    let pinTutorButton = document.getElementById('pin-tutor-button')
+    let tutorInfoDiv = document.getElementById('tutor-info-div')
+    let bookSessionButton = document.getElementById('book-session-button')
+
+    bookSessionButton.style.display = 'none'
+    tutorInfoDiv.style.display = 'none'
+    likeTutorButton.style.display = 'none'
+    pinTutorButton.style.display = 'none'
+
+    if(isTutor) {
+        let sessionsText = document.getElementById('sessions-text')
+        let averageText = document.getElementById('average-text')
+
+        sessionsText.innerHTML = await getCountOfSessions(userID)
+        averageText.innerHTML = await getRatingForUser(userID)
+
+        bookSessionButton.style.display = 'flex'
+        tutorInfoDiv.style.display = 'flex'
+        likeTutorButton.style.display = 'flex'
+        pinTutorButton.style.display = 'flex'
+
+        bookSessionButton.setAttribute('onClick', 'loadSessionBooking("' + userID + '","' + userData + '")')
+
+        loadisTutorLiked(userID)
+        loadisTutorPinned(userID)
+    }
+}
+
+function loadisTutorPinned(tutorID) {
+    let pinTutorButton = document.getElementById('pin-tutor-button')
+
+    if(corePinnedTutors != null) { 
+        for (const [id, status] of Object.entries(corePinnedTutors)) {
+            //User has this tutor pinned currently
+            if ( id == tutorID && status == 'active') {
+                pinTutorButton.setAttribute('class', 'icon-button-active')
+                pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${true})`)
+                //exit loop as the tutor has been matched
+                break
+                
+            //User has never pinned tutor before and does not have them pinned currently
+            } else {
+                pinTutorButton.setAttribute('class', 'icon-button-inactive')
+                pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${false})`)
+            }
+        } 
+
+    //User has never pinned a tutor before
+    } else {
+        pinTutorButton.setAttribute('class', 'icon-button-inactive')
+        pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${false})`)
+    }
+}
+
+function pinTutor(tutorID, isPinned) {
+    let pinTutorButton = document.getElementById('pin-tutor-button')
+    
+    let pinDict = {}
+    let pinPath = 'pinnedTutors.' + tutorID
+    pinDict[pinPath] = (isPinned ? 'inactive' : 'active')
+
+    if(isPinned) {
+        userDB.collection('userTest').doc(globalUserId).update(pinDict).then( () => {
+            pinTutorButton.setAttribute('class', 'icon-button-inactive')
+            pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${false})`)
+        })
+
+    } else {
+        userDB.collection('userTest').doc(globalUserId).update(pinDict).then( () => {
+            pinTutorButton.setAttribute('class', 'icon-button-active')
+            pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${true})`)
+        })
+    }
+}
+
+function loadisTutorLiked(tutorID) {
+    let likeTutorButton = document.getElementById('like-tutor-button')
+
+    if(coreLikedTutors != null) { 
+        for (const [id, status] of Object.entries(coreLikedTutors)) {
+            //User has this tutor liked currently
+            if(id == tutorID && status == 'active') {
+                likeTutorButton.setAttribute('class', 'icon-button-active')
+                likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${true})`)
+                //exit loop as the tutor has been matched
+                break
+            } else {
+                likeTutorButton.setAttribute('class', 'icon-button-inactive')
+                likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${false})`)
+            }
+        } 
+
+    //User has never liked a tutor before
+    } else {
+        likeTutorButton.setAttribute('class', 'icon-button-inactive')
+        likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${false})`)
+    }
+}
+
+
+function likeTutor(tutorID, isLiked) {
+    let likeTutorButton = document.getElementById('like-tutor-button')
+
+    let likeDict = {}
+    let likePath = 'likedTutors.' + tutorID
+    likeDict[likePath] = (isLiked ? 'inactive' : 'active')
+
+    if(isLiked) {
+        userDB.collection('userTest').doc(globalUserId).update(likeDict).then( () => {
+            updateTutorsLikes(tutorID, false, globalUserId)
+            likeTutorButton.setAttribute('class', 'icon-button-inactive')
+            likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${false})`)
+        })
+
+    } else {
+        userDB.collection('userTest').doc(globalUserId).update(likeDict).then( () => {
+            updateTutorsLikes(tutorID, true, globalUserId)
+            likeTutorButton.setAttribute('class', 'icon-button-active')
+            likeTutorButton.setAttribute('onClick', `likeTutor("${tutorID}",${true})`)
+        })
+    }
+}
+
+function updateTutorsLikes(tutorID, isIncrementing, likedBy) {
+    //decrementing if false:
+    var user = likedBy
+    var userDict = {}
+
+    if(isIncrementing) {
+        userDict[user] = 'active'
+        var updateDict = {
+            'numLikes' : firebase.firestore.FieldValue.increment(1)
+        }
+        updateDict['likedBy'] = userDict
+
+        userDB.collection('userTest').doc(tutorID).update(updateDict)
+    } else {
+        userDict[user] = 'inactive'
+        var updateDict = {
+            'numLikes' : firebase.firestore.FieldValue.increment(-1)
+        }
+        updateDict['likedBy'] = userDict
+
+        userDB.collection('userTest').doc(tutorID).update(updateDict)
+    }
+}
