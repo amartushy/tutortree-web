@@ -29,7 +29,7 @@ var messagesRight = document.getElementById('messages-right')
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
         loadCoreProperties(user.uid)
-		
+		loadInitialState()
 	//If user is not logged in return them to login screen
 	} else {
 		location.href = "https://parent-tutortree.webflow.io/login"
