@@ -307,7 +307,7 @@ async function buildMessagesProfile(userID, userData) {
 
             messagesPage.style.display = 'none'
             sessionBookingPage.style.display = 'flex'
-            loadSessionBooking(userID, userData)
+            loadBookingPageFromData(userData, userID)
         })
 
         loadMessagesIsTutorLiked(userID)
