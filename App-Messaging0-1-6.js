@@ -270,6 +270,7 @@ async function buildMessagesProfile(userID, userData) {
         profileButtonClone = profileButton.cloneNode(true)
         profileButton.parentNode.replaceChild(profileButtonClone, profileButton)
         profileButton.addEventListener('click', () => {
+            document.getElementById('tutor-profile-page').style.display = 'flex'
             loadTutorProfile(userData, userId)
         })
 
