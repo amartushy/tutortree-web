@@ -1,8 +1,6 @@
 //Profile____________________________________________________________________________________________________________________________________________________
 
 async function loadTutorProfile(data, ID) {
-    let homePage = document.getElementById('home-page')
-    homePage.style.display = 'none'
     //Load image
     const tutorContainer = document.getElementById('tutor-image-container')
     tutorContainer.removeChild(tutorContainer.firstChild)
