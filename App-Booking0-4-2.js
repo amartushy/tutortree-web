@@ -115,6 +115,7 @@ function setNavigation(isFromProfile) {
     availabilityBack.addEventListener('click', () => {
         if(isFromProfile) {
             sessionBookingPage.style.display = 'none'
+            tutorProfile.style.display = 'flex'
             $("html, body").animate({ scrollTop: $("#availability-section").offset().top }, 500);
         } else {
             $('#checkout-screen').fadeOut(400, function(){
