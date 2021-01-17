@@ -1,11 +1,21 @@
-//Global Variables________________________________________________________________________________________
-var globalUserId,
-    coreName,
-    corePinnedTutors,
-    coreLikedTutors
 
-
+//Global Variables__________________________________________________________________
 var userDB = firebase.firestore()
+
+var globalUserId,
+    coreBio,
+    coreBalance,
+    coreEmail,
+    coreIsEmailOn,
+    coreIsSMSOn,
+    coreisTutor,
+    coreLikedTutors,
+    coreName,
+    corePhone,
+    corePinnedTutors,
+    corePreferences,
+    coreProfileImage
+
 
 var connectionsArea = document.getElementById('connections-area')
 var messagesHeader = document.getElementById('messages-header')
@@ -18,25 +28,42 @@ var messagesRight = document.getElementById('messages-right')
 //Initialize elements on page load
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
-        globalUserId = user.uid
         
 		userDB.collection('userTest').doc(globalUserId).onSnapshot(function(doc) {
-            var data = doc.data()
     
-            coreName = data.name,
-            coreLikedTutors = data.likedTutors,
-            corePinnedTutors = data.pinnedTutors  
+            loadCoreProperties(user.id)
     
         })
-
-        loadConnections()
-        loadMessagingNavigation()
 		
 	//If user is not logged in return them to login screen
 	} else {
 		location.href = "https://parent-tutortree.webflow.io/login"
 	}
 })
+
+function loadCoreProperties(ID) {
+    globalUserId = ID
+	console.log(globalUserId)
+    userDB.collection('userTest').doc(globalUserId).onSnapshot(function(doc) {
+        var data = doc.data()
+
+        coreBio = data.bio
+	    coreBalance = data.currentBalance    
+        coreEmail = data.email
+        coreIsEmailOn = data.isEmailOn 
+        coreIsSMSOn = data.coreIsSMSOn
+        coreisTutor = data.isTutor
+	    coreLikedTutors = data.likedTutors
+        coreName = data.name 
+        corePhone = data.phoneNumber 
+	    corePinnedTutors = data.pinnedTutors
+	    corePreferences = data.preferences
+        coreProfileImage = data.profileImage 
+
+        loadConnections()
+        loadMessagingNavigation()
+    })
+}
 
 function loadConnections() {
 
