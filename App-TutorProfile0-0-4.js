@@ -2,11 +2,11 @@
 
 async function loadTutorProfile(data, ID) {
 	
-    loadButtons(data, tutorID)
+    loadButtons(data, ID)
     //loadSimilarTutors()
-    loadProfileExperience(data, tutorID)
-    loadReviews(data, tutorID)
-    loadProfileAvailability(tutorID, data)
+    loadProfileExperience(data, ID)
+    loadReviews(data, ID)
+    loadProfileAvailability(ID, data)
 	
 	
     //Load image
