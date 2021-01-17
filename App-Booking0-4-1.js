@@ -106,6 +106,7 @@ function setNavigation(isFromProfile) {
 
     profileCheckoutContinue.addEventListener('click', () => {
         availabilityScreen.style.display = 'none'
+        tutorProfile.style.display = 'none'
         sessionBookingPage.style.display = 'flex'
         window.scrollTo(0, 0);
         $('#checkout-screen').fadeIn()
