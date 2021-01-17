@@ -1,4 +1,3 @@
-
 //Global Variables__________________________________________________________________
 var userDB = firebase.firestore()
 
@@ -293,7 +292,7 @@ async function buildMessagesProfile(userID, userData) {
         profileButton.parentNode.replaceChild(profileButtonClone, profileButton)
         profileButtonClone.addEventListener('click', () => {
             let messagesPage = document.getElementById('messages-page')
-            let tutorProfilePage = document.getElementById('tutor-profile-page')
+            let tutorProfilePage = document.getElementById('tutor-profile')
 
             messagesPage.style.display = 'none'
             tutorProfilePage.style.display = 'flex'
