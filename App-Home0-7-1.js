@@ -1303,7 +1303,7 @@ function setProfileAvailabilityInitialState() {
     sessionDateHeader.innerHTML = 'Select a Date'
     sessionTimeText.innerHTML = 'Select a Time'
     profileCheckoutHourly.innerHTML = parseFloat(tutorsPricePHH * 2).toFixed(2)
-    profileCheckoutPreTotal = '0.00'
+    profileCheckoutPreTotal.innerHTML = '0.00'
     checkoutContinue.style.display = 'none'
 
     while(timeslotsContainer.firstChild) {
