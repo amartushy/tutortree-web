@@ -1,6 +1,14 @@
 //Profile____________________________________________________________________________________________________________________________________________________
 
 async function loadTutorProfile(data, ID) {
+	
+    loadButtons(data, tutorID)
+    //loadSimilarTutors()
+    loadProfileExperience(data, tutorID)
+    loadReviews(data, tutorID)
+    loadProfileAvailability(tutorID, data)
+	
+	
     //Load image
     const tutorContainer = document.getElementById('tutor-image-container')
     tutorContainer.removeChild(tutorContainer.firstChild)
