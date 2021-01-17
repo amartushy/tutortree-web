@@ -30,6 +30,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         })
 
         loadConnections()
+        loadMessagingNavigation()
 		
 	//If user is not logged in return them to login screen
 	} else {
@@ -225,7 +226,6 @@ function sendMessagingNotifications(otherID, currentName, message) {
         }
     })
 }
-
 
 
 async function buildMessagesProfile(userID, userData) {
