@@ -99,7 +99,7 @@ function getTutorData(tutorID) {
         //loadSimilarTutors()
 	loadProfileExperience(data, tutorID)
         loadReviews(data, tutorID)
-        //loadAvailability(data)
+        loadProfileAvailability(tutorID, data)
     })
 }
 
