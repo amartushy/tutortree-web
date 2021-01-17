@@ -242,10 +242,8 @@ async function buildMessagesProfile(userID, userData) {
     let messagesProfileName = document.getElementById('messages-profile-name')
     messagesProfileName.innerHTML = userData.name 
 
-    let profileButton = document.getElementById('profile-button')
-    profileButton.setAttribute('onClick', 'loadUsersProfile("' + userID + '","' + userData + '")')
-
     //Tutor Elements
+    let profileButton = document.getElementById('profile-button')
     let likeTutorButton = document.getElementById('like-tutor-button')
     let pinTutorButton = document.getElementById('pin-tutor-button')
     let tutorInfoDiv = document.getElementById('tutor-info-div')
@@ -263,11 +261,13 @@ async function buildMessagesProfile(userID, userData) {
         sessionsText.innerHTML = await getCountOfSessions(userID)
         averageText.innerHTML = await getRatingForUser(userID)
 
+        profileButton.style.display = 'flex'
         bookSessionButton.style.display = 'flex'
         tutorInfoDiv.style.display = 'flex'
         likeTutorButton.style.display = 'flex'
         pinTutorButton.style.display = 'flex'
 
+        profileButton.setAttribute('onClick', 'loadTutorProfile("' + userData+ '","' + userID + '")')
         bookSessionButton.setAttribute('onClick', 'loadSessionBooking("' + userID + '","' + userData + '")')
 
         loadMessagesIsTutorLiked(userID)
