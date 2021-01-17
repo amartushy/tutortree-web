@@ -1255,6 +1255,36 @@ function loadProfileAvailability(tutorID, tutorData) {
     buildProfileCalendarNav()
     buildProfileCalendar(tutorsAvailability)
 
+    tutorsPricePHH = data.pricePHH
+    courseVal = corePreferences.course
+    schoolVal = corePreferences.school
+    subjectVal = corePreferences.subject
+    tutor = tutorID 
+    currentBalance = parseFloat(coreBalance).toFixed(2)
+
+    const checkoutName = document.getElementById('checkout-name')
+    const checkoutHourly = document.getElementById('checkout-hourly')
+    const bookingImageContainer = document.getElementById('booking-image-container')
+    const checkoutSubject = document.getElementById('checkout-subject')
+    const checkoutCourse = document.getElementById('checkout-course')
+    const checkoutFullName = document.getElementById('checkout-full-name')
+    const checkoutSessionFee = document.getElementById('checkout-session-fee')
+    const checkoutBalance = document.getElementById('checkout-balance')
+
+    checkoutName.innerHTML = data.name.split(" ")[0] + "'s Availability"
+    checkoutHourly.innerHTML = data.pricePHH * 2
+
+    bookingImageContainer.removeChild(bookingImageContainer.firstChild)
+    var bookingImage = document.createElement('img')
+    bookingImage.setAttribute('class', 'booking-profile-image')
+    bookingImage.src = data.profileImage
+    bookingImageContainer.appendChild(bookingImage)
+
+    checkoutFullName.innerHTML = data.name
+    checkoutSubject.innerHTML = subjectVal
+    checkoutCourse.innerHTML = courseVal
+    checkoutSessionFee.innerHTML = '$' + sessionFee
+    checkoutBalance.innerHTML = '$' + parseFloat(coreBalance).toFixed(2)
 }
 
 function setProfileAvailabilityInitialState() {
