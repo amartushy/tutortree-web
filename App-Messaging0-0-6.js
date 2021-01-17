@@ -1,5 +1,3 @@
-
-
 //Global Variables________________________________________________________________________________________
 var globalUserId,
     coreName 
@@ -112,16 +110,20 @@ async function buildConnection(connectionID, studentID, tutorID) {
             connectionsAreaChildren[i].setAttribute('class', 'connection-block')
         }
         connectionBlock.setAttribute('class', 'connection-block-selected')
-        
-        showHeader(studentID)
+
+        userDB.collection('userTest').doc(studentID).get().then(function(student) {
+            let studentData = student.data()
+            showHeader(studentID, studentData)
+            buildMessagesProfile(studentID, studentData)
+        })
+
         showMessages(connectionID, studentID, senderType)
-	buildMessagesProfile(studentID)
         replaceMessageFieldListener(studentID, connectionID, senderType)
         sendMessage.setAttribute('onClick', 'sendConnectionMessage("' + studentID + "','" + connectionID + '","' + senderType + '")')
     })
 }
 
-function showHeader(studentID) {
+function showHeader(studentID, studentData) {
     while(messagesHeader.firstChild) {
         messagesHeader.removeChild(messagesHeader.firstChild)
     }
@@ -135,10 +137,9 @@ function showHeader(studentID) {
     messagesHeader.appendChild(connectionImageMessagingHeader) 
     messagesHeader.appendChild(connectionName)
 
-    userDB.collection('userTest').doc(studentID).get().then(function(student) {
-        connectionImageMessagingHeader.src = student.data().profileImage
-        connectionName.innerHTML = student.data().name
-    })
+
+    connectionImageMessagingHeader.src = studentData.profileImage
+    connectionName.innerHTML = studentData.name
 }
 
 function showMessages(connectionID) {
@@ -171,6 +172,7 @@ function showMessages(connectionID) {
         })
     })
 }
+
 
 function replaceMessageFieldListener(otherID, connectionId, senderType) {
     var oldMessageField = document.getElementById("message-field")
