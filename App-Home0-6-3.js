@@ -1244,3 +1244,65 @@ function buildReviewBlock(data, image) {
     reviewText.innerHTML = data.review
     reviewContainer.append(reviewText)
 }
+
+
+
+//Availability
+
+function loadProfileAvailability(tutorID, tutorData) {
+    setProfileAvailabilityInitialState()
+    loadAvailabilities(tutorData.availability)
+    buildProfileCalendarNav()
+    buildProfileCalendar(tutorsAvailability)
+
+}
+
+function setProfileAvailabilityInitialState() {
+    var sessionDateHeader = document.getElementById('profile-session-date-header')
+    var sessionTimeText = document.getElementById('profile-session-time-text')
+    var checkoutContinue = document.getElementById('profile-checkout-continue')
+    var timeslotsContainer = document.getElementById('profile-timeslots-container')
+    let profileCheckoutHourly = document.getElementById('profile-checkout-hourly')
+    
+    sessionDateHeader.innerHTML = 'Select a Date'
+    sessionTimeText.innerHTML = 'Select a Time'
+    profileCheckoutHourly.innerHTML = parseFloat(tutorsPricePHH * 2).toFixed(2)
+    checkoutContinue.style.display = 'none'
+
+    while(timeslotsContainer.firstChild) {
+        timeslotsContainer.removeChild(timeslotsContainer.firstChild)
+    }
+    var noDateSelectedText = document.createElement('div')
+    noDateSelectedText.setAttribute('class', 'no-date-selected-text')
+    noDateSelectedText.innerHTML = "Select a date to see available times"
+    timeslotsContainer.appendChild(noDateSelectedText)
+}
+
+function buildProfileCalendarNav() {
+
+    var profileCalendarBack = document.getElementById('profile-calendar-back')
+    var profileCalendarBackClone = profileCalendarBack.cloneNode(true)
+    profileCalendarBack.parentNode.replaceChild(profileCalendarBackClone, profileCalendarBack)
+    profileCalendarBackClone.addEventListener('click', () => {
+        if (month==0) {
+            year--
+            month = 11
+        } else {
+            month--
+        }
+        buildProfileCalendar(tutorsAvailability)
+    })
+
+    var profileCalendarForward = document.getElementById('profile-calendar-forward')
+    var profileCalendarForwardClone = profileCalendarForward.cloneNode(true)
+    profileCalendarForward.parentNode.replaceChild(profileCalendarForwardClone, profileCalendarForward)
+    profileCalendarForwardClone.addEventListener('click', () => {
+        if (month==11) {
+            year++
+            month = 0
+        } else {
+            month++
+        }
+        buildProfileCalendar(tutorsAvailability)
+    })
+}
