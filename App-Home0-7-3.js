@@ -50,6 +50,7 @@ function loadCoreProperties(ID) {
 
         loadHeader()
         loadHomePage()
+	loadHomeNavigation()
     })
 }
 
@@ -74,18 +75,16 @@ function loadHeader() {
 
 
 
-
-
-const adrianProfile = document.getElementById('adrian-profile')
-adrianProfile.setAttribute('onClick', 'getTutorData("wR441Js4g6RM3u8tsDe3kmujsUs2")')
-
 const tutorProfile = document.getElementById('tutor-profile')
-const homeBack = document.getElementById('home-back')
+function loadHomeNavigation() {
+	const homeBack = document.getElementById('home-back')
+	
+	homeBack.addEventListener('click', () => {
+	    tutorProfile.style.display = 'none'
+	    document.getElementById('home-page').style.display = 'flex'
+	})
+}
 
-homeBack.addEventListener('click', () => {
-    tutorProfile.style.display = 'none'
-    document.getElementById('home-page').style.display = 'flex'
-})
 
 function getTutorData(tutorID) {
     tutorProfile.style.display = 'flex'
