@@ -311,13 +311,13 @@ function pinMessagesTutor(tutorID, isPinned) {
     if(isPinned) {
         userDB.collection('userTest').doc(globalUserId).update(pinDict).then( () => {
             pinTutorButton.setAttribute('class', 'icon-button-inactive')
-            pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${false})`)
+            pinTutorButton.setAttribute('onClick', `pinMessagesTutor("${tutorID}",${false})`)
         })
 
     } else {
         userDB.collection('userTest').doc(globalUserId).update(pinDict).then( () => {
             pinTutorButton.setAttribute('class', 'icon-button-active')
-            pinTutorButton.setAttribute('onClick', `pinTutor("${tutorID}",${true})`)
+            pinTutorButton.setAttribute('onClick', `pinMessagesTutor("${tutorID}",${true})`)
         })
     }
 }
