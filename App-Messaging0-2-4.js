@@ -268,7 +268,7 @@ async function buildMessagesProfile(userID, userData) {
     let likeTutorButton = document.getElementById('like-tutor-button')
     let pinTutorButton = document.getElementById('pin-tutor-button')
     let tutorInfoDiv = document.getElementById('tutor-info-div')
-    let bookSessionButton = document.getElementById('book-session-button')
+    let bookSessionButton = document.getElementById('messages-book-session')
 
     bookSessionButton.style.display = 'none'
     tutorInfoDiv.style.display = 'none'
@@ -302,6 +302,11 @@ async function buildMessagesProfile(userID, userData) {
         bookSessionButtonClone = bookSessionButton.cloneNode(true)
         bookSessionButton.parentNode.replaceChild(bookSessionButtonClone, bookSessionButton)
         bookSessionButtonClone.addEventListener('click',  () => {
+            let messagesPage = document.getElementById('messages-page')
+            let sessionBookingPage = document.getElementById('session-booking-page')
+
+            messagesPage.style.display = 'none'
+            sessionBookingPage.style.display = 'flex'
             loadSessionBooking(userID, userData)
         })
 
