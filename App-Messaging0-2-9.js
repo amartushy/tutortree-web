@@ -23,7 +23,7 @@ var messagesArea = document.getElementById('messages-area')
 var messageField = document.getElementById('message-field')
 var sendMessage = document.getElementById('send-message')
 var messagesModal = document.getElementById('messages-modal')
-var messagesRight = document.getElementById('messages-right')
+var messagesProfileContainer = document.getElementById('messages-profile-container')
 
 //Initialize elements on page load
 firebase.auth().onAuthStateChanged(function(user) {
@@ -59,6 +59,8 @@ function loadCoreProperties(ID) {
         loadMessagingNavigation()
     })
 }
+
+
 
 function loadConnections() {
 
@@ -171,7 +173,7 @@ function showHeader(studentID, studentData) {
 }
 
 function showMessages(connectionID) {
-    messagesRight.style.display = 'flex'
+    messagesProfileContainer.style.display = 'flex'
 
     userDB.collection('messages').doc(connectionID).collection('messages').onSnapshot(function(messages) {
         while(messagesArea.firstChild) {
