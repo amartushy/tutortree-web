@@ -1,6 +1,9 @@
 //Global Variables________________________________________________________________________________________
 var globalUserId,
-    coreName 
+    coreName,
+    corePinnedTutors,
+    coreLikedTutors
+
 
 var userDB = firebase.firestore()
 
@@ -20,7 +23,9 @@ firebase.auth().onAuthStateChanged(function(user) {
 		userDB.collection('userTest').doc(globalUserId).onSnapshot(function(doc) {
             var data = doc.data()
     
-            coreName = data.name 
+            coreName = data.name,
+            coreLikedTutors = data.likeTutors,
+            corePinnedTutors = data.pinnedTutors  
     
         })
 
