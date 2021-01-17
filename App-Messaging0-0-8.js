@@ -24,7 +24,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             var data = doc.data()
     
             coreName = data.name,
-            coreLikedTutors = data.likeTutors,
+            coreLikedTutors = data.likedTutors,
             corePinnedTutors = data.pinnedTutors  
     
         })
