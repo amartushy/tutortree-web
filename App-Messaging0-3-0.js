@@ -318,6 +318,9 @@ async function buildMessagesProfile(userID, userData) {
         loadMessagesIsTutorLiked(userID)
         loadMessagesIsTutorPinned(userID)
     }
+
+
+    $('#messages-profile-container').fadeIn()
 }
 
 function loadMessagesIsTutorPinned(tutorID) {
@@ -430,6 +433,4 @@ function loadMessagingNavigation() {
     })
 
     const profileBackButton = document.getElementById('profile-back-button')
-
-
 }
