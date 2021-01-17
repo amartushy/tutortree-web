@@ -1255,6 +1255,7 @@ function loadProfileAvailability(tutorID, tutorData) {
     buildProfileCalendarNav()
     buildProfileCalendar(tutorsAvailability)
 
+    setNavigation(true)
 }
 
 function loadCheckoutFromProfile(tutorData, tutorID) {
