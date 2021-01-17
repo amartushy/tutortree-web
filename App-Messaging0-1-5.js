@@ -267,8 +267,17 @@ async function buildMessagesProfile(userID, userData) {
         likeTutorButton.style.display = 'flex'
         pinTutorButton.style.display = 'flex'
 
-        profileButton.setAttribute('onClick', 'loadTutorProfile("' + userData+ '","' + userID + '")')
-        bookSessionButton.setAttribute('onClick', 'loadSessionBooking("' + userID + '","' + userData + '")')
+        profileButtonClone = profileButton.cloneNode(true)
+        profileButton.parentNode.replaceChild(profileButtonClone, profileButton)
+        profileButton.addEventListener('click', () => {
+            loadTutorProfile(userData, userId)
+        })
+
+        bookSessionButtonClone = bookSessionButton.cloneNode(true)
+        bookSessionButton.parentNode.replaceChild(bookSessionButtonClone, bookSessionButton)
+        bookSessionButtonClone.addEventListener('click',  () => {
+            loadSessionBooking(userID, userData)
+        })
 
         loadMessagesIsTutorLiked(userID)
         loadMessagesIsTutorPinned(userID)
