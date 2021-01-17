@@ -124,6 +124,7 @@ async function loadTutorProfile() {
 	loadProfileAvailability()
 	loadProfileReviews()
 }
+
 //Tab Navigation
 var tab1 = document.getElementById('tab-1')
 tab1.addEventListener('click', () => {
@@ -446,6 +447,64 @@ function loadTimeslots() {
         }
     }
 }
+
+function timeslotSelected(index) {
+    const timeslotsContainer = document.getElementById('timeslots-container')
+    const previousIndex = parseInt(index)-1
+    const nextIndex = parseInt(index)+1
+    var children = timeslotsContainer.childNodes
+
+    if(sessionIndices.length == 0) {
+        sessionIndices.push(parseInt(index))
+        sessionIndices.sort()
+        var timeslot = document.getElementById('timeslot-'+index)
+        timeslot.setAttribute('class', 'booking-timeslot-selected')
+
+        if(availabilityArray[nextIndex]==1) {
+            var nextTimeslot = document.getElementById('timeslot-'+nextIndex)
+            nextTimeslot.setAttribute('class', 'booking-timeslot-option')
+        }
+
+    } else if (index < sessionIndices[0] || index > sessionIndices[sessionIndices.length-1]+1 || sessionIndices.includes(parseInt(index))) {
+        for(i=0; i<children.length; i++) {
+            children[i].setAttribute('class', 'booking-timeslot')
+        }
+        sessionIndices = []
+        sessionIndices.push(parseInt(index))
+        sessionIndices.sort()
+        var timeslot = document.getElementById('timeslot-'+index)
+        timeslot.setAttribute('class', 'booking-timeslot-selected')
+
+        if(availabilityArray[nextIndex]==1) {
+            var nextTimeslot = document.getElementById('timeslot-'+nextIndex)
+            nextTimeslot.setAttribute('class', 'booking-timeslot-option')
+        }
+    }  else if (availabilityArray[index]==1) {
+        sessionIndices.push(parseInt(index))
+        sessionIndices.sort()
+        var timeslot = document.getElementById('timeslot-'+index)
+        timeslot.setAttribute('class', 'booking-timeslot-selected')
+
+        if(availabilityArray[nextIndex]==1) {
+            var nextTimeslot = document.getElementById('timeslot-'+nextIndex)
+            nextTimeslot.setAttribute('class', 'booking-timeslot-option')
+        }
+    }
+
+    var sessionTimeText = document.getElementById('session-time-text')
+    if (sessionIndices.length>1) {
+        var lastSessionIndex = sessionIndices[sessionIndices.length-1]+1
+        console.log(lastSessionIndex)
+        sessionTimeText.innerHTML = timeOptions[sessionIndices[0]]+" to "+timeOptions[lastSessionIndex]
+    } else {
+        sessionTimeText.innerHTML = timeOptions[sessionIndices[0]]+" to "+timeOptions[sessionIndices[0]+1]
+    }
+
+    updateStartAndEnd()
+    updateCheckout()
+}
+
+
 
 function loadNotifications() {
     const usersEmail = document.getElementById('email-field')
