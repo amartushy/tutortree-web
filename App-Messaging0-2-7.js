@@ -1,3 +1,4 @@
+
 //Global Variables__________________________________________________________________
 var userDB = firebase.firestore()
 
@@ -271,6 +272,7 @@ async function buildMessagesProfile(userID, userData) {
     let bookSessionButton = document.getElementById('messages-book-session')
 
     bookSessionButton.style.display = 'none'
+    profileButton.style.display = 'none'
     tutorInfoDiv.style.display = 'none'
     likeTutorButton.style.display = 'none'
     pinTutorButton.style.display = 'none'
@@ -409,4 +411,23 @@ function likeMessagesTutor(tutorID, isLiked) {
             likeTutorButton.setAttribute('onClick', `likeMessagesTutor("${tutorID}",${true})`)
         })
     }
+}
+
+
+let tutorProfile = document.getElementById('tutor-profile')
+function loadMessagingNavigation() {
+    let messagesPage = document.getElementById('messages-page')
+    let sessionBookingPage = document.getElementById('session-booking-page')
+
+    let messagesBack = document.getElementById('messages-back')
+
+    messagesBack.addEventListener('click', () => {
+        messagesPage.style.display = 'flex'
+        tutorProfile.style.display = 'none'
+        sessionBookingPage.style.display = 'none'
+    })
+
+    const profileBackButton = document.getElementById('profile-back-button')
+
+
 }
