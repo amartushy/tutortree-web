@@ -1255,7 +1255,7 @@ function loadProfileAvailability(tutorID, tutorData) {
     buildProfileCalendarNav()
     buildProfileCalendar(tutorsAvailability)
 
-    tutorsPricePHH = data.pricePHH
+    tutorsPricePHH = tutorData.pricePHH
     courseVal = corePreferences.course
     schoolVal = corePreferences.school
     subjectVal = corePreferences.subject
@@ -1271,16 +1271,16 @@ function loadProfileAvailability(tutorID, tutorData) {
     const checkoutSessionFee = document.getElementById('checkout-session-fee')
     const checkoutBalance = document.getElementById('checkout-balance')
 
-    checkoutName.innerHTML = data.name.split(" ")[0] + "'s Availability"
-    checkoutHourly.innerHTML = data.pricePHH * 2
+    checkoutName.innerHTML = tutorData.name.split(" ")[0] + "'s Availability"
+    checkoutHourly.innerHTML = tutorData.pricePHH * 2
 
     bookingImageContainer.removeChild(bookingImageContainer.firstChild)
     var bookingImage = document.createElement('img')
     bookingImage.setAttribute('class', 'booking-profile-image')
-    bookingImage.src = data.profileImage
+    bookingImage.src = tutorData.profileImage
     bookingImageContainer.appendChild(bookingImage)
 
-    checkoutFullName.innerHTML = data.name
+    checkoutFullName.innerHTML = tutorData.name
     checkoutSubject.innerHTML = subjectVal
     checkoutCourse.innerHTML = courseVal
     checkoutSessionFee.innerHTML = '$' + sessionFee
