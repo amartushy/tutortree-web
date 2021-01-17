@@ -1298,10 +1298,12 @@ function setProfileAvailabilityInitialState() {
     var checkoutContinue = document.getElementById('profile-checkout-continue')
     var timeslotsContainer = document.getElementById('profile-timeslots-container')
     let profileCheckoutHourly = document.getElementById('profile-checkout-hourly')
+    let profileCheckoutPreTotal = document.getElementById('profile-checkout-pre-total')
     
     sessionDateHeader.innerHTML = 'Select a Date'
     sessionTimeText.innerHTML = 'Select a Time'
     profileCheckoutHourly.innerHTML = parseFloat(tutorsPricePHH * 2).toFixed(2)
+    profileCheckoutPreTotal = '0.00'
     checkoutContinue.style.display = 'none'
 
     while(timeslotsContainer.firstChild) {
@@ -1343,7 +1345,6 @@ function buildProfileCalendarNav() {
 }
 
 
-//Update here______________________________________________________________________________________
 function buildProfileCalendar(availability) {
     var calendarHeader = document.getElementById('profile-calendar-header')
     calendarHeader.innerHTML = months[month] + " " + year
