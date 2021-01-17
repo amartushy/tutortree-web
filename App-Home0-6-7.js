@@ -1247,10 +1247,9 @@ function buildReviewBlock(data, image) {
 
 
 
-//Availability
 function loadProfileAvailability(tutorID, tutorData) {
     
-    loadCheckoutFromProfile(tutorData)
+    loadCheckoutFromProfile(tutorData, tutorID)
     setProfileAvailabilityInitialState()
     loadAvailabilities(tutorData.availability)
     buildProfileCalendarNav()
@@ -1258,7 +1257,7 @@ function loadProfileAvailability(tutorID, tutorData) {
 
 }
 
-function loadCheckoutFromProfile(tutorData) {
+function loadCheckoutFromProfile(tutorData, tutorID) {
     tutorsPricePHH = tutorData.pricePHH
     courseVal = corePreferences.course
     schoolVal = corePreferences.school
