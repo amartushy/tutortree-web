@@ -417,6 +417,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
             createSessionInfoHeader(zoomString, sessionInfoLocationContainer)
             createSessionInfoText(sessionInfo.location, sessionInfoMeetingLink)
 
+            buildLocationDiv(sessionInfoLocationContainer, sessionID)
             if(sessionInfo.hasOwnProperty('password')) {
                 var sessionInfoPasswordContainer = document.createElement('div')
                 sessionInfoPasswordContainer.setAttribute('class', 'session-info-lower')
@@ -456,6 +457,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
         createSessionInfoText(data.phoneNumber, sessionInfoPhoneNumberContainer)
     })
 }
+
 
 function toggleSessionBlockBottom(sessionID) {
     var elementID = 'session-block-bottom-' + sessionID
