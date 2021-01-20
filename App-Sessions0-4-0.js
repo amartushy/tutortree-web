@@ -467,17 +467,21 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     var sessionInfoPhoneNumberContainer = document.createElement('div')
     sessionInfoPhoneNumberContainer.setAttribute('class', 'session-info-lower')
     sessionBlockBottomRight.appendChild(sessionInfoPhoneNumberContainer)
-    createSessionInfoHeader('Contact Phone Number',sessionInfoPhoneNumberContainer )
+    createSessionInfoHeader('Contact Phone Number', sessionInfoPhoneNumberContainer)
 
     await userDB.collection('userTest').doc(otherId).get().then(function(doc) {
         var data = doc.data()
-        var studentName = data.name
-        var studentPhoto = data.profileImage
+        let studentPhone = data.phoneNumber
 
-        sessionHeader.innerHTML = studentName
-        sessionInfoImage.src = studentPhoto
+        sessionHeader.innerHTML = data.name
+        sessionInfoImage.src = data.profileImage
         createSessionInfoText(data.email, sessionInfoEmailContainer)
-        createSessionInfoText(data.phoneNumber, sessionInfoPhoneNumberContainer)
+        if( data.phoneNumber != '' || data.phoneNumber == '123456789') {
+            createSessionInfoText(data.phoneNumber, sessionInfoPhoneNumberContainer)
+        } else {
+            let phoneText = `${getFirstName(data.name)} hasn't added a number yet`
+            createSessionInfoText(phoneText, sessionInfoPhoneNumberContainer)
+        }
     })
 }
 
