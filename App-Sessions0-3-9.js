@@ -469,16 +469,6 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     sessionBlockBottomRight.appendChild(sessionInfoPhoneNumberContainer)
     createSessionInfoHeader('Contact Phone Number',sessionInfoPhoneNumberContainer )
 
-    var sessionInfoNotesContainer = document.createElement('div')
-    sessionInfoNotesContainer.setAttribute('class', 'session-info-lower')
-    sessionBlockBottomRight.appendChild(sessionInfoNotesContainer)
-    createSessionInfoHeader('Notes', sessionInfoNotesContainer)
-    if(sessionInfo.hasOwnProperty('notes')) {
-        createSessionInfoText(sessionInfo.notes, sessionInfoNotesContainer)
-    } else {
-        createSessionInfoText('No notes yet', sessionInfoNotesContainer)
-    }
-
     await userDB.collection('userTest').doc(otherId).get().then(function(doc) {
         var data = doc.data()
         var studentName = data.name
