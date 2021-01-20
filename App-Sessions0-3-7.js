@@ -409,7 +409,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     let locationTextDiv = document.createElement('div')
     locationTextDiv.setAttribute('class', 'location-text-div')
     sessionInfoLocationContainer.appendChild(locationTextDiv)
-    
+
     createSessionInfoHeader('Location', locationTextDiv)
     let editLocationIcon = document.createElement('div')
     editLocationIcon.setAttribute('class', 'edit-location-icon')
@@ -452,8 +452,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
             createSessionInfoText(sessionInfo.location, sessionInfoLocationContainer)
         }
     } else {
-        createSessionInfoText('No location has been set', locationTextDiv)
-
+        createSessionInfoText('No location has been set', sessionInfoLocationContainer)
     }
     buildLocationDiv(sessionInfoLocationContainer, sessionID, sessionInfo)
 
