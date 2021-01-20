@@ -405,13 +405,30 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     var sessionInfoLocationContainer = document.createElement('div')
     sessionInfoLocationContainer.setAttribute('class', 'session-info-lower')
     sessionBlockBottomRight.appendChild(sessionInfoLocationContainer)
-    createSessionInfoHeader('Location', sessionInfoLocationContainer)
+
+    let locationTextDiv = document.createElement('div')
+    locationTextDiv.setAttribute('class', 'location-text-div')
+    sessionInfoLocationContainer.appendChild(locationTextDiv)
+    
+    createSessionInfoHeader('Location', locationTextDiv)
+    let editLocationIcon = document.createElement('div')
+    editLocationIcon.setAttribute('class', 'edit-location-icon')
+    editLocationIcon.innerHTML = ''
+    editLocationIcon.addEventListener('click', () => {
+        let locationContainer = document.getElementById(`add-location-container-${sessionID}`)
+        if (locationContainer.style.display == 'none') {
+            $(`#add-location-container-${sessionID}`).fadeIn()
+        } else {
+            $(`#add-location-container-${sessionID}`).fadeOut()
+        }
+    })
+    locationTextDiv.appendChild(editLocationIcon)
+
 
     if(sessionInfo.hasOwnProperty('location')) {
-        buildLocationDiv(sessionInfoLocationContainer, sessionID, sessionInfo)
 
         if(sessionInfo.location == 'zoom') {
-            
+            createSessionInfoText('This is a Zoom meeting', sessionInfoLocationContainer)
             var sessionInfoMeetingLink = document.createElement('div')
             sessionInfoMeetingLink.setAttribute('class', 'session-info-lower')
             sessionBlockBottomRight.appendChild(sessionInfoMeetingLink)
@@ -435,27 +452,10 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
             createSessionInfoText(sessionInfo.location, sessionInfoLocationContainer)
         }
     } else {
-        let locationTextDiv = document.createElement('div')
-        locationTextDiv.setAttribute('class', 'location-text-div')
-        sessionInfoLocationContainer.appendChild(locationTextDiv)
-
         createSessionInfoText('No location has been set', locationTextDiv)
 
-        let editLocationIcon = document.createElement('div')
-        editLocationIcon.setAttribute('class', 'edit-location-icon')
-        editLocationIcon.innerHTML = ''
-        editLocationIcon.addEventListener('click', () => {
-            let locationContainer = document.getElementById(`add-location-container-${sessionID}`)
-            if (locationContainer.style.display == 'none') {
-                $(`#add-location-container-${sessionID}`).fadeIn()
-            } else {
-                $(`#add-location-container-${sessionID}`).fadeOut()
-            }
-        })
-        locationTextDiv.appendChild(editLocationIcon)
     }
-
-    createSessionInfoText('This is a Zoom meeting', sessionInfoLocationContainer)
+    buildLocationDiv(sessionInfoLocationContainer, sessionID, sessionInfo)
 
     var sessionInfoPhoneNumberContainer = document.createElement('div')
     sessionInfoPhoneNumberContainer.setAttribute('class', 'session-info-lower')
