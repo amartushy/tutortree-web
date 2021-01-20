@@ -337,6 +337,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     var sessionBlockBottom = document.createElement('div')
     sessionBlockBottom.setAttribute('class', 'session-block-bottom')
     sessionBlockBottom.setAttribute('id', 'session-block-bottom-' + sessionID)
+    sessionBlockBottom.style.display = 'none'
     sessionBlock.appendChild(sessionBlockBottom)
 
     var sessionBlockBottomLeft = document.createElement('div')
@@ -429,8 +430,26 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
             createSessionInfoText(sessionInfo.location, sessionInfoLocationContainer)
         }
     } else {
-        createSessionInfoText('No location has been set', sessionInfoLocationContainer)
+        let locationTextDiv = document.createElement('div')
+        locationTextDiv.setAttribute('class', 'location-text-div')
+        sessionInfoLocationContainer.appendChild(locationTextDiv)
+
+        createSessionInfoText('No location has been set', locationTextDiv)
+
+        let editLocationIcon = document.createElement('div')
+        editLocationIcon.setAttribute('class', 'edit-location-icon')
+        editLocationIcon.innerHTML = ''
+        editLocationIcon.addEventListener('click', () => {
+            let locationContainer = document.getElementById(`add-location-container-${sessionID}`)
+            if (locationContainer.style.display == 'none') {
+                $(`#add-location-container-${sessionID}`).fadeIn()
+            } else {
+                $(`#add-location-container-${sessionID}`).fadeOut()
+            }
+        })
+        locationTextDiv.appendChild(editLocationIcon)
     }
+    buildLocationDiv(sessionInfoLocationContainer, sessionID)
 
     var sessionInfoPhoneNumberContainer = document.createElement('div')
     sessionInfoPhoneNumberContainer.setAttribute('class', 'session-info-lower')
