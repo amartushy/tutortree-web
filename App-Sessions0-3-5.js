@@ -411,7 +411,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
         buildLocationDiv(sessionInfoLocationContainer, sessionID, sessionInfo)
 
         if(sessionInfo.location == 'zoom') {
-            createSessionInfoText('This is a Zoom meeting', sessionInfoLocationContainer)
+            
             var sessionInfoMeetingLink = document.createElement('div')
             sessionInfoMeetingLink.setAttribute('class', 'session-info-lower')
             sessionBlockBottomRight.appendChild(sessionInfoMeetingLink)
@@ -454,6 +454,8 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
         })
         locationTextDiv.appendChild(editLocationIcon)
     }
+
+    createSessionInfoText('This is a Zoom meeting', sessionInfoLocationContainer)
 
     var sessionInfoPhoneNumberContainer = document.createElement('div')
     sessionInfoPhoneNumberContainer.setAttribute('class', 'session-info-lower')
