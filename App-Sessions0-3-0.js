@@ -1106,3 +1106,120 @@ function processReschedule(sessionID, sessionInfo) {
         })
     })
 }
+
+
+
+
+//Cancel Session_______________________________________________________________________________________________________________________________
+function cancelSession(sessionID, sessionInfo) {
+    sessionsManagementPage.style.display = 'flex'
+    confirmSessionScreen.style.display = 'none'
+    rescheduleSessionScreen.style.display = 'none'
+    cancelSessionScreen.style.display = 'flex'
+    completionScreen.style.display = 'none'
+
+    var cancelSessionButton = document.getElementById('cancel-session-button')
+    cancelSessionClone = cancelSessionButton.cloneNode(true)
+    cancelSessionButton.parentNode.replaceChild(cancelSessionClone, cancelSessionButton)
+    cancelSessionClone.addEventListener('click', () => {
+        $('#cancel-session-screen').fadeOut(400, () => {
+            $('#completion-screen').fadeIn()
+            processCancellation(sessionID, sessionInfo)
+        })
+    })
+}
+
+function processCancellation(sessionID, sessionInfo) {
+    var cancellationField = document.getElementById('cancellation-field')
+    var cancellationReason = cancellationField.value
+
+    var sessionDate = document.getElementById('session-date-header').innerHTML
+    var sessionTime = document.getElementById('session-time-text').innerHTML
+    var promises = []
+    var depositTotal = parseFloat(sessionInfo.tutorsFee) * 0.85
+
+    //if session is confirmed
+    if(sessionInfo.status == 'confirmed') {
+        //deduct balance
+        var balancePromise = userDB.collection('userTest').doc(globalUserId).update({
+            'currentBalance' : coreBalance - parseFloat(depositTotal)
+        }).then(function() {
+            console.log('Balance updated')
+        }).catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
+
+        promises.push(balancePromise)
+    }
+
+    //update student sessions
+    var studentPromise = userDB.collection('userTest').doc(sessionInfo.student).collection('sessions').doc(sessionID).update({'status' : 'cancelled'}).then( ()=> {
+        console.log('Student doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    //update tutor sessions
+    var tutorPromise = userDB.collection('userTest').doc(sessionInfo.tutor).collection('sessions').doc(sessionID).update({'status' : 'cancelled'}).then( ()=> {
+        console.log('Tutor doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    //update global sessions
+    var globalPromise = userDB.collection('globalSessions').doc(sessionID).update({'status' : 'cancelled'}).then( ()=> {
+        console.log('Global doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    //email support@
+    var cancellationTitle = 'Tutor Cancelled Session'
+    sendEmailTo('support@tutortree.com', cancellationTitle, cancellationReason)
+
+    //notify student
+    var notificationPromise = userDB.collection('userTest').doc(sessionInfo.student).get().then(function(doc) {
+        var userData = doc.data()
+
+        var isSMSOn = userData.isSMSOn
+        var isPushOn = userData.isPushOn
+        var isEmailOn = userData.isEmailOn
+
+        if(isSMSOn) {
+            var phoneNumber = userData.phoneNumber
+            var smsMessage = coreName + ' has cancelled your session for ' + sessionDate+' from '+sessionTime
+            sendSMSTo(phoneNumber, smsMessage)
+        }
+
+        if(isPushOn) {
+            var token = userData.pushToken
+            var pushTitle = "Session Confirmed"
+            var pushMessage = coreName + ' has cancelled your session for ' + sessionDate+' from '+sessionTime
+            sendPushTo(token, pushTitle, pushMessage)
+        }
+
+        if(isEmailOn) {
+            var email = userData.email 
+            var emailTitle = 'Session Confirmed'
+            var emailMessage = coreName + ' has cancelled your session for ' + sessionDate+' from '+sessionTime
+            sendEmailTo(email, emailTitle, emailMessage)
+        }
+        console.log('Notifications sent')
+    })
+
+    //refund student
+    sendRefund(sessionID)
+
+    promises.push(studentPromise, tutorPromise, globalPromise, notificationPromise)
+
+    Promise.all(promises).then(() => {
+        console.log('All documents written')
+        isNewEvents = false
+        loadSessions()
+        $("#processing-text").hide(() => {
+            document.getElementById('finished-text').innerHTML = 'This session has been cancelled and your student has been refunded.'
+            $('#confirmation-text').fadeIn()
+            $('#confirmation-check').fadeIn()
+        })
+    })
+}
