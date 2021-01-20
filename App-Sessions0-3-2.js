@@ -409,16 +409,16 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
 
     if(sessionInfo.hasOwnProperty('location')) {
 
-        if(sessionInfo.location == 'Zoom') {
+        if(sessionInfo.location == 'zoom') {
             createSessionInfoText('This is a Zoom meeting', sessionInfoLocationContainer)
             var sessionInfoMeetingLink = document.createElement('div')
             sessionInfoMeetingLink.setAttribute('class', 'session-info-lower')
             sessionBlockBottomRight.appendChild(sessionInfoMeetingLink)
             const zoomString = 'Attendees can join this session from a computer, tablet or smartphone'
             createSessionInfoHeader(zoomString, sessionInfoLocationContainer)
-            createSessionInfoText(sessionInfo.location, sessionInfoMeetingLink)
+            createSessionInfoText(sessionInfo.zoomLink, sessionInfoMeetingLink)
 
-            buildLocationDiv(sessionInfoLocationContainer, sessionID)
+            buildLocationDiv(sessionInfoLocationContainer, sessionID, sessionInfo)
             if(sessionInfo.hasOwnProperty('password')) {
                 var sessionInfoPasswordContainer = document.createElement('div')
                 sessionInfoPasswordContainer.setAttribute('class', 'session-info-lower')
