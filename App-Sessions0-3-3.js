@@ -418,7 +418,6 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
             createSessionInfoHeader(zoomString, sessionInfoLocationContainer)
             createSessionInfoText(sessionInfo.zoomLink, sessionInfoMeetingLink)
 
-            buildLocationDiv(sessionInfoLocationContainer, sessionID, sessionInfo)
             if(sessionInfo.hasOwnProperty('password')) {
                 var sessionInfoPasswordContainer = document.createElement('div')
                 sessionInfoPasswordContainer.setAttribute('class', 'session-info-lower')
@@ -449,7 +448,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
         })
         locationTextDiv.appendChild(editLocationIcon)
     }
-    buildLocationDiv(sessionInfoLocationContainer, sessionID)
+    buildLocationDiv(sessionInfoLocationContainer, sessionID, sessionInfo)
 
     var sessionInfoPhoneNumberContainer = document.createElement('div')
     sessionInfoPhoneNumberContainer.setAttribute('class', 'session-info-lower')
