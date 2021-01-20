@@ -408,15 +408,21 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     createSessionInfoHeader('Location', sessionInfoLocationContainer)
 
     if(sessionInfo.hasOwnProperty('location')) {
+        buildLocationDiv(sessionInfoLocationContainer, sessionID, sessionInfo)
 
         if(sessionInfo.location == 'zoom') {
             createSessionInfoText('This is a Zoom meeting', sessionInfoLocationContainer)
             var sessionInfoMeetingLink = document.createElement('div')
             sessionInfoMeetingLink.setAttribute('class', 'session-info-lower')
             sessionBlockBottomRight.appendChild(sessionInfoMeetingLink)
+
+            let zoomLinkContainer = document.createElement('div')
+            zoomLinkContainer.setAttribute('class', 'session-info-lower')
+            sessionBlockBottomRight.appendChild(zoomLinkContainer)
+
             const zoomString = 'Attendees can join this session from a computer, tablet or smartphone'
-            createSessionInfoHeader(zoomString, sessionInfoLocationContainer)
-            createSessionInfoText(sessionInfo.zoomLink, sessionInfoMeetingLink)
+            createSessionInfoHeader(zoomString, zoomLinkContainer)
+            createSessionInfoText(sessionInfo.zoomLink, zoomLinkContainer)
 
             if(sessionInfo.hasOwnProperty('password')) {
                 var sessionInfoPasswordContainer = document.createElement('div')
@@ -448,7 +454,6 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
         })
         locationTextDiv.appendChild(editLocationIcon)
     }
-    buildLocationDiv(sessionInfoLocationContainer, sessionID, sessionInfo)
 
     var sessionInfoPhoneNumberContainer = document.createElement('div')
     sessionInfoPhoneNumberContainer.setAttribute('class', 'session-info-lower')
