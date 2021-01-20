@@ -309,14 +309,22 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     sessionInfoBlock.setAttribute('class', 'session-info-block')
     sessionBlockTop.appendChild(sessionInfoBlock)
 
-    var sessionHeader = document.createElement('div')
-    sessionHeader.setAttribute('class', 'session-header')
-    sessionInfoBlock.appendChild(sessionHeader)
+    var sessionInfoImage = document.createElement('img')
+    sessionInfoImage.setAttribute('class', 'session-info-image')
+    sessionInfoBlock.appendChild(sessionInfoImage)
 
     var sessionInfoText = document.createElement('div')
-    sessionInfoText.setAttribute('class', 'session-info')
-    sessionInfoText.innerHTML = courseString
+    sessionInfoText.setAttribute('class', 'session-info-text')
     sessionInfoBlock.appendChild(sessionInfoText)
+
+    var sessionHeader = document.createElement('div')
+    sessionHeader.setAttribute('class', 'session-header')
+    sessionInfoText.appendChild(sessionHeader)
+
+    var sessionInfoCourse = document.createElement('div')
+    sessionInfoCourse.setAttribute('class', 'session-info')
+    sessionInfoCourse.innerHTML = courseString
+    sessionInfoText.appendChild(sessionInfoCourse)
 
     var detailsDiv = document.createElement('div')
     detailsDiv.setAttribute('class', 'details-div')
@@ -476,7 +484,8 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
         var studentName = data.name
         var studentPhoto = data.profileImage
 
-        sessionHeader.innerHTML = data.name
+        sessionHeader.innerHTML = studentName
+        sessionInfoImage.src = studentPhoto
         createSessionInfoText(data.email, sessionInfoEmailContainer)
         createSessionInfoText(data.phoneNumber, sessionInfoPhoneNumberContainer)
     })
