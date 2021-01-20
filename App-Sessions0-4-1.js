@@ -476,11 +476,11 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
         sessionHeader.innerHTML = data.name
         sessionInfoImage.src = data.profileImage
         createSessionInfoText(data.email, sessionInfoEmailContainer)
-        if( data.phoneNumber != '' || data.phoneNumber == '123456789') {
-            createSessionInfoText(data.phoneNumber, sessionInfoPhoneNumberContainer)
-        } else {
+        if( data.phoneNumber == '' || data.phoneNumber == '123456789') {
             let phoneText = `${getFirstName(data.name)} hasn't added a number yet`
             createSessionInfoText(phoneText, sessionInfoPhoneNumberContainer)
+        } else {
+            createSessionInfoText(data.phoneNumber, sessionInfoPhoneNumberContainer)
         }
     })
 }
