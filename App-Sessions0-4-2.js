@@ -485,6 +485,177 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     })
 }
 
+//Location Setting
+function buildLocationDiv(DOMElement, sessionID, sessionInfo) {
+    let addLocationContainer = document.createElement('div')
+    addLocationContainer.setAttribute('class', 'add-location-container')
+    addLocationContainer.setAttribute('id', `add-location-container-${sessionID}`)
+    addLocationContainer.style.display = 'none'
+    DOMElement.appendChild(addLocationContainer)
+
+    let sessionsButtonsDiv = document.createElement('div')
+    sessionsButtonsDiv.setAttribute('class', 'sessions-button-div')
+    addLocationContainer.appendChild(sessionsButtonsDiv)
+
+    let inPersonButton = document.createElement('div')
+    inPersonButton.setAttribute('class', 'sessions-button-inactive')
+    inPersonButton.setAttribute('id', `in-person-button-${sessionID}`)
+    inPersonButton.setAttribute('onClick', `updateLocationButtons(false, "${sessionID}")`)
+    inPersonButton.innerHTML = 'In-Person'
+    sessionsButtonsDiv.appendChild(inPersonButton)
+
+    let zoomButton = document.createElement('div')
+    zoomButton.setAttribute('class', 'sessions-button-inactive')
+    zoomButton.setAttribute('id', `zoom-button-${sessionID}`)
+    zoomButton.setAttribute('onClick', `updateLocationButtons(true, "${sessionID}")`)
+    zoomButton.innerHTML = 'Zoom'
+    sessionsButtonsDiv.appendChild(zoomButton)
+
+    //Zoom div
+    let sessionsZoomDiv = document.createElement('div')
+    sessionsZoomDiv.setAttribute('class', 'sessions-zoom-div')
+    sessionsZoomDiv.setAttribute('id', `zoom-div-${sessionID}`)
+    sessionsZoomDiv.style.display = 'none'
+    addLocationContainer.appendChild(sessionsZoomDiv)
+
+    createSessionInfoHeader('Zoom Link', sessionsZoomDiv)
+
+    let locationFieldContainer = document.createElement('div')
+    locationFieldContainer.setAttribute('class', 'location-field-container')
+    sessionsZoomDiv.appendChild(locationFieldContainer)
+
+    let locationField = document.createElement('input')
+    locationField.setAttribute('class', 'add-location-field')
+    locationField.setAttribute('id', `zoom-link-field-${sessionID}`)
+    locationField.addEventListener('focus', () => {
+        $(`#location-save-button-${sessionID}`).fadeIn()
+    })
+    locationField.placeholder = 'Paste link here..'
+    locationFieldContainer.appendChild(locationField)
+
+    let locationSaveButton = document.createElement('div')
+    locationSaveButton.setAttribute('class', 'sessions-button-active')
+    locationSaveButton.setAttribute('id', `location-save-button-${sessionID}`)
+    locationSaveButton.innerHTML = 'Save'
+    locationSaveButton.addEventListener('click', () => {
+        console.log(`this is the sessionID: ${sessionID}`)
+        updateSessionLocation(sessionID, sessionInfo)
+    })
+    locationSaveButton.style.display = 'none'
+    locationFieldContainer.appendChild(locationSaveButton)
+
+    //In Person Div
+    let sessionsInPersonDiv = document.createElement('div')
+    sessionsInPersonDiv.setAttribute('class', 'sessions-zoom-div')
+    sessionsInPersonDiv.setAttribute('id', `in-person-div-${sessionID}`)
+    sessionsInPersonDiv.style.display = 'none'
+    addLocationContainer.appendChild(sessionsInPersonDiv)
+
+    createSessionInfoHeader('Meeting Area', sessionsInPersonDiv)
+
+    let meetingLocationFieldContainer = document.createElement('div')
+    meetingLocationFieldContainer.setAttribute('class', 'location-field-container')
+    sessionsInPersonDiv.appendChild(meetingLocationFieldContainer)
+
+    let meetingLocationField = document.createElement('input')
+    meetingLocationField.setAttribute('class', 'add-location-field')
+    meetingLocationField.setAttribute('id', `in-person-link-field-${sessionID}`)
+    meetingLocationField.addEventListener('focus', () => {
+        $(`#meeting-location-save-button-${sessionID}`).fadeIn()
+    })
+    meetingLocationField.placeholder = 'Edit Location..'
+    meetingLocationFieldContainer.appendChild(meetingLocationField)
+
+    let meetingLocationSaveButton = document.createElement('div')
+    meetingLocationSaveButton.setAttribute('class', 'sessions-button-active')
+    meetingLocationSaveButton.setAttribute('id', `meeting-location-save-button-${sessionID}`)
+    meetingLocationSaveButton.innerHTML = 'Save'
+    meetingLocationSaveButton.addEventListener('click', () => {
+        console.log(`this is the sessionID: ${sessionID}`)
+        updateSessionLocation(sessionID, sessionInfo)
+    })
+    meetingLocationSaveButton.style.display = 'none'
+    meetingLocationFieldContainer.appendChild(meetingLocationSaveButton)
+}
+
+
+var isZoomSession = false
+function updateLocationButtons(isZoom, sessionID) {
+    isZoomSession = isZoom
+    console.log(isZoomSession)
+
+    let inPersonButton = document.getElementById(`in-person-button-${sessionID}`)
+    let zoomButton = document.getElementById(`zoom-button-${sessionID}`)
+
+    if(isZoom) {
+        console.log('zoom is true')
+        inPersonButton.setAttribute('class', 'sessions-button-inactive')
+        zoomButton.setAttribute('class', 'sessions-button-active')
+
+        document.getElementById(`in-person-div-${sessionID}`).style.display = 'none'
+        $(`#zoom-div-${sessionID}`).fadeIn()
+    } else {
+        console.log('zoom is false')
+        inPersonButton.setAttribute('class', 'sessions-button-active')
+        zoomButton.setAttribute('class', 'sessions-button-inactive')
+
+        document.getElementById(`zoom-div-${sessionID}`).style.display = 'none'
+        $(`#in-person-div-${sessionID}`).fadeIn()
+    }
+}
+
+
+function updateSessionLocation(sessionID, sessionInfo) {
+    console.log(sessionInfo)
+    let locationField = document.getElementById(`zoom-link-field-${sessionID}`)
+    let meetingLocationField = document.getElementById(`in-person-link-field-${sessionID}`)
+    var updateDict = {}
+    var promises = []
+
+    if (isZoomSession) {
+        let zoomDict = {
+            'location' : 'zoom',
+            'zoomLink' : locationField.value 
+        }
+        updateDict = zoomDict
+        console.log(updateDict)
+
+    } else {
+        let inPersonDict = {
+            'location' : meetingLocationField.value 
+        }
+        updateDict = inPersonDict
+        console.log(inPersonDict)
+    }
+
+    var studentPromise = userDB.collection('userTest').doc(sessionInfo.student).collection('sessions').doc(sessionID).update(updateDict).then( ()=> {
+        console.log('Student doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    var tutorPromise = userDB.collection('userTest').doc(sessionInfo.tutor).collection('sessions').doc(sessionID).update(updateDict).then( ()=> {
+        console.log('Tutor doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    var globalPromise = userDB.collection('globalSessions').doc(sessionID).update(updateDict).then( ()=> {
+        console.log('Global doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    promises.push(studentPromise, tutorPromise, globalPromise)
+
+    Promise.all(promises).then(() => {
+        console.log('All documents written')
+        $(`#add-location-container-${sessionID}`).fadeOut()
+
+        loadSessions()
+    })
+}
+
 
 function toggleSessionBlockBottom(sessionID) {
     var elementID = 'session-block-bottom-' + sessionID
@@ -1250,3 +1421,9 @@ function processCancellation(sessionID, sessionInfo) {
         })
     })
 }
+
+
+
+
+
+
