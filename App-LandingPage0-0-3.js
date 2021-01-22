@@ -1,4 +1,3 @@
-//Update Here________________________________________________________________________________________________________________
 let tutorImageDictionary = {
     'Abigail Cakebread' : 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-0.png?alt=media&token=13d172fd-950f-425c-9b92-404a64d48797',
     'Abigail Stevens' : 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-1.png?alt=media&token=e1d0cf6b-625b-477e-b50f-a9cf802742e7',
@@ -22,7 +21,7 @@ let tutorImageDictionary = {
     'Brandon Bourassa': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-19.png?alt=media&token=ed48ae18-489a-4c8a-90a3-bc5f6938f445',
     'Bryant': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-20.png?alt=media&token=31464f2e-aaa2-482d-8766-7c5e8cba99b3',
     'Caelan': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-21.png?alt=media&token=75b4b091-cd85-4026-8bb4-5cfc56760d6c',
-    'Caitlin Walsh': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-22.png?alt=media&token=7eb79c58-40c2-42b3-a841-bfc918e3f2de'
+    'Caitlin Walsh': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-22.png?alt=media&token=7eb79c58-40c2-42b3-a841-bfc918e3f2de',
     //^
     'Calvin Tran': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-23.png?alt=media&token=129e5bb6-9ca9-4e46-a571-17dcc4028b01',
     'Camille': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-24.png?alt=media&token=4abb13b4-e76f-46a2-a62c-0c279a8e2456',
