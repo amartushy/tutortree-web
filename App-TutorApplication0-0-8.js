@@ -614,35 +614,35 @@ var increaseHoursButton = document.getElementById('increase-hours-button')
 var editHoursAmount = document.getElementById('edit-hours-amount')
 
 reduceRateButton.addEventListener('click', () => {
-    userDB.collection('userTest').doc(globalUserId).update({
-        'pricePHH' : firebase.firestore.FieldValue.increment(-0.50)
-    }).then(function() {
-        editRateAmount.innerHTML = parseFloat(corePricePHH).toFixed(2)
-    })
+    let currentPricePHH = parseFloat( coreDict['pricePHH'] )
+    let newPricePHH = currentPricePHH - 0.5
+    coreDict[ coreDict['pricePHH'] ] = newPricePHH
+
+    editRateAmount.innerHTML = parseFloat( coreDict['pricePHH'] ).toFixed(2)
 })
 
 increaseRateButton.addEventListener('click', () => {
-    userDB.collection('userTest').doc(globalUserId).update({
-        'pricePHH' : firebase.firestore.FieldValue.increment(0.50)
-    }).then(function() {
-        editRateAmount.innerHTML = parseFloat(corePricePHH).toFixed(2)
-    })
+    let currentPricePHH = parseFloat( coreDict['pricePHH'] )
+    let newPricePHH = currentPricePHH + 0.5
+    coreDict[ coreDict['pricePHH'] ] = newPricePHH
+
+    editRateAmount.innerHTML = parseFloat( coreDict['pricePHH'] ).toFixed(2)
 })
 
 reduceHoursButton.addEventListener('click', () => {
-    userDB.collection('userTest').doc(globalUserId).update({
-        'maxHPW' : firebase.firestore.FieldValue.increment(-1)
-    }).then(function() {
-        editHoursAmount.innerHTML = coreMaxHours
-    })
+    let currentMaxHPW = parseFloat( coreDict['maxHPW'] )
+    let newMaxHPW = currentMaxHPW - 1
+    coreDict[ coreDict['maxHPW'] ] = newMaxHPW
+
+    editHoursAmount.innerHTML = coreDict['maxHPW']
 })
 
 increaseHoursButton.addEventListener('click', () => {
-    userDB.collection('userTest').doc(globalUserId).update({
-        'maxHPW' : firebase.firestore.FieldValue.increment(1)
-    }).then(function() {
-        editHoursAmount.innerHTML = coreMaxHours
-    })
+    let currentMaxHPW = parseFloat( coreDict['maxHPW'] )
+    let newMaxHPW = currentMaxHPW + 1
+    coreDict[ coreDict['maxHPW'] ] = newMaxHPW
+
+    editHoursAmount.innerHTML = coreDict['maxHPW']
 })
 
 var availability = []
