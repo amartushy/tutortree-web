@@ -54,6 +54,7 @@ coursesBack.addEventListener('click', () => {
 })
 coursesNext.addEventListener('click', () => {
     animateSectionsNext('courses', 'availability')
+    loadAvailability()
 })
 availabilityBack.addEventListener('click', () => {
     animateSectionsBack('availability', 'courses')
@@ -598,10 +599,6 @@ function updateSchoolClasses(school) {
         }
     })
 }
-
-
-
-
 
 
 
