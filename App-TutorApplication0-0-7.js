@@ -904,7 +904,6 @@ function updateAvailability(dayIndex, startIndex, endIndex, isRemoving) {
 }
 
 function updateEveryday(startIndex, endIndex) {
-    var updateDict = {}
 
     for (i = 0; i < 7; i++) {
         var availabilityArray = twosComplement(availability[i]).split("")
@@ -912,10 +911,12 @@ function updateEveryday(startIndex, endIndex) {
             availabilityArray[j] = "1"
         }
         var binaryString = '0000000000000000' + availabilityArray.join('')
-        updateDict[dayArray[i]] = parseInt( binaryString, 2)
+        const decimalAvailability = parseInt( binaryString, 2)
+
+        coreDict['availability'][dayArray[i]] = decimalAvailability
     }
 
-    coreDict['availability'] = updateDict
+    console.log(coreDict['availability'])
     $('#add-new-availability').fadeOut()
     loadAvailability()
 }
