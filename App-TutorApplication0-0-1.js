@@ -1,4 +1,3 @@
-
 //Navigation_____________________________________________________________________________________________________________
 //Progress Bar
 const progressBar = document.getElementById('progress-bar')
@@ -46,6 +45,7 @@ gradesBack.addEventListener('click', () => {
     animateSectionsBack('grades', 'school')
 })
 gradesNext.addEventListener('click', () => {
+    loadCourseOptions()
     animateSectionsNext('grades', 'courses')
 })
 coursesBack.addEventListener('click', () => {
@@ -202,4 +202,122 @@ var coreDict = {
 
     },
     'tutorApplicantStatus' : 'pending'
+}
+
+
+//Functions________________________________________________________________________________________________________
+let schoolDB = firebase.firestore().collection('schools')
+let userDB = firebase.firestore().collection('userTest')
+
+let allSchoolsContainer = document.getElementById('all-schools-container')
+let schoolNavBlock = document.getElementById('school-nav-block')
+let applicantSchoolText = document.getElementById('applicant-school-text')
+let allSchoolIDs = []
+
+var tutorsSchool,
+    tutorsSchoolTitle
+
+function loadInitialState() {
+    loadAllSchools()
+    loadGradeOptions()
+}
+
+loadInitialState()
+
+function loadAllSchools() {
+    schoolNavBlock.style.display = 'none'
+
+    while (allSchoolsContainer.firstChild) {
+        allSchoolsContainer.removeChild(allSchoolsContainer.firstChild)
+    }
+
+    schoolDB.get().then(function(schools) {
+        schools.forEach(function(doc) {
+            allSchoolIDs.push(doc.id)
+            var schoolData = doc.data()
+
+            var coursesSchoolButton = document.createElement('div')
+            coursesSchoolButton.setAttribute('class', 'courses-school-button')
+            coursesSchoolButton.setAttribute('id', `courses-school-button-${doc.id}`)
+            coursesSchoolButton.addEventListener('click', () => {
+                applicantSchoolText.innerHTML = schoolData.title 
+                tutorsSchool = doc.id
+                tutorsSchoolTitle = schoolData.title
+
+                updateSchoolClasses(doc.id)
+                $('#school-nav-block').fadeIn()
+            })
+            allSchoolsContainer.appendChild(coursesSchoolButton)
+
+            var coursesSchoolImage = document.createElement('img')
+            coursesSchoolImage.setAttribute('class', 'courses-school-image')
+            coursesSchoolImage.src = schoolData.icon 
+            coursesSchoolButton.appendChild(coursesSchoolImage)
+
+            var coursesSchoolText = document.createElement('div')
+            coursesSchoolText.setAttribute('class', 'courses-school-text')
+            coursesSchoolText.innerHTML = schoolData.title 
+            coursesSchoolButton.appendChild(coursesSchoolText)
+        })
+    })
+}
+
+function updateSchoolClasses(school) {
+    allSchoolIDs.forEach(function(id) {
+        var targetElement = document.getElementById(`courses-school-button-${id}`)
+
+        if(id == school) {
+            targetElement.setAttribute('class', 'courses-school-button-selected')
+        } else {
+            targetElement.setAttribute('class', 'courses-school-button')
+        }
+    })
+}
+
+function loadGradeOptions() {
+    gradesNext.style.display = 'none'
+
+    let middleSchoolButton = document.getElementById('middle-school-button')
+    let highSchoolButton = document.getElementById('high-school-button')
+    let collegeButton = document.getElementById('college-button')
+
+    middleSchoolButton.setAttribute('class', 'grade-option')
+    highSchoolButton.setAttribute('class', 'grade-option-middle')
+    collegeButton.setAttribute('class', 'grade-option')
+
+    middleSchoolButton.addEventListener('click', () => {
+        if(middleSchoolButton.classList.contains('grade-option-selected')) {
+            middleSchoolButton.setAttribute('class', 'grade-option')
+            delete coreDict['schoolPreferences']['middleSchool']
+        } else {
+            middleSchoolButton.setAttribute('class', 'grade-option-selected')
+            coreDict['schoolPreferences']['middleSchool'] = 'Middle School'
+        }
+        $('#grades-next').fadeIn() 
+        console.log(coreDict)
+    })
+
+    highSchoolButton.addEventListener('click', () => {
+        if(highSchoolButton.classList.contains('grade-option-middle-selected')) {
+            highSchoolButton.setAttribute('class', 'grade-option-middle')
+            delete coreDict['schoolPreferences']['highSchool']
+        } else {
+            highSchoolButton.setAttribute('class', 'grade-option-middle-selected')
+            coreDict['schoolPreferences']['highSchool'] = 'High School'
+        }
+        $('#grades-next').fadeIn()
+        console.log(coreDict)
+    })
+
+    collegeButton.addEventListener('click', () => {
+        if(collegeButton.classList.contains('grade-option-selected')) {
+            collegeButton.setAttribute('class', 'grade-option')
+            delete coreDict['schoolPreferences'][tutorsSchool]
+        } else {
+            collegeButton.setAttribute('class', 'grade-option-selected')
+            coreDict['schoolPreferences'][tutorsSchool] = tutorsSchoolTitle
+        }
+        $('#grades-next').fadeIn()
+        console.log(coreDict)
+    })
 }
