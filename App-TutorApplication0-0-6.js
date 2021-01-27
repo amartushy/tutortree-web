@@ -1,4 +1,3 @@
-
 //Navigation_____________________________________________________________________________________________________________
 //Progress Bar
 const progressBar = document.getElementById('progress-bar')
@@ -663,7 +662,7 @@ function loadAvailability() {
 
     availability = []
     availability.push( coreDict['availability']['Sunday'] )
-    availability.push( oreDict['availability']['Monday'] )
+    availability.push( coreDict['availability']['Monday'] )
     availability.push( coreDict['availability']['Tuesday'] )
     availability.push( coreDict['availability']['Wednesday'] )
     availability.push( coreDict['availability']['Thursday'] )
