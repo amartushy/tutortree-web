@@ -616,7 +616,7 @@ var editHoursAmount = document.getElementById('edit-hours-amount')
 reduceRateButton.addEventListener('click', () => {
     let currentPricePHH = parseFloat( coreDict['pricePHH'] )
     let newPricePHH = currentPricePHH - 0.5
-    coreDict[ coreDict['pricePHH'] ] = newPricePHH
+    coreDict['pricePHH'] = newPricePHH
 
     editRateAmount.innerHTML = parseFloat( coreDict['pricePHH'] ).toFixed(2)
 })
@@ -624,7 +624,7 @@ reduceRateButton.addEventListener('click', () => {
 increaseRateButton.addEventListener('click', () => {
     let currentPricePHH = parseFloat( coreDict['pricePHH'] )
     let newPricePHH = currentPricePHH + 0.5
-    coreDict[ coreDict['pricePHH'] ] = newPricePHH
+    coreDict['pricePHH'] = newPricePHH
 
     editRateAmount.innerHTML = parseFloat( coreDict['pricePHH'] ).toFixed(2)
 })
@@ -632,7 +632,7 @@ increaseRateButton.addEventListener('click', () => {
 reduceHoursButton.addEventListener('click', () => {
     let currentMaxHPW = parseFloat( coreDict['maxHPW'] )
     let newMaxHPW = currentMaxHPW - 1
-    coreDict[ coreDict['maxHPW'] ] = newMaxHPW
+    coreDict['maxHPW'] = newMaxHPW
 
     editHoursAmount.innerHTML = coreDict['maxHPW']
 })
@@ -640,7 +640,7 @@ reduceHoursButton.addEventListener('click', () => {
 increaseHoursButton.addEventListener('click', () => {
     let currentMaxHPW = parseFloat( coreDict['maxHPW'] )
     let newMaxHPW = currentMaxHPW + 1
-    coreDict[ coreDict['maxHPW'] ] = newMaxHPW
+    coreDict['maxHPW'] = newMaxHPW
 
     editHoursAmount.innerHTML = coreDict['maxHPW']
 })
