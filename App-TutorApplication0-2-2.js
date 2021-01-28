@@ -117,6 +117,7 @@ aboutBack.addEventListener('click', () => {
     animateSectionsBack('about', 'availability')
 })
 aboutNext.addEventListener('click', () => {
+    loadDocumentsScreen()
     updateAboutYouResponses()
     animateSectionsNext('about', 'verification')
 })
@@ -892,4 +893,87 @@ function updateEveryday(startIndex, endIndex) {
         $('#add-new-availability').fadeOut()
         loadAvailability()
     })
+}
+
+
+
+
+//About You Screen____________________________________________________________
+let applicationImageBlock = document.getElementById('application-image-block')
+let whyTutorField = document.getElementById('why-tutor-field')
+let groupsField = document.getElementById('groups-field')
+
+function loadAboutYou() {
+    loadProfileImage()
+    userDB.doc(globalUserId).collection('tutorApplication').doc('application').get().then(function(doc) {
+        let applicationData = doc.data()
+        let whyTutorData = applicationData['applicationFields']['whyTutor']
+        let groupsData = applicationData['applicationFields']['groups']
+
+        if(whyTutorData != "" ) {
+            whyTutorField.value = whyTutorData
+        }
+        if(groupsData != "") {
+            groupsField.value = groupsData
+        }
+    })
+}
+
+function loadProfileImage() {
+    while(applicationImageBlock.firstChild) {
+        applicationImageBlock.removeChild(applicationImageBlock.firstChild)
+    }
+
+    let applicationProfileImage = document.createElement('img')
+    applicationProfileImage.setAttribute('class', 'application-profile-image')
+    applicationProfileImage.src = coreDict['profileImage']
+    applicationImageBlock.appendChild(applicationProfileImage)
+
+    applicationProfileImage.addEventListener('click', function() {
+        openPhotoUploadDialog()
+    })
+
+    var newIcon = document.createElement('div')
+    newIcon.setAttribute('class', 'edit-photo-icon')
+    newIcon.innerHTML = ''
+    applicationProfileImage.appendChild(newIcon)
+}
+
+//Photo Upload
+var storageRef = firebase.storage().ref();
+var hiddenPhotoUploadButton = document.getElementById('hidden-photo-upload-button')
+
+function openPhotoUploadDialog() {
+	hiddenPhotoUploadButton.click();
+}
+
+hiddenPhotoUploadButton.addEventListener('change', uploadProfileImage);
+
+var selectedPhotoFile;
+function uploadProfileImage(e) {
+    selectedPhotoFile = e.target.files[0];
+    handlePhotoUpload()
+}
+
+async function handlePhotoUpload() {
+	const uploadTask = await storageRef.child(`images/${selectedPhotoFile.name}`).put(selectedPhotoFile);
+	uploadAndUpdateFirebasePhoto()
+}
+
+//final submit button and update firebase
+async function uploadAndUpdateFirebasePhoto() {
+	var phototFileURL = ""
+	await storageRef.child('/images/'+selectedPhotoFile.name).getDownloadURL().then(function(url) { phototFileURL = url.toString() })
+	userDB.doc(globalUserId).update( {"profileImage" : phototFileURL }).then(function() {
+        loadProfileImage()
+        loadHeader()
+    })
+}
+
+function updateAboutYouResponses() {
+    let updateDict =  {}
+    updateDict['applicationFields.groups'] = groupsField.value
+    updateDict['applicationFields.whyTutor'] = whyTutorField.value 
+
+    userDB.doc(globalUserId).collection('tutorApplication').doc('application').update(updateDict)
 }
