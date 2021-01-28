@@ -616,8 +616,8 @@ var timeOptions = ["6:00am", "6:30am", "7:00am", "7:30am", "8:00am","8:30am", "9
 var dayIDs = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']   
 
 function loadAvailability() {
-    editRateAmount.innerHTML = parseFloat(corePricePHH).toFixed(2)
-    editHoursAmount.innerHTML = coreMaxHours
+    editRateAmount.innerHTML = parseFloat(coreDict['pricePHH']).toFixed(2)
+    editHoursAmount.innerHTML = coreDict['maxHPW']
 
     addNewAvailability.style.display = 'none'
     isEveryDay = false
