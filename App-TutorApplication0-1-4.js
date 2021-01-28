@@ -132,17 +132,17 @@ scheduleNext.addEventListener('click', () => {
 })
 
 function animateSectionsNext(sectionOne, sectionTwo) {
-    $(`#${sectionOne}-section`).animate({right: '2000px'}, 500, function () {
+    $(`#${sectionOne}-section`).animate({right: '2000px'}, 400, function () {
         $(`#${sectionOne}-section`).fadeOut()
-        $(`#${sectionTwo}-section`).animate({left: '0'}, 500, function () {
+        $(`#${sectionTwo}-section`).animate({left: '0'}, 400, function () {
             $(`#${sectionTwo}-section`).fadeIn()
         })
     })
 }
 function animateSectionsBack(sectionOne, sectionTwo) {
-    $(`#${sectionOne}-section`).animate({left: '2000px'}, 500, function () {
+    $(`#${sectionOne}-section`).animate({left: '2000px'}, 400, function () {
         $(`#${sectionOne}-section`).fadeOut()
-        $(`#${sectionTwo}-section`).animate({right: '0'}, 500, function () {
+        $(`#${sectionTwo}-section`).animate({right: '0'}, 400, function () {
             $(`#${sectionTwo}-section`).fadeIn()
         })
     })
