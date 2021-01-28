@@ -129,3 +129,341 @@ let tutorImageDictionary = {
     'firyal bawab': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-125.png?alt=media&token=83a1ed03-a87d-4eb8-9b42-7288b7cfc638',
     'yuritzi ayala': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-126.png?alt=media&token=3a4454f8-65e7-47a2-8e9b-be52a7955a8d'
 }
+
+let treeImagesContainer = document.getElementById('tree-images-container')
+
+imageLoader()
+function imageLoader() {
+
+    var allTutorImages = new Image()
+
+    //set image list
+    var images = new Array()
+
+    
+    for( i = 1; i < 22; i++ ) {
+        let tutorImage = document.getElementById(`tree-image-${i}`)
+
+        let newImage = document.createElement('img')
+        newImage.src = getRandomImage()
+        newImage.setAttribute('class', `tree-image-${i}`)
+        tutorImage.parentNode.replaceChild(newImage, tutorImage)
+    }
+}
+
+function getRandomImage() {
+    var keys = Object.keys(tutorImageDictionary);
+    let randomPhoto = tutorImageDictionary[keys[ keys.length * Math.random() << 0]];
+    console.log(randomPhoto)
+    return randomPhoto
+}
+
+
+
+
+
+//Tutor Application Account Creation______________________________________________________________________________
+//Update Dictionaries
+var applicationDict = {
+    'applicationFields' : {
+        'courses' : '',
+        'firstName' : '',
+        'groups' : '',
+        'howHeard' : '',
+        'lastName' : '',
+        'major' : '',
+        'referredBy' : '',
+        'schoolName' : '',
+        'whyTutor' : '',
+        'year' : ''
+    },
+    'applicationPoints' : {
+        'groupsPoints' : 0,
+        'majorPoints' : 0,
+        'whyTutorPoints' : 0,
+        'yearPoints' : 0
+    },
+    'assessmentScore' : 0,
+    'completedInterview' : false,
+    'didRequestInterview' : false,
+    'didSubmitPreInterview' : false,
+    'email' : '',
+    'facultyFile' : 'No file',
+    'interviewScore' : 0,
+    'meghanNotes' : 'No notes yet',
+    'school' : 'Invalid School',
+    'timeSubmitted' : 0,
+    'transcriptFile' : 'No file',
+    'uploadedFaculty' : false,
+    'uploadedTranscript' : false
+}
+
+// Deprecated?
+// var assessmentDict = {
+
+// }
+
+var interviewDict = {
+    'interviewNotes' : {
+        'challengingNotes' : 'No notes yet',
+        'confidenceNotes' : 'No notes yet',
+        'explainNotes' : 'No notes yet',
+        'helpNotes' : 'No notes yet',
+        'onTimeNotes' : 'No notes yet',
+        'onlineNotes' : 'No notes yet',
+        'preparedNotes' : 'No notes yet',
+        'questionNotes' : 'No notes yet',
+        'situationNotes' : 'No notes yet',
+        'troubleNotes' : 'No notes yet'
+    },
+    'interviewScores' : {
+        'challengingScore' : 0,
+        'confidenceScore' : 0,
+        'explainScore' : 0,
+        'helpScore' : 0,
+        'onTimeScore' : 0,
+        'onlineScore' : 0,
+        'preparedScore' : 0,
+        'questionScore' : 0,
+        'situationScore' : 0,
+        'troubleScore' : 0
+    }
+}
+
+var coreDict = {
+    'agreedTOS' : true,
+    'availability' : {
+        'Sunday' : 0,
+        'Monday' : 0,
+        'Tuesday' : 0,
+        'Wednesday' : 0,
+        'Thursday' : 0,
+        'Friday' : 0,
+        'Saturday' : 0
+    },
+    'bio' : "This user hasn't added a bio yet",
+    'currentBalance' : 0,
+    'email' : '',
+    'hasBeenReferred' : false,
+    'isAdmin' : false,
+    'isDarkModeOn' : false,
+    'isEmailOn' : false,
+    "isPushOn" : false,
+    'isSMSOn' : false,
+    'isTutor' : false,
+    'major' : 'No major set',
+    'maxHPW' : 30,
+    'name' : '',
+    'phoneNumber' : 00000000000,
+    'preferences' : {
+        'grade' : '',
+        'school' : '',
+        'subject' : '',
+        'course' : ''
+    },
+    'pricePHH' : 10,
+    'profileImage' : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Logos%2FTTLogo600px.png?alt=media&token=bb275980-c106-497a-bc38-0b93d20907ca",
+    'pushToken' : '',
+    'referralCode' : '',
+    'school' : 'Invalid School',
+    'schoolPreferences' : { },
+    'tutorApplicantStatus' : 'pending'
+}
+
+
+let applicationNameField = document.getElementById('application-name-field')
+let applicationEmailField = document.getElementById('application-email-field')
+let applicationPasswordField = document.getElementById('application-password-field')
+let applicationConfirmField = document.getElementById('application-confirm-field')
+let applicationContinueButton = document.getElementById('application-continue-button')
+
+applicationContinueButton.addEventListener('click', () => {
+    if ( applicationNameField.value == '' ) {
+        showErrorMessage('Please enter your name')
+
+    } else if ( applicationEmailField.value == '' ) {
+        showErrorMessage('Please enter an email for your account')
+
+    } else if ( applicationPasswordField.value == '' ) {
+        showErrorMessage('Please enter a valid password')
+
+    } else if ( applicationConfirmField.value == '' ) {
+        showErrorMessage('Please confirm your password') 
+
+    } else if ( applicationPasswordField.value != applicationConfirmField.value ) {
+        showErrorMessage('Your passwords do not match')
+
+    } else {
+        createApplicantAccount()
+    }
+})
+
+function createApplicantAccount() {
+    var currentDateTime = new Date() / 1000
+
+    applicationDict['applicationFields']['firstName'] = getFirstName(applicationNameField.value)
+    applicationDict['applicationFields']['lastName'] = getLastName(applicationNameField.value)
+    applicationDict['timeSubmitted'] = currentDateTime
+    applicationDict['email'] = applicationEmailField.value
+    
+    coreDict['name'] = applicationNameField.value
+    coreDict['email'] = applicationEmailField.value
+    coreDict['referralCode'] = getFirstName(applicationNameField.value) + appendRandomLetters()
+
+    console.log(applicationDict)
+    console.log(coreDict)
+    // let adminMessage = `${applicationNameField.value} submitted their initial application, their email is ${applicationEmailField.value}`
+    // sendSMSTo('4582108156', adminMessage)
+}
+
+function appendRandomLetters() {
+    var result =''
+    var characters = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'
+    var charactersLength = characters.length
+    
+    for (i = 0; i < 3; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return result
+}
+
+function getLastName(fullName) {
+    let nameArray = fullName.split(" ")
+    let lastName = 'No Last Name'
+    if (nameArray.length > 1) {
+        nameArray.shift()
+        lastName = nameArray.join(" ")
+    }
+    return lastName
+}
+
+
+
+
+
+function loadHomeNav() {
+    let applyTutorButton = document.getElementById('apply-tutor-home')
+    applyTutorButton.addEventListener('click', () => {
+        loadApplicationInitialState()
+        $('#tutor-application-page').fadeIn()
+    })
+
+    let processingContinueButton = document.getElementById('processing-continue-button')
+    processingContinueButton.addEventListener('click',  () => {
+        location.href = "https://app-tutortree.webflow.io/tutor-application"
+    })
+
+    let tutorApplicationBack = document.getElementById('tutor-application-back')
+    tutorApplicationBack.addEventListener('click', () => {
+        $('#tutor-application-page').fadeOut()
+    })
+}
+loadHomeNav()
+
+//Tutor Application Account Creation______________________________________________________________________________
+//Update Dictionaries
+var applicationDict = {
+    'applicationFields' : {
+        'courses' : '',
+        'firstName' : '',
+        'groups' : '',
+        'howHeard' : '',
+        'lastName' : '',
+        'major' : '',
+        'referredBy' : '',
+        'schoolName' : '',
+        'whyTutor' : '',
+        'year' : ''
+    },
+    'applicationPoints' : {
+        'groupsPoints' : 0,
+        'majorPoints' : 0,
+        'whyTutorPoints' : 0,
+        'yearPoints' : 0
+    },
+    'assessmentScore' : 0,
+    'completedInterview' : false,
+    'didRequestInterview' : false,
+    'didSubmitPreInterview' : false,
+    'email' : '',
+    'facultyFile' : 'No file',
+    'interviewScore' : 0,
+    'meghanNotes' : 'No notes yet',
+    'school' : 'Invalid School',
+    'timeSubmitted' : 0,
+    'transcriptFile' : 'No file',
+    'uploadedFaculty' : false,
+    'uploadedTranscript' : false
+}
+
+// Deprecated?
+// var assessmentDict = {
+
+// }
+
+var interviewDict = {
+    'interviewNotes' : {
+        'challengingNotes' : 'No notes yet',
+        'confidenceNotes' : 'No notes yet',
+        'explainNotes' : 'No notes yet',
+        'helpNotes' : 'No notes yet',
+        'onTimeNotes' : 'No notes yet',
+        'onlineNotes' : 'No notes yet',
+        'preparedNotes' : 'No notes yet',
+        'questionNotes' : 'No notes yet',
+        'situationNotes' : 'No notes yet',
+        'troubleNotes' : 'No notes yet'
+    },
+    'interviewScores' : {
+        'challengingScore' : 0,
+        'confidenceScore' : 0,
+        'explainScore' : 0,
+        'helpScore' : 0,
+        'onTimeScore' : 0,
+        'onlineScore' : 0,
+        'preparedScore' : 0,
+        'questionScore' : 0,
+        'situationScore' : 0,
+        'troubleScore' : 0
+    }
+}
+
+var tutorApplicantCoreDict = {
+    'agreedTOS' : true,
+    'availability' : {
+        'Sunday' : 0,
+        'Monday' : 0,
+        'Tuesday' : 0,
+        'Wednesday' : 0,
+        'Thursday' : 0,
+        'Friday' : 0,
+        'Saturday' : 0
+    },
+    'bio' : "This user hasn't added a bio yet",
+    'currentBalance' : 0,
+    'email' : '',
+    'hasBeenReferred' : false,
+    'isAdmin' : false,
+    'isDarkModeOn' : false,
+    'isEmailOn' : false,
+    "isPushOn" : false,
+    'isSMSOn' : false,
+    'isTutor' : false,
+    'major' : 'No major set',
+    'maxHPW' : 30,
+    'name' : '',
+    'phoneNumber' : 00000000000,
+    'preferences' : {
+        'grade' : '',
+        'school' : '',
+        'subject' : '',
+        'course' : ''
+    },
+    'pricePHH' : 10,
+    'profileImage' : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Logos%2FTTLogo600px.png?alt=media&token=bb275980-c106-497a-bc38-0b93d20907ca",
+    'pushToken' : '',
+    'referralCode' : '',
+    'school' : 'Invalid School',
+    'schoolPreferences' : { },
+    'tutorApplicantStatus' : 'pending'
+}
