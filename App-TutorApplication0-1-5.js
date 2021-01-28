@@ -25,7 +25,6 @@ function loadCoreProperties(ID) {
 
         loadHeader()
         loadAllSchools()
-        loadGradeOptions()
     })
 }
 
@@ -227,50 +226,48 @@ function updateSchoolClasses(school) {
 
 
 //Grade Options Screen
-function loadGradeOptions() {
-    gradesNext.style.display = 'none'
+gradesNext.style.display = 'none'
 
-    let middleSchoolButton = document.getElementById('middle-school-button')
-    let highSchoolButton = document.getElementById('high-school-button')
-    let collegeButton = document.getElementById('college-button')
+let middleSchoolButton = document.getElementById('middle-school-button')
+let highSchoolButton = document.getElementById('high-school-button')
+let collegeButton = document.getElementById('college-button')
 
-    middleSchoolButton.setAttribute('class', 'grade-option')
-    highSchoolButton.setAttribute('class', 'grade-option-middle')
-    collegeButton.setAttribute('class', 'grade-option')
+middleSchoolButton.setAttribute('class', 'grade-option')
+highSchoolButton.setAttribute('class', 'grade-option-middle')
+collegeButton.setAttribute('class', 'grade-option')
 
-    middleSchoolButton.addEventListener('click', () => {
-        if(middleSchoolButton.classList.contains('grade-option-selected')) {
-            middleSchoolButton.setAttribute('class', 'grade-option')
-            delete applicantSchoolPreferences['middleSchool']
-        } else {
-            middleSchoolButton.setAttribute('class', 'grade-option-selected')
-            applicantSchoolPreferences['middleSchool'] = 'Middle School'
-        }
-        $('#grades-next').fadeIn() 
-    })
+middleSchoolButton.addEventListener('click', () => {
+    if(middleSchoolButton.classList.contains('grade-option-selected')) {
+        middleSchoolButton.setAttribute('class', 'grade-option')
+        delete applicantSchoolPreferences['middleSchool']
+    } else {
+        middleSchoolButton.setAttribute('class', 'grade-option-selected')
+        applicantSchoolPreferences['middleSchool'] = 'Middle School'
+    }
+    $('#grades-next').fadeIn() 
+})
 
-    highSchoolButton.addEventListener('click', () => {
-        if(highSchoolButton.classList.contains('grade-option-middle-selected')) {
-            highSchoolButton.setAttribute('class', 'grade-option-middle')
-            delete applicantSchoolPreferences['highSchool']
-        } else {
-            highSchoolButton.setAttribute('class', 'grade-option-middle-selected')
-            applicantSchoolPreferences['highSchool'] = 'High School'
-        }
-        $('#grades-next').fadeIn()
-    })
+highSchoolButton.addEventListener('click', () => {
+    if(highSchoolButton.classList.contains('grade-option-middle-selected')) {
+        highSchoolButton.setAttribute('class', 'grade-option-middle')
+        delete applicantSchoolPreferences['highSchool']
+    } else {
+        highSchoolButton.setAttribute('class', 'grade-option-middle-selected')
+        applicantSchoolPreferences['highSchool'] = 'High School'
+    }
+    $('#grades-next').fadeIn()
+})
 
-    collegeButton.addEventListener('click', () => {
-        if(collegeButton.classList.contains('grade-option-selected')) {
-            collegeButton.setAttribute('class', 'grade-option')
-            delete applicantSchoolPreferences[tutorsSchool]
-        } else {
-            collegeButton.setAttribute('class', 'grade-option-selected')
-            applicantSchoolPreferences[tutorsSchool] = tutorsSchoolTitle
-        }
-        $('#grades-next').fadeIn()
-    })
-}
+collegeButton.addEventListener('click', () => {
+    if(collegeButton.classList.contains('grade-option-selected')) {
+        collegeButton.setAttribute('class', 'grade-option')
+        delete applicantSchoolPreferences[tutorsSchool]
+    } else {
+        collegeButton.setAttribute('class', 'grade-option-selected')
+        applicantSchoolPreferences[tutorsSchool] = tutorsSchoolTitle
+    }
+    $('#grades-next').fadeIn()
+})
 
 let applicantSchoolPreferences = {}
 function updateApplicantGradeOptions() {
