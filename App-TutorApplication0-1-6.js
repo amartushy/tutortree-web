@@ -277,3 +277,220 @@ function updateApplicantGradeOptions() {
         loadCourseOptions()
     })
 }
+
+
+
+//Courses Screen__________________________________________________________________________________________________________________________
+var addCollegeButton = document.getElementById('add-college-button')
+var chooseCoursesArea = document.getElementById('choose-courses-area')
+
+function loadCourseOptions() {
+    while(chooseCoursesArea.firstChild) {
+        chooseCoursesArea.removeChild(chooseCoursesArea.firstChild)
+    }
+    loadNewSchools()
+
+    for (var schoolID in coreDict['schoolPreferences']) {
+        if(coreDict['schoolPreferences'].hasOwnProperty(schoolID)) {
+
+            if(schoolID != 'middleSchool' &&  schoolID != 'highSchool') {
+                schoolDB.doc(schoolID).get().then(function(school) {
+                    buildSchool(school.id, school.data())
+                })
+            }
+        }
+    }
+}
+
+function buildSchool(school, schoolData) {
+    var collegeContainer = document.createElement('div')
+    collegeContainer.setAttribute('class', 'college-container')
+    chooseCoursesArea.appendChild(collegeContainer)
+
+    var schoolBlock = document.createElement('div')
+    schoolBlock.setAttribute('class', 'school-block')
+    schoolBlock.addEventListener('click', () => {
+        var courseContainer = document.getElementById(`courses-container-${school}`)
+        if(courseContainer.style.display == 'none') {
+            $(`#courses-container-${school}`).fadeIn()
+        } else {
+            $(`#courses-container-${school}`).fadeOut()
+        }
+    })
+    collegeContainer.appendChild(schoolBlock)
+
+    var schoolHeader = document.createElement('div')
+    schoolHeader.setAttribute('class', 'filter-header')
+    schoolBlock.appendChild(schoolHeader)
+
+    var schoolHeaderLogoContainer = document.createElement('div')
+    schoolHeaderLogoContainer.setAttribute('class', 'school-header-logo-container')
+    schoolHeader.appendChild(schoolHeaderLogoContainer)
+
+    var schoolHeaderLogo = document.createElement('img')
+    schoolHeaderLogo.setAttribute('class', 'school-header-logo')
+    schoolHeaderLogo.src = schoolData.icon 
+    schoolHeaderLogoContainer.appendChild(schoolHeaderLogo)
+
+    var schoolHeaderText = document.createElement('div')
+    schoolHeaderText.setAttribute('class', 'school-header-text')
+    schoolHeaderText.innerHTML = schoolData.title
+    schoolHeaderLogoContainer.appendChild(schoolHeaderText)
+
+    var schoolChevron = document.createElement('div')
+    schoolChevron.setAttribute('class', 'filter-chevron')
+    schoolChevron.innerHTML = ''
+    schoolHeader.appendChild(schoolChevron)
+
+    var coursesContainer = document.createElement('div')
+    coursesContainer.setAttribute('class', 'courses-container')
+    coursesContainer.setAttribute('id', `courses-container-${school}`)
+    collegeContainer.appendChild(coursesContainer)
+    coursesContainer.style.display = 'none'
+
+    schoolDB.doc(school).collection('courses').onSnapshot(function(subject) {
+        subject.forEach(function(doc) {
+            buildSubjectBlock(school, doc.id, doc.data())
+        })
+    })
+}
+
+
+function buildSubjectBlock(school, subject, courseDict) {
+    var subjectID = subject.replace(/\s+/g, '');
+
+    var courseContainer = document.getElementById(`courses-container-${school}`)
+
+    var courseDiv = document.createElement('div')
+    courseDiv.setAttribute('class', 'course-div')
+    courseContainer.appendChild(courseDiv)
+
+    var courseHeader = document.createElement('div')
+    courseHeader.setAttribute('class', 'course-header')
+    courseHeader.addEventListener('click', () => {
+        var courseContainer = document.getElementById(`course-container-${subjectID}`)
+        if(courseContainer.style.display == 'none') {
+            $(`#course-container-${subjectID}`).fadeIn()
+        } else {
+            $(`#course-container-${subjectID}`).fadeOut()
+        }
+    })
+    courseDiv.appendChild(courseHeader)
+
+    var courseHeaderText = document.createElement('div')
+    courseHeaderText.setAttribute('class', 'course-header-text')
+    courseHeaderText.innerHTML = subject
+    courseHeader.appendChild(courseHeaderText)
+
+    var courseChevron = document.createElement('div')
+    courseChevron.setAttribute('class', 'course-chevron')
+    courseChevron.innerHTML = ''
+    courseHeader.appendChild(courseChevron)
+
+    var courseBlockContainer = document.createElement('course-block-container')
+    courseBlockContainer.setAttribute('class', 'course-block-container')
+    courseBlockContainer.setAttribute('id', `course-container-${subjectID}`)
+    courseBlockContainer.style.display = 'none'
+    courseDiv.appendChild(courseBlockContainer)
+
+    for ( var course in courseDict ) {
+        if (courseDict.hasOwnProperty(course)) {
+            var courseBlock = document.createElement('div')
+            courseBlock.setAttribute('class', 'course-block')
+            courseBlock.setAttribute('id', `${school}-${subject}-${course}`)
+            courseBlock.setAttribute('onClick', 'updateTutorsCourses("' +school+ '","'+ subject + '","' + course  + '")')
+
+            courseBlock.innerHTML = course 
+            courseBlockContainer.appendChild(courseBlock)
+        }
+    }
+}
+
+var applicantsCourses = {}
+function updateTutorsCourses(school, subject, course) {
+
+    var courseBlock = document.getElementById(`${school}-${subject}-${course}`)
+    
+    if( applicantsCourses.hasOwnProperty(school) ){
+        if ( applicantsCourses[school].hasOwnProperty(subject) ){
+            if ( applicantsCourses[school][subject].hasOwnProperty(course)) {
+                delete applicantsCourses[school][subject][course]
+                courseBlock.setAttribute('class', 'course-block')
+            } else {
+                applicantsCourses[school][subject][course] = course
+                courseBlock.setAttribute('class', 'course-block-selected')
+            }
+        } else {
+            let courseDict = {}
+            courseDict[course] = course
+            applicantsCourses[school][subject] = courseDict
+            courseBlock.setAttribute('class', 'course-block-selected')
+        }
+    } else {
+        let updateDict = {}
+        let courseDict = {}
+        courseDict[course] = course
+        updateDict[subject] = courseDict
+        applicantsCourses[school] = updateDict
+        courseBlock.setAttribute('class', 'course-block-selected')
+    }
+
+    console.log(applicantsCourses)
+}
+
+
+
+
+//Add Additional Schools
+var allSchoolsArea = document.getElementById('all-schools-area')
+var coursesAllSchoolsContainer = document.getElementById('courses-all-schools-container')
+var addSchoolButton = document.getElementById('add-school-button')
+
+var addSchoolBlock = document.getElementById('add-school-block')
+addSchoolBlock.addEventListener('click', () => {
+    $('#all-schools-area').fadeIn()
+})
+
+//Request School
+var requestSchoolButton = document.getElementById('request-school-button')
+var addSchoolContainer = document.getElementById('add-school-container')
+var requestConfirmation = document.getElementById('request-confirmation')
+var addSchoolName = document.getElementById('add-school-name')
+var addSchoolCourses = document.getElementById('add-school-courses')
+var addSchoolToggle = document.getElementById('add-school-toggle')
+var addSchoolCancel = document.getElementById('add-school-cancel')
+var addSchoolSubmit = document.getElementById('add-school-submit')
+var isNotify
+
+requestSchoolButton.addEventListener('click', () => {
+    $('#add-school-container').fadeIn()
+})
+addSchoolCancel.addEventListener('click', () => {
+    $('#add-school-container').fadeOut()
+})
+addSchoolToggle.addEventListener('click', () => {
+    if(isNotify == false) {
+        isNotify = true
+        addSchoolToggle.setAttribute('class', 'toggle-selected')
+    } else {
+        isNotify = false
+        addSchoolToggle.setAttribute('class', 'toggle')
+    }
+})
+
+addSchoolSubmit.addEventListener('click', () => {
+    var schoolName = addSchoolName.value 
+    var courses = addSchoolCourses.value
+    
+    if(schoolName == '') {
+        showErrorMessage("Please enter the school's name")
+    } else if (courses == '') {
+        showErrorMessage("Please enter what courses you'd like to tutor")
+    } else {
+        var message = 'School Name: ' + schoolName + ', Courses Message: ' + courses + ' Tutor Info: ' + coreName +', '+coreEmail+', notify: '+isNotify
+        sendEmailTo('support@tutortree.com', 'New School Request', message)
+        $('#add-school-container').fadeOut(200, () => {
+            $('#request-confirmation').fadeIn().delay(5000).fadeOut("slow")
+        })
+    }
+})
