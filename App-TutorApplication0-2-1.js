@@ -110,12 +110,14 @@ availabilityBack.addEventListener('click', () => {
     animateSectionsBack('availability', 'courses')
 })
 availabilityNext.addEventListener('click', () => {
+    loadAboutYou()
     animateSectionsNext('availability', 'about')
 })
 aboutBack.addEventListener('click', () => {
     animateSectionsBack('about', 'availability')
 })
 aboutNext.addEventListener('click', () => {
+    updateAboutYouResponses()
     animateSectionsNext('about', 'verification')
 })
 verificationBack.addEventListener('click', () => {
