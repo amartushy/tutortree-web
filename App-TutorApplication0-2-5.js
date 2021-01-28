@@ -64,7 +64,6 @@ const aboutNext = document.getElementById('about-next')
 const verificationBack = document.getElementById('verification-back')
 const verificationNext = document.getElementById('verification-next')
 const scheduleBack = document.getElementById('schedule-back')
-const scheduleNext = document.getElementById('schedule-next')
 const completionButton = document.getElementById('completion-button')
 
 //Application Sections
@@ -131,9 +130,7 @@ verificationNext.addEventListener('click', () => {
 scheduleBack.addEventListener('click', () => {
     animateSectionsBack('schedule', 'verification')
 })
-scheduleNext.addEventListener('click', () => {
-    animateSectionsNext('schedule', 'confirmation')
-})
+
 
 function animateSectionsNext(sectionOne, sectionTwo) {
     $(`#${sectionOne}-section`).animate({right: '2000px'}, 400, function () {
@@ -1090,4 +1087,4 @@ async function uploadAndUpdateFirebaseFaculty() {
     }).then( () => {
         loadDocumentsScreen()
     })
-}		
+}			
