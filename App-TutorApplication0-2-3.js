@@ -977,3 +977,116 @@ function updateAboutYouResponses() {
 
     userDB.doc(globalUserId).collection('tutorApplication').doc('application').update(updateDict)
 }
+
+
+
+
+//Documents Screen
+let transcriptUploadUnconfirmed = document.getElementById('transcript-upload-unconfirmed')
+let facultyUploadUnconfirmed = document.getElementById('faculty-upload-unconfirmed')
+let transcriptConfirmed = document.getElementById('transcript-confirmation')
+let facultyConfirmed = document.getElementById('faculty-confirmation')
+
+
+function loadDocumentsScreen() {
+    transcriptUploadUnconfirmed.style.display = 'flex'
+    facultyUploadUnconfirmed.style.display = 'flex'
+    transcriptConfirmed.style.display = 'none'
+    facultyConfirmed.style.display = 'none'
+
+    verificationNext.style.display = 'none'
+
+    userDB.doc(globalUserId).collection('tutorApplication').doc('application').get().then(function(doc) {
+        let applicationData = doc.data()
+        let didUploadTranscript = applicationData['uploadedTranscript']
+        let didUploadFaculty = applicationData['uploadedFaculty']
+
+        if( didUploadTranscript ) {
+            transcriptUploadUnconfirmed.style.display = 'none'
+            transcriptConfirmed.style.display = 'flex'
+            $('#verification-next').fadeIn()
+        }
+        if( didUploadFaculty ) {
+            facultyUploadUnconfirmed.style.display = 'none'
+            facultyConfirmed.style.display = 'flex'
+        }
+    })
+}
+
+let uploadTranscriptButton = document.getElementById('upload-transcript-button')
+var hiddenTranscriptButton = document.getElementById('hidden-transcript-button')
+
+uploadTranscriptButton.addEventListener('click', () => {
+    openTranscriptDialog()
+})
+
+function openTranscriptDialog() {
+    hiddenTranscriptButton.click();
+}
+
+hiddenTranscriptButton.addEventListener('change', handleTranscriptUploadChange);
+
+  
+var selectedTranscriptFile;
+function handleTranscriptUploadChange(e) {
+    selectedTranscriptFile = e.target.files[0];
+    handleTranscriptUpload()
+}
+    
+async function handleTranscriptUpload() {
+    const uploadTask = await storageRef.child(`transcripts/${selectedTranscriptFile.name}`).put(selectedTranscriptFile);
+    uploadAndUpdateFirebaseTranscript()
+}
+
+//Final Submit Button and Update Firebase
+async function uploadAndUpdateFirebaseTranscript() {
+    var transcriptFileURL = ""
+    await storageRef.child('/transcripts/'+selectedTranscriptFile.name)
+        .getDownloadURL()
+        .then(function(url) { transcriptFileURL = url.toString() })
+    userDB.doc(globalUserId).collection("tutorApplication").doc("application").update( {
+        "transcriptFile" : transcriptFileURL,
+        "uploadedTranscript" : true 
+    }).then( () => {
+        loadDocumentsScreen()
+    })
+}
+    
+
+
+var hiddenFacultyButton = document.getElementById('hidden-faculty-button')
+let uploadFacultyButton = document.getElementById('upload-faculty-button')
+
+uploadFacultyButton.addEventListener('click', () => {
+    openFacultyDialog()
+})
+
+function openFacultyDialog() {
+    hiddenFacultyButton.click();
+}
+
+hiddenFacultyButton.addEventListener('change', handleFacultyUploadChange);
+
+async function handleFacultyUpload() {
+    const uploadTask = await storageRef.child(`faculty/${selectedFacultyFile.name}`).put(selectedFacultyFile);
+    uploadAndUpdateFirebaseFaculty()
+}
+
+var selectedFacultyFile;
+function handleFacultyUploadChange(e) {
+    selectedFacultyFile = e.target.files[0];
+    handleFacultyUpload()	
+}
+
+async function uploadAndUpdateFirebaseFaculty() {
+    var facultyFileURL = ""
+    await storageRef.child('/faculty/'+selectedFacultyFile.name)
+        .getDownloadURL()
+        .then(function(url) { facultyFileURL = url.toString() })
+    userDB.doc(globalUserId).collection("tutorApplication").doc("application").update( {
+        "facultyFile" : facultyFileURL,
+        "uploadedFaculty" : true 
+    }).then( () => {
+        loadDocumentsScreen()
+    })
+}	
