@@ -208,7 +208,7 @@ function updateApplicantsSchool() {
     let applicationUpdate = {}
     applicationUpdate['applicationFields.schoolName'] = tutorsSchool
     applicationUpdate['school'] = tutorsSchool
-    userDB.doc(globalUserId).collection('tutorApplication').doc('application').update( schoolUpdate )
+    userDB.doc(globalUserId).collection('tutorApplication').doc('application').update( applicationUpdate )
 }
 
 function updateSchoolClasses(school) {
