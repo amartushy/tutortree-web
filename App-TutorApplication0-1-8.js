@@ -95,7 +95,7 @@ gradesBack.addEventListener('click', () => {
     animateSectionsBack('grades', 'school')
 })
 gradesNext.addEventListener('click', () => {
-    updateApplicantGradeOptions()
+    updateApplicantSchoolPreferences()
     animateSectionsNext('grades', 'courses')
 })
 coursesBack.addEventListener('click', () => {
@@ -271,7 +271,7 @@ collegeButton.addEventListener('click', () => {
 })
 
 let applicantSchoolPreferences = {}
-function updateApplicantGradeOptions() {
+function updateApplicantSchoolPreferences() {
     let updateDict = {}
     updateDict['schoolPreferences'] = applicantSchoolPreferences
     userDB.doc(globalUserId).update( updateDict ).then(function() {
@@ -546,8 +546,8 @@ function loadNewSchools() {
 }
 
 addSchoolButton.addEventListener('click', () => {
-    coreDict['schoolPreferences'][selectedSchool] = selectedSchoolTitle
-    loadCourseOptions()
+    applicantSchoolPreferences[selectedSchool] = selectedSchoolTitle
+    updateApplicantSchoolPreferences()
 })
 
 function updateSchoolClasses(school) {
