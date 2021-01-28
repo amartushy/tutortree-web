@@ -270,3 +270,158 @@ var tutorApplicantCoreDict = {
     'schoolPreferences' : { },
     'tutorApplicantStatus' : 'pending'
 }
+
+
+
+
+
+let applicationFieldsScreen = document.getElementById('application-fields-screen')
+let applicationNameField = document.getElementById('application-name-field')
+let applicationEmailField = document.getElementById('application-email-field')
+let applicationPasswordField = document.getElementById('application-password-field')
+let applicationConfirmField = document.getElementById('application-confirm-field')
+let applicationContinueButton = document.getElementById('application-continue-button')
+
+let applicationProcessingScreen = document.getElementById('application-processing-screen')
+let applicationProcessingText = document.getElementById('application-processing-text')
+let applicationConfirmationText = document.getElementById('application-confirmation-text')
+let applicationConfirmationCheck = document.getElementById('application-confirmation-check')
+
+let applyTutorButton = document.getElementById('apply-tutor-home')
+applyTutorButton.addEventListener('click', () => {
+    loadApplicationInitialState()
+    $('#tutor-application-page').fadeIn()
+})
+
+let processingContinueButton = document.getElementById('processing-continue-button')
+processingContinueButton.addEventListener('click',  () => {
+    location.href = "https://app-tutortree.webflow.io/tutor-application"
+})
+
+let tutorApplicationBack = document.getElementById('tutor-application-back')
+tutorApplicationBack.addEventListener('click', () => {
+    $('#tutor-application-page').fadeOut()
+})
+
+applicationContinueButton.addEventListener('click', () => {
+    if ( applicationNameField.value == '' ) {
+        applicationShowErrorMessage('Please enter your name')
+
+    } else if ( applicationEmailField.value == '' ) {
+        applicationShowErrorMessage('Please enter an email for your account')
+
+    } else if ( applicationPasswordField.value == '' ) {
+        applicationShowErrorMessage('Please enter a valid password')
+
+    } else if ( applicationConfirmField.value == '' ) {
+        applicationShowErrorMessage('Please confirm your password') 
+
+    } else if ( applicationPasswordField.value != applicationConfirmField.value ) {
+        applicationShowErrorMessage('Your passwords do not match')
+
+    } else {
+        createApplicantAccount()
+    }
+})
+
+function loadApplicationInitialState() {
+    applicationFieldsScreen.style.display = 'flex'
+
+    applicationProcessingScreen.style.display = 'none'
+    applicationProcessingText.style.display = 'flex'
+    applicationConfirmationText.style.display = 'none'
+    applicationConfirmationCheck.style.display = 'none'
+}
+function loadApplicationConfirmationState() {
+    applicationFieldsScreen.style.display = 'none'
+
+    applicationProcessingScreen.style.display = 'flex'
+    applicationProcessingText.style.display = 'none'
+    applicationConfirmationText.style.display = 'flex'
+    applicationConfirmationCheck.style.display = 'flex'
+}
+
+function createApplicantAccount() {
+    applicationFieldsScreen.style.display = 'none'
+    $('#application-processing-screen').fadeIn()
+
+    var currentDateTime = new Date() / 1000
+
+    applicationDict['applicationFields']['firstName'] = getFirstName(applicationNameField.value)
+    applicationDict['applicationFields']['lastName'] = getLastName(applicationNameField.value)
+    applicationDict['timeSubmitted'] = currentDateTime
+    applicationDict['email'] = applicationEmailField.value
+    
+    tutorApplicantCoreDict['name'] = applicationNameField.value
+    tutorApplicantCoreDict['email'] = applicationEmailField.value
+    tutorApplicantCoreDict['referralCode'] = getFirstName(applicationNameField.value) + appendRandomLetters()
+
+    firebase.auth().createUserWithEmailAndPassword(applicationEmailField.value, applicationPasswordField.value).then(function(data) {
+        //Create User and Tutor Applicant
+        var tutorApplicantID = data.user.uid
+        userDB.collection("userTest").doc(tutorApplicantID).set(tutorApplicantCoreDict)
+            .then(function() {
+                console.log("User doc written")
+
+                var promises = []
+
+                var applicationPromise = userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("application").set(applicationDict).then(function(){
+                    console.log("Application doc written")
+                }).catch(function(error) {
+                    applicationShowErrorMessage(error.message)
+                })
+
+                var interviewPromise = userDB.collection("userTest").doc(tutorApplicantID).collection("tutorApplication").doc("interview").set(interviewDict).then(function(){
+                    console.log("Interview doc written")
+                }).catch(function(error) {
+                    applicationShowErrorMessage(error.message)
+                })
+
+                promises.push(applicationPromise, interviewPromise)
+                Promise.all(promises).then( () => {
+                    console.log('All docs written successfully')
+                    loadApplicationConfirmationState()
+                    setTimeout(function () {
+                        location.href = "https://app-tutortree.webflow.io/tutor-application"
+                     }, 1500)
+                    let adminMessage = `${applicationNameField.value} submitted their initial application, their email is ${applicationEmailField.value}`
+                    sendSMSTo('4582108156', adminMessage)
+                })
+
+            }).catch(function(error) {
+                applicationShowErrorMessage(error.message)
+        })
+    })
+    .catch(function(error) {
+        loadApplicationInitialState()
+        applicationShowErrorMessage(error.message)
+    });
+}
+
+function appendRandomLetters() {
+    var result =''
+    var characters = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'
+    var charactersLength = characters.length
+    
+    for (i = 0; i < 3; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return result
+}
+
+function getLastName(fullName) {
+    let nameArray = fullName.split(" ")
+    let lastName = 'No Last Name'
+    if (nameArray.length > 1) {
+        nameArray.shift()
+        lastName = nameArray.join(" ")
+    }
+    return lastName
+}
+
+function applicationShowErrorMessage(message){
+    var errorMessageDiv = document.getElementById('application-error-message')
+    errorMessageDiv.innerHTML = message
+
+    $('#application-error-message').fadeIn().delay(10000).fadeOut("slow")
+}
