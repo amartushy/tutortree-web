@@ -1,3 +1,5 @@
+var userDB = firebase.firestore()
+
 let tutorImageDictionary = {
     'Abigail Cakebread' : 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-0.png?alt=media&token=13d172fd-950f-425c-9b92-404a64d48797',
     'Abigail Stevens' : 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-1.png?alt=media&token=e1d0cf6b-625b-477e-b50f-a9cf802742e7',
