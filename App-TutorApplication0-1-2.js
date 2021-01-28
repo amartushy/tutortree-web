@@ -1,5 +1,4 @@
 //Global Variables______________________________________________________________________________________________________
-var userDB = firebase.firestore()
 var coreDict = {}
 let schoolDB = firebase.firestore().collection('schools')
 let userDB = firebase.firestore().collection('userTest')
@@ -21,7 +20,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 function loadCoreProperties(ID) {
     globalUserId = ID
 	console.log(globalUserId)
-    userDB.collection('userTest').doc(globalUserId).onSnapshot(function(doc) {
+    userDB.doc(globalUserId).onSnapshot(function(doc) {
         coreDict = doc.data()
 
         loadHeader()
