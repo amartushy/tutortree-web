@@ -125,6 +125,7 @@ verificationBack.addEventListener('click', () => {
     animateSectionsBack('verification', 'about')
 })
 verificationNext.addEventListener('click', () => {
+    loadScheduleScreen()
     animateSectionsNext('verification', 'schedule')
 })
 scheduleBack.addEventListener('click', () => {
@@ -1089,4 +1090,4 @@ async function uploadAndUpdateFirebaseFaculty() {
     }).then( () => {
         loadDocumentsScreen()
     })
-}	
+}		
