@@ -102,6 +102,7 @@ coursesBack.addEventListener('click', () => {
     animateSectionsBack('courses', 'grades')
 })
 coursesNext.addEventListener('click', () => {
+    updateApplicantsCourses()
     animateSectionsNext('courses', 'availability')
     loadAvailability()
 })
@@ -438,6 +439,10 @@ function updateTutorsCourses(school, subject, course) {
     console.log(applicantsCourses)
 }
 
+//Update database function
+function updateApplicantsCourses() {
+    userDB.doc(globalUserId).collection('tutorApplication').doc('courses').set( applicantsCourses, { merge : true } )
+}
 
 
 
@@ -494,3 +499,65 @@ addSchoolSubmit.addEventListener('click', () => {
         })
     }
 })
+
+//Load Additional Schools
+var selectedSchool
+var selectedSchoolTitle
+function loadNewSchools() {
+    isNotify = false
+    while(coursesAllSchoolsContainer.firstChild) {
+        coursesAllSchoolsContainer.removeChild(coursesAllSchoolsContainer.firstChild)
+    }
+
+    //Set initial states
+    addSchoolContainer.style.display = 'none'
+    requestConfirmation.style.display = 'none'
+    addSchoolToggle.setAttribute('class', 'toggle')
+    allSchoolsArea.style.display = 'none'
+    addSchoolButton.style.display = 'none'
+
+    schoolDB.get().then(function(schools) {
+        schools.forEach(function(doc) {
+            var schoolData = doc.data()
+
+            var coursesSchoolButton = document.createElement('div')
+            coursesSchoolButton.setAttribute('class', 'courses-school-button')
+            coursesSchoolButton.setAttribute('id', `courses-school-button-${doc.id}`)
+            coursesSchoolButton.addEventListener('click', () => {
+                addSchoolButton.innerHTML = 'Add ' + schoolData.title 
+                selectedSchool = doc.id
+                selectedSchoolTitle = schoolData.title
+                updateSchoolClasses(doc.id)
+                $('#add-school-button').fadeIn()
+            })
+            coursesAllSchoolsContainer.appendChild(coursesSchoolButton)
+
+            var coursesSchoolImage = document.createElement('img')
+            coursesSchoolImage.setAttribute('class', 'courses-school-image')
+            coursesSchoolImage.src = schoolData.icon 
+            coursesSchoolButton.appendChild(coursesSchoolImage)
+
+            var coursesSchoolText = document.createElement('div')
+            coursesSchoolText.setAttribute('class', 'courses-school-text')
+            coursesSchoolText.innerHTML = schoolData.title 
+            coursesSchoolButton.appendChild(coursesSchoolText)
+        })
+    })
+}
+
+addSchoolButton.addEventListener('click', () => {
+    coreDict['schoolPreferences'][selectedSchool] = selectedSchoolTitle
+    loadCourseOptions()
+})
+
+function updateSchoolClasses(school) {
+    allSchoolIDs.forEach(function(id) {
+        var targetElement = document.getElementById(`courses-school-button-${id}`)
+
+        if(id == school) {
+            targetElement.setAttribute('class', 'courses-school-button-selected')
+        } else {
+            targetElement.setAttribute('class', 'courses-school-button')
+        }
+    })
+}
