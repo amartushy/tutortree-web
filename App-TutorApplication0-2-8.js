@@ -1281,24 +1281,4 @@ function loadTimeslots() {
             bookingTimeslot.innerHTML = timeOptions[i]
         }
     }
-}
-
-function timeslotSelected(index) {
-    const timeslotsContainer = document.getElementById('timeslots-container')
-    var children = timeslotsContainer.childNodes
-
-    for( i = 0; i < children.length; i++) {
-        children[i].setAttribute('class', 'booking-timeslot')
-    }
-    interviewTimeIndex = index
-
-    var timeslot = document.getElementById('timeslot-'+index)
-    timeslot.setAttribute('class', 'booking-timeslot-selected')
-
-    var sessionTimeText = document.getElementById('session-time-text')
-    sessionTimeText.innerHTML = timeOptions[sessionIndices[0]]+" to "+timeOptions[sessionIndices[0]+1]
-
-    $('#book-interview-button').fadeIn()
-
-    updateStartAndEnd()
 }			
