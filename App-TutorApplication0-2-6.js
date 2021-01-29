@@ -1087,4 +1087,218 @@ async function uploadAndUpdateFirebaseFaculty() {
     }).then( () => {
         loadDocumentsScreen()
     })
+}	
+
+
+
+
+
+
+//Schedule Screen
+var end
+var start
+var interviewer 
+
+var currentDate = getCurrentMonthAndYear()
+var year = currentDate[0]
+var month = currentDate[1]
+var dayVal
+var interviewersAvailability = []
+var interviewTimeIndex
+
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+function loadScheduleScreen() {
+    userDB.doc('VdXorWku69eKSOSCk1yq7eLkt843').get().then( function(doc) {
+        let data = doc.data()
+        setInitialState()
+        loadAvailabilities(data.availability)
+        buildCalendarNav()
+        buildCalendar(interviewersAvailability)
+    })
+}
+
+function setInitialState() {
+    var bookInterviewButton = document.getElementById('book-interview-button')
+    bookInterviewButton.style.display = 'none'
+
+    bookInterviewButton.addEventListener('click', () => {
+        animateSectionsNext('schedule', 'confirmation')
+    })
+
+    var sessionDateHeader = document.getElementById('session-date-header')
+    var sessionTimeText = document.getElementById('session-time-text')
+    var timeslotsContainer = document.getElementById('timeslots-container')
+
+    sessionDateHeader.innerHTML = 'Select a Date'
+    sessionTimeText.innerHTML = 'Select a Time'
+
+    while(timeslotsContainer.firstChild) {
+        timeslotsContainer.removeChild(timeslotsContainer.firstChild)
+    }
+    var noDateSelectedText = document.createElement('div')
+    noDateSelectedText.setAttribute('class', 'no-date-selected-text')
+    noDateSelectedText.innerHTML = "Select a date to see available times"
+    timeslotsContainer.appendChild(noDateSelectedText)
+}
+
+function loadAvailabilities(availabilityData) {
+    interviewersAvailability = []
+    interviewersAvailability.push(availabilityData.Sunday)
+    interviewersAvailability.push(availabilityData.Monday)
+    interviewersAvailability.push(availabilityData.Tuesday)
+    interviewersAvailability.push(availabilityData.Wednesday)
+    interviewersAvailability.push(availabilityData.Thursday)
+    interviewersAvailability.push(availabilityData.Friday)
+    interviewersAvailability.push(availabilityData.Saturday)
+}
+
+function buildCalendar(availability) {
+    var calendarHeader = document.getElementById('calendar-header')
+    calendarHeader.innerHTML = months[month] + " " + year
+
+    var dayRowContainer = document.getElementById('day-row-container')
+    while(dayRowContainer.firstChild) {
+        dayRowContainer.removeChild(dayRowContainer.firstChild)
+    }
+    var daysInMonth = getDaysInMonth(year, month+1)
+    var firstDay = firstDayOfMonth(year, month)
+    var counter = 0
+    var dayCounter = 1
+    for(i=0; i<6; i++) {
+        var dayRow = document.createElement('div')
+        dayRow.setAttribute('class', 'day-row')
+        dayRowContainer.appendChild(dayRow)
+
+        for(j=0; j<7; j++) {
+            var dayDiv = document.createElement('div')
+            if( counter >= firstDay && dayCounter <= daysInMonth){
+                dayDiv.setAttribute('class', 'day-div')
+                dayDiv.setAttribute('id', 'dayDiv-' + dayCounter)
+                dayRow.appendChild(dayDiv)
+
+                var dayNumber = document.createElement('div')
+                dayNumber.setAttribute('class', 'day-number')
+                dayNumber.innerHTML = dayCounter
+                dayDiv.appendChild(dayNumber)
+    
+                var dayCircle = document.createElement('div')
+                if(availability[j] > 0) {
+                    dayCircle.setAttribute('class', 'availability-circle')
+                    dayDiv.setAttribute('onClick', 'daySelected("'+j+'","'+dayCounter+'","'+daysInMonth+'")')
+                } else {
+                    dayCircle.setAttribute('class', 'availability-circle-clear')
+                }
+                dayDiv.appendChild(dayCircle)
+                dayCounter++
+            } else {
+                dayDiv.setAttribute('class', 'day-div-empty')
+                dayRow.appendChild(dayDiv)
+            }
+
+            counter++
+        }
+    }
+}
+
+function buildCalendarNav() {
+
+    var calendarBack = document.getElementById('calendar-back')
+    var calendarBackClone = calendarBack.cloneNode(true)
+    calendarBack.parentNode.replaceChild(calendarBackClone, calendarBack)
+    calendarBackClone.addEventListener('click', () => {
+        if (month==0) {
+            year--
+            month = 11
+        } else {
+            month--
+        }
+        buildCalendar(interviewersAvailability)
+    })
+
+    var calendarForward = document.getElementById('calendar-forward')
+    var calendarForwardClone = calendarForward.cloneNode(true)
+    calendarForward.parentNode.replaceChild(calendarForwardClone, calendarForward)
+    calendarForwardClone.addEventListener('click', () => {
+        if (month==11) {
+            year++
+            month = 0
+        } else {
+            month++
+        }
+        buildCalendar(interviewersAvailability)
+    })
+}
+
+var timeOptions = ["6:00am", "6:30am", "7:00am", "7:30am", "8:00am","8:30am", "9:00am", "9:30am", "10:00am", "10:30am",
+                    "11:00am", "11:30am", "12:00pm", "12:30pm", "1:00pm", "1:30pm", "2:00pm", "2:30pm", "3:00pm", "3:30pm", 
+                    "4:00pm", "4:30pm", "5:00pm", "5:30pm", "6:00pm", "6:30pm", "7:00pm", "7:30pm", "8:00pm", "8:30pm", 
+                    "9:00pm", "9:30pm", "10:00pm", "10:30pm", "11:00pm", "11:30pm", "12:00am"]
+var availabilityArray = []
+
+function daySelected(dayInt, dayOfMonth, daysInMonth) {
+    dayVal = dayOfMonth
+    //Change CSS
+    const sessionDateHeader = document.getElementById('session-date-header')
+    sessionDateHeader.innerHTML = formatSessionDate(dayInt, dayOfMonth, month)
+
+    const selectedDay = document.getElementById('dayDiv-' + dayOfMonth)
+    selectedDay.setAttribute('class', 'day-div-selected')
+    selectedDay.childNodes[0].setAttribute('class', 'day-number-selected')
+    selectedDay.childNodes[1].setAttribute('class', 'availability-circle-selected')
+
+    for(i=1; i<=daysInMonth; i++) {
+        if(i!=dayOfMonth) {
+            var dayDiv = document.getElementById('dayDiv-' + i)
+            dayDiv.setAttribute('class', 'day-div')
+            var divChildren = dayDiv.childNodes
+            divChildren[0].setAttribute('class', 'day-number')
+            if(divChildren[1].classList.contains('availability-circle-selected')) {
+                divChildren[1].setAttribute('class', 'availability-circle')
+            }
+        }
+    }
+
+    //Show Availability
+    availabilityArray = twosComplement(interviewersAvailability[dayInt]).split("")
+    loadTimeslots()
+}
+
+function loadTimeslots() {
+    const timeslotsContainer = document.getElementById('timeslots-container')
+    while(timeslotsContainer.firstChild) {
+        timeslotsContainer.removeChild(timeslotsContainer.firstChild)
+    }
+
+    for(i=0; i<availabilityArray.length; i++) {
+        if(availabilityArray[i] == 1) {
+            var bookingTimeslot = document.createElement('div')
+            bookingTimeslot.setAttribute('class', 'booking-timeslot')
+            bookingTimeslot.setAttribute('onClick', 'timeslotSelected("'+i+'")')
+            bookingTimeslot.setAttribute('id', 'timeslot-'+i)
+            timeslotsContainer.appendChild(bookingTimeslot)
+            bookingTimeslot.innerHTML = timeOptions[i]
+        }
+    }
+}
+
+function timeslotSelected(index) {
+    const timeslotsContainer = document.getElementById('timeslots-container')
+    var children = timeslotsContainer.childNodes
+
+    for( i = 0; i < children.length; i++) {
+        children[i].setAttribute('class', 'booking-timeslot')
+    }
+    interviewTimeIndex = index
+
+    var timeslot = document.getElementById('timeslot-'+index)
+    timeslot.setAttribute('class', 'booking-timeslot-selected')
+
+    var sessionTimeText = document.getElementById('session-time-text')
+    sessionTimeText.innerHTML = timeOptions[sessionIndices[0]]+" to "+timeOptions[sessionIndices[0]+1]
+
+    $('#book-interview-button').fadeIn()
+
+    updateStartAndEnd()
 }			
