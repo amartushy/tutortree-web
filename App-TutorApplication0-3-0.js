@@ -1284,4 +1284,108 @@ function loadTimeslots() {
             bookingTimeslot.innerHTML = timeOptions[i]
         }
     }
+}
+
+function timeslotSelected(index) {
+    const timeslotsContainer = document.getElementById('timeslots-container')
+    var children = timeslotsContainer.childNodes
+
+    for( i = 0; i < children.length; i++) {
+        children[i].setAttribute('class', 'booking-timeslot')
+    }
+    interviewTimeIndex = parseInt(index)
+
+    var timeslot = document.getElementById('timeslot-'+index)
+    timeslot.setAttribute('class', 'booking-timeslot-selected')
+
+    var sessionTimeText = document.getElementById('session-time-text')
+    sessionTimeText.innerHTML = timeOptions[interviewTimeIndex]+" to "+timeOptions[interviewTimeIndex+1]
+
+    $('#book-interview-button').fadeIn()
+
+    //Update start and end
+    var dateObject = new Date(year, month, dayVal)
+    var epoch = dateObject.getTime() / 1000
+    start = epoch + 21600 + interviewTimeIndex*1800
+    end = start + 1800
+}
+
+
+
+function scheduleInterview( ) {
+
+    var interviewID = createTransactionID()
+
+    var interviewDict = {
+        'applicant' : globalUserId,
+        'applicantName' : coreDict['name'],
+        'applicantEmail' : coreDict['email'],
+        'applicantsSchool' : coreDict['school'],
+        'adminID' : 'VdXorWku69eKSOSCk1yq7eLkt843',
+        'interviewer' : '',
+        'interviewerName' : '',
+        'interviewerEmail' : '',
+        'end' : end,
+        'location' : 'Zoom',
+        'zoomLink' : 'No link has been set',
+        'zoomPassword' : 'No password yet',
+        'start' : start,
+        'status' : 'pending'
+    }
+
+    //add interview data to applicants interview collection
+    var promises = []
+    let applicantUpdateDict = {}
+    applicantUpdateDict[interviewID] = interviewDict
+
+    var applicantPromise = userDB.doc(globalUserId).collection('tutorApplication').doc('interview').update(applicantUpdateDict).then(function() {
+        console.log("Applicant doc written");
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+        showErrorMessage('Something went wrong. Please contact support@tutortree.com')
+    });
+
+    //create global interview session
+    var globalPromise = firebase.firestore().collection('interviews').doc(interviewID).set(interviewDict).then(function() {
+        console.log("Global doc written");
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+        showErrorMessage('Something went wrong. Please contact support@tutortree.com')
+    });
+
+    //Update admins availability
+    var copyOfAvailabilityArray = availabilityArray
+    copyOfAvailabilityArray[interviewTimeIndex] = '0'
+    
+    var binaryString = '0000000000000000' + copyOfAvailabilityArray.join('')
+    const decimalAvailability = parseInt( binaryString, 2)
+    var availabilityPath = 'availability.' + dayArray[dayVal]
+    var updateDay = {}
+    updateDay[availabilityPath] = decimalAvailability
+
+    var availabilityPromise = userDB.doc('VdXorWku69eKSOSCk1yq7eLkt843').update(updateDay).then(() => {
+        console.log('Availability doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+        showErrorMessage('Something went wrong. Please contact support@tutortree.com')
+    });
+
+    //notify admin
+    let formattedDate = getFormattedDate(start)
+    let formattedDateString = `${formattedDate[0]}, ${formattedDate[1]} ${formattedDate[2]}`
+    let formattedTime = getFormattedTime(start, end)
+    let formattedTimeString = `${formattedTime[0]} to ${formattedTime[1]}`
+    var adminMessage = `${coreDict['name']} has submitted their Tutor application and scheduled an interview for ${formattedDateString} from ${formattedTimeString}`
+    sendSMSTo('4582108156', adminMessage)
+    sendEmailTo('support@tutortree.com', 'New Tutor Application', adminMessage)
+
+    promises.push(applicantPromise, globalPromise, availabilityPromise)
+
+    Promise.all(promises).then(results => {
+        console.log('All documents written successfully')
+        animateSectionsNext('schedule', 'confirmation')
+        completionButton.addEventListener('click', () => {
+            location.href = 'https://app-tutortree.webflow.io/app-home'
+        })
+    })
 }			
