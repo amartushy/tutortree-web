@@ -1238,6 +1238,9 @@ var timeOptions = ["6:00am", "6:30am", "7:00am", "7:30am", "8:00am","8:30am", "9
 var availabilityArray = []
 
 function daySelected(dayInt, dayOfMonth, daysInMonth) {
+    var sessionTimeText = document.getElementById('session-time-text')
+    sessionTimeText.innerHTML = 'Select a Time'
+
     dayVal = dayOfMonth
     //Change CSS
     const sessionDateHeader = document.getElementById('session-date-header')
