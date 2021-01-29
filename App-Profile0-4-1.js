@@ -27,7 +27,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		
 	//If user is not logged in return them to login screen
 	} else {
-		location.href = "https://parent-tutortree.webflow.io/login"
+		location.href = 'https://app-tutortree.webflow.io/login'
 	}
 })
 
