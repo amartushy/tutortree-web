@@ -1091,6 +1091,19 @@ function loadCompletedState() {
     })
 }
 
+//Logout
+let logOutButton = document.getElementById('log-out-button')
+
+logOutButton.addEventListener('click', () => {
+    firebase.auth().signOut().then(() => {
+        // Sign-out successful.
+        location.href = 'https://app-tutortree.webflow.io/login'
+      }).catch((error) => {
+        // An error happened.
+        showErrorMessage(error.message)
+      });
+})
+
 
 //Edit Profile Page_______________________________________________________________________________________________________________________
 var editProfileButton = document.getElementById('edit-profile-button')
