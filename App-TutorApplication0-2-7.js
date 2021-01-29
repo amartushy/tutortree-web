@@ -1124,7 +1124,7 @@ function setInitialState() {
     bookInterviewButton.style.display = 'none'
 
     bookInterviewButton.addEventListener('click', () => {
-        animateSectionsNext('schedule', 'confirmation')
+        scheduleInterview()
     })
 
     var sessionDateHeader = document.getElementById('session-date-header')
