@@ -25,6 +25,7 @@ function loadCoreProperties(ID) {
 
         loadHeader()
         loadAllSchools()
+	 updateProgressBar(2)
     })
 }
 
@@ -49,7 +50,6 @@ function loadHeader() {
 
 //Navigation________________________________________________________________________________________________________________________
 //Progress Bar
-updateProgressBar(2)
 
 //Navigation Buttons
 const schoolNext = document.getElementById('school-next')
