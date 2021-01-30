@@ -425,3 +425,192 @@ function applicationShowErrorMessage(message){
 
     $('#application-error-message').fadeIn().delay(10000).fadeOut("slow")
 }
+
+
+
+
+//User Account Creation
+
+let schoolDB = firebase.firestore().collection('schools')
+let userDB = firebase.firestore().collection('userTest')
+
+let landingPageContainer = document.getElementById('landing-page-container')
+let userAccountCreationPage = document.getElementById('user-account-creation-page')
+
+let landingMiddleSchoolButton = document.getElementById('landing-middleschool-button')
+let landingHighSchoolButton = document.getElementById('landing-highschool-button')
+let landingCollegeButton = document.getElementById('landing-college-button')
+
+landingMiddleSchoolButton.addEventListener('click', () => {
+    userAccountCoreDict['preferences']['grade'] = 'middleSchool'
+    setUserInitialState('middleSchool')
+})
+landingHighSchoolButton.addEventListener('click', () => {
+    userAccountCoreDict['preferences']['grade'] = 'highSchool'
+    setUserInitialState('highSchool')
+})
+landingCollegeButton.addEventListener('click', () => {
+    userAccountCoreDict['preferences']['grade'] = 'college'
+    setUserInitialState('college')
+})
+
+var userAccountCoreDict = {
+    'agreedTOS' : true,
+    'availability' : {
+        'Sunday' : 0,
+        'Monday' : 0,
+        'Tuesday' : 0,
+        'Wednesday' : 0,
+        'Thursday' : 0,
+        'Friday' : 0,
+        'Saturday' : 0
+    },
+    'bio' : "This user hasn't added a bio yet",
+    'currentBalance' : 0,
+    'email' : '',
+    'hasBeenReferred' : false,
+    'isAdmin' : false,
+    'isDarkModeOn' : false,
+    'isEmailOn' : false,
+    "isPushOn" : false,
+    'isSMSOn' : false,
+    'isTutor' : false,
+    'major' : 'No major set',
+    'maxHPW' : 30,
+    'name' : '',
+    'phoneNumber' : 00000000000,
+    'preferences' : {
+        'grade' : '',
+        'school' : '',
+        'subject' : '',
+        'course' : ''
+    },
+    'pricePHH' : 10,
+    'profileImage' : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Logos%2FTTLogo600px.png?alt=media&token=bb275980-c106-497a-bc38-0b93d20907ca",
+    'pushToken' : '',
+    'referralCode' : '',
+    'school' : 'Invalid School'
+}
+
+
+//Navigation________________________________________________________________________________________________________________________
+
+//Account Creation Buttons
+let userAccountCreationBack = document.getElementById('user-account-creation-back')
+let userGradesNext = document.getElementById('user-grades-next')
+let userSchoolNext = document.getElementById('user-school-next')
+let userSubjectBack = document.getElementById('user-subject-back')
+let userSubjectNext = document.getElementById('user-subject-next')
+
+//Account Creation Sections
+let userGradesSection = document.getElementById('user-grades-section')
+let userSchoolSection = document.getElementById('user-school-section')
+let userSubjectSection = document.getElementById('user-subject-section')
+let userAccountSection = document.getElementById('user-account-section')
+
+userGradesSection.style.display = 'none'
+userSchoolSection.style.display = 'flex'
+userSubjectSection.style.display = 'none'
+userAccountSection.style.display = 'none'
+
+function setUserInitialState(state) {
+    landingPageContainer.style.display = 'none'
+    $('#user-account-creation-page').fadeIn()
+}
+
+//Navigation Button Functions
+userAccountCreationBack.addEventListener('click', () => {
+    landingPageContainer.style.display = 'block'
+    $('#user-account-creation-page').fadeOut()
+})
+userGradesNext.addEventListener('click', () => {
+    animateSectionsNext('grades', 'school')
+})
+userSchoolNext.addEventListener('click', () => {
+    animateSectionsNext('school', 'subject')
+})
+userSubjectBack.addEventListener('click', () => {
+    animateSectionsBack('subject', 'school')
+})
+userSubjectNext.addEventListener('click', () => {
+    animateSectionsNext('subject', 'account')
+})
+
+
+
+function animateSectionsNext(sectionOne, sectionTwo) {
+    $(`#user-${sectionOne}-section`).animate({right: '2000px'}, 400, function () {
+        $(`#user-${sectionOne}-section`).fadeOut()
+        $(`#user-${sectionTwo}-section`).animate({left: '0'}, 400, function () {
+            $(`#user-${sectionTwo}-section`).fadeIn()
+        })
+    })
+}
+function animateSectionsBack(sectionOne, sectionTwo) {
+    $(`#user-${sectionOne}-section`).animate({left: '2000px'}, 400, function () {
+        $(`#user-${sectionOne}-section`).fadeOut()
+        $(`#user-${sectionTwo}-section`).animate({right: '0'}, 400, function () {
+            $(`#user-${sectionTwo}-section`).fadeIn()
+        })
+    })
+}
+
+
+//Account Creation Screens______________________________________________________________________________________________________________________
+
+//School Screen
+let allSchoolsContainer = document.getElementById('all-schools-container')
+let schoolNavBlock = document.getElementById('school-nav-block')
+let applicantSchoolText = document.getElementById('applicant-school-text')
+let allSchoolIDs = []
+
+
+function loadAllSchools() {
+    schoolNavBlock.style.display = 'none'
+
+    while (allSchoolsContainer.firstChild) {
+        allSchoolsContainer.removeChild(allSchoolsContainer.firstChild)
+    }
+
+    schoolDB.get().then(function(schools) {
+        schools.forEach(function(doc) {
+            allSchoolIDs.push(doc.id)
+            var schoolData = doc.data()
+
+            var coursesSchoolButton = document.createElement('div')
+            coursesSchoolButton.setAttribute('class', 'courses-school-button')
+            coursesSchoolButton.setAttribute('id', `courses-school-button-${doc.id}`)
+            coursesSchoolButton.addEventListener('click', () => {
+                applicantSchoolText.innerHTML = schoolData.title 
+                userAccountCoreDict['preferences']['school'] = doc.id
+
+                updateSchoolClasses(doc.id)
+                $('#school-nav-block').fadeIn()
+            })
+            allSchoolsContainer.appendChild(coursesSchoolButton)
+
+            var coursesSchoolImage = document.createElement('img')
+            coursesSchoolImage.setAttribute('class', 'courses-school-image')
+            coursesSchoolImage.src = schoolData.icon 
+            coursesSchoolButton.appendChild(coursesSchoolImage)
+
+            var coursesSchoolText = document.createElement('div')
+            coursesSchoolText.setAttribute('class', 'courses-school-text')
+            coursesSchoolText.innerHTML = schoolData.title 
+            coursesSchoolButton.appendChild(coursesSchoolText)
+        })
+    })
+}
+
+
+function updateSchoolClasses(school) {
+    allSchoolIDs.forEach(function(id) {
+        var targetElement = document.getElementById(`courses-school-button-${id}`)
+
+        if(id == school) {
+            targetElement.setAttribute('class', 'courses-school-button-selected')
+        } else {
+            targetElement.setAttribute('class', 'courses-school-button')
+        }
+    })
+}
