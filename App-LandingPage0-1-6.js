@@ -615,6 +615,163 @@ function updateSchoolClasses(school) {
     })
 }
 
+
+//Courses Screen_________________________________________________________________________________________________________
+let chooseCoursesArea = document.getElementById('choose-courses-area')
+
+function loadCourseOptions() {
+    while(chooseCoursesArea.firstChild) {
+        chooseCoursesArea.removeChild(chooseCoursesArea.firstChild)
+    }
+    let userSubjectNext = document.getElementById('user-subject-next')
+    userSubjectNext.style.display = 'none'
+
+    let gradeLevel = userAccountCoreDict['preferences']['grade']
+    let schoolID = userAccountCoreDict['preferences']['school']
+
+    if(gradeLevel != 'middleSchool' &&  schoolID != 'highSchool') {
+        schoolDB.doc(schoolID).get().then(function(school) {
+            buildSchool(school.id, school.data())
+        })
+    }
+}
+
+function buildSchool(school, schoolData) {
+    var collegeContainer = document.createElement('div')
+    collegeContainer.setAttribute('class', 'college-container')
+    chooseCoursesArea.appendChild(collegeContainer)
+
+    var schoolBlock = document.createElement('div')
+    schoolBlock.setAttribute('class', 'school-block')
+    schoolBlock.addEventListener('click', () => {
+        var courseContainer = document.getElementById(`courses-container-${school}`)
+        if(courseContainer.style.display == 'none') {
+            $(`#courses-container-${school}`).fadeIn()
+        } else {
+            $(`#courses-container-${school}`).fadeOut()
+        }
+    })
+    collegeContainer.appendChild(schoolBlock)
+
+    var schoolHeader = document.createElement('div')
+    schoolHeader.setAttribute('class', 'filter-header')
+    schoolBlock.appendChild(schoolHeader)
+
+    var schoolHeaderLogoContainer = document.createElement('div')
+    schoolHeaderLogoContainer.setAttribute('class', 'school-header-logo-container')
+    schoolHeader.appendChild(schoolHeaderLogoContainer)
+
+    var schoolHeaderLogo = document.createElement('img')
+    schoolHeaderLogo.setAttribute('class', 'school-header-logo')
+    schoolHeaderLogo.src = schoolData.icon 
+    schoolHeaderLogoContainer.appendChild(schoolHeaderLogo)
+
+    var schoolHeaderText = document.createElement('div')
+    schoolHeaderText.setAttribute('class', 'school-header-text')
+    schoolHeaderText.innerHTML = schoolData.title
+    schoolHeaderLogoContainer.appendChild(schoolHeaderText)
+
+    var schoolChevron = document.createElement('div')
+    schoolChevron.setAttribute('class', 'filter-chevron')
+    schoolChevron.innerHTML = ''
+    schoolHeader.appendChild(schoolChevron)
+
+    var coursesContainer = document.createElement('div')
+    coursesContainer.setAttribute('class', 'courses-container')
+    coursesContainer.setAttribute('id', `courses-container-${school}`)
+    collegeContainer.appendChild(coursesContainer)
+    coursesContainer.style.display = 'block'
+
+    schoolDB.doc(school).collection('courses').onSnapshot(function(subject) {
+        subject.forEach(function(doc) {
+            buildSubjectBlock(school, doc.id, doc.data())
+        })
+    })
+}
+
+
+function buildSubjectBlock(school, subject, courseDict) {
+    var subjectID = subject.replace(/\s+/g, '');
+    allSubjectIDs.push(subjectID)
+
+    var courseContainer = document.getElementById(`courses-container-${school}`)
+
+    var courseDiv = document.createElement('div')
+    courseDiv.setAttribute('class', 'course-div')
+    courseContainer.appendChild(courseDiv)
+
+    var courseHeader = document.createElement('div')
+    courseHeader.setAttribute('class', 'course-header')
+    courseHeader.addEventListener('click', () => {
+
+        userAccountCoreDict['preferences']['subject'] = subject
+
+        var courseContainer = document.getElementById(`course-container-${subjectID}`)
+        if(courseContainer.style.display == 'none') {
+            $(`#course-container-${subjectID}`).fadeIn()
+        } else {
+            $(`#course-container-${subjectID}`).fadeOut()
+        }
+    })
+    courseDiv.appendChild(courseHeader)
+
+    var courseHeaderText = document.createElement('div')
+    courseHeaderText.setAttribute('class', 'course-header-text')
+    courseHeaderText.innerHTML = subject
+    courseHeader.appendChild(courseHeaderText)
+
+    var courseChevron = document.createElement('div')
+    courseChevron.setAttribute('class', 'course-chevron')
+    courseChevron.innerHTML = ''
+    courseHeader.appendChild(courseChevron)
+
+    var courseBlockContainer = document.createElement('course-block-container')
+    courseBlockContainer.setAttribute('class', 'course-block-container')
+    courseBlockContainer.setAttribute('id', `course-container-${subjectID}`)
+    courseBlockContainer.style.display = 'none'
+    courseDiv.appendChild(courseBlockContainer)
+
+    for ( var course in courseDict ) {
+        if (courseDict.hasOwnProperty(course)) {
+            var courseBlock = document.createElement('div')
+            courseBlock.setAttribute('class', 'course-block')
+            courseBlock.setAttribute('id', `${school}-${subject}-${course}`)
+            courseBlock.setAttribute('onClick', 'updateCourses("' +school+ '","'+ subject + '","' + course  + '")')
+
+            courseBlock.innerHTML = course 
+            courseBlockContainer.appendChild(courseBlock)
+        }
+    }
+}
+
+
+var allSubjectIDs = []
+function updateCourses(school, subject, course) {
+
+    for (i = 0; i < allSubjectIDs.length; i ++) {
+        var courseContainer = document.getElementById(`course-container-${allSubjectIDs[i]}`)
+
+        var courseChildren = courseContainer.children;
+        for (var j = 0; j < courseChildren.length; j++) {
+            var courseChild = courseChildren[j];
+            courseChild.setAttribute('class', 'course-block')
+        }
+    }
+
+    var courseBlock = document.getElementById(`${school}-${subject}-${course}`)
+    courseBlock.setAttribute('class', 'course-block-selected')
+
+    userAccountCoreDict['preferences']['course'] = course
+
+    let userSubjectCourseText = document.getElementById('user-subject-course-text')
+    userSubjectCourseText.innerHTML = `${subject} - ${course}`
+
+    $('#user-subject-next').fadeIn()
+}
+
+
+
+
 //Course Request
 let courseRequestBlock = document.getElementById('course-request-block')
 let courseRequestChevron = document.getElementById('course-request-chevron')
