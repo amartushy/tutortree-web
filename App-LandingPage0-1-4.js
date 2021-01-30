@@ -75,7 +75,6 @@ let tutorImageDictionary = {
     'Katelyn Ngo': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-68.png?alt=media&token=88908a0d-38a0-40b2-9be5-f6b571ce0027',
     'Kevin Soloway': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-69.png?alt=media&token=31888aeb-4df3-4308-b7f7-2f547da879f9',
     'LIZA FREIBERG': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-70.png?alt=media&token=598a3e20-e646-4cd5-bff1-4ef26ff7c909',
-    'Lane': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-71.png?alt=media&token=bd869479-8260-4962-9841-37016da0ccd6',
     'Leeza': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-72.png?alt=media&token=8e470681-a0d5-4307-8e43-cdd8efc6246a',
     'Lindsey Laughlin': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-73.png?alt=media&token=e8d760b5-448d-43cc-b2ac-301d96c5136e',
     'Lucas Einhorn': 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-74.png?alt=media&token=18d0468e-c398-484d-bb92-cd14e8b829c8',
