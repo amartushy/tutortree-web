@@ -614,3 +614,75 @@ function updateSchoolClasses(school) {
         }
     })
 }
+
+//Course Request
+let courseRequestBlock = document.getElementById('course-request-block')
+let courseRequestChevron = document.getElementById('course-request-chevron')
+let courseRequestContainer = document.getElementById('course-request-container')
+courseRequestContainer.style.display = 'none'
+
+courseRequestBlock.addEventListener('click', () => {
+    if (courseRequestContainer.style.display == 'none') {
+        $('#course-request-container').fadeIn()
+    } else {
+        $('#course-request-container').fadeOut()
+    }
+    if (courseRequestChevron.classList.contains('filter-chevron')) {
+        courseRequestChevron.setAttribute('class', 'filter-chevron-down')
+    } else {
+        courseRequestChevron.setAttribute('class', 'filter-chevron')
+    }
+})
+
+let courseRequestForm = document.getElementById('course-request-form')
+let courseRequestSchool = document.getElementById('course-request-school')
+let courseRequestSubject = document.getElementById('course-request-subject')
+let courseRequestCourse = document.getElementById('course-request-course')
+let courseRequestAdditional = document.getElementById('course-request-additional')
+let courseRequestToggle = document.getElementById('course-request-toggle')
+let courseRequestEmail = document.getElementById('course-request-email')
+courseRequestEmail.style.display = 'none'
+let cancelCourseRequest = document.getElementById('cancel-course-request')
+let submitCourseRequest = document.getElementById('submit-course-request')
+let courseRequestConfirmation = document.getElementById('course-request-confirmation')
+courseRequestConfirmation.style.display = 'none'
+let closeCourseRequest = document.getElementById('close-course-request')
+
+var wantsToBeNotified = false
+courseRequestToggle.setAttribute('class', 'toggle')
+courseRequestToggle.addEventListener('click', () => {
+    if(wantsToBeNotified == false) {
+        wantsToBeNotified = true
+        $('#course-request-email').fadeIn()
+        courseRequestToggle.setAttribute('class', 'toggle-selected')
+    } else {
+        wantsToBeNotified = false
+        courseRequestEmail.style.display = 'none'
+        courseRequestToggle.setAttribute('class', 'toggle')
+    }
+})
+cancelCourseRequest.addEventListener('click', () => {
+    $('#course-request-container').fadeOut()
+})
+
+submitCourseRequest.addEventListener('click', () => {
+    let title = 'Account Creation Course Request'
+    let schoolVal = courseRequestSchool.value
+    let subjectVal = courseRequestSubject.value
+    let courseVal = courseRequestCourse.value
+
+    let emailField = document.getElementById('course-request-email-field')
+    let notificationString = wantsToBeNotified ? `They would like to be notified. Their email is ${emailField.value}` : 'They do not want to be notified.'
+    var message = `A new user has requested a course for ${schoolVal}, ${subjectVal}, ${courseVal}. `
+    let finalString = message + notificationString + ` Additional notes: ${courseRequestAdditional.value}`
+
+    sendEmailTo('support@tutortree.com', title, finalString)
+
+    courseRequestForm.style.display = 'none'
+    $('#course-request-confirmation').fadeIn().delay(8000).fadeOut()
+
+    let userSubjectCourseText = document.getElementById('user-subject-course-text')
+    userSubjectCourseText.innerHTML = `${courseRequestSubject.value} - ${courseRequestCourse.value}`
+
+    $('#user-subject-next').fadeIn()
+})
