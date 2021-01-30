@@ -525,6 +525,7 @@ userGradesNext.addEventListener('click', () => {
     animateSectionsNext('grades', 'school')
 })
 userSchoolNext.addEventListener('click', () => {
+    loadCourseOptions()
     animateSectionsNext('school', 'subject')
 })
 userSubjectBack.addEventListener('click', () => {
