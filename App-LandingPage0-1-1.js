@@ -430,7 +430,7 @@ function applicationShowErrorMessage(message){
 
 
 
-//User Account Creation
+//User Account Creation______________________________________________________________________________________________________________________________
 let landingPageContainer = document.getElementById('landing-page-container')
 let userAccountCreationPage = document.getElementById('user-account-creation-page')
 
@@ -511,6 +511,7 @@ userSubjectSection.style.display = 'none'
 userAccountSection.style.display = 'none'
 
 function setUserInitialState(state) {
+    loadAllSchools()
     landingPageContainer.style.display = 'none'
     $('#user-account-creation-page').fadeIn()
 }
