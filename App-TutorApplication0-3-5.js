@@ -10,6 +10,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 		var ID = user.uid
 		 
         loadCoreProperties(ID)
+	updateProgressBar(1)
 		
 	//If user is not logged in return them to login screen
 	} else {
@@ -25,7 +26,6 @@ function loadCoreProperties(ID) {
 
         loadHeader()
         loadAllSchools()
-	 updateProgressBar(1)
     })
 }
 
