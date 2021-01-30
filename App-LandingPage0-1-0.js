@@ -1,4 +1,5 @@
 var userDB = firebase.firestore()
+let schoolDB = firebase.firestore().collection('schools')
 
 let tutorImageDictionary = {
     'Abigail Cakebread' : 'https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Home%20Images%2Ftutor-0.png?alt=media&token=13d172fd-950f-425c-9b92-404a64d48797',
@@ -430,10 +431,6 @@ function applicationShowErrorMessage(message){
 
 
 //User Account Creation
-
-let schoolDB = firebase.firestore().collection('schools')
-let userDB = firebase.firestore().collection('userTest')
-
 let landingPageContainer = document.getElementById('landing-page-container')
 let userAccountCreationPage = document.getElementById('user-account-creation-page')
 
