@@ -47,7 +47,43 @@ function loadHeader() {
     profileTab.appendChild(profileText)
 }
 
+//Navigation________________________________________________________________________________________________________________________
+//Progress Bar
+updateProgressBar(2)
 
+//Navigation Buttons
+const schoolNext = document.getElementById('school-next')
+const gradesBack = document.getElementById('grades-back')
+const gradesNext = document.getElementById('grades-next')
+const coursesBack = document.getElementById('courses-back')
+const coursesNext = document.getElementById('courses-next')
+const availabilityBack = document.getElementById('availability-back')
+const availabilityNext = document.getElementById('availability-next')
+const aboutBack = document.getElementById('about-back')
+const aboutNext = document.getElementById('about-next')
+const verificationBack = document.getElementById('verification-back')
+const verificationNext = document.getElementById('verification-next')
+const scheduleBack = document.getElementById('schedule-back')
+const completionButton = document.getElementById('completion-button')
+
+//Application Sections
+const schoolSection = document.getElementById('school-section')
+const gradesSection = document.getElementById('grades-section')
+const coursesSection = document.getElementById('courses-section')
+const availabilitySection = document.getElementById('availability-section')
+const aboutSection = document.getElementById('about-section')
+const verificationSection = document.getElementById('verification-section')
+const scheduleSection = document.getElementById('schedule-section')
+const confirmationSection = document.getElementById('confirmation-section')
+
+//Set initial section displays 
+gradesSection.style.display = 'none'
+coursesSection.style.display = 'none'
+availabilitySection.style.display = 'none'
+aboutSection.style.display = 'none'
+verificationSection.style.display = 'none'
+scheduleSection.style.display = 'none'
+confirmationSection.style.display = 'none'
 
 
 //Application Functions_____________________________________________________________________________________
