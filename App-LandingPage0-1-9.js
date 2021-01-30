@@ -256,12 +256,6 @@ var tutorApplicantCoreDict = {
     'maxHPW' : 30,
     'name' : '',
     'phoneNumber' : 00000000000,
-    'preferences' : {
-        'grade' : '',
-        'school' : '',
-        'subject' : '',
-        'course' : ''
-    },
     'pricePHH' : 10,
     'profileImage' : "https://firebasestorage.googleapis.com/v0/b/tutortree-68061.appspot.com/o/Logos%2FTTLogo600px.png?alt=media&token=bb275980-c106-497a-bc38-0b93d20907ca",
     'pushToken' : '',
