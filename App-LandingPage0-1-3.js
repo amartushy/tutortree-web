@@ -511,7 +511,6 @@ userSubjectSection.style.display = 'none'
 userAccountSection.style.display = 'none'
 
 function setUserInitialState(state) {
-    loadAllSchools()
     landingPageContainer.style.display = 'none'
     $('#user-account-creation-page').fadeIn()
 }
@@ -563,6 +562,9 @@ let schoolNavBlock = document.getElementById('school-nav-block')
 let applicantSchoolText = document.getElementById('applicant-school-text')
 let allSchoolIDs = []
 
+window.onload = function() {
+    loadAllSchools()
+}
 
 function loadAllSchools() {
     schoolNavBlock.style.display = 'none'
