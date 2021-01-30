@@ -25,7 +25,7 @@ function loadCoreProperties(ID) {
 
         loadHeader()
         loadAllSchools()
-	 updateProgressBar(2)
+	 updateProgressBar(1)
     })
 }
 
