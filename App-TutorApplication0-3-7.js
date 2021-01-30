@@ -85,6 +85,150 @@ verificationSection.style.display = 'none'
 scheduleSection.style.display = 'none'
 confirmationSection.style.display = 'none'
 
+//Navigation Button Functions
+schoolNext.addEventListener('click', () => {
+    updateApplicantsSchool()
+    animateSectionsNext('school', 'grades')
+})
+schoolNext.setAttribute('onClick', `updateProgressBar(3)`)
+
+gradesBack.addEventListener('click', () => {
+    animateSectionsBack('grades', 'school')
+})
+gradesBack.setAttribute('onClick', `updateProgressBar(1)`)
+
+gradesNext.addEventListener('click', () => {
+    updateApplicantSchoolPreferences()
+    animateSectionsNext('grades', 'courses')
+})
+gradesNext.setAttribute('onClick', `updateProgressBar(4)`)
+
+coursesBack.addEventListener('click', () => {
+    animateSectionsBack('courses', 'grades')
+})
+coursesBack.setAttribute('onClick', `updateProgressBar(3)`)
+
+coursesNext.addEventListener('click', () => {
+    updateApplicantsCourses()
+    animateSectionsNext('courses', 'availability')
+    loadAvailability()
+})
+coursesNext.setAttribute('onClick', `updateProgressBar(5)`)
+
+availabilityBack.addEventListener('click', () => {
+    animateSectionsBack('availability', 'courses')
+})
+availabilityBack.setAttribute('onClick', `updateProgressBar(4)`)
+
+availabilityNext.addEventListener('click', () => {
+    loadAboutYou()
+    animateSectionsNext('availability', 'about')
+})
+availabilityNext.setAttribute('onClick', `updateProgressBar(9)`)
+
+aboutBack.addEventListener('click', () => {
+    animateSectionsBack('about', 'availability')
+})
+aboutBack.setAttribute('onClick', `updateProgressBar(5)`)
+
+aboutNext.addEventListener('click', () => {
+    loadDocumentsScreen()
+    updateAboutYouResponses()
+    animateSectionsNext('about', 'verification')
+})
+aboutNext.setAttribute('onClick', `updateProgressBar(13)`)
+
+verificationBack.addEventListener('click', () => {
+    animateSectionsBack('verification', 'about')
+})
+verificationBack.setAttribute('onClick', `updateProgressBar(9)`)
+
+verificationNext.addEventListener('click', () => {
+    loadScheduleScreen()
+    animateSectionsNext('verification', 'schedule')
+})
+verificationNext.setAttribute('onClick', `updateProgressBar(17)`)
+
+scheduleBack.addEventListener('click', () => {
+    animateSectionsBack('schedule', 'verification')
+})
+scheduleBack.setAttribute('onClick', `updateProgressBar(13)`)
+
+
+
+function animateSectionsNext(sectionOne, sectionTwo) {
+    $(`#${sectionOne}-section`).animate({right: '2000px'}, 400, function () {
+        $(`#${sectionOne}-section`).fadeOut()
+        $(`#${sectionTwo}-section`).animate({left: '0'}, 400, function () {
+            $(`#${sectionTwo}-section`).fadeIn()
+        })
+    })
+}
+function animateSectionsBack(sectionOne, sectionTwo) {
+    $(`#${sectionOne}-section`).animate({left: '2000px'}, 400, function () {
+        $(`#${sectionOne}-section`).fadeOut()
+        $(`#${sectionTwo}-section`).animate({right: '0'}, 400, function () {
+            $(`#${sectionTwo}-section`).fadeIn()
+        })
+    })
+}
+
+
+
+function updateProgressBar(progressNum) {
+    updateProgressBubbles(progressNum)
+
+    for ( i = 1; i <= 17; i ++) {
+        if( i == 1 || i == 5 || i == 9 || i == 13 || i == 17) {
+            continue
+        }
+        console.log(i)
+        console.log('progress num: ', progressNum)
+        if( i <= progressNum) {
+            console.log('called')
+            document.getElementById(`progress-bar-${i}`).setAttribute('class', 'progress-bar-complete')
+        } else {
+            console.log('called pt 2')
+            document.getElementById(`progress-bar-${i}`).setAttribute('class', 'progress-bar-todo-partial')
+        }
+    }
+}
+
+let bubbleNumMap = {
+    '1' : '1',
+    '5' : '2',
+    '9' : '3',
+    '13' : '4',
+    '17' : '5'
+}
+
+function updateProgressBubbles(bubbleNum) {
+
+    for ( i = 1; i <= 17; i += 4) {
+        let progressBubble = document.getElementById(`progress-bubble-${i}`)
+        let progressText = document.getElementById(`progress-text-${i}`)
+
+        if ( i < bubbleNum ) {
+            progressBubble.setAttribute('class', 'progress-bubble-complete')
+            progressBubble.innerHTML = ''
+
+            progressText.setAttribute('class', 'progress-text-complete')
+
+        } else if ( i == bubbleNum ) {
+            progressBubble.setAttribute('class', 'progress-bubble-current')
+            progressBubble.innerHTML = bubbleNumMap[i]
+
+            progressText.setAttribute('class', 'progress-text-complete')
+
+        } else {
+            progressBubble.setAttribute('class', 'progress-bubble-todo')
+            progressBubble.innerHTML = bubbleNumMap[i]
+
+            progressText.setAttribute('class', 'progress-text-todo')
+        }
+    }
+}
+
 
 //Application Functions_____________________________________________________________________________________
 
@@ -1320,6 +1464,14 @@ function scheduleInterview( ) {
     Promise.all(promises).then(results => {
         console.log('All documents written successfully')
         animateSectionsNext('schedule', 'confirmation')
+	    
+	let progressBubble = document.getElementById(`progress-bubble-17`)
+        let progressText = document.getElementById(`progress-text-17`)
+
+        progressBubble.setAttribute('class', 'progress-bubble-complete')
+        progressBubble.innerHTML = ''
+
+        progressText.setAttribute('class', 'progress-text-complete')
         completionButton.addEventListener('click', () => {
             location.href = 'https://app-tutortree.webflow.io/app-home'
         })
