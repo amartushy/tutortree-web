@@ -28,13 +28,40 @@ var messagesProfileContainer = document.getElementById('messages-profile-contain
 //Initialize elements on page load
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
+	loadAuthHeader()
         loadCoreProperties(user.uid)
 		loadInitialState()
+		
 	//If user is not logged in return them to login screen
 	} else {
 		location.href = "https://parent-tutortree.webflow.io/login"
 	}
 })
+
+function loadInitialState() {
+    while(messagesHeader.firstChild) {
+        messagesHeader.removeChild(messagesHeader.firstChild)
+    }
+    while(messagesArea.firstChild) {
+        messagesArea.removeChild(messagesArea.firstChild)
+    }
+    messagesProfileContainer.style.display = 'none'
+
+    let noConnectionContainer = document.createElement('div')
+    noConnectionContainer.setAttribute('class', 'no-connection-container')
+    messagesArea.appendChild(noConnectionContainer)
+
+    let noConnectionIcon = document.createElement('div')
+    noConnectionIcon.setAttribute('class', 'no-connection-icon')
+    noConnectionIcon.innerHTML = ''
+    noConnectionContainer.appendChild(noConnectionIcon)
+
+    let noConnectionText = document.createElement('div')
+    noConnectionText.setAttribute('class', 'no-connection-text')
+    noConnectionText.innerHTML = 'Select a connection'
+    noConnectionContainer.appendChild(noConnectionText)
+
+}
 
 function loadCoreProperties(ID) {
     globalUserId = ID
