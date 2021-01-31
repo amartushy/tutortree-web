@@ -186,15 +186,14 @@ function loadSessions() {
 }
 
 
-let noUpcomingSessions = document.getElementById('no-upcoming-sessions')
-
 async function buildUpcomingSessions(sessions) {
-	if (sessions.length == 0) {
-        noUpcomingSessions.style.display = 'flex'
-    }
 
     while (upcomingSessionsArea.firstChild) {
         upcomingSessionsArea.removeChild(upcomingSessionsArea.firstChild)
+    }
+
+    if (sessions.length == 0) {
+        buildEmptySessionsState(upcomingSessionsArea, 'No upcoming sessions')
     }
 
     var sortedSessions = sessions.sort(function(a, b) {
@@ -219,17 +218,15 @@ async function buildUpcomingSessions(sessions) {
 }
 
 
-let noPendingSessions = document.getElementById('no-pending-sessions')
-
 async function buildPendingSessions(sessions) {
     const pendingBubble = document.getElementById('pending-bubble')
 
-    if (sessions.length == 0) {
-        noPendingSessions.style.display = 'flex'
-    }
-
     while (pendingSessionsArea.firstChild) {
         pendingSessionsArea.removeChild(pendingSessionsArea.firstChild)
+    }
+
+    if (sessions.length == 0) {
+        buildEmptySessionsState(pendingSessionsArea, 'No pending sessions')
     }
 
     if (sessions.length > 0) {
@@ -265,13 +262,15 @@ async function buildPendingSessions(sessions) {
 let noPastSessions = document.getElementById('no-past-sessions')
 
 async function buildPastSessions(sessions) {
-    if (sessions.length == 0) {
-        noPastSessions.style.display = 'flex'
-    }
     
     while (pastSessionsArea.firstChild) {
         pastSessionsArea.removeChild(pastSessionsArea.firstChild)
     }
+
+    if (sessions.length == 0) {
+        buildEmptySessionsState(pastSessionsArea, 'No past sessions')
+    }
+
     var sortedSessions = sessions.sort(function(a, b) {
         return b[0] - a[0];
     })
@@ -291,6 +290,22 @@ async function buildPastSessions(sessions) {
 
         await buildSessionBlock(sessionID, sessionInfo, pastSessionsArea)
     }
+}
+
+function buildEmptySessionsState(DOMElement, text) {
+    let emptySessionsDiv = document.createElement('div')
+    emptySessionsDiv.setAttribute('class', 'empty-sessions-div')
+    DOMElement.appendChild(emptySessionsDiv)
+
+    let emptySessionsIcon = document.createElement('div')
+    emptySessionsIcon.setAttribute('class', 'empty-sessions-icon')
+    emptySessionsIcon.innerHTML = ''
+    emptySessionsDiv.appendChild(emptySessionsIcon)
+
+    let emptySessionsText = document.createElement('div')
+    emptySessionsText.setAttribute('class', 'empty-sessions-text')
+    emptySessionsText.innerHTML = text
+    emptySessionsDiv.appendChild(emptySessionsText)
 }
 
 
