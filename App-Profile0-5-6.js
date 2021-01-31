@@ -1215,6 +1215,8 @@ async function loadUserElements() {
     editBioField.value = coreBio
     editMajorField.value = coreSubject
     editProfileSchoolText.innerHTML = await getSchoolName(coreSchool)
+    let schoolImage = await getSchoolImage(coreSchool)
+    updateEditProfileSchoolImage(schoolImage)
 	
     //Create Photo 
     editImageBlock.removeChild(editImageBlock.firstChild)
