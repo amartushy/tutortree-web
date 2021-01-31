@@ -176,7 +176,7 @@ async function buildConnection(connectionID, studentID, tutorID) {
 
         showMessages(connectionID, studentID, senderType)
         replaceMessageFieldListener(studentID, connectionID, senderType)
-        sendMessage.setAttribute('onClick', 'sendConnectionMessage("' + studentID + "','" + connectionID + '","' + senderType + '")')
+        sendMessage.setAttribute('onClick', `sendConnectionMessage(${studentID}, ${connectionID}, ${senderType})`)
     })
 }
 
