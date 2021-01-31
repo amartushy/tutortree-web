@@ -1149,6 +1149,9 @@ var editBioField = document.getElementById('edit-bio-field')
 var saveNameButton = document.getElementById('save-name-button')
 var saveBioButton = document.getElementById('save-bio-button')
 
+var availabilityScreen = document.getElementById('availability-screen')
+var experienceScreen = document.getElementById('experience-screen')
+
 var coursesScreen = document.getElementById('courses-screen')
 var schoolHeader = document.getElementById('school-header')
 var changeSchoolButton = document.getElementById('change-school-button')
@@ -1301,7 +1304,6 @@ async function uploadAndUpdateFirebasePhoto() {
 
 
 //Experience Screen__________________________________________________________________________
-var experienceScreen = document.getElementById('experience-screen')
 var editMajorField = document.getElementById('edit-major-field')
 var saveMajorButton = document.getElementById('save-major-button')
 var experienceContainer = document.getElementById('experience-container')
@@ -1413,7 +1415,6 @@ function addNewExperience() {
 }
 
 //Availability Screen___________________________________________________________________________________________________________________________
-var availabilityScreen = document.getElementById('availability-screen')
 var addNewAvailability = document.getElementById('add-new-availability')
 var reduceRateButton = document.getElementById('reduce-rate-button')
 var increaseRateButton = document.getElementById('increase-rate-button')
