@@ -1,5 +1,6 @@
 //Global Variables__________________________________________________________________
 var userDB = firebase.firestore()
+var schoolDB = firebase.firestore()
 
 //Core properties all users have
 var globalUserId,
