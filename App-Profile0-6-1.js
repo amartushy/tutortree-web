@@ -103,6 +103,7 @@ async function loadProfile() {
     experienceSection.style.display = 'none'
     availabilitySection.style.display = 'none'
     usersAverageBlock.style.display = 'none'  
+    tutorApplicationButton.style.display = 'flex
 
     var usersSessions = document.getElementById('users-sessions')
     var usersImageBlock = document.getElementById('users-image-block')
@@ -135,6 +136,8 @@ async function loadTutorProfile() {
     experienceSection.style.display = 'block'
     availabilitySection.style.display = 'block'
     usersAverageBlock.style.display = 'flex' 
+    tutorApplicationButton.style.display = 'none
+
 
     var usersAverage = document.getElementById('users-average')
     
@@ -150,6 +153,8 @@ async function loadPendingApplicantProfile() {
     experienceSection.style.display = 'block'
     availabilitySection.style.display = 'block'
     usersAverageBlock.style.display = 'flex' 
+    tutorApplicationButton.style.display = 'none
+
 
     var usersAverage = document.getElementById('users-average')
     usersAverage.innerHTML = await getRatingForUser(globalUserId)
@@ -1123,6 +1128,14 @@ function loadCompletedState() {
         $('#w-confirmation-check').fadeIn()
     })
 }
+
+//Tutor Application Button
+let tutorApplicationButton = document.getElementById('profile-tutor-apply')
+tutorApplicationButton.style.display = 'none'
+
+tutorApplicationButton.addEventListener('click', () => {
+    location.href = 'https://app-tutortree.webflow.io/tutor-application'
+})
 
 //Logout
 let logOutButton = document.getElementById('log-out-button')
