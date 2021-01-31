@@ -168,12 +168,6 @@ function loadSessions() {
         })
 
         Promise.all(promises).then(results => {
-            if(pendingSessions.length == 0) {
-                noPendingSessions.style.display = 'flex'
-            }
-            if(pastSessions.length == 0) {
-                noPastSessions.style.display = 'flex'
-            }
             buildUpcomingSessions(upcomingSessions)
             buildPendingSessions(pendingSessions)
             buildPastSessions(pastSessions)
