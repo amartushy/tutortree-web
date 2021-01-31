@@ -131,7 +131,15 @@ loadNewEvents.addEventListener('click', () => {
     loadSessions()
 })
 
+let noUpcomingSessions = document.getElementById('no-upcoming-sessions')
+let noPendingSessions = document.getElementById('no-pending-sessions')
+let noPastSessions = document.getElementById('no-past-sessions')
+
 function loadSessions() {
+    noUpcomingSessions.style.display = 'none'
+    noPendingSessions.style.display = 'none'
+    noPastSessions.style.display = 'none'
+
     loadNewEvents.style.display = 'none'
 
     var currentTime = (new Date()).getTime() / 1000
@@ -168,6 +176,15 @@ function loadSessions() {
         })
 
         Promise.all(promises).then(results => {
+            if(upcomingSessions.length == 0) {
+                noUpcomingSessions.style.display = 'flex'
+            }
+            if(pendingSessions.length == 0) {
+                noPendingSessions.style.display = 'flex'
+            }
+            if(pastSessions.length == 0) {
+                noPastSessions.style.display = 'flex'
+            }
             buildUpcomingSessions(upcomingSessions)
             buildPendingSessions(pendingSessions)
             buildPastSessions(pastSessions)
