@@ -131,10 +131,6 @@ loadNewEvents.addEventListener('click', () => {
     loadSessions()
 })
 
-let noUpcomingSessions = document.getElementById('no-upcoming-sessions')
-let noPendingSessions = document.getElementById('no-pending-sessions')
-let noPastSessions = document.getElementById('no-past-sessions')
-
 function loadSessions() {
     noUpcomingSessions.style.display = 'none'
     noPendingSessions.style.display = 'none'
@@ -176,9 +172,6 @@ function loadSessions() {
         })
 
         Promise.all(promises).then(results => {
-            if(upcomingSessions.length == 0) {
-                noUpcomingSessions.style.display = 'flex'
-            }
             if(pendingSessions.length == 0) {
                 noPendingSessions.style.display = 'flex'
             }
@@ -192,7 +185,14 @@ function loadSessions() {
     })
 }
 
+
+let noUpcomingSessions = document.getElementById('no-upcoming-sessions')
+
 async function buildUpcomingSessions(sessions) {
+	if (sessions.length == 0) {
+        noUpcomingSessions.style.display = 'flex'
+    }
+
     while (upcomingSessionsArea.firstChild) {
         upcomingSessionsArea.removeChild(upcomingSessionsArea.firstChild)
     }
@@ -218,8 +218,15 @@ async function buildUpcomingSessions(sessions) {
     }
 }
 
+
+let noPendingSessions = document.getElementById('no-pending-sessions')
+
 async function buildPendingSessions(sessions) {
     const pendingBubble = document.getElementById('pending-bubble')
+
+    if (sessions.length == 0) {
+        noPendingSessions.style.display = 'flex'
+    }
 
     while (pendingSessionsArea.firstChild) {
         pendingSessionsArea.removeChild(pendingSessionsArea.firstChild)
@@ -254,7 +261,14 @@ async function buildPendingSessions(sessions) {
     }
 }
 
+
+let noPastSessions = document.getElementById('no-past-sessions')
+
 async function buildPastSessions(sessions) {
+    if (sessions.length == 0) {
+        noPastSessions.style.display = 'flex'
+    }
+    
     while (pastSessionsArea.firstChild) {
         pastSessionsArea.removeChild(pastSessionsArea.firstChild)
     }
