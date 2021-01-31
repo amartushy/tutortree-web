@@ -1157,9 +1157,15 @@ var coursesContainer = document.getElementById('courses-container')
 
 
 editProfileButton.addEventListener('click', () => {
-    editProfilePage.style.display = 'flex'
+    $('#edit-profile-page').fadeIn()
+    availabilityScreen.style.display = 'none'
 
     loadUserElements()
+
+    // if(coreTutorApplicantStatus == 'pending' ) {
+    //     loadTutorApplicantElements()
+    // }
+
     if(coreIsTutor) {
         loadTutorElements()
     }
@@ -1224,8 +1230,14 @@ function loadUserElements() {
     editImageBlock.appendChild(newIcon)
 }
 
+function loadTutorApplicantElements() {
+    experienceScreen.style.display = 'flex'
+    availabilityScreen.style.display = 'flex'
+    loadExperience()
+    loadAvailability()
+}
+
 function loadTutorElements() {
-    aboutScreen.style.display = 'flex'
     experienceScreen.style.display = 'flex'
     availabilityScreen.style.display = 'flex'
     coursesScreen.style.display = 'flex'
