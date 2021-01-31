@@ -38,7 +38,7 @@ function loadCoreProperties(ID) {
         var data = doc.data()
 
         coreBio = data.bio
-	coreBalance = data.currentBalance
+	    coreBalance = data.currentBalance
         coreEmail = data.email
         coreIsEmailOn = data.isEmailOn 
         coreIsSMSOn = data.isSMSOn
@@ -48,12 +48,17 @@ function loadCoreProperties(ID) {
         coreProfileImage = data.profileImage 
         coreSchool = data.school 
         coreSubject = data.major 
-	
+        coreTutorApplicantStatus = data.tutorApplicantStatus 
+
         loadHeader()
         loadProfile()
 	    loadNotifications()
 	    loadFinancials()
-	    
+        
+        if(coreTutorApplicantStatus == 'pending' ) {
+            loadPendingApplicantProfile()
+        }
+
         if (coreIsTutor) {
    	    coreAvailability = data.availability
 	    coreMaxHours = data.maxHPW
@@ -83,8 +88,15 @@ function loadHeader() {
     profileTab.appendChild(profileText)
 }
 
+let experienceSection = document.getElementById('experience-section')
+let availabilitySection = document.getElementById('availability-section')
 
 async function loadProfile() {
+    experienceSection.style.display = 'none'
+    availabilitySection.style.display = 'none'
+
+    var usersSessions = document.getElementById('users-sessions')
+    var usersAverage = document.getElementById('users-average')
 
     var usersImageBlock = document.getElementById('users-image-block')
     var usersName = document.getElementById('users-name')
@@ -101,28 +113,40 @@ async function loadProfile() {
     usersProfileImage.src = coreProfileImage
     usersImageBlock.appendChild(usersProfileImage)
 
-    var cameraIcon = document.createElement('div')
-    cameraIcon.setAttribute('class', 'users-photo-icon')
-    cameraIcon.innerHTML = ''
-    usersImageBlock.appendChild(cameraIcon)
-
     usersName.innerHTML = coreName
     usersBio.innerHTML = coreBio
     usersSchool.innerHTML = await getSchoolName(coreSchool)
     usersMajor.innerHTML = coreSubject
+
+    usersSessions.innerHTML = await getCountOfSessions(globalUserId)
+    usersAverage.style.display = 'none'   
     
+    loadProfileReviews()
 }
 
 async function loadTutorProfile() {
-    var usersSessions = document.getElementById('users-sessions')
-    var usersAverage = document.getElementById('users-average')
+    experienceSection.style.display = 'block'
+    availabilitySection.style.display = 'block'
 
-    usersSessions.innerHTML = await getCountOfSessions(globalUserId)
-    usersAverage.innerHTML = await getRatingForUser(globalUserId)
-	
+    var usersAverage = document.getElementById('users-average')
+    
 	loadProfileExperience()
 	loadProfileAvailability()
-	loadProfileReviews()
+    
+    usersAverage.innerHTML = await getRatingForUser(globalUserId)
+    usersAverage.style.display = 'flex'
+}
+
+async function loadPendingApplicantProfile() {
+    experienceSection.style.display = 'block'
+    availabilitySection.style.display = 'block'
+    
+    var usersAverage = document.getElementById('users-average')
+    usersAverage.innerHTML = await getRatingForUser(globalUserId)
+    usersAverage.style.display = 'flex'
+
+    loadProfileExperience()
+	loadProfileAvailability()
 }
 
 //Tab Navigation
