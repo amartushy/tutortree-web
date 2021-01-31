@@ -79,6 +79,16 @@ async function getSchoolName(school) {
     return schoolTitle
 }
 
+async function getSchoolImage(school) {
+    var schoolIcon = ''
+
+    await userDB.collection('schools').doc(school).get().then(function(doc) {
+        schoolIcon = doc.data().icon 
+    })
+
+    return schoolIcon
+}
+
 function getFormattedDate(timeEpoch) {
     var time = parseFloat(timeEpoch)
     var d = new Date(0);
