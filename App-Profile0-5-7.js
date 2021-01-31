@@ -1307,12 +1307,91 @@ async function uploadAndUpdateFirebasePhoto() {
         })
 }
 
+//Edit Users School
+let editProfileSchoolText = document.getElementById('edit-profile-school-text')
+let editProfileSchoolImageContainer = document.getElementById('edit-profile-school-image-container')
+let editProfileSchoolsBlock = document.getElementById('edit-profile-schools-block')
+let editProfileSchoolChevron = document.getElementById('edit-profile-school-chevron')
+let editProfileSchoolsArea = document.getElementById('edit-profile-schools-area')
+
+var editProfileSchoolIDs = []
+
+function loadEditProfileSchool() {
+    //initial state
+    editProfileSchoolsArea.style.display = 'none'
+
+    while (editProfileSchoolsArea.firstChild) {
+        editProfileSchoolsArea.removeChild(editProfileSchoolsArea.firstChild)
+    }
+
+    schoolDB.get().then(function(schools) {
+        schools.forEach(function(doc) {
+            editProfileSchoolIDs.push(doc.id)
+            var schoolData = doc.data()
+            console.log(schoolData)
+            var coursesSchoolButton = document.createElement('div')
+            coursesSchoolButton.setAttribute('class', 'edit-profile-school-button')
+            coursesSchoolButton.setAttribute('id', `edit-profile-school-button-${doc.id}`)
+            coursesSchoolButton.addEventListener('click', () => {
+                editProfileSchoolText.innerHTML = schoolData.title 
+                updateEditProfileSchoolImage(schoolData.icon)
+                updateUsersSchool(doc.id)
+            })
+            editProfileSchoolsArea.appendChild(coursesSchoolButton)
+
+            var coursesSchoolImage = document.createElement('img')
+            coursesSchoolImage.setAttribute('class', 'edit-profile-school-image')
+            coursesSchoolImage.src = schoolData.icon 
+            coursesSchoolButton.appendChild(coursesSchoolImage)
+
+            var coursesSchoolText = document.createElement('div')
+            coursesSchoolText.setAttribute('class', 'edit-profile-school-text')
+            coursesSchoolText.innerHTML = schoolData.title 
+            coursesSchoolButton.appendChild(coursesSchoolText)
+        })
+    })
+}
+
+function updateUsersSchool(school) {
+    let updateDict = {}
+    updateDict['school'] = school
+    userDB.collection('userTest').doc(globalUserId).update(updateDict).then(function() {
+
+        $('#edit-profile-schools-area').fadeOut()
+    })
+}
+
+function updateEditProfileSchoolImage(image) {
+    while(editProfileSchoolImageContainer.firstChild) {
+        editProfileSchoolImageContainer.removeChild(editProfileSchoolImageContainer.firstChild)
+    }
+
+    let newSchoolIcon = document.createElement('img')
+    newSchoolIcon.setAttribute('class', 'edit-profile-school-image')
+    newSchoolIcon.src = image
+    editProfileSchoolImageContainer.appendChild(newSchoolIcon)
+}
+
+
+editProfileSchoolsBlock.addEventListener('click', () => {
+
+    if (editProfileSchoolChevron.classList.contains('course-chevron')) {
+        editProfileSchoolChevron.setAttribute('class', 'course-chevron-down')
+    } else {
+        editProfileSchoolChevron.setAttribute('class', 'course-chevron')
+    }
+
+    if(editProfileSchoolsArea.style.display == 'none') {
+        $('#edit-profile-schools-area').fadeIn()
+    } else {
+        $('#edit-profile-schools-area').fadeOut()
+    }
+})
+
 
 
 
 //Experience Screen__________________________________________________________________________
-var editMajorField = document.getElementById('edit-major-field')
-var saveMajorButton = document.getElementById('save-major-button')
 var experienceContainer = document.getElementById('experience-container')
 var addExperienceButton = document.getElementById('add-experience-button')
 var addExperienceContainer = document.getElementById('add-experience-container')
@@ -1321,17 +1400,6 @@ var addExperienceDescription = document.getElementById('add-experience-descripti
 var cancelExperienceButton = document.getElementById('cancel-experience-button')
 var confirmExperienceButton = document.getElementById('confirm-experience-button')
 
-editMajorField.onfocus = function() {
-    $('#save-major-button').fadeIn()
-}
-
-saveMajorButton.addEventListener('click', () => {
-    userDB.collection('userTest').doc(globalUserId).update({
-        'major' : editMajorField.value
-    }).then(() => {
-        $('#save-major-button').fadeOut()
-    })
-})
 
 function loadExperience() {
     while(experienceContainer.firstChild) {
