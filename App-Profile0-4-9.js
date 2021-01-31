@@ -1161,13 +1161,12 @@ var coursesContainer = document.getElementById('courses-container')
 
 editProfileButton.addEventListener('click', () => {
     $('#edit-profile-page').fadeIn()
-    availabilityScreen.style.display = 'none'
 
     loadUserElements()
 
-    // if(coreTutorApplicantStatus == 'pending' ) {
-    //     loadTutorApplicantElements()
-    // }
+    if(coreTutorApplicantStatus == 'pending' ) {
+        loadTutorApplicantElements()
+    }
 
     if(coreIsTutor) {
         loadTutorElements()
