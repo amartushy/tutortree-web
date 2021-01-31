@@ -93,15 +93,16 @@ function loadHeader() {
 
 let experienceSection = document.getElementById('experience-section')
 let availabilitySection = document.getElementById('availability-section')
+let usersSessionsBlock = document.getElementById('users-sessions-block')
+let usersAverageBlock = document.getElementById('users-average-block')
 
 async function loadProfile() {
     console.log('Loading User Profile')
     experienceSection.style.display = 'none'
     availabilitySection.style.display = 'none'
+    usersAverageBlock.style.display = 'none'  
 
     var usersSessions = document.getElementById('users-sessions')
-    var usersAverage = document.getElementById('users-average')
-
     var usersImageBlock = document.getElementById('users-image-block')
     var usersName = document.getElementById('users-name')
     var usersSchool = document.getElementById('users-school')
@@ -122,8 +123,7 @@ async function loadProfile() {
     usersSchool.innerHTML = await getSchoolName(coreSchool)
     usersMajor.innerHTML = coreSubject
 
-    usersSessions.innerHTML = await getCountOfSessions(globalUserId)
-    usersAverage.style.display = 'none'   
+    usersSessions.innerHTML = await getCountOfSessions(globalUserId) 
     
     loadProfileReviews()
 }
@@ -132,6 +132,7 @@ async function loadTutorProfile() {
     console.log('Loading Tutor Profile')
     experienceSection.style.display = 'block'
     availabilitySection.style.display = 'block'
+    usersAverageBlock.style.display = 'flex' 
 
     var usersAverage = document.getElementById('users-average')
     
@@ -139,7 +140,6 @@ async function loadTutorProfile() {
 	loadProfileAvailability()
     
     usersAverage.innerHTML = await getRatingForUser(globalUserId)
-    usersAverage.style.display = 'flex'
 }
 
 async function loadPendingApplicantProfile() {
@@ -147,10 +147,10 @@ async function loadPendingApplicantProfile() {
 
     experienceSection.style.display = 'block'
     availabilitySection.style.display = 'block'
+    usersAverageBlock.style.display = 'flex' 
 
     var usersAverage = document.getElementById('users-average')
     usersAverage.innerHTML = await getRatingForUser(globalUserId)
-    usersAverage.style.display = 'flex'
 
     loadProfileExperience()
 	loadProfileAvailability()
