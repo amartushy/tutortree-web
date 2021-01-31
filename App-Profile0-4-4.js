@@ -56,13 +56,16 @@ function loadCoreProperties(ID) {
 	    loadFinancials()
         
         if(coreTutorApplicantStatus == 'pending' ) {
+            coreAvailability = data.availability
+	        coreMaxHours = data.maxHPW
+	        corePricePHH = data.pricePHH
             loadPendingApplicantProfile()
         }
 
         if (coreIsTutor) {
-   	    coreAvailability = data.availability
-	    coreMaxHours = data.maxHPW
-	    corePricePHH = data.pricePHH
+            coreAvailability = data.availability
+            coreMaxHours = data.maxHPW
+            corePricePHH = data.pricePHH
             loadTutorProfile()
         }
     })
@@ -92,6 +95,7 @@ let experienceSection = document.getElementById('experience-section')
 let availabilitySection = document.getElementById('availability-section')
 
 async function loadProfile() {
+    console.log('Loading User Profile')
     experienceSection.style.display = 'none'
     availabilitySection.style.display = 'none'
 
@@ -125,6 +129,7 @@ async function loadProfile() {
 }
 
 async function loadTutorProfile() {
+    console.log('Loading Tutor Profile')
     experienceSection.style.display = 'block'
     availabilitySection.style.display = 'block'
 
@@ -138,9 +143,11 @@ async function loadTutorProfile() {
 }
 
 async function loadPendingApplicantProfile() {
+    console.log('Loading Tutor Applicant Profile')
+
     experienceSection.style.display = 'block'
     availabilitySection.style.display = 'block'
-    
+
     var usersAverage = document.getElementById('users-average')
     usersAverage.innerHTML = await getRatingForUser(globalUserId)
     usersAverage.style.display = 'flex'
