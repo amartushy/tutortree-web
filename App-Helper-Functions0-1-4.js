@@ -1,4 +1,34 @@
 //Helper Functions ___________________________________________________________________________________________________________
+function loadAuthHeader() {
+    document.getElementById("home").addEventListener('click', () => {
+        location.href = "https://app-tutortree.webflow.io/app-home"
+    })
+    
+    document.getElementById("messages").addEventListener('click', () => {
+        location.href = "https://app-tutortree.webflow.io/messages"
+    })
+    
+    document.getElementById("sessions").addEventListener('click', () => {
+        location.href = "https://app-tutortree.webflow.io/sessions"
+    })
+    
+    document.getElementById("profile").addEventListener('click', () => {
+        location.href = "https://app-tutortree.webflow.io/user-profile"
+    })
+}
+
+function loadNonAuthHeader() {
+    document.getElementById("non-auth-log-in").addEventListener('click', () => {
+        location.href = "https://app-tutortree.webflow.io/login"
+    })
+    document.getElementById("non-auth-create-account").addEventListener('click', () => {
+        //no page yet
+    })
+    document.getElementById("non-auth-home").addEventListener('click', () => {
+        location.href = "https://app-tutortree.webflow.io/"
+    })
+}
+
 async function getRatingForUser(ID) {
     var rating = 0
 
