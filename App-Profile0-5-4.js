@@ -1202,7 +1202,7 @@ saveBioButton.addEventListener('click', () => {
     })
 })
 
-function loadUserElements() {
+async function loadUserElements() {
     aboutScreen.style.display = 'flex'
     saveNameButton.style.display = 'none'
     saveBioButton.style.display = 'none'
