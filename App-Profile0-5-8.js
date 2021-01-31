@@ -1388,6 +1388,22 @@ editProfileSchoolsBlock.addEventListener('click', () => {
     }
 })
 
+//Edit Users Major
+let saveMajorButton = document.getElementById('save-major-button')
+let editMajorField = document.getElementById('edit-major-field')
+
+editMajorField.onfocus = function() {
+    $('#save-major-button').fadeIn()
+}
+
+saveMajorButton.addEventListener('click', () => {
+    userDB.collection('userTest').doc(globalUserId).update({
+        'name' : editMajorField.value
+    }).then(() => {
+        $('#save-major-button').fadeOut()
+    })
+})
+
 
 
 
