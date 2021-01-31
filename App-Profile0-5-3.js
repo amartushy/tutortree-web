@@ -1,6 +1,6 @@
 //Global Variables__________________________________________________________________
 var userDB = firebase.firestore()
-var schoolDB = firebase.firestore()
+var schoolDB = firebase.firestore().collection('schools')
 
 //Core properties all users have
 var globalUserId,
@@ -1214,7 +1214,8 @@ function loadUserElements() {
     editNameField.value = coreName
     editBioField.value = coreBio
     editMajorField.value = coreSubject
-
+    editProfileSchoolText.innerHTML = await getSchoolName(coreSchool)
+	
     //Create Photo 
     editImageBlock.removeChild(editImageBlock.firstChild)
     editImageBlock.removeChild(editImageBlock.firstChild)
