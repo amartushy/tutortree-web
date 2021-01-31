@@ -132,10 +132,6 @@ loadNewEvents.addEventListener('click', () => {
 })
 
 function loadSessions() {
-    noUpcomingSessions.style.display = 'none'
-    noPendingSessions.style.display = 'none'
-    noPastSessions.style.display = 'none'
-
     loadNewEvents.style.display = 'none'
 
     var currentTime = (new Date()).getTime() / 1000
