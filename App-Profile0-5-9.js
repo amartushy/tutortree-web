@@ -1398,7 +1398,7 @@ editMajorField.onfocus = function() {
 
 saveMajorButton.addEventListener('click', () => {
     userDB.collection('userTest').doc(globalUserId).update({
-        'name' : editMajorField.value
+        'major' : editMajorField.value
     }).then(() => {
         $('#save-major-button').fadeOut()
     })
