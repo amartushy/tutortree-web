@@ -8,7 +8,7 @@ let userDB = firebase.firestore().collection('userTest')
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		var ID = user.uid
-		 
+	loadAuthHeader()	 
         loadCoreProperties(ID)
 	updateProgressBar(1)
 		
