@@ -12,7 +12,7 @@ var globalAdminID,
 //Initialize elements on page load
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
-		var globalAdminID = user.uid
+		globalAdminID = user.uid
         
         loadAdminProperties(globalAdminID)
 	    loadAuthHeader()
