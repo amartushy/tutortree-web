@@ -122,9 +122,9 @@ function loadInterviews() {
         })
 
         Promise.all(promises).then( () => {
-            buildUpcomingInterviews(upcomingSessions)
-            buildPendingInterviews(pendingSessions)
-            buildPastInterviews(pastSessions)
+            buildUpcomingInterviews(upcomingInterviews)
+            buildPendingInterviews(pendingInterviews)
+            buildPastInterviews(pastInterviews)
         })
     })
 }
