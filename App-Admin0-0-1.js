@@ -25,7 +25,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 function loadAdminProperties(adminID) {
 
-    userDB.collection('userTest').doc(adminID).onSnapshot(function(doc) {
+    userDB.doc(adminID).onSnapshot(function(doc) {
         let data = doc.data()
 
         var isAdmin = data.isAdmin
@@ -604,7 +604,7 @@ function updateSessionLocation(interviewID, interviewInfo) {
         updateDict = inPersonDict
     }
 
-    // var applicantPromise = userDB.collection('userTest').doc(interviewInfo.tutor).collection('sessions').doc(interviewID).update(updateDict).then( ()=> {
+    // var applicantPromise = userDB.doc(interviewInfo.tutor).collection('sessions').doc(interviewID).update(updateDict).then( ()=> {
     //     console.log('Tutor doc written')
     // }).catch(function(error) {
     //     console.error("Error writing document: ", error);
