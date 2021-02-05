@@ -403,19 +403,6 @@ async function buildInterviewBlock(interviewID, interviewInfo, DOMElement) {
     sessionInfoLocationContainer.appendChild(locationTextDiv)
 
     createSessionInfoHeader('Location', locationTextDiv)
-    let editLocationIcon = document.createElement('div')
-    editLocationIcon.setAttribute('class', 'edit-location-icon')
-    editLocationIcon.innerHTML = ''
-    editLocationIcon.addEventListener('click', () => {
-        let locationContainer = document.getElementById(`add-location-container-${interviewID}`)
-        if (locationContainer.style.display == 'none') {
-            $(`#add-location-container-${interviewID}`).fadeIn()
-        } else {
-            $(`#add-location-container-${interviewID}`).fadeOut()
-        }
-    })
-    locationTextDiv.appendChild(editLocationIcon)
-
 
     if(interviewInfo.zoomLink != 'No link has been set') {
         createSessionInfoText('This is a Zoom meeting', sessionInfoLocationContainer)
@@ -439,10 +426,26 @@ async function buildInterviewBlock(interviewID, interviewInfo, DOMElement) {
             createSessionInfoText(interviewInfo.zoomPassword, sessionInfoPasswordContainer)
         }
     } else {
+
         createSessionInfoText(interviewInfo.zoomLink, sessionInfoLocationContainer)
     }
 
-    buildLocationDiv(sessionInfoLocationContainer, interviewID, interviewInfo)
+    if(interviewInfo.status == 'confirmed' && interviewInfo.end > currentTime && interviewInfo.interviewer == globalAdminID) {
+        let editLocationIcon = document.createElement('div')
+        editLocationIcon.setAttribute('class', 'edit-location-icon')
+        editLocationIcon.innerHTML = ''
+        editLocationIcon.addEventListener('click', () => {
+            let locationContainer = document.getElementById(`add-location-container-${interviewID}`)
+            if (locationContainer.style.display == 'none') {
+                $(`#add-location-container-${interviewID}`).fadeIn()
+            } else {
+                $(`#add-location-container-${interviewID}`).fadeOut()
+            }
+        })
+        locationTextDiv.appendChild(editLocationIcon)
+
+        buildLocationDiv(sessionInfoLocationContainer, interviewID, interviewInfo)
+    }
 
     var sessionInfoPhoneNumberContainer = document.createElement('div')
     sessionInfoPhoneNumberContainer.setAttribute('class', 'session-info-lower')
