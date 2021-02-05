@@ -340,7 +340,7 @@ async function buildInterviewBlock(interviewID, interviewInfo, DOMElement) {
     sessionDividerLeft.setAttribute('class', 'session-divider-left')
     sessionBlockBottomLeft.appendChild(sessionDividerLeft)
 
-    //Interview is pending, allow any admin to manage interview
+    //Interview is pending, allow any admin to confirm interview
     if(interviewInfo.status == 'pending') {
         var confirmSessionButton = document.createElement('div')
         confirmSessionButton.setAttribute('class', 'confirm-session')
@@ -349,22 +349,6 @@ async function buildInterviewBlock(interviewID, interviewInfo, DOMElement) {
         confirmSessionButton.addEventListener('click', () => {
             confirmInterview(interviewID, interviewInfo)
         })
-
-        var rescheduleSessionButton = document.createElement('div')
-        rescheduleSessionButton.setAttribute('class', 'reschedule-session')
-        rescheduleSessionButton.addEventListener('click', () => {
-            rescheduleInterview(interviewID, interviewInfo)
-        })
-        rescheduleSessionButton.innerHTML = 'Reschedule'
-        sessionBlockBottomLeft.appendChild(rescheduleSessionButton)
-
-        var cancelSessionButton = document.createElement('div')
-        cancelSessionButton.setAttribute('class', 'cancel-session')
-        cancelSessionButton.addEventListener('click', () => {
-            cancelInterview(interviewID, interviewInfo)
-        })
-        cancelSessionButton.innerHTML = "Cancel Interview"
-        sessionBlockBottomLeft.appendChild(cancelSessionButton)
 
     //interview is upcoming, only allow interview that has confirmed it to manage
     } else if(interviewInfo.status == 'confirmed' && interviewInfo.end > currentTime && interviewInfo.interviewer == globalAdminID) {
