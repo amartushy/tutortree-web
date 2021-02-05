@@ -3,11 +3,11 @@ var globalDB = firebase.firestore()
 var userDB = firebase.firestore().collection('userTest')
 
 var globalAdminID,
+    adminCoreBalance,
     adminName,
     adminEmail,
     adminPhone,
     adminProfileImage
-
 
 //Initialize elements on page load
 firebase.auth().onAuthStateChanged(function(user) {
@@ -33,6 +33,7 @@ function loadAdminProperties(adminID) {
             location.href = "https://app-tutortree.webflow.io/login"
 
         } else {
+            adminCoreBalance = data.currentBalance,
             adminName = data.name,
             adminEmail = data.email,
             adminPhone = data.phoneNumber,
