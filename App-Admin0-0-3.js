@@ -157,7 +157,7 @@ async function buildUpcomingInterviews(interviews) {
             buildDateHeader(endDateString, upcomingInterviewsArea)
         }
 
-        await buildSessionBlock(interviewID, interviewInfo, upcomingInterviewsArea)
+        await buildInterviewBlock(interviewID, interviewInfo, upcomingInterviewsArea)
     }
 }
 
@@ -196,7 +196,7 @@ async function buildPendingInterviews(interviews) {
             buildDateHeader(endDateString, pendingInterviewsArea)
         }
 
-        await buildSessionBlock(interviewID, interviewInfo, pendingInterviewsArea)
+        await buildInterviewBlock(interviewID, interviewInfo, pendingInterviewsArea)
     }
 }
 
@@ -228,7 +228,7 @@ async function buildPastInterviews(interviews) {
             buildDateHeader(endDateString, pastInterviewsArea)
         }
 
-        await buildSessionBlock(interviewID, interviewInfo, pastInterviewsArea)
+        await buildInterviewBlock(interviewID, interviewInfo, pastInterviewsArea)
     }
 }
 
