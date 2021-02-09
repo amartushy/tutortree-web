@@ -1395,11 +1395,6 @@ function timeslotSelected(index) {
 function scheduleInterview( ) {
 
     var interviewID = createTransactionID()
-    var dateObject = getFormattedDate(start)
-    let dateString = dateObject[0] + ', ' + dateObject[1] + ' ' + dateObject[2]
-
-    var timeObject = getFormattedTime(start, end)
-    let timeString = timeObject[0] + ' to ' + timeObject[1]
 
     var interviewDict = {
         'applicant' : globalUserId,
@@ -1410,8 +1405,6 @@ function scheduleInterview( ) {
         'interviewer' : '',
         'interviewerName' : '',
         'interviewerEmail' : '',
-        'interviewDateString' : dateString,
-        'interviewTimeString' : timeString,
         'end' : end,
         'location' : 'Zoom',
         'zoomLink' : 'No link has been set',
