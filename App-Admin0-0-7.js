@@ -271,7 +271,7 @@ async function buildInterviewBlock(interviewID, interviewInfo, DOMElement) {
     var currentTime = (new Date()).getTime() / 1000
     const timeObject = getFormattedTime(interviewInfo.start, interviewInfo.end)
     const timeString = timeObject[0] + ' to ' + timeObject[1]
-    const applicantSchool = interviewInfo.applicantSchool 
+    const applicantSchool = interviewInfo.applicantsSchool 
 
     var applicantID = interviewInfo.applicant
 
