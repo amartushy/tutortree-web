@@ -1405,6 +1405,8 @@ function scheduleInterview( ) {
         'interviewer' : '',
         'interviewerName' : '',
         'interviewerEmail' : '',
+        'interviewDateString' : getFormattedDate(start),
+        'interviewTimeString' : getFormattedTime(start, end)
         'end' : end,
         'location' : 'Zoom',
         'zoomLink' : 'No link has been set',
