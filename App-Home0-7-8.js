@@ -111,9 +111,7 @@ let tutorsHomeSubheader = document.getElementById('tutors-home-subheader')
 
 let pinnedTutorsArea = document.getElementById('pinned-tutors-area')
 
-let tutorPreviewsContainer = document.getElementById('tutor-previews-container')
 let noPreferencesContainer = document.getElementById('no-preferences-container')
-
 
 function loadHomePage() {
     homeProfileImageContainer.removeChild(homeProfileImageContainer.firstChild)
