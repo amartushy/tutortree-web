@@ -137,6 +137,7 @@ function loadHomePage() {
 }
 
 function loadFiltersFromPreferences() {
+   
     gradeFilterArea.style.display = 'none'
     schoolFilterArea.style.display = 'none'
     subjectFilterArea.style.display = 'none'
@@ -155,6 +156,7 @@ function loadFiltersFromPreferences() {
     buildGradeOptions()
     loadSchoolOptions()
 
+    tutorsHomeSubheader.style.display = 'none'
     if(school != 'none' ) {
         updateHomeHeader(school)
         loadSubjectOptions() 
@@ -163,13 +165,20 @@ function loadFiltersFromPreferences() {
             userDB.collection('schools').doc(school).collection('courses').doc(subject).get().then(function(courses) {
                 let courseData = courses.data()
                 loadCourseOptions(courseData)
-		noPreferencesContainer.style.display = 'none'
 		    
                 if(course != 'none') {
                     if( courseData[course].hasOwnProperty('tutors') && Object.keys(courseData[course].tutors).length > 0) {
                         let tutorData = courseData[course].tutors
                         loadTutors(tutorData)
+			    
+			noPreferencesContainer.style.display = 'none'
+			tutorsHomeSubheader.style.display = 'flex'
+			tutorsHomeSubheader.innerHTML = `All Tutors for ${courseData[course]}`
                     } else {
+			noPreferencesContainer.style.display = 'none'
+			tutorsHomeSubheader.style.display = 'flex'
+			tutorsHomeSubheader.innerHTML = `All Tutors for ${courseData[course]}`
+			
                         loadTutorRequestForm()
                     }
                 }
@@ -430,7 +439,7 @@ function buildCourseOption(courseName, courseInfo) {
 	    
         $('#course-filter-area').fadeOut()
         $('#tutors-home-subheader').fadeIn()
-        tutorsHomeSubheader.innerHTML = `All tutors for ${courseName}`
+        tutorsHomeSubheader.innerHTML = `All Tutors for ${courseName}`
         courseFilterText.innerHTML = courseName
         resetFilters(grade, school, subject, courseName)
 
