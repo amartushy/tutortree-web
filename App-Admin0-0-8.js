@@ -651,3 +651,170 @@ function createSessionInfoText(text, DOMElement) {
     sessionInfoText.innerHTML = text
     DOMElement.appendChild(sessionInfoText)
 }
+
+
+
+//Interview Confirmation_________________________________________________________________________________
+const interviewManagementPage = document.getElementById('interview-management-page')
+const interviewsBack = document.getElementById('interviews-back')
+const completionBack = document.getElementById('completion-back')
+
+interviewsBack.addEventListener('click', () => {
+    interviewManagementPage.style.display = 'none'
+})
+completionBack.addEventListener('click', () => {
+    interviewManagementPage.style.display = 'none'
+})
+
+const confirmInterviewScreen = document.getElementById('confirm-interview-screen')
+const rescheduleInterviewScreen = document.getElementById('reschedule-interview-screen')
+const cancelInterviewScreen = document.getElementById('cancel-interview-screen')
+const completionScreen = document.getElementById('completion-screen')
+const interviewDate = document.getElementById('interview-date')
+const interviewTime = document.getElementById('interview-time')
+
+function confirmInterview(interviewID, interviewInfo) {
+    window.scrollTo(0, 0);
+    userDB.doc(interviewInfo.applicant).get().then(function(doc) {
+        var data = doc.data()
+        var applicantName = data.name
+        var applicantPhoto = data.profileImage
+
+        var applicantImageContainer = document.getElementById('applicant-image-container')
+        applicantImageContainer.removeChild(applicantImageContainer.firstChild)
+
+        var applicantImage = document.createElement('img')
+        applicantImage.setAttribute('class', 'student-profile-image')
+        applicantImage.src = applicantPhoto 
+        applicantImageContainer.appendChild(applicantImage)
+
+        var applicantNameHeader = document.getElementById('student-name')
+        applicantNameHeader.innerHTML = applicantName
+
+    })
+
+    interviewManagementPage.style.display = 'flex'
+    confirmInterviewScreen.style.display = 'flex'
+    rescheduleInterviewScreen.style.display = 'none'
+    cancelInterviewScreen.style.display = 'none'
+    completionScreen.style.display = 'none'
+    $("#processing-text").show()
+    $('#confirmation-text').hide()
+    $('#confirmation-check').hide()
+
+    const interviewSchool = document.getElementById('interview-school')
+    const interviewTotal = document.getElementById('interview-total')
+
+    var dateObject = getFormattedDate(interviewInfo.start)
+    var dateString = dateObject[0]+', '+dateObject[1]+' '+dateObject[2]
+    interviewDate.innerHTML = dateString 
+
+    var timeObject = getFormattedTime(interviewInfo.start, interviewInfo.end)
+    var timeString = timeObject[0]+' to '+timeObject[1]
+    interviewTime.innerHTML = timeString
+
+    interviewSchool.innerHTML = interviewInfo.applicantsSchool 
+    
+    interviewTotal.innerHTML = '$8.50'
+
+    var confirmInterview = document.getElementById('confirm-interview')
+    var confirmInterviewClone = confirmInterview.cloneNode(true)
+    confirmInterview.parentNode.replaceChild(confirmInterviewClone, confirmInterview)
+    confirmInterviewClone.addEventListener('click', () => {
+        $('#confirm-interview-screen').fadeOut(400, () => {
+            $('#completion-screen').fadeIn()
+            processConfirmation(interviewID, interviewInfo, dateString)
+        })
+    })
+}
+
+
+function processConfirmation(interviewID, interviewInfo) {
+    var promises = []
+
+    let confirmZoomField = document.getElementById('confirm-zoom-field')
+    let confirmPasswordField = document.getElementById('confirm-password-field')
+
+    interviewInfo['interviewer'] = globalAdminID
+    interviewInfo['interviewerEmail'] = adminEmail
+    interviewInfo['interviewerName'] = adminName
+    interviewInfo['interviewerPhone'] = adminPhone
+    interviewInfo['interviewDateString'] = interviewDate.innerHTML
+    interviewInfo['interviewTimeString'] = interviewTime.innerHTML
+    interviewInfo['status'] = 'confirmed'
+    interviewInfo['zoomLink'] = confirmZoomField.value
+    interviewInfo['zoomPassword'] = confirmPasswordField.value
+
+    //update global collection
+    var globalPromise = globalDB.collection('interviews').doc(interviewID).update( interviewInfo ).then( ()=> {
+        console.log(interviewID)
+        console.log('Global doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    //update applicants interview collection
+    var updateDict = {}
+    updateDict[interviewID] = interviewInfo
+    var applicantPromise = userDB.doc(interviewInfo.applicant).collection('tutorApplication').doc('interview').update( updateDict ).then( ()=> {
+        console.log('Applicant doc written')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    //update interviewers balance
+    var balancePromise = userDB.doc(globalAdminID).update({
+        'currentBalance' : adminCoreBalance + 8.5
+    }).then(function() {
+        console.log('Balance updated')
+    }).catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+
+    //create connection
+    const connectionID = globalAdminID + ":" + interviewInfo.applicantID
+    var messageRef = globalDB.collection('messages').doc(connectionID)
+    var connectionPromise = messageRef.get().then(function(doc) {
+        if (doc.exists) {
+            console.log("Connection already exists")
+        } else {
+            console.log("Document does not exist, creating new one")
+            var updateDict = {
+                "members" : [globalAdminID, interviewInfo.applicantID],
+                "student" : globalAdminID,
+                "tutor" : interviewInfo.applicantID
+            }
+            globalDB.collection('messages').doc(connectionID).set(updateDict).then(function() {
+                'Done writing connection doc'
+            })
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
+
+
+    promises.push(globalPromise, applicantPromise, balancePromise, connectionPromise)
+
+    Promise.all(promises).then(() => {
+        console.log('All documents written')
+        
+        //send confirmation email to applicant
+        var xhr = new XMLHttpRequest();
+        var url = "https://tutortree-development.herokuapp.com/confirmApplicantInterviewEmail";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                //var json = JSON.parse(xhr.responseText);
+                console.log('sent');
+                loadInterviews()
+                $("#processing-text").hide(() => {
+                    $('#confirmation-text').fadeIn()
+                    $('#confirmation-check').fadeIn()
+                })
+            }
+        };
+        var data = JSON.stringify(interviewInfo);
+        xhr.send(data);
+    })
+}
