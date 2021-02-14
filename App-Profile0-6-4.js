@@ -145,6 +145,12 @@ async function loadTutorProfile() {
 	loadProfileAvailability()
     
     usersAverage.innerHTML = await getRatingForUser(globalUserId)
+	
+    userDB.collection('userTest').doc(globalUserId).collection("tutorApplication").doc("application").get().then( function(doc) {
+        if (doc.data().uploadedFaculty == false) {
+            loadUploadFacultyRec()
+        }
+    })
 }
 
 async function loadPendingApplicantProfile() {
