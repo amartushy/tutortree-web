@@ -163,7 +163,8 @@ function loadFiltersFromPreferences() {
             userDB.collection('schools').doc(school).collection('courses').doc(subject).get().then(function(courses) {
                 let courseData = courses.data()
                 loadCourseOptions(courseData)
-
+		noPreferencesContainer.style.display = 'none'
+		    
                 if(course != 'none') {
                     if( courseData[course].hasOwnProperty('tutors') && Object.keys(courseData[course].tutors).length > 0) {
                         let tutorData = courseData[course].tutors
@@ -425,6 +426,8 @@ function buildCourseOption(courseName, courseInfo) {
     courseFilterArea.appendChild(courseOption)
 
     courseOption.addEventListener('click', () => {
+	noPreferencesContainer.style.display = 'none'
+	    
         $('#course-filter-area').fadeOut()
         $('#tutors-home-subheader').fadeIn()
         tutorsHomeSubheader.innerHTML = `All tutors for ${courseName}`
@@ -433,6 +436,7 @@ function buildCourseOption(courseName, courseInfo) {
 
         if( courseInfo.hasOwnProperty('tutors') ) {
             loadTutors(courseInfo.tutors)
+	    
         } else {
             $('#tutor-request-container').fadeIn()
         }
