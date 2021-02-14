@@ -1149,6 +1149,63 @@ tutorApplicationButton.addEventListener('click', () => {
     location.href = 'https://app-tutortree.webflow.io/tutor-application'
 })
 
+//Upload Faculty Recommendation
+let hiddenFacultyButton = document.getElementById('hidden-faculty-upload-button')
+let profileFacultyUpload = document.getElementById('profile-faculty-upload')
+let profileFacultyUnconfirmed = document.getElementById('profile-faculty-unconfirmed')
+let profileFacultyPreview = document.getElementById('profile-faculty-preview')
+let profileFacultyConfirmed = document.getElementById('profile-faculty-confirmed')
+let profileFacultySubmitDiv = document.getElementById('profile-faculty-submit-div')
+let profileFacultySubmit = document.getElementById('profile-faculty-submit')
+
+profileFacultyUpload.style.display = 'none'
+profileFacultySubmitDiv.style.display = 'none'
+profileFacultyUpload.addEventListener('click', openFacultyDialog )
+hiddenFacultyButton.addEventListener('change', handleFacultyUploadChange);
+
+function loadUploadFacultyRec() {
+    //set initial state
+    profileFacultyUpload.style.display = 'flex'
+    profileFacultyUnconfirmed.style.display = 'flex'
+    profileFacultyPreview.style.display = 'none'
+    profileFacultyConfirmed.style.display = 'none'
+}
+
+function openFacultyDialog() {
+    hiddenFacultyButton.click();
+}
+
+var selectedFacultyFile;
+function handleFacultyUploadChange(e) {
+    selectedFacultyFile = e.target.files[0];
+
+    $('#profile-faculty-preview').fadeIn()
+    $('#profile-faculty-submit-div').fadeIn()
+    profileFacultyPreview.innerHTML = selectedFacultyFile.name
+    profileFacultySubmit.addEventListener('click', handleFacultyUpload )		
+}
+
+async function handleFacultyUpload() {
+    const uploadTask = await storageRef.child(`faculty/${selectedFacultyFile.name}`).put(selectedFacultyFile);
+    uploadAndUpdateFirebaseFaculty()
+}
+
+async function uploadAndUpdateFirebaseFaculty() {
+    var facultyFileURL = ""
+    await storageRef.child('/faculty/'+selectedFacultyFile.name).getDownloadURL().then(function(url) { facultyFileURL = url.toString() })
+
+    userDB.collection("userTest").doc(globalUserId).collection("tutorApplication").doc("application").update( {
+        "facultyFile" : facultyFileURL,
+        "uploadedFaculty" : true 
+    }).then(function() {
+        profileFacultyUnconfirmed.style.display = 'none'
+        profileFacultyConfirmed.style.display = 'flex'
+        profileFacultySubmitDiv.style.display = 'none'
+        $('#profile-faculty-upload').delay(3000).fadeOut()
+    })
+}	
+
+
 //Logout
 let logOutButton = document.getElementById('log-out-button')
 
@@ -1161,7 +1218,6 @@ logOutButton.addEventListener('click', () => {
         showErrorMessage(error.message)
       });
 })
-
 
 //Edit Profile Page_______________________________________________________________________________________________________________________
 var editProfileButton = document.getElementById('edit-profile-button')
