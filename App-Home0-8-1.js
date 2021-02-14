@@ -173,11 +173,11 @@ function loadFiltersFromPreferences() {
 			    
 			noPreferencesContainer.style.display = 'none'
 			tutorsHomeSubheader.style.display = 'flex'
-			tutorsHomeSubheader.innerHTML = `All Tutors for ${courseData[course]}`
+			tutorsHomeSubheader.innerHTML = `All Tutors for ${course}`
                     } else {
 			noPreferencesContainer.style.display = 'none'
 			tutorsHomeSubheader.style.display = 'flex'
-			tutorsHomeSubheader.innerHTML = `All Tutors for ${courseData[course]}`
+			tutorsHomeSubheader.innerHTML = `All Tutors for ${course}`
 			
                         loadTutorRequestForm()
                     }
