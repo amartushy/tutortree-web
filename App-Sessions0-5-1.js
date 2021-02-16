@@ -250,6 +250,9 @@ async function buildPendingSessions(sessions) {
 
 
 let noPastSessions = document.getElementById('no-past-sessions')
+let pastBubble = document.getElementById('past-bubble')
+pastBubble.style.display = 'none'
+var unratedSessions = 0
 
 async function buildPastSessions(sessions) {
     
@@ -276,6 +279,13 @@ async function buildPastSessions(sessions) {
         if ( sessionDate != endDateString ) {
             sessionDate = endDateString
             buildDateHeader(endDateString, pastSessionsArea)
+        }
+        if(sessionInfo.rated == false) {
+            unratedSessions ++
+            if(pastBubble.style.display == 'none') {
+                pastBubble.style.display = 'flex'
+                pastBubble.innerHTML = unratedSessions
+            }
         }
 
         await buildSessionBlock(sessionID, sessionInfo, pastSessionsArea)
