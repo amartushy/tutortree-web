@@ -129,7 +129,7 @@ loadNewEvents.addEventListener('click', () => {
 function loadSessions() {
     loadNewEvents.style.display = 'none'
     isNewEvents = false
-
+    unratedSessions = 0
     var currentTime = (new Date()).getTime() / 1000
 
     userDB.collection('userTest').doc(globalUserId).collection('sessions').onSnapshot( function(sessions) {
