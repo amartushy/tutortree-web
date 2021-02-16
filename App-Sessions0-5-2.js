@@ -282,9 +282,9 @@ async function buildPastSessions(sessions) {
         }
         if(sessionInfo.rated == false) {
             unratedSessions ++
+            pastBubble.innerHTML = unratedSessions
             if(pastBubble.style.display == 'none') {
                 pastBubble.style.display = 'flex'
-                pastBubble.innerHTML = unratedSessions
             }
         }
 
