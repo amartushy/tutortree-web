@@ -768,6 +768,102 @@ function createSessionInfoText(text, DOMElement) {
     DOMElement.appendChild(sessionInfoText)
 }
 
+//Rate Session
+function buildRateSession(sessionID, otherID, DOMElement) {
+    let rateSessionDiv = document.createElement('div')
+    rateSessionDiv.setAttribute('id', `rate-session-div-${sessionID}`)
+    rateSessionDiv.setAttribute('class', 'rate-session-div')
+    DOMElement.appendChild(rateSessionDiv)
+    
+    let rateSessionText = document.createElement('div')
+    rateSessionText.setAttribute('class', 'rate-session-text')
+    rateSessionText.innerHTML = 'How was this session?'
+    rateSessionDiv.appendChild(rateSessionText)
+    
+    let rateSessionStarContainer = document.createElement('div')
+    rateSessionStarContainer.setAttribute('class', 'rate-session-star-container')
+    rateSessionDiv.appendChild(rateSessionStarContainer)
+    
+    for(i=1; i<6; i++) {
+        var rateSessionStar = document.createElement('div')
+        rateSessionStar.setAttribute('class', 'rate-session-star-unselected')
+        rateSessionStar.setAttribute('id', `star-${sessionID}-${i}`)
+        rateSessionStar.innerHTML = ''
+        rateSessionStarContainer.appendChild(rateSessionStar)
+
+        rateSessionStar.setAttribute('onmouseover', `updateStars('${sessionID}', '${otherID}', ${i})`)
+    }
+
+    let rateSessionSubmitDiv = document.createElement('div')
+    rateSessionSubmitDiv.setAttribute('class', 'rate-session-submit-div')
+    rateSessionSubmitDiv.setAttribute('id', `rate-session-submit-div-${sessionID}`)
+    rateSessionSubmitDiv.style.display = 'none'
+    rateSessionDiv.appendChild(rateSessionSubmitDiv)
+    
+    let rateSessionSubmitText = document.createElement('div')
+    rateSessionSubmitText.setAttribute('class', 'rate-session-submit-text')
+    rateSessionSubmitText.setAttribute('id', `rate-session-submit-text-${sessionID}`)
+    rateSessionSubmitText.innerHTML = '-/5'
+    rateSessionSubmitDiv.appendChild(rateSessionSubmitText)
+    
+    let rateSessionSubmit = document.createElement('div')
+    rateSessionSubmit.setAttribute('class', 'rate-session-submit')
+    rateSessionSubmit.setAttribute('id', `rate-session-submit-${sessionID}`)
+    rateSessionSubmit.innerHTML = 'Submit'
+    rateSessionSubmitDiv.appendChild(rateSessionSubmit)
+}
+
+
+function updateStars(sessionID, otherID, index) {
+    console.log(sessionID, otherID, index)
+
+    let rateSessionSubmitDiv = document.getElementById(`rate-session-submit-div-${sessionID}`)
+    if(rateSessionSubmitDiv.style.display == 'none') {
+        $(`#rate-session-submit-div-${sessionID}`).fadeIn(400, () => {
+            rateSessionSubmitDiv.style.display = 'flex'
+        })
+    }
+    let rateSessionSubmitText = document.getElementById(`rate-session-submit-text-${sessionID}`)    
+    rateSessionSubmitText.innerHTML = `${index}/5`
+
+    let rateSessionSubmit = document.getElementById(`rate-session-submit-${sessionID}`)
+    rateSessionSubmit.setAttribute('onClick', `rateSession('${sessionID}', '${otherID}', ${index})`)
+
+    for( i = 1; i < 6; i++) {
+        if( i <= index) {
+            document.getElementById(`star-${sessionID}-${i}`).setAttribute('class', 'rate-session-star-selected')
+        } else{ 
+            document.getElementById(`star-${sessionID}-${i}`).setAttribute('class', 'rate-session-star-unselected')
+        }
+    }
+}
+
+function rateSession(sessionID, otherID, index) {
+    var promises = []
+
+    var otherPromise = userDB.collection('userTest').doc(otherID).collection('sessions').doc(sessionID).update({
+        'ratingFromOtherUser' : index
+    }).then( () => {
+        console.log('Other finished writing')
+    })
+
+    var currentPromise = userDB.collection('userTest').doc(globalUserId).collection('sessions').doc(sessionID).update({
+        'rated' : true
+    }).then( () =>{
+        console.log('Current finished writing')
+    })
+
+    promises.push(otherPromise, currentPromise)
+
+    Promise.all(promises).then( () => {
+        console.log('Successfully updated rating')
+        $(`#rate-session-div-${sessionID}`).fadeOut()
+        $(`#session-alert-div-${sessionID}`).fadeOut()
+        unratedSessions --
+        pastBubble.innerHTML = unratedSessions
+    })
+}
+
 
 //Session Confirmation_________________________________________________________________________________
 const sessionsManagementPage = document.getElementById('sessions-management-page')
