@@ -124,10 +124,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 	}
 })
 
-var isNewEvents = false
 var loadNewEvents = document.getElementById('load-new-events')
 loadNewEvents.addEventListener('click', () => {
-    isNewEvents = false
     loadSessions()
 })
 
@@ -137,11 +135,10 @@ function loadSessions() {
     var currentTime = (new Date()).getTime() / 1000
 
     userDB.collection('userTest').doc(globalUserId).collection('sessions').onSnapshot( function(sessions) {
-        if(isNewEvents) {
-            loadNewEvents.style.display = 'flex'
-        }
-        isNewEvents = true
+        $('load-new-events').fadeIn()
+    })
 
+    userDB.collection('userTest').doc(globalUserId).collection('sessions').get().then( function(sessions) {
         var promises = []
         var upcomingSessions = []
         var pendingSessions = []
@@ -427,6 +424,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
 
     }
 
+    //session management for tutor
     if(sessionInfo.tutor == globalUserId) {
         if(sessionInfo.status == 'pending') {
             var confirmSessionButton = document.createElement('div')
@@ -923,7 +921,6 @@ function processConfirmation(sessionID, sessionInfo, sessionDate) {
 
     Promise.all(promises).then(() => {
         console.log('All documents written')
-        isNewEvents = false
         loadSessions()
         $("#processing-text").hide(() => {
             $('#confirmation-text').fadeIn()
@@ -1362,7 +1359,6 @@ function processReschedule(sessionID, sessionInfo) {
 
     Promise.all(promises).then(() => {
         console.log('All documents written')
-        isNewEvents = false
         loadSessions()
         $("#processing-text").hide(() => {
             if(previousStatus == 'pending'){
@@ -1483,7 +1479,6 @@ function processCancellation(sessionID, sessionInfo) {
 
     Promise.all(promises).then(() => {
         console.log('All documents written')
-        isNewEvents = false
         loadSessions()
         $("#processing-text").hide(() => {
             document.getElementById('finished-text').innerHTML = 'This session has been cancelled and your student has been refunded.'
@@ -1491,7 +1486,7 @@ function processCancellation(sessionID, sessionInfo) {
             $('#confirmation-check').fadeIn()
         })
     })
-}
+}	
 
 
 
