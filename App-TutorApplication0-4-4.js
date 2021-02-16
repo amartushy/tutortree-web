@@ -1401,7 +1401,7 @@ function scheduleInterview( ) {
         'applicantName' : coreDict['name'],
         'applicantEmail' : coreDict['email'],
         'applicantsSchool' : coreDict['school'],
-        'adminID' : 'VdXorWku69eKSOSCk1yq7eLkt843',
+        'adminID' : 'nBpGfzbCopbnqST7YxfKUd3KPSA2',
         'interviewer' : '',
         'interviewerName' : '',
         'interviewerEmail' : '',
@@ -1443,7 +1443,7 @@ function scheduleInterview( ) {
     var updateDay = {}
     updateDay[availabilityPath] = decimalAvailability
 
-    var availabilityPromise = userDB.doc('VdXorWku69eKSOSCk1yq7eLkt843').update(updateDay).then(() => {
+    var availabilityPromise = userDB.doc('nBpGfzbCopbnqST7YxfKUd3KPSA2').update(updateDay).then(() => {
         console.log('Availability doc written')
     }).catch(function(error) {
         console.error("Error writing document: ", error);
