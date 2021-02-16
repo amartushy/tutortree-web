@@ -110,13 +110,9 @@ pastTab.addEventListener('click', () => {
 firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 		globalUserId = user.uid
-		 
-        userDB.collection('userTest').doc(globalUserId).onSnapshot(function(doc) {
-            var data = doc.data()
+		loadSessions()
+        	upcomingTab.click()
 
-            loadSessions()
-            upcomingTab.click()
-        })
 		
 	//If user is not logged in return them to login screen
 	} else {
@@ -135,7 +131,7 @@ function loadSessions() {
     var currentTime = (new Date()).getTime() / 1000
 
     userDB.collection('userTest').doc(globalUserId).collection('sessions').onSnapshot( function(sessions) {
-        $('load-new-events').fadeIn()
+        $('#load-new-events').fadeIn()
     })
 
     userDB.collection('userTest').doc(globalUserId).collection('sessions').get().then( function(sessions) {
