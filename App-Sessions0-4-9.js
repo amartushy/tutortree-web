@@ -389,6 +389,11 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     sessionBlockBottomLeft.setAttribute('class', 'session-block-bottom-left')
     sessionBlockBottom.appendChild(sessionBlockBottomLeft)
 
+    //rate past sessions for all users
+    if(sessionInfo.status == 'confirmed' && sessionInfo.end < currentTime) {
+        buildRateSession(sessionID, sessionInfo, sessionBlockBottomLeft)
+    }
+	
     var sessionDividerLeft = document.createElement('div')
     sessionDividerLeft.setAttribute('class', 'session-divider-left')
     sessionBlockBottomLeft.appendChild(sessionDividerLeft)
