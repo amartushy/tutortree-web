@@ -412,6 +412,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
 
         let sessionAlertDiv = document.createElement('div')
         sessionAlertDiv.setAttribute('class', 'session-alert-div')
+	    sessionAlertDiv.setAttribute('id', `session-alert-div-${sessionID}`)
         sessionTimeDiv.appendChild(sessionAlertDiv)
 
         let alertBubble = document.createElement('div')
