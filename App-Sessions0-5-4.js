@@ -347,10 +347,14 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     sessionBlockTop.setAttribute('onClick', 'toggleSessionBlockBottom("'+sessionID+'")')
     sessionBlock.appendChild(sessionBlockTop)
 
+    var sessionTimeDiv = document.createElement('div')
+    sessionTimeDiv.setAttribute('class', 'session-time-div')
+    sessionBlockTop.appendChild(sessionTimeDiv)
+
     var sessionTime = document.createElement('div')
     sessionTime.setAttribute('class', 'session-time')
     sessionTime.innerHTML = timeString
-    sessionBlockTop.appendChild(sessionTime)
+    sessionTimeDiv.appendChild(sessionTime)
 
     var sessionInfoBlock = document.createElement('div')
     sessionInfoBlock.setAttribute('class', 'session-info-block')
@@ -406,6 +410,21 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     //rate past sessions for all users
     if(sessionInfo.rated == false && sessionInfo.end < currentTime) {
         buildRateSession(sessionID, otherId, sessionBlockBottomLeft)
+
+        let sessionAlertDiv = document.createElement('div')
+        sessionAlertDiv.setAttribute('class', 'session-alert-div')
+        sessionTimeDiv.appendChild(sessionAlertDiv)
+
+        let alertBubble = document.createElement('div')
+        alertBubble.setAttribute('class', 'alert-bubble')
+        alertBubble.innerHTML = ''
+        sessionAlertDiv.appendChild(alertBubble)
+
+        let sessionAlertText = document.createElement('div')
+        sessionAlertText.setAttribute('class', 'session-alert-text')
+        sessionAlertText.innerHTML = 'NEEDS RATING'
+        sessionAlertDiv.appendChild(sessionAlertText)
+
     }
 
     if(sessionInfo.tutor == globalUserId) {
