@@ -1190,7 +1190,7 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 function loadScheduleScreen() {
-    userDB.doc('VdXorWku69eKSOSCk1yq7eLkt843').get().then( function(doc) {
+    userDB.doc('nBpGfzbCopbnqST7YxfKUd3KPSA2').get().then( function(doc) {
         let data = doc.data()
         setInitialState()
         loadAvailabilities(data.availability)
