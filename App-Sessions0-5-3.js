@@ -405,7 +405,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
 
     //rate past sessions for all users
     if(sessionInfo.rated == false && sessionInfo.end < currentTime) {
-        buildRateSession(sessionID, sessionInfo, sessionBlockBottomLeft)
+        buildRateSession(sessionID, otherId, sessionBlockBottomLeft)
     }
 
     if(sessionInfo.tutor == globalUserId) {
