@@ -120,6 +120,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 	}
 })
 
+var isNewEvents = false
 var loadNewEvents = document.getElementById('load-new-events')
 loadNewEvents.addEventListener('click', () => {
     loadSessions()
@@ -127,11 +128,16 @@ loadNewEvents.addEventListener('click', () => {
 
 function loadSessions() {
     loadNewEvents.style.display = 'none'
+    isNewEvents = false
 
     var currentTime = (new Date()).getTime() / 1000
 
     userDB.collection('userTest').doc(globalUserId).collection('sessions').onSnapshot( function(sessions) {
-        $('#load-new-events').fadeIn()
+        console.log('new events')
+        if(isNewEvents) {
+            loadNewEvents.style.display = 'flex'
+        }
+        isNewEvents = true
     })
 
     userDB.collection('userTest').doc(globalUserId).collection('sessions').get().then( function(sessions) {
