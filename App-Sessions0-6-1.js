@@ -407,7 +407,7 @@ async function buildSessionBlock(sessionID, sessionInfo, DOMElement) {
     sessionBlockBottomLeft.appendChild(sessionDividerLeft)
 
     //rate past sessions for all users
-    if(sessionInfo.rated == false && sessionInfo.end < currentTime) {
+    if(sessionInfo.status != 'pending' && sessionInfo.rated == false && sessionInfo.end < currentTime) {
         buildRateSession(sessionID, otherId, sessionBlockBottomLeft)
 
         let sessionAlertDiv = document.createElement('div')
