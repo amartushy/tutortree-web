@@ -125,7 +125,7 @@ async function loadProfile() {
     usersName.innerHTML = coreName
     if(coreBio == "This user hasn't added a bio yet") {
         usersBio.style.display = 'none'
-        profileNoBio.style.display = 'flex'
+        profileNoBio.style.display = 'block'
     } else {
         usersBio.style.display = 'flex'
         profileNoBio.style.display = 'none'
