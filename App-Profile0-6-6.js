@@ -111,7 +111,8 @@ async function loadProfile() {
     var usersSchool = document.getElementById('users-school')
     var usersMajor = document.getElementById('users-major')
     var usersBio = document.getElementById('users-bio')
-    
+    let profileNoBio = document.getElementById('profile-no-bio')
+
     while ( usersImageBlock.firstChild ) {
         usersImageBlock.removeChild(usersImageBlock.firstChild)
     }
@@ -122,7 +123,14 @@ async function loadProfile() {
     usersImageBlock.appendChild(usersProfileImage)
 
     usersName.innerHTML = coreName
-    usersBio.innerHTML = coreBio
+    if(coreBio == "This user hasn't added a bio yet") {
+        usersBio.style.display = 'none'
+        profileNoBio.style.display = 'flex'
+    } else {
+        usersBio.style.display = 'flex'
+        profileNoBio.style.display = 'none'
+        usersBio.innerHTML = coreBio
+    }
     usersSchool.innerHTML = await getSchoolName(coreSchool)
     usersMajor.innerHTML = coreSubject
 
@@ -137,7 +145,8 @@ async function loadTutorProfile() {
     availabilitySection.style.display = 'block'
     usersAverageBlock.style.display = 'flex' 
     tutorApplicationButton.style.display = 'none'
-
+    tab2.style.display = 'flex'
+    tab4.style.display = 'flex'
 
     var usersAverage = document.getElementById('users-average')
     
@@ -160,7 +169,8 @@ async function loadPendingApplicantProfile() {
     availabilitySection.style.display = 'block'
     usersAverageBlock.style.display = 'flex' 
     tutorApplicationButton.style.display = 'none'
-
+    tab2.style.display = 'flex'
+    tab4.style.display = 'flex'
 
     var usersAverage = document.getElementById('users-average')
     usersAverage.innerHTML = await getRatingForUser(globalUserId)
@@ -183,6 +193,7 @@ tab1.addEventListener('click', () => {
 })
 
 var tab2 = document.getElementById('tab-2')
+tab2.style.display = 'none'
 tab2.addEventListener('click', () => {
     changeTabClasses(2)
     $("html, body").animate({ scrollTop: $("#experience-section").offset().top }, 500);
@@ -195,6 +206,7 @@ tab3.addEventListener('click', () => {
 })
 
 var tab4 = document.getElementById('tab-4')
+tab4.style.display = 'none'
 tab4.addEventListener('click', () => {
     changeTabClasses(4)
     $("html, body").animate({ scrollTop: $("#availability-section").offset().top }, 500);
