@@ -581,6 +581,7 @@ function loadAllSchools() {
             coursesSchoolButton.addEventListener('click', () => {
                 applicantSchoolText.innerHTML = schoolData.title 
                 userAccountCoreDict['preferences']['school'] = doc.id
+                userAccountCoreDict['school'] = doc.id
 
                 updateSchoolClasses(doc.id)
                 $('#school-nav-block').fadeIn()
